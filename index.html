@@ -1028,14 +1028,305 @@
                 </form>
             </div>
 
+            <!-- Character Edit -->
+            <div id="characterEdit" class="character-view">
+                <div class="flex items-center mb-6">
+                    <button id="backToSheetFromEdit" class="text-primary hover:text-primary-dark mr-4">
+                        <i class="fas fa-arrow-left text-xl"></i>
+                    </button>
+                    <h2 class="text-2xl font-bold">Edit Character</h2>
+                </div>
+
+                <form id="editCharacterForm" class="space-y-6">
+                    <!-- Basic Info -->
+                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-4">Basic Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Character Name</label>
+                                <input type="text" id="editCharName" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Level</label>
+                                <input type="number" id="editCharLevel" value="1" min="1" max="10" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Race</label>
+                                <select id="editCharRace" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option>--</option>
+                                    <option>Assaimar</option>
+                                    <option>Dragonborn</option>
+                                    <option>Dwarf</option>
+                                    <option>Elf</option>
+                                    <option>Gnome</option>
+                                    <option>Halfling</option>
+                                    <option>Human</option>
+                                    <option>Orc</option>
+                                    <option>Tiefling</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Class</label>
+                                <select id="editCharClass" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option>--</option>
+                                    <option>Barbarian</option>
+                                    <option>Bard</option>
+                                    <option>Cleric</option>
+                                    <option>Druid</option>
+                                    <option>Fighter</option>
+                                    <option>Monk</option>
+                                    <option>Paladin</option>
+                                    <option>Ranger</option>
+                                    <option>Rogue</option>
+                                    <option>Sorcerer</option>
+                                    <option>Warlock</option>
+                                    <option>Wizard</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Race Bonuses and Proficiencies Combined -->
+                        <div id="editRaceBonusSection" class="mt-4 hidden">
+                            <label class="block text-sm font-medium mb-2">Race Bonuses & Ability Scores (Select up to 2)</label>
+                            <div id="editRaceBonusButtons" class="flex flex-wrap gap-2">
+                                <!-- Race bonus and ability score buttons will be populated here -->
+                            </div>
+                        </div>
+
+                        <!-- Race Proficiencies -->
+                        <div id="editRaceProficiencySection" class="mt-4 hidden">
+                            <label class="block text-sm font-medium mb-2">Race Proficiencies (Select up to 2)</label>
+                            <div id="editRaceProficiencyButtons" class="flex flex-wrap gap-2">
+                                <!-- Race proficiency buttons will be populated here -->
+                            </div>
+                        </div>
+
+                        <!-- Ability Score Results -->
+                        <div id="editAbilityScoreResultsSection" class="mt-4 hidden">
+                            <label class="block text-sm font-medium mb-2">Selected Ability Scores</label>
+                            <div id="editAbilityScoreResults" class="ability-score-results empty">
+                                No ability scores selected
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ability Scores -->
+                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold">Ability Scores</h3>
+                            <div class="flex space-x-2">
+                                <button type="button" id="editRandomizeModifiers" class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm">
+                                    <i class="fas fa-dice mr-1"></i>Randomize
+                                </button>
+                                <button type="button" id="editResetModifiers" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm">
+                                    <i class="fas fa-redo mr-1"></i>Reset
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Manual Ability Score Input -->
+                        <div class="mb-4 p-3 bg-yellow-50 dark:bg-yellow-900 rounded-lg">
+                            <h4 class="text-sm font-semibold text-yellow-800 dark:text-yellow-200 mb-2">Direct Input</h4>
+                            <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
+                                <div class="text-center">
+                                    <label class="block text-xs font-medium mb-1">STR</label>
+                                    <input type="number" id="editStrInput" min="-5" max="10" class="w-full px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <div class="text-center">
+                                    <label class="block text-xs font-medium mb-1">DEX</label>
+                                    <input type="number" id="editDexInput" min="-5" max="10" class="w-full px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <div class="text-center">
+                                    <label class="block text-xs font-medium mb-1">CON</label>
+                                    <input type="number" id="editConInput" min="-5" max="10" class="w-full px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <div class="text-center">
+                                    <label class="block text-xs font-medium mb-1">INT</label>
+                                    <input type="number" id="editIntInput" min="-5" max="10" class="w-full px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <div class="text-center">
+                                    <label class="block text-xs font-medium mb-1">WIS</label>
+                                    <input type="number" id="editWisInput" min="-5" max="10" class="w-full px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <div class="text-center">
+                                    <label class="block text-xs font-medium mb-1">CHA</label>
+                                    <input type="number" id="editChaInput" min="-5" max="10" class="w-full px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 p-3 bg-blue-50 dark:bg-blue-900 rounded-lg">
+                            <p class="text-sm text-blue-800 dark:text-blue-200 mb-2">Available Modifiers:</p>
+                            <div id="editAvailableModifiers" class="flex flex-wrap gap-2">
+                                <!-- Available modifiers will be shown here -->
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <label class="block text-sm font-medium mb-2">Strength</label>
+                                <div class="flex items-center justify-center space-x-2">
+                                    <button type="button" class="edit-ability-selector w-16 h-10 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-ability="str">
+                                        <span class="modifier-display">--</span>
+                                    </button>
+                                    <div class="edit-proficiency-circle w-6 h-6 rounded-full border-2 border-dashed border-gray-400 dark:border-gray-500 bg-transparent opacity-50 cursor-not-allowed transition-colors" data-ability="str" title="Proficiency set by race selection">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <label class="block text-sm font-medium mb-2">Dexterity</label>
+                                <div class="flex items-center justify-center space-x-2">
+                                    <button type="button" class="edit-ability-selector w-16 h-10 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-ability="dex">
+                                        <span class="modifier-display">--</span>
+                                    </button>
+                                    <div class="edit-proficiency-circle w-6 h-6 rounded-full border-2 border-dashed border-gray-400 dark:border-gray-500 bg-transparent opacity-50 cursor-not-allowed transition-colors" data-ability="dex" title="Proficiency set by race selection">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <label class="block text-sm font-medium mb-2">Constitution</label>
+                                <div class="flex items-center justify-center space-x-2">
+                                    <button type="button" class="edit-ability-selector w-16 h-10 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-ability="con">
+                                        <span class="modifier-display">--</span>
+                                    </button>
+                                    <div class="edit-proficiency-circle w-6 h-6 rounded-full border-2 border-dashed border-gray-400 dark:border-gray-500 bg-transparent opacity-50 cursor-not-allowed transition-colors" data-ability="con" title="Proficiency set by race selection">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <label class="block text-sm font-medium mb-2">Intelligence</label>
+                                <div class="flex items-center justify-center space-x-2">
+                                    <button type="button" class="edit-ability-selector w-16 h-10 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-ability="int">
+                                        <span class="modifier-display">--</span>
+                                    </button>
+                                    <div class="edit-proficiency-circle w-6 h-6 rounded-full border-2 border-dashed border-gray-400 dark:border-gray-500 bg-transparent opacity-50 cursor-not-allowed transition-colors" data-ability="int" title="Proficiency set by race selection">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <label class="block text-sm font-medium mb-2">Wisdom</label>
+                                <div class="flex items-center justify-center space-x-2">
+                                    <button type="button" class="edit-ability-selector w-16 h-10 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-ability="wis">
+                                        <span class="modifier-display">--</span>
+                                    </button>
+                                    <div class="edit-proficiency-circle w-6 h-6 rounded-full border-2 border-dashed border-gray-400 dark:border-gray-500 bg-transparent opacity-50 cursor-not-allowed transition-colors" data-ability="wis" title="Proficiency set by race selection">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <label class="block text-sm font-medium mb-2">Charisma</label>
+                                <div class="flex items-center justify-center space-x-2">
+                                    <button type="button" class="edit-ability-selector w-16 h-10 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-ability="cha">
+                                        <span class="modifier-display">--</span>
+                                    </button>
+                                    <div class="edit-proficiency-circle w-6 h-6 rounded-full border-2 border-dashed border-gray-400 dark:border-gray-500 bg-transparent opacity-50 cursor-not-allowed transition-colors" data-ability="cha" title="Proficiency set by race selection">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resources -->
+                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                        <div class="space-y-4">
+                            <!-- HP -->
+                            <div class="flex items-center space-x-4">
+                                <div class="w-16 text-sm font-medium">HP</div>
+                                <div class="resource-container" id="editHpBoxes">
+                                    <!-- HP boxes will be generated here -->
+                                </div>
+                                <input type="number" id="editHpMax" value="0" min="0" max="12" class="w-16 px-2 py-1 text-base text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            
+                            <!-- Separator Line -->
+                                <div class="border-t border-gray-300 dark:border-gray-600 my-4"></div>
+
+                            <!-- STRESS -->
+                            <div class="flex items-center space-x-4">
+                                <div class="w-16 text-sm font-medium">STRESS</div>
+                                <div class="resource-container" id="editStressBoxes">
+                                    <!-- Stress boxes will be generated here -->
+                                </div>
+                                <input type="number" id="editStressMax" value="0" min="0" max="12" class="w-16 px-2 py-1 text-base text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            
+                            <!-- Separator Line -->
+                                <div class="border-t border-gray-300 dark:border-gray-600 my-4"></div>
+
+                            <!-- CLASS -->
+                            <div class="flex items-center space-x-4">
+                                <div class="w-16 text-sm font-medium">CLASS</div>
+                                <div class="resource-container" id="editClassBoxes">
+                                    <!-- Class boxes will be generated here -->
+                                </div>
+                                <input type="number" id="editClassMax" value="0" min="0" max="12" class="w-16 px-2 py-1 text-base text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            
+                            <!-- Separator Line -->
+                                <div class="border-t border-gray-300 dark:border-gray-600 my-4"></div>
+
+                            <!-- SPELL -->
+                            <div class="flex items-center space-x-4">
+                                <div class="w-16 text-sm font-medium">SPELL</div>
+                                <div class="resource-container" id="editSpellBoxes">
+                                    <!-- Spell boxes will be generated here -->
+                                </div>
+                                <input type="number" id="editSpellMax" value="0" min="0" max="12" class="w-16 px-2 py-1 text-base text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                        </div>
+                        
+                        <!-- Combat Stats -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Evasion</label>
+                                <input type="number" id="editEvasion" value="0" min="1" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Armor</label>
+                                <input type="number" id="editArmor" value="1" min="0" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Threshold -->
+                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-4">Threshold</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Lower</label>
+                                <input type="number" id="editThresholdLower" value="0" min="0" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Upper</label>
+                                <input type="number" id="editThresholdUpper" value="0" min="0" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" id="cancelEdit" class="px-6 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                            Cancel
+                        </button>
+                        <button type="submit" class="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg transition-colors">
+                            Update Character
+                        </button>
+                    </div>
+                </form>
+            </div>
+
             <!-- Character Sheet -->
             <div id="characterSheet" class="character-view">
                 <div class="flex items-center mb-4">
                     <button id="backToListFromSheet" class="text-primary hover:text-primary-dark mr-4">
                         <i class="fas fa-arrow-left text-xl"></i>
                     </button>
-                    <div>
-                        <h2 id="sheetCharName" class="text-2xl font-bold"></h2>
+                    <div class="flex-1">
+                        <div class="flex items-center">
+                            <h2 id="sheetCharName" class="text-2xl font-bold mr-3"></h2>
+                            <button id="editCharacterBtn" class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors" title="Edit Character">
+                                <i class="fas fa-edit text-lg"></i>
+                            </button>
+                        </div>
                         <p id="sheetCharInfo" class="text-gray-600 dark:text-gray-400"></p>
                     </div>
                 </div>
@@ -5040,6 +5331,20 @@
             cancelCreate.addEventListener('click', showCharacterList);
         }
 
+        const backToSheetFromEdit = document.getElementById('backToSheetFromEdit');
+        if (backToSheetFromEdit) {
+            backToSheetFromEdit.addEventListener('click', function() {
+                showCharacterSheet(currentCharacter);
+            });
+        }
+        
+        const cancelEdit = document.getElementById('cancelEdit');
+        if (cancelEdit) {
+            cancelEdit.addEventListener('click', function() {
+                showCharacterSheet(currentCharacter);
+            });
+        }
+
         // Threshold damage button event listeners
         document.addEventListener('click', function(e) {
             if (e.target.closest('.threshold-damage-button')) {
@@ -5662,6 +5967,21 @@
             return character.armorItem.bonuses?.evasion || 0;
         }
         
+        function calculateTotalEvasion(character) {
+            if (!character.evasionData) {
+                character.evasionData = {
+                    base: character.evasion || 0,
+                    temporary: 0
+                };
+            }
+            
+            const baseEvasion = character.evasionData.base || 0;
+            const tempEvasion = character.evasionData.temporary || 0;
+            const armorEvasion = getArmorEvasionValue(character);
+            
+            return baseEvasion + tempEvasion + armorEvasion;
+        }
+        
         function getMinimumEvasionValue(character) {
             const armorEvasion = getArmorEvasionValue(character);
             // Minimum evasion is 1, but if armor provides evasion bonus, use that as minimum
@@ -5682,8 +6002,8 @@
             // Add temporary evasion
             currentCharacter.evasionData.temporary = (currentCharacter.evasionData.temporary || 0) + amount;
             
-            // Update the actual evasion value (base + temporary)
-            currentCharacter.evasion = currentCharacter.evasionData.base + currentCharacter.evasionData.temporary;
+            // Update the actual evasion value (base + temporary + armor)
+            currentCharacter.evasion = calculateTotalEvasion(currentCharacter);
             
             // Update display
             document.getElementById('displayEvasion').textContent = currentCharacter.evasion;
@@ -5724,8 +6044,8 @@
             // Adjust base evasion
             currentCharacter.evasionData.base = newBaseEvasion;
             
-            // Update the actual evasion value (base + temporary)
-            currentCharacter.evasion = currentCharacter.evasionData.base + (currentCharacter.evasionData.temporary || 0);
+            // Update the actual evasion value (base + temporary + armor)
+            currentCharacter.evasion = calculateTotalEvasion(currentCharacter);
             
             // Update display
             document.getElementById('displayEvasion').textContent = currentCharacter.evasion;
@@ -5751,15 +6071,44 @@
             // Reset temporary evasion only
             currentCharacter.evasionData.temporary = 0;
             
-            // Update the actual evasion value
-            currentCharacter.evasion = currentCharacter.evasionData.base;
+            // Update the actual evasion value (base + armor)
+            currentCharacter.evasion = calculateTotalEvasion(currentCharacter);
             
             // Update display
             document.getElementById('displayEvasion').textContent = currentCharacter.evasion;
             
             saveCharacters();
+            populateCharacterSheet(currentCharacter);
             
             document.getElementById('evasionModal').classList.add('hidden');
+        }
+
+        // Helper function to calculate effective threshold values (including Unarmored Defense)
+        function getEffectiveThresholdValues(character) {
+            const thresholdLowerBase = character.thresholdLower || 0;
+            const thresholdUpperBase = character.thresholdUpper || 0;
+            
+            let thresholdLowerEffective = thresholdLowerBase;
+            let thresholdUpperEffective = thresholdUpperBase;
+            
+            // Apply Unarmored Defense threshold bonuses if active
+            if (character.unarmoredDefenseActive && !character.armorItem) {
+                if (character.class === 'Monk') {
+                    const currentDex = getCurrentDexModifier(character);
+                    thresholdLowerEffective += currentDex;
+                    thresholdUpperEffective += currentDex;
+                } else if (character.class === 'Barbarian') {
+                    const currentDex = getCurrentDexModifier(character);
+                    const currentCon = getCurrentConModifier(character);
+                    thresholdLowerEffective += currentDex;
+                    thresholdUpperEffective += currentDex + currentCon;
+                }
+            }
+            
+            return {
+                lower: thresholdLowerEffective,
+                upper: thresholdUpperEffective
+            };
         }
 
         // Threshold temp box functions
@@ -5768,8 +6117,11 @@
                 character.tempThreshold = { lower: 0, upper: 0 };
             }
             
-            const lowerValue = (character.thresholdLower || 0) + character.tempThreshold.lower;
-            const upperValue = (character.thresholdUpper || 0) + character.tempThreshold.upper;
+            // Get effective threshold values (including Unarmored Defense)
+            const effectiveThreshold = getEffectiveThresholdValues(character);
+            
+            const lowerValue = effectiveThreshold.lower + character.tempThreshold.lower;
+            const upperValue = effectiveThreshold.upper + character.tempThreshold.upper;
             
             // Update lower temp boxes
             document.getElementById('thresholdLowerTemp1').textContent = character.tempThreshold.lower > 0 ? lowerValue : '-';
@@ -5913,6 +6265,12 @@
 
         document.getElementById('confirmCharacterDeletion').addEventListener('click', function() {
             deleteCurrentCharacter();
+        });
+
+        // Edit Character event listener
+        document.getElementById('editCharacterBtn').addEventListener('click', function() {
+            if (!currentCharacter) return;
+            populateCharacterCreationForm();
         });
 
         // Individual Character Save/Load Event Listeners
@@ -6308,6 +6666,212 @@
             }
         }
 
+        function showCharacterEdit() {
+            document.querySelectorAll('.character-view').forEach(view => view.classList.remove('active'));
+            document.getElementById('characterEdit').classList.add('active');
+            populateCharacterEditForm();
+        }
+
+        function populateCharacterEditForm() {
+            if (!currentCharacter) return;
+            
+            // Populate basic information
+            document.getElementById('editCharName').value = currentCharacter.name || '';
+            document.getElementById('editCharLevel').value = currentCharacter.level || 1;
+            document.getElementById('editCharRace').value = currentCharacter.race || '--';
+            document.getElementById('editCharClass').value = currentCharacter.class || '--';
+            
+            // Populate ability scores with manual input fields
+            const raceAbilityBonuses = currentCharacter.abilityScoreAllocations || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+            const primaryWeaponAbilityBonuses = currentCharacter.primaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+            const secondaryWeaponAbilityBonuses = currentCharacter.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+            const armorAbilityBonuses = currentCharacter.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+            
+            // Set the direct input fields with the current total values
+            document.getElementById('editStrInput').value = (currentCharacter.str || 0) + raceAbilityBonuses.str + primaryWeaponAbilityBonuses.str + secondaryWeaponAbilityBonuses.str + armorAbilityBonuses.str;
+            document.getElementById('editDexInput').value = (currentCharacter.dex || 0) + raceAbilityBonuses.dex + primaryWeaponAbilityBonuses.dex + secondaryWeaponAbilityBonuses.dex + armorAbilityBonuses.dex;
+            document.getElementById('editConInput').value = (currentCharacter.con || 0) + raceAbilityBonuses.con + primaryWeaponAbilityBonuses.con + secondaryWeaponAbilityBonuses.con + armorAbilityBonuses.con;
+            document.getElementById('editIntInput').value = (currentCharacter.int || 0) + raceAbilityBonuses.int + primaryWeaponAbilityBonuses.int + secondaryWeaponAbilityBonuses.int + armorAbilityBonuses.int;
+            document.getElementById('editWisInput').value = (currentCharacter.wis || 0) + raceAbilityBonuses.wis + primaryWeaponAbilityBonuses.wis + secondaryWeaponAbilityBonuses.wis + armorAbilityBonuses.wis;
+            document.getElementById('editChaInput').value = (currentCharacter.cha || 0) + raceAbilityBonuses.cha + primaryWeaponAbilityBonuses.cha + secondaryWeaponAbilityBonuses.cha + armorAbilityBonuses.cha;
+            
+            // Populate resources with the actual current maximum values
+            document.getElementById('editHpMax').value = currentCharacter.resources?.hp?.max || currentCharacter.hpMax || 0;
+            document.getElementById('editStressMax').value = currentCharacter.resources?.stress?.max || currentCharacter.stressMax || 0;
+            document.getElementById('editClassMax').value = currentCharacter.resources?.class?.max || currentCharacter.classMax || 0;
+            document.getElementById('editSpellMax').value = currentCharacter.resources?.spell?.max || currentCharacter.spellMax || 0;
+            
+            // Populate combat stats
+            document.getElementById('editEvasion').value = currentCharacter.evasion || 0;
+            document.getElementById('editArmor').value = currentCharacter.armor || 0;
+            
+            // Populate threshold values - show the actual stored base values
+            document.getElementById('editThresholdLower').value = currentCharacter.thresholdLower || 0;
+            document.getElementById('editThresholdUpper').value = currentCharacter.thresholdUpper || 0;
+            
+            // Generate resource boxes
+            setTimeout(() => {
+                generateResourceBoxes('editHpBoxes', currentCharacter.resources?.hp?.max || currentCharacter.hpMax || 0, 'hp');
+                generateResourceBoxes('editStressBoxes', currentCharacter.resources?.stress?.max || currentCharacter.stressMax || 0, 'stress');
+                generateResourceBoxes('editClassBoxes', currentCharacter.resources?.class?.max || currentCharacter.classMax || 0, 'class');
+                generateResourceBoxes('editSpellBoxes', currentCharacter.resources?.spell?.max || currentCharacter.spellMax || 0, 'spell');
+            }, 100);
+        }
+
+        // Function to populate Character Creation form with existing character data
+        function populateCharacterCreationForm() {
+            if (!currentCharacter) return;
+            
+            // Switch to character edit view instead
+            showCharacterEdit();
+            
+            // Wait for the form to be visible before populating
+            setTimeout(() => {
+                // Basic Information
+                document.getElementById('charName').value = currentCharacter.name || '';
+                document.getElementById('charLevel').value = currentCharacter.level || 1;
+                document.getElementById('charRace').value = currentCharacter.race || '--';
+                document.getElementById('charClass').value = currentCharacter.class || '--';
+                
+                // Handle race selection first to set up race bonuses/proficiencies
+                if (currentCharacter.race && currentCharacter.race !== '--') {
+                    updateRaceOptions(currentCharacter.race);
+                    
+                    // Restore race bonus selections
+                    if (currentCharacter.selectedRaceBonuses) {
+                        currentCharacter.selectedRaceBonuses.forEach(bonusIndex => {
+                            const button = document.querySelector(`[data-index="${bonusIndex}"][data-category="bonus"]`);
+                            if (button) {
+                                button.classList.add('selected');
+                                selectedRaceBonuses.push(bonusIndex);
+                            }
+                        });
+                    }
+                    
+                    // Restore ability score selections if they exist
+                    if (currentCharacter.abilityScoreAllocations) {
+                        abilityScoreAllocations = { ...currentCharacter.abilityScoreAllocations };
+                        
+                        // Check if there are any non-zero allocations
+                        const hasAllocations = Object.values(abilityScoreAllocations).some(value => value !== 0);
+                        if (hasAllocations) {
+                            selectedAbilityScores = currentCharacter.selectedAbilityScores || [];
+                            const abilityButton = document.querySelector('[data-category="ability"]');
+                            if (abilityButton) {
+                                abilityButton.classList.add('selected');
+                            }
+                        }
+                    }
+                    
+                    // Restore race proficiency selections
+                    if (currentCharacter.selectedRaceProficiencies) {
+                        currentCharacter.selectedRaceProficiencies.forEach(proficiency => {
+                            const button = document.querySelector(`[data-ability="${proficiency}"].race-proficiency-button`);
+                            if (button) {
+                                button.classList.add('selected');
+                                selectedRaceProficiencies.push(proficiency);
+                            }
+                        });
+                    }
+                    
+                    // Restore race bonus values
+                    if (currentCharacter.raceBonusValues) {
+                        raceBonusValues = { ...currentCharacter.raceBonusValues };
+                    }
+                }
+                
+                // Handle class selection to update base values
+                if (currentCharacter.class && currentCharacter.class !== '--') {
+                    updateClassValues(currentCharacter.class);
+                }
+                
+                // Ability Scores - restore modifiers and proficiencies
+                if (currentCharacter.str !== undefined) selectedModifiers.str = currentCharacter.str;
+                if (currentCharacter.dex !== undefined) selectedModifiers.dex = currentCharacter.dex;
+                if (currentCharacter.con !== undefined) selectedModifiers.con = currentCharacter.con;
+                if (currentCharacter.int !== undefined) selectedModifiers.int = currentCharacter.int;
+                if (currentCharacter.wis !== undefined) selectedModifiers.wis = currentCharacter.wis;
+                if (currentCharacter.cha !== undefined) selectedModifiers.cha = currentCharacter.cha;
+                
+                // Update used modifiers array
+                usedModifiers = [];
+                Object.values(selectedModifiers).forEach((modifier, index) => {
+                    if (modifier !== null) {
+                        const modifierIndex = availableModifiers.findIndex((mod, i) => 
+                            mod === modifier && !usedModifiers.includes(i)
+                        );
+                        if (modifierIndex !== -1) {
+                            usedModifiers.push(modifierIndex);
+                        }
+                    }
+                });
+                
+                // Restore proficiencies
+                if (currentCharacter.proficiencies) {
+                    proficiencies = { ...currentCharacter.proficiencies };
+                }
+                
+                // Resources - use base values only (not including race bonuses)
+                const classInfo = classData[currentCharacter.class] || { hp: 0, stress: 0, class: 0, spell: 0 };
+                document.getElementById('hpMax').value = classInfo.hp + (raceBonusValues.hp || 0);
+                document.getElementById('stressMax').value = classInfo.stress + (raceBonusValues.stress || 0);
+                document.getElementById('classMax').value = classInfo.class + (raceBonusValues.class || 0);
+                document.getElementById('spellMax').value = classInfo.spell + (raceBonusValues.spell || 0);
+                
+                // Evasion - use base evasion (without temporary and armor values)
+                let baseEvasion = currentCharacter.evasion || 0;
+                
+                // If we have evasion data, use the base value
+                if (currentCharacter.evasionData && currentCharacter.evasionData.base !== undefined) {
+                    baseEvasion = currentCharacter.evasionData.base;
+                } else {
+                    // Calculate base by removing temporary and armor bonuses
+                    const tempEvasion = currentCharacter.evasionData?.temporary || 0;
+                    const armorEvasion = getArmorEvasionValue(currentCharacter);
+                    baseEvasion = (currentCharacter.evasion || 0) - tempEvasion - armorEvasion;
+                }
+                
+                document.getElementById('evasion').value = baseEvasion;
+                
+                // Armor - use base armor value
+                let baseArmor = 0;
+                if (currentCharacter.armorSlots && currentCharacter.armorSlots.permanent !== undefined) {
+                    baseArmor = currentCharacter.armorSlots.permanent;
+                } else {
+                    baseArmor = currentCharacter.armor || 0;
+                }
+                document.getElementById('armor').value = baseArmor;
+                
+                // Threshold - use base threshold values (not temporary)
+                let baseLowerThreshold = currentCharacter.thresholdLower || 0;
+                let baseUpperThreshold = currentCharacter.thresholdUpper || 0;
+                
+                // Remove temporary threshold bonuses if they exist
+                if (currentCharacter.tempThreshold) {
+                    baseLowerThreshold -= currentCharacter.tempThreshold.lower || 0;
+                    baseUpperThreshold -= currentCharacter.tempThreshold.upper || 0;
+                }
+                
+                document.getElementById('thresholdLower').value = baseLowerThreshold;
+                document.getElementById('thresholdUpper').value = baseUpperThreshold;
+                
+                // Update all displays
+                updateAvailableModifiers();
+                updateAbilitySelectors();
+                updateProficiencyCircles();
+                updateAbilityScoreResults();
+                
+                // Regenerate resource boxes with current values
+                setTimeout(() => {
+                    generateResourceBoxes('hpBoxes', parseInt(document.getElementById('hpMax').value) || 0, 'hp');
+                    generateResourceBoxes('stressBoxes', parseInt(document.getElementById('stressMax').value) || 0, 'stress');
+                    generateResourceBoxes('classBoxes', parseInt(document.getElementById('classMax').value) || 0, 'class');
+                    generateResourceBoxes('spellBoxes', parseInt(document.getElementById('spellMax').value) || 0, 'spell');
+                }, 100);
+                
+            }, 100);
+        }
+
         // Individual Character Save/Load Functions
         function saveIndividualCharacter() {
             if (!currentCharacter) return;
@@ -6462,58 +7026,158 @@
             });
         }
         
+        // Helper function to create a character from data with proper validation
+        function createCharacterFromData(characterData, preserveId = null) {
+            return {
+                // Use preserved ID if provided, otherwise generate new one
+                id: preserveId || Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                name: characterData.name || 'Unknown Character',
+                level: characterData.level || 1,
+                race: characterData.race || 'Human',
+                class: characterData.class || 'Fighter',
+                str: characterData.str || 0,
+                dex: characterData.dex || 0,
+                con: characterData.con || 0,
+                int: characterData.int || 0,
+                wis: characterData.wis || 0,
+                cha: characterData.cha || 0,
+                proficiencies: characterData.proficiencies || { str: false, dex: false, con: false, int: false, wis: false, cha: false },
+                abilityScoreAllocations: characterData.abilityScoreAllocations || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+                hpMax: characterData.hpMax || 0,
+                stressMax: characterData.stressMax || 0,
+                classMax: characterData.classMax || 0,
+                spellMax: characterData.spellMax || 0,
+                resources: characterData.resources || {
+                    hp: { max: characterData.hpMax || 0, used: [], temp: 0 },
+                    stress: { max: characterData.stressMax || 0, used: [], temp: 0 },
+                    class: { max: characterData.classMax || 0, used: [], temp: 0 },
+                    spell: { max: characterData.spellMax || 0, used: [], temp: 0 }
+                },
+                evasion: characterData.evasion || 0,
+                armor: characterData.armor || 1,
+                armorSlots: characterData.armorSlots || { total: characterData.armor || 1, filled: [], permanent: characterData.armor || 1, temporary: 0 },
+                thresholdLower: characterData.thresholdLower || 0,
+                thresholdUpper: characterData.thresholdUpper || 0,
+                equipment: characterData.equipment || [],
+                notes: characterData.notes || '',
+                // Preserve all other character properties
+                ...characterData,
+                // Override ID only if preserveId is provided
+                id: preserveId || Date.now().toString() + Math.random().toString(36).substr(2, 9)
+            };
+        }
+
+        function showDuplicateCharacterDialog(characterData, callback) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
+                    <h3 class="text-lg font-semibold mb-4 text-orange-600 dark:text-orange-400">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>Duplicate Character Name
+                    </h3>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4">
+                        A character named <strong>"${characterData.name}"</strong> already exists.
+                    </p>
+                    <p class="text-gray-700 dark:text-gray-300 mb-6">
+                        Would you like to:
+                    </p>
+                    
+                    <div class="space-y-3 mb-6">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="duplicateAction" value="overwrite" class="mr-3">
+                            <div>
+                                <div class="font-medium">Overwrite existing character</div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400">Replace the current character data with the new data</div>
+                            </div>
+                        </label>
+                        
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="duplicateAction" value="copy" class="mr-3">
+                            <div>
+                                <div class="font-medium">Create a copy</div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400">Add as "${characterData.name} - copy"</div>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3">
+                        <button class="cancel-duplicate px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Cancel</button>
+                        <button class="confirm-duplicate px-4 py-2 bg-orange-500 text-white hover:bg-orange-600 rounded">Continue</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            modal.querySelector('.confirm-duplicate').addEventListener('click', () => {
+                const selectedAction = modal.querySelector('input[name="duplicateAction"]:checked');
+                if (!selectedAction) {
+                    showCustomDialog('No Option Selected', 'Please select an option to continue.');
+                    return;
+                }
+                
+                let finalCharacterData = { ...characterData };
+                
+                if (selectedAction.value === 'copy') {
+                    // Add " - copy" to the name for the copy option
+                    finalCharacterData.name = `${characterData.name} - copy`;
+                }
+                
+                callback(selectedAction.value, finalCharacterData);
+                modal.remove();
+            });
+            
+            modal.querySelector('.cancel-duplicate').addEventListener('click', () => {
+                modal.remove();
+            });
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.remove();
+                }
+            });
+        }
+
         function importSingleCharacter(characterData) {
             try {
-                // Generate new ID to avoid conflicts
-                const newCharacter = {
-                    // Ensure all required properties exist with defaults
-                    id: Date.now().toString() + Math.random().toString(36).substr(2, 9), // Unique ID
-                    name: characterData.name || 'Unknown Character',
-                    level: characterData.level || 1,
-                    race: characterData.race || 'Human',
-                    class: characterData.class || 'Fighter',
-                    str: characterData.str || 0,
-                    dex: characterData.dex || 0,
-                    con: characterData.con || 0,
-                    int: characterData.int || 0,
-                    wis: characterData.wis || 0,
-                    cha: characterData.cha || 0,
-                    proficiencies: characterData.proficiencies || { str: false, dex: false, con: false, int: false, wis: false, cha: false },
-                    abilityScoreAllocations: characterData.abilityScoreAllocations || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-                    hpMax: characterData.hpMax || 0,
-                    stressMax: characterData.stressMax || 0,
-                    classMax: characterData.classMax || 0,
-                    spellMax: characterData.spellMax || 0,
-                    resources: characterData.resources || {
-                        hp: { max: characterData.hpMax || 0, used: [], temp: 0 },
-                        stress: { max: characterData.stressMax || 0, used: [], temp: 0 },
-                        class: { max: characterData.classMax || 0, used: [], temp: 0 },
-                        spell: { max: characterData.spellMax || 0, used: [], temp: 0 }
-                    },
-                    evasion: characterData.evasion || 0,
-                    armor: characterData.armor || 1,
-                    armorSlots: characterData.armorSlots || { total: characterData.armor || 1, filled: [], permanent: characterData.armor || 1, temporary: 0 },
-                    thresholdLower: characterData.thresholdLower || 0,
-                    thresholdUpper: characterData.thresholdUpper || 0,
-                    equipment: characterData.equipment || [],
-                    notes: characterData.notes || '',
-                    // Preserve all other character properties
-                    ...characterData,
-                    // Override ID to ensure uniqueness
-                    id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
-                };
+                // Check for duplicate names
+                const existingCharacter = characters.find(char => char.name === characterData.name);
                 
-                // Add character to the list
+                if (existingCharacter) {
+                    // Show duplicate warning dialog
+                    showDuplicateCharacterDialog(characterData, (action, finalCharacterData) => {
+                        if (action === 'overwrite') {
+                            // Update existing character with new data while preserving ID
+                            const updatedCharacter = createCharacterFromData(finalCharacterData, existingCharacter.id);
+                            const existingIndex = characters.findIndex(char => char.id === existingCharacter.id);
+                            characters[existingIndex] = updatedCharacter;
+                            
+                            saveCharacters();
+                            updateCharacterDisplay();
+                            showCustomDialog('Character Updated', `Successfully updated ${updatedCharacter.name} with new data.`);
+                        } else if (action === 'copy') {
+                            // Create new character with copy name
+                            const newCharacter = createCharacterFromData(finalCharacterData);
+                            characters.push(newCharacter);
+                            
+                            saveCharacters();
+                            updateCharacterDisplay();
+                            showCustomDialog('Character Copy Created', `Successfully created ${newCharacter.name}.`);
+                        }
+                        
+                        showCharacterList();
+                    });
+                    return;
+                }
+                
+                // No duplicate found, proceed normally
+                const newCharacter = createCharacterFromData(characterData);
                 characters.push(newCharacter);
                 
-                // Save and update display
                 saveCharacters();
                 updateCharacterDisplay();
-                
-                // Show success message and return to character list
                 showCustomDialog('Character Loaded', `Successfully loaded ${newCharacter.name} and added to your character list.`);
-                
-                // Return to the character list
                 showCharacterList();
                 
             } catch (error) {
@@ -6620,6 +7284,114 @@
 
         // Initialize circles when page loads
         document.addEventListener('DOMContentLoaded', createWeaponCircles);
+
+        // Edit Character Form Event Handlers
+        document.getElementById('editCharacterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!currentCharacter) return;
+            
+            // Update basic information
+            currentCharacter.name = document.getElementById('editCharName').value;
+            currentCharacter.level = parseInt(document.getElementById('editCharLevel').value);
+            currentCharacter.race = document.getElementById('editCharRace').value;
+            currentCharacter.class = document.getElementById('editCharClass').value;
+            
+            // Update ability scores from direct input fields - remove all existing bonuses and apply new totals
+            const strInput = parseInt(document.getElementById('editStrInput').value) || 0;
+            const dexInput = parseInt(document.getElementById('editDexInput').value) || 0;
+            const conInput = parseInt(document.getElementById('editConInput').value) || 0;
+            const intInput = parseInt(document.getElementById('editIntInput').value) || 0;
+            const wisInput = parseInt(document.getElementById('editWisInput').value) || 0;
+            const chaInput = parseInt(document.getElementById('editChaInput').value) || 0;
+            
+            // Calculate the base ability scores by removing all bonuses
+            const raceAbilityBonuses = currentCharacter.abilityScoreAllocations || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+            const primaryWeaponAbilityBonuses = currentCharacter.primaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+            const secondaryWeaponAbilityBonuses = currentCharacter.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+            const armorAbilityBonuses = currentCharacter.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+            
+            // Set base ability scores (input minus all bonuses)
+            currentCharacter.str = strInput - raceAbilityBonuses.str - primaryWeaponAbilityBonuses.str - secondaryWeaponAbilityBonuses.str - armorAbilityBonuses.str;
+            currentCharacter.dex = dexInput - raceAbilityBonuses.dex - primaryWeaponAbilityBonuses.dex - secondaryWeaponAbilityBonuses.dex - armorAbilityBonuses.dex;
+            currentCharacter.con = conInput - raceAbilityBonuses.con - primaryWeaponAbilityBonuses.con - secondaryWeaponAbilityBonuses.con - armorAbilityBonuses.con;
+            currentCharacter.int = intInput - raceAbilityBonuses.int - primaryWeaponAbilityBonuses.int - secondaryWeaponAbilityBonuses.int - armorAbilityBonuses.int;
+            currentCharacter.wis = wisInput - raceAbilityBonuses.wis - primaryWeaponAbilityBonuses.wis - secondaryWeaponAbilityBonuses.wis - armorAbilityBonuses.wis;
+            currentCharacter.cha = chaInput - raceAbilityBonuses.cha - primaryWeaponAbilityBonuses.cha - secondaryWeaponAbilityBonuses.cha - armorAbilityBonuses.cha;
+            
+            // Update resources
+            currentCharacter.hpMax = parseInt(document.getElementById('editHpMax').value) || 0;
+            currentCharacter.stressMax = parseInt(document.getElementById('editStressMax').value) || 0;
+            currentCharacter.classMax = parseInt(document.getElementById('editClassMax').value) || 0;
+            currentCharacter.spellMax = parseInt(document.getElementById('editSpellMax').value) || 0;
+            
+            // Update resources object
+            if (!currentCharacter.resources) {
+                currentCharacter.resources = {
+                    hp: { max: 0, used: [], temp: 0 },
+                    stress: { max: 0, used: [], temp: 0 },
+                    class: { max: 0, used: [], temp: 0 },
+                    spell: { max: 0, used: [], temp: 0 }
+                };
+            }
+            
+            currentCharacter.resources.hp.max = currentCharacter.hpMax;
+            currentCharacter.resources.stress.max = currentCharacter.stressMax;
+            currentCharacter.resources.class.max = currentCharacter.classMax;
+            currentCharacter.resources.spell.max = currentCharacter.spellMax;
+            
+            // Clean up used resources that are now beyond the max
+            Object.keys(currentCharacter.resources).forEach(resourceType => {
+                const resource = currentCharacter.resources[resourceType];
+                const totalMax = resource.max + (resource.temp || 0);
+                resource.used = resource.used.filter(index => index < totalMax);
+            });
+            
+            // Update combat stats
+            currentCharacter.evasion = parseInt(document.getElementById('editEvasion').value) || 0;
+            currentCharacter.armor = parseInt(document.getElementById('editArmor').value) || 0;
+            
+            // Update armor slots to match new armor value
+            if (!currentCharacter.armorSlots) {
+                currentCharacter.armorSlots = { 
+                    total: currentCharacter.armor, 
+                    filled: [],
+                    permanent: currentCharacter.armor,
+                    temporary: 0
+                };
+            } else {
+                currentCharacter.armorSlots.permanent = currentCharacter.armor;
+                currentCharacter.armorSlots.total = currentCharacter.armor + (currentCharacter.armorSlots.temporary || 0);
+                // Remove filled states that are now beyond the total
+                currentCharacter.armorSlots.filled = currentCharacter.armorSlots.filled.filter(index => index < currentCharacter.armorSlots.total);
+            }
+            
+            // Update threshold values
+            currentCharacter.thresholdLower = parseInt(document.getElementById('editThresholdLower').value) || 0;
+            currentCharacter.thresholdUpper = parseInt(document.getElementById('editThresholdUpper').value) || 0;
+            
+            // Save changes
+            saveCharacters();
+            updateCharacterDisplay();
+            showCharacterSheet(currentCharacter);
+        });
+
+        // Edit form resource input event listeners
+        document.getElementById('editHpMax').addEventListener('input', function() {
+            generateResourceBoxes('editHpBoxes', parseInt(this.value) || 0, 'hp');
+        });
+        
+        document.getElementById('editStressMax').addEventListener('input', function() {
+            generateResourceBoxes('editStressBoxes', parseInt(this.value) || 0, 'stress');
+        });
+        
+        document.getElementById('editClassMax').addEventListener('input', function() {
+            generateResourceBoxes('editClassBoxes', parseInt(this.value) || 0, 'class');
+        });
+        
+        document.getElementById('editSpellMax').addEventListener('input', function() {
+            generateResourceBoxes('editSpellBoxes', parseInt(this.value) || 0, 'spell');
+        });
 
         // Unarmored Defense helper functions
         function getCurrentDexModifier(character) {
