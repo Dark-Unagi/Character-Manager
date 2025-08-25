@@ -856,6 +856,23 @@
                         </div>
                     </div>
 
+                    <!-- Familiar Section (for Wizard and Warlock) -->
+                    <div id="familiarSection" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg" style="display: none;">
+                        <h3 class="text-lg font-semibold mb-4">Familiar</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="hasFamiliar" class="mr-2">
+                                    <span class="text-sm font-medium">Yes, I want a familiar</span>
+                                </label>
+                            </div>
+                            <div id="familiarNameSection" class="hidden">
+                                <label class="block text-sm font-medium mb-2">Familiar Name</label>
+                                <input type="text" id="familiarName" placeholder="Familiar" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Ability Scores -->
                     <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
                         <div class="flex justify-between items-center mb-4">
@@ -1106,6 +1123,23 @@
                             <label class="block text-sm font-medium mb-2">Selected Ability Scores</label>
                             <div id="editAbilityScoreResults" class="ability-score-results empty">
                                 No ability scores selected
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Familiar Section (for Wizard and Warlock) -->
+                    <div id="editFamiliarSection" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg" style="display: none;">
+                        <h3 class="text-lg font-semibold mb-4">Familiar</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="editHasFamiliar" class="mr-2">
+                                    <span class="text-sm font-medium">Yes, I want a familiar</span>
+                                </label>
+                            </div>
+                            <div id="editFamiliarNameSection" class="hidden">
+                                <label class="block text-sm font-medium mb-2">Familiar Name</label>
+                                <input type="text" id="editFamiliarName" placeholder="Familiar" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
                             </div>
                         </div>
                     </div>
@@ -1391,6 +1425,17 @@
                                     <!-- Description will be populated based on class -->
                                 </div>
                             </div>
+                            
+                            <!-- Mage Armor -->
+                            <div id="mageArmorSection" class="mt-4 p-3 bg-purple-50 dark:bg-purple-900 rounded-lg" style="display: none;">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="mageArmorToggle" class="mr-2">
+                                    <span class="text-sm font-medium text-purple-800 dark:text-purple-200">Mage Armor</span>
+                                </label>
+                                <div class="text-xs text-purple-600 dark:text-purple-300 mt-1" id="mageArmorDescription">
+                                    Add DEX modifier to Evasion and Level/2×Level to Thresholds
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Resources -->
@@ -1475,6 +1520,53 @@
                                         <div class="threshold-label">SEVERE DAMAGE</div>
                                         <div class="threshold-hp">Mark 3 HP</div>
                                     </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Familiar -->
+                        <div id="familiarSheetSection" class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg" style="display: none;">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-semibold">Familiar</h3>
+                                <button id="familiarToggle" class="w-6 h-6 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded flex items-center justify-center transition-colors">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                            </div>
+                            <div id="familiarContent">
+                                <div id="familiarDisplayName" class="text-center font-medium mb-3">Familiar</div>
+                                <div class="flex justify-between items-center">
+                                    <!-- HP Section -->
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-xs font-medium mb-1">HP</div>
+                                        <div class="resource-box solid cursor-pointer" id="familiarHpBox" data-familiar-resource="hp"></div>
+                                    </div>
+                                    
+                                    <!-- Stress Section -->
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-xs font-medium mb-1">Stress</div>
+                                        <div class="flex gap-1">
+                                            <div class="resource-box solid cursor-pointer" id="familiarStressBox1" data-familiar-resource="stress"></div>
+                                            <div class="resource-box solid cursor-pointer" id="familiarStressBox2" data-familiar-resource="stress"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Evasion Section -->
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-xs font-medium mb-1">Evasion</div>
+                                        <div class="text-sm font-medium">10</div>
+                                    </div>
+                                    
+                                    <!-- Modifier Section -->
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-xs font-medium mb-1">Mod</div>
+                                        <div class="text-sm font-medium">+2</div>
+                                    </div>
+                                    
+                                    <!-- Threshold Section -->
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-xs font-medium mb-1">Threshold</div>
+                                        <div class="text-sm font-medium">3 / 6</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2075,7 +2167,7 @@
                 range: "Melee",
                 damage: "d6/d12",
                 feature: "1H/2H, B/S, -1 DEX",
-                bonuses: { dex: -1}
+                bonuses: { armor: 1, dex: -1}
             },
             {
                 name: "Broad Sword",
@@ -2787,16 +2879,44 @@
                 }
             });
             
+            // ALWAYS REMOVE ALL TEMPORARY BONUSES DURING LONG REST (regardless of selection)
+            
+            // Remove ALL temporary resource points from ALL resources
+            if (currentCharacter.resources) {
+                ['hp', 'stress', 'class', 'spell'].forEach(resourceType => {
+                    if (currentCharacter.resources[resourceType]) {
+                        currentCharacter.resources[resourceType].temp = 0;
+                    }
+                });
+            }
+            
+            // Remove temporary armor slots
+            if (currentCharacter.armorSlots) {
+                currentCharacter.armorSlots.temporary = 0;
+                currentCharacter.armorSlots.total = currentCharacter.armorSlots.permanent;
+                // Remove filled states that are now beyond the total
+                currentCharacter.armorSlots.filled = currentCharacter.armorSlots.filled.filter(index => index < currentCharacter.armorSlots.total);
+            }
+            
             // Remove all temporary threshold values
             if (currentCharacter.tempThreshold) {
                 currentCharacter.tempThreshold = { lower: 0, upper: 0 };
             }
             
-            // Remove all temporary evasion values
+            // Remove all temporary evasion values (for both normal and unarmored defense modes)
+            if (currentCharacter.normalEvasionData) {
+                currentCharacter.normalEvasionData.temporary = 0;
+            }
+            if (currentCharacter.unarmoredDefenseEvasionData) {
+                currentCharacter.unarmoredDefenseEvasionData.temporary = 0;
+            }
+            // Also handle legacy evasionData structure
             if (currentCharacter.evasionData) {
                 currentCharacter.evasionData.temporary = 0;
-                currentCharacter.evasion = currentCharacter.evasionData.base;
             }
+            
+            // Recalculate current evasion based on active mode
+            updateCharacterEvasion();
             
             // Save and refresh
             saveCharacters();
@@ -3004,9 +3124,12 @@
             // Increase level, defaulting to 1 if not set, and cap at 10
             currentCharacter.level = Math.min((currentCharacter.level || 1) + 1, 10);
 
-            // Optional: Disable button if max level is reached
+            // Disable and grey out button if max level is reached
             if (currentCharacter.level === 10) {
-                document.getElementById('levelUpCharacter').hidden = true;
+                const levelUpBtn = document.getElementById('levelUpCharacter');
+                levelUpBtn.disabled = true;
+                levelUpBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                levelUpBtn.classList.remove('hover:bg-green-600');
             }
         
             
@@ -3556,11 +3679,26 @@
             if (currentWeaponType === 'armor') {
                 if (!currentCharacter.armorItem) return;
                 
+                // Check if this is Unarmored Defense armor
+                const isUnarmoredDefenseArmor = currentCharacter.armorItem.isUnarmoredDefense;
+                
                 // Remove armor bonuses
                 removeArmorBonuses(currentCharacter.armorItem.bonuses);
                 
                 // Remove armor from character
                 delete currentCharacter.armorItem;
+                
+                // If it was Unarmored Defense armor, also uncheck the checkbox and update status
+                if (isUnarmoredDefenseArmor) {
+                    currentCharacter.unarmoredDefenseActive = false;
+                    currentCharacter.evasion = currentCharacter.normalEvasion;
+                    
+                    // Update the checkbox in the UI
+                    const checkbox = document.getElementById('unarmoredDefenseToggle');
+                    if (checkbox) {
+                        checkbox.checked = false;
+                    }
+                }
             } else {
                 const weaponProperty = currentWeaponType === 'primary' ? 'primaryWeapon' : 'secondaryWeapon';
                 
@@ -3578,6 +3716,9 @@
             
             // Save changes
             saveCharacters();
+            
+            // Refresh the character sheet to update all displays
+            populateCharacterSheet(currentCharacter);
             
             // Close modal
             document.getElementById('weaponRemovalModal').classList.add('hidden');
@@ -4975,8 +5116,8 @@
             let thresholdLowerDisplay = thresholdLowerBase;
             let thresholdUpperDisplay = thresholdUpperBase;
             
-            // Apply Unarmored Defense threshold bonuses if active
-            if (character.unarmoredDefenseActive && !character.armorItem) {
+            // Apply Unarmored Defense threshold bonuses if active (allow ceremonial Unarmored Defense armor)
+            if (character.unarmoredDefenseActive && (!character.armorItem || character.armorItem.isUnarmoredDefense)) {
                 if (character.class === 'Monk') {
                     const currentDex = getCurrentDexModifier(character);
                     thresholdLowerDisplay += currentDex;
@@ -4986,6 +5127,12 @@
                     const currentCon = getCurrentConModifier(character);
                     thresholdLowerDisplay += currentDex;
                     thresholdUpperDisplay += currentDex + currentCon;
+                }
+                
+                // Add level-up bonuses for Barbarians and Monks
+                if (character.unarmoredDefenseThresholdBonuses) {
+                    thresholdLowerDisplay += character.unarmoredDefenseThresholdBonuses.lower || 0;
+                    thresholdUpperDisplay += character.unarmoredDefenseThresholdBonuses.upper || 0;
                 }
             }
             
@@ -5048,6 +5195,15 @@
             
             // Update Unarmored Defense display
             updateUnarmoredDefenseDisplay();
+            
+            // Update Mage Armor display
+            updateMageArmorDisplay();
+            
+            // Update level up button state
+            updateLevelUpButtonState(character);
+            
+            // Update Familiar display
+            updateFamiliarDisplay(character);
             
             // Equipment
             updateEquipmentDisplay(character);
@@ -5370,7 +5526,12 @@
         });
 
         // Level Up event listeners
-        document.getElementById('levelUpCharacter').addEventListener('click', showLevelUpModal);
+        document.getElementById('levelUpCharacter').addEventListener('click', function() {
+            // Check if the button is disabled before showing modal
+            if (!this.disabled) {
+                showLevelUpModal();
+            }
+        });
         document.getElementById('cancelLevelUp').addEventListener('click', function() {
             document.getElementById('levelUpModal').classList.add('hidden');
         });
@@ -5394,6 +5555,116 @@
             updateClassValues(this.value);
         });
 
+        // Familiar toggle functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'familiarToggle' || e.target.closest('#familiarToggle')) {
+                toggleFamiliarSection();
+            }
+            // Handle familiar resource box clicks
+            if (e.target.dataset.familiarResource) {
+                handleFamiliarResourceClick(e.target);
+            }
+        });
+
+        function toggleFamiliarSection() {
+            const content = document.getElementById('familiarContent');
+            const toggleButton = document.getElementById('familiarToggle');
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                toggleButton.innerHTML = '<i class="fas fa-minus text-xs"></i>';
+            } else {
+                content.style.display = 'none';
+                toggleButton.innerHTML = '<i class="fas fa-plus text-xs"></i>';
+            }
+        }
+
+        function handleFamiliarResourceClick(box) {
+            if (!currentCharacter || !currentCharacter.familiar) return;
+            
+            const resourceType = box.dataset.familiarResource;
+            
+            if (resourceType === 'hp') {
+                // Toggle HP (only 1 box)
+                currentCharacter.familiar.hpUsed = !currentCharacter.familiar.hpUsed;
+                updateFamiliarDisplay(currentCharacter);
+            } else if (resourceType === 'stress') {
+                // Toggle stress boxes (2 boxes) with ordering
+                if (!currentCharacter.familiar.stressUsed) {
+                    currentCharacter.familiar.stressUsed = 0;
+                }
+                
+                const boxId = box.id;
+                if (boxId === 'familiarStressBox1') {
+                    // If clicking first box
+                    if (currentCharacter.familiar.stressUsed === 0) {
+                        currentCharacter.familiar.stressUsed = 1; // Mark first box
+                    } else {
+                        currentCharacter.familiar.stressUsed = 0; // Unmark all
+                    }
+                } else if (boxId === 'familiarStressBox2') {
+                    // If clicking second box
+                    if (currentCharacter.familiar.stressUsed < 2) {
+                        currentCharacter.familiar.stressUsed = 2; // Mark both boxes
+                    } else {
+                        currentCharacter.familiar.stressUsed = 1; // Unmark second box only
+                    }
+                }
+                
+                updateFamiliarDisplay(currentCharacter);
+            }
+            
+            saveCharacters();
+        }
+
+        function updateFamiliarDisplay(character) {
+            if (!character) return;
+            
+            const familiarSection = document.getElementById('familiarSheetSection');
+            
+            // Show familiar section only if character has a familiar
+            if (character.familiar) {
+                familiarSection.style.display = 'block';
+                
+                // Update familiar name
+                const nameDisplay = document.getElementById('familiarDisplayName');
+                if (nameDisplay) {
+                    nameDisplay.textContent = character.familiar.name || 'Familiar';
+                }
+                
+                // Update familiar resource boxes
+                const hpBox = document.getElementById('familiarHpBox');
+                const stressBox1 = document.getElementById('familiarStressBox1');
+                const stressBox2 = document.getElementById('familiarStressBox2');
+                
+                if (hpBox) {
+                    if (character.familiar.hpUsed) {
+                        hpBox.classList.add('used');
+                    } else {
+                        hpBox.classList.remove('used');
+                    }
+                }
+                
+                if (stressBox1 && stressBox2) {
+                    const stressUsed = character.familiar.stressUsed || 0;
+                    
+                    if (stressUsed >= 1) {
+                        stressBox1.classList.add('used');
+                    } else {
+                        stressBox1.classList.remove('used');
+                    }
+                    
+                    if (stressUsed >= 2) {
+                        stressBox2.classList.add('used');
+                    } else {
+                        stressBox2.classList.remove('used');
+                    }
+                }
+            } else {
+                familiarSection.style.display = 'none';
+            }
+        }
+
         // Character form submission
         document.getElementById('characterForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -5405,12 +5676,36 @@
                 return;
             }
             
+            const characterClass = document.getElementById('charClass').value;
+            const normalEvasion = parseInt(document.getElementById('evasion').value);
+            
+            // Calculate Unarmored Defense evasion for Barbarian and Monk
+            let unarmoredDefenseEvasion = normalEvasion;
+            let hasUnarmoredDefense = false;
+            
+            if (characterClass === 'Barbarian' || characterClass === 'Monk') {
+                hasUnarmoredDefense = true;
+                const initialDexMod = selectedModifiers.dex + (abilityScoreAllocations.dex || 0);
+                unarmoredDefenseEvasion = normalEvasion + initialDexMod;
+            }
+            
+            // Handle familiar data for Wizard and Warlock
+            let familiarData = null;
+            if ((characterClass === 'Wizard' || characterClass === 'Warlock') && document.getElementById('hasFamiliar').checked) {
+                const familiarName = document.getElementById('familiarName').value.trim() || 'Familiar';
+                familiarData = {
+                    name: familiarName,
+                    hpUsed: false,
+                    stressUsed: 0 // 0 = none, 1 = first box, 2 = both boxes
+                };
+            }
+
             const character = {
                 id: Date.now().toString(),
                 name: document.getElementById('charName').value,
                 level: parseInt(document.getElementById('charLevel').value),
                 race: document.getElementById('charRace').value,
-                class: document.getElementById('charClass').value,
+                class: characterClass,
                 str: selectedModifiers.str,
                 dex: selectedModifiers.dex,
                 con: selectedModifiers.con,
@@ -5437,7 +5732,12 @@
                     class: { max: parseInt(document.getElementById('classMax').value), used: [], temp: 0 },
                     spell: { max: parseInt(document.getElementById('spellMax').value), used: [], temp: 0 }
                 },
-                evasion: parseInt(document.getElementById('evasion').value),
+                // Store both evasion values for Unarmored Defense classes
+                evasion: normalEvasion,
+                normalEvasion: normalEvasion,
+                unarmoredDefenseEvasion: unarmoredDefenseEvasion,
+                hasUnarmoredDefense: hasUnarmoredDefense,
+                unarmoredDefenseActive: false, // Default to normal evasion
                 armor: parseInt(document.getElementById('armor').value),
                 armorSlots: { 
                     total: parseInt(document.getElementById('armor').value), 
@@ -5454,6 +5754,8 @@
                 selectedRaceProficiencies: [...selectedRaceProficiencies],
                 selectedAbilityScores: [...selectedAbilityScores],
                 raceBonusValues: { ...raceBonusValues },
+                // Store familiar data
+                familiar: familiarData,
                 // Initialize weapon and armor properties
                 primaryWeapon: null,
                 secondaryWeapon: null,
@@ -5937,22 +6239,33 @@
             
             const modal = document.getElementById('evasionModal');
             
-            // Initialize evasion data if missing
-            if (!currentCharacter.evasionData) {
-                currentCharacter.evasionData = {
-                    base: currentCharacter.evasion || 0,
+            // Initialize separate evasion data for both modes if missing
+            if (!currentCharacter.normalEvasionData) {
+                currentCharacter.normalEvasionData = {
+                    base: currentCharacter.normalEvasion || currentCharacter.evasion || 0,
                     temporary: 0
                 };
             }
+            
+            if (!currentCharacter.unarmoredDefenseEvasionData) {
+                currentCharacter.unarmoredDefenseEvasionData = {
+                    base: currentCharacter.unarmoredDefenseEvasion || currentCharacter.evasion || 0,
+                    temporary: 0
+                };
+            }
+            
+            // Get current mode data
+            const isUnarmoredDefense = currentCharacter.unarmoredDefenseActive && !currentCharacter.armorItem;
+            const currentEvasionData = isUnarmoredDefense ? currentCharacter.unarmoredDefenseEvasionData : currentCharacter.normalEvasionData;
             
             // Get armor evasion value
             const armorEvasion = getArmorEvasionValue(currentCharacter);
             
             // Update modal display
-            const currentEvasion = (currentCharacter.evasionData.base || 0) + (currentCharacter.evasionData.temporary || 0) + armorEvasion;
+            const currentEvasion = (currentEvasionData.base || 0) + (currentEvasionData.temporary || 0) + armorEvasion;
             document.getElementById('currentEvasion').textContent = currentEvasion;
-            document.getElementById('baseEvasion').textContent = currentCharacter.evasionData.base || 0;
-            document.getElementById('temporaryEvasion').textContent = currentCharacter.evasionData.temporary || 0;
+            document.getElementById('baseEvasion').textContent = currentEvasionData.base || 0;
+            document.getElementById('temporaryEvasion').textContent = currentEvasionData.temporary || 0;
             document.getElementById('armorEvasion').textContent = armorEvasion;
             
             document.getElementById('evasionAmount').value = '';
@@ -5988,25 +6301,55 @@
             return Math.max(1, armorEvasion);
         }
         
-        function addTempEvasion(amount) {
-            if (!currentCharacter || !amount || amount < 1) return;
+        function updateLevelUpButtonState(character) {
+            if (!character) return;
             
-            // Initialize evasion data if missing
-            if (!currentCharacter.evasionData) {
-                currentCharacter.evasionData = {
-                    base: currentCharacter.evasion || 0,
-                    temporary: 0
-                };
+            const levelUpBtn = document.getElementById('levelUpCharacter');
+            if (!levelUpBtn) return;
+            
+            // Check if character is at max level (10)
+            if (character.level >= 10) {
+                levelUpBtn.disabled = true;
+                levelUpBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                levelUpBtn.classList.remove('hover:bg-green-600');
+            } else {
+                levelUpBtn.disabled = false;
+                levelUpBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                levelUpBtn.classList.add('hover:bg-green-600');
             }
+        }
+
+        function updateCharacterEvasion() {
+            if (!currentCharacter) return;
             
-            // Add temporary evasion
-            currentCharacter.evasionData.temporary = (currentCharacter.evasionData.temporary || 0) + amount;
+            // Get current mode data
+            const isUnarmoredDefense = currentCharacter.unarmoredDefenseActive && !currentCharacter.armorItem;
+            const currentEvasionData = isUnarmoredDefense ? currentCharacter.unarmoredDefenseEvasionData : currentCharacter.normalEvasionData;
             
-            // Update the actual evasion value (base + temporary + armor)
-            currentCharacter.evasion = calculateTotalEvasion(currentCharacter);
+            // Calculate total evasion
+            const baseEvasion = currentEvasionData.base || 0;
+            const tempEvasion = currentEvasionData.temporary || 0;
+            const armorEvasion = getArmorEvasionValue(currentCharacter);
+            
+            // Update character's main evasion value
+            currentCharacter.evasion = baseEvasion + tempEvasion + armorEvasion;
             
             // Update display
             document.getElementById('displayEvasion').textContent = currentCharacter.evasion;
+        }
+
+        function addTempEvasion(amount) {
+            if (!currentCharacter || !amount || amount < 1) return;
+            
+            // Get current mode data
+            const isUnarmoredDefense = currentCharacter.unarmoredDefenseActive && (!currentCharacter.armorItem || currentCharacter.armorItem.isUnarmoredDefense);
+            const currentEvasionData = isUnarmoredDefense ? currentCharacter.unarmoredDefenseEvasionData : currentCharacter.normalEvasionData;
+            
+            // Add temporary evasion to current mode
+            currentEvasionData.temporary = (currentEvasionData.temporary || 0) + amount;
+            
+            // Update the character's main evasion value
+            updateCharacterEvasion();
             
             saveCharacters();
             populateCharacterSheet(currentCharacter);
@@ -6017,17 +6360,13 @@
         function adjustBaseEvasion(amount) {
             if (!currentCharacter || !amount) return;
             
-            // Initialize evasion data if missing
-            if (!currentCharacter.evasionData) {
-                currentCharacter.evasionData = {
-                    base: currentCharacter.evasion || 0,
-                    temporary: 0
-                };
-            }
+            // Get current mode data
+            const isUnarmoredDefense = currentCharacter.unarmoredDefenseActive && !currentCharacter.armorItem;
+            const currentEvasionData = isUnarmoredDefense ? currentCharacter.unarmoredDefenseEvasionData : currentCharacter.normalEvasionData;
             
             // Get minimum evasion value (1 or armor's evasion value, whichever is higher)
             const minimumEvasion = getMinimumEvasionValue(currentCharacter);
-            const newBaseEvasion = (currentCharacter.evasionData.base || 0) + amount;
+            const newBaseEvasion = (currentEvasionData.base || 0) + amount;
             
             // Check if the new value would go below the minimum
             if (newBaseEvasion < minimumEvasion) {
@@ -6041,14 +6380,11 @@
                 return;
             }
             
-            // Adjust base evasion
-            currentCharacter.evasionData.base = newBaseEvasion;
+            // Adjust base evasion for current mode
+            currentEvasionData.base = newBaseEvasion;
             
-            // Update the actual evasion value (base + temporary + armor)
-            currentCharacter.evasion = calculateTotalEvasion(currentCharacter);
-            
-            // Update display
-            document.getElementById('displayEvasion').textContent = currentCharacter.evasion;
+            // Update the character's main evasion value
+            updateCharacterEvasion();
             
             saveCharacters();
             populateCharacterSheet(currentCharacter);
@@ -6059,23 +6395,15 @@
         function resetTempEvasion() {
             if (!currentCharacter) return;
             
-            // Initialize evasion data if missing
-            if (!currentCharacter.evasionData) {
-                currentCharacter.evasionData = {
-                    base: currentCharacter.evasion || 0,
-                    temporary: 0
-                };
-                return;
-            }
+            // Get current mode data
+            const isUnarmoredDefense = currentCharacter.unarmoredDefenseActive && !currentCharacter.armorItem;
+            const currentEvasionData = isUnarmoredDefense ? currentCharacter.unarmoredDefenseEvasionData : currentCharacter.normalEvasionData;
             
-            // Reset temporary evasion only
-            currentCharacter.evasionData.temporary = 0;
+            // Reset temporary evasion only for current mode
+            currentEvasionData.temporary = 0;
             
-            // Update the actual evasion value (base + armor)
-            currentCharacter.evasion = calculateTotalEvasion(currentCharacter);
-            
-            // Update display
-            document.getElementById('displayEvasion').textContent = currentCharacter.evasion;
+            // Update the character's main evasion value
+            updateCharacterEvasion();
             
             saveCharacters();
             populateCharacterSheet(currentCharacter);
@@ -6102,6 +6430,12 @@
                     const currentCon = getCurrentConModifier(character);
                     thresholdLowerEffective += currentDex;
                     thresholdUpperEffective += currentDex + currentCon;
+                }
+                
+                // Add level-up bonuses for Barbarians and Monks
+                if (character.unarmoredDefenseThresholdBonuses) {
+                    thresholdLowerEffective += character.unarmoredDefenseThresholdBonuses.lower || 0;
+                    thresholdUpperEffective += character.unarmoredDefenseThresholdBonuses.upper || 0;
                 }
             }
             
@@ -6178,10 +6512,12 @@
             }
         });
         
-        // Unarmored Defense toggle
+        // Unarmored Defense and Mage Armor toggles
         document.addEventListener('change', function(e) {
             if (e.target.id === 'unarmoredDefenseToggle') {
                 handleUnarmoredDefenseToggle(e.target.checked);
+            } else if (e.target.id === 'mageArmorToggle') {
+                handleMageArmorToggle(e.target.checked);
             }
         });
 
@@ -6250,6 +6586,53 @@
         document.getElementById('tempThresholdUpper').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 addTempThreshold();
+            }
+        });
+
+        // Familiar section event listeners
+        document.getElementById('hasFamiliar').addEventListener('change', function() {
+            const familiarNameSection = document.getElementById('familiarNameSection');
+            if (this.checked) {
+                familiarNameSection.classList.remove('hidden');
+            } else {
+                familiarNameSection.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('editHasFamiliar').addEventListener('change', function() {
+            const familiarNameSection = document.getElementById('editFamiliarNameSection');
+            if (this.checked) {
+                familiarNameSection.classList.remove('hidden');
+            } else {
+                familiarNameSection.classList.add('hidden');
+            }
+        });
+
+        // Class selection event listeners for familiar section
+        document.getElementById('charClass').addEventListener('change', function() {
+            const familiarSection = document.getElementById('familiarSection');
+            if (this.value === 'Wizard' || this.value === 'Warlock') {
+                familiarSection.style.display = 'block';
+            } else {
+                familiarSection.style.display = 'none';
+                // Reset familiar when class changes away from Wizard/Warlock
+                document.getElementById('hasFamiliar').checked = false;
+                document.getElementById('familiarNameSection').classList.add('hidden');
+                document.getElementById('familiarName').value = '';
+            }
+            updateClassValues(this.value);
+        });
+
+        document.getElementById('editCharClass').addEventListener('change', function() {
+            const familiarSection = document.getElementById('editFamiliarSection');
+            if (this.value === 'Wizard' || this.value === 'Warlock') {
+                familiarSection.style.display = 'block';
+            } else {
+                familiarSection.style.display = 'none';
+                // Reset familiar when class changes away from Wizard/Warlock
+                document.getElementById('editHasFamiliar').checked = false;
+                document.getElementById('editFamiliarNameSection').classList.add('hidden');
+                document.getElementById('editFamiliarName').value = '';
             }
         });
 
@@ -7420,25 +7803,40 @@
             if (!currentCharacter) return;
             
             if (isChecked) {
-                // Check if armor is equipped and remove it first
-                if (currentCharacter.armorItem) {
-                    // Remove armor bonuses
+                // Check if armor is equipped - auto-remove armor
+                if (currentCharacter.armorItem && !currentCharacter.armorItem.isUnarmoredDefense) {
+                    // Remove armor bonuses and item
                     removeArmorBonuses(currentCharacter.armorItem.bonuses);
-                    
-                    // Remove armor from character
                     delete currentCharacter.armorItem;
-                    
-                    // Update weapon display
-                    updateWeaponDisplay();
                 }
                 
-                // Apply Unarmored Defense bonus
+                // Auto-equip Unarmored Defense "armor" for display purposes
+                currentCharacter.armorItem = createUnarmoredDefenseArmor(currentCharacter.class);
+                
+                // Switch to Unarmored Defense evasion
                 currentCharacter.unarmoredDefenseActive = true;
-                applyUnarmoredDefenseBonus();
+                currentCharacter.evasion = currentCharacter.unarmoredDefenseEvasion;
+                
+                // Apply Unarmored Defense threshold bonuses (both DEX/CON and level-up bonuses)
+                applyUnarmoredDefenseThresholdBonuses();
+                
+                // Update weapon display to show the new Unarmored Defense armor
+                updateWeaponDisplay();
             } else {
-                // Remove Unarmored Defense bonus
+                // Remove Unarmored Defense threshold bonuses
+                removeUnarmoredDefenseThresholdBonuses();
+                
+                // Remove Unarmored Defense "armor"
+                if (currentCharacter.armorItem && currentCharacter.armorItem.isUnarmoredDefense) {
+                    delete currentCharacter.armorItem;
+                }
+                
+                // Switch back to normal evasion
                 currentCharacter.unarmoredDefenseActive = false;
-                removeUnarmoredDefenseBonus();
+                currentCharacter.evasion = currentCharacter.normalEvasion;
+                
+                // Update weapon display to remove the Unarmored Defense armor
+                updateWeaponDisplay();
             }
             
             saveCharacters();
@@ -7461,6 +7859,55 @@
             
             const initialDexMod = getInitialDexModifier(currentCharacter);
             currentCharacter.evasion = (currentCharacter.evasion || 0) - initialDexMod;
+        }
+        
+        function createUnarmoredDefenseArmor(characterClass) {
+            if (characterClass === 'Barbarian') {
+                return {
+                    name: "Unarmored Defense (Barbarian)",
+                    thresholdLower: 0,
+                    thresholdUpper: 0,
+                    armor: 0,
+                    feature: "DEX to Evasion & Thresholds, CON to Upper Threshold",
+                    bonuses: {}, // No actual bonuses - purely ceremonial
+                    isUnarmoredDefense: true
+                };
+            } else if (characterClass === 'Monk') {
+                return {
+                    name: "Unarmored Defense (Monk)",
+                    thresholdLower: 0,
+                    thresholdUpper: 0,
+                    armor: 0,
+                    feature: "DEX to Evasion & Thresholds",
+                    bonuses: {}, // No actual bonuses - purely ceremonial
+                    isUnarmoredDefense: true
+                };
+            }
+            return null;
+        }
+        
+        function applyUnarmoredDefenseThresholdBonuses() {
+            if (!currentCharacter || !currentCharacter.unarmoredDefenseActive) return;
+            
+            // Initialize if not present
+            if (!currentCharacter.unarmoredDefenseThresholdBonuses) {
+                currentCharacter.unarmoredDefenseThresholdBonuses = { lower: 0, upper: 0 };
+            }
+            
+            // Add level-up bonus for Barbarians and Monks (+1/+1)
+            if ((currentCharacter.class === 'Barbarian' || currentCharacter.class === 'Monk') && currentCharacter.level > 1) {
+                currentCharacter.unarmoredDefenseThresholdBonuses.lower += (currentCharacter.level - 1);
+                currentCharacter.unarmoredDefenseThresholdBonuses.upper += (currentCharacter.level - 1);
+            }
+        }
+        
+        function removeUnarmoredDefenseThresholdBonuses() {
+            if (!currentCharacter) return;
+            
+            // Clear any Unarmored Defense threshold bonuses
+            if (currentCharacter.unarmoredDefenseThresholdBonuses) {
+                currentCharacter.unarmoredDefenseThresholdBonuses = { lower: 0, upper: 0 };
+            }
         }
         
         function updateUnarmoredDefenseDisplay() {
@@ -7488,8 +7935,104 @@
                 section.style.display = 'none';
             }
         }
+        
+        // Mage Armor Functions
+        function handleMageArmorToggle(isChecked) {
+            if (!currentCharacter) return;
+            
+            if (isChecked) {
+                // Apply Mage Armor bonuses
+                applyMageArmorBonuses();
+                currentCharacter.mageArmorActive = true;
+            } else {
+                // Remove Mage Armor bonuses
+                removeMageArmorBonuses();
+                currentCharacter.mageArmorActive = false;
+            }
+            
+            saveCharacters();
+            populateCharacterSheet(currentCharacter);
+        }
+        
+        function applyMageArmorBonuses() {
+            if (!currentCharacter) return;
+            
+            const currentDex = getCurrentDexModifier(currentCharacter);
+            const level = currentCharacter.level || 1;
+            
+            // Initialize Mage Armor bonuses if not present
+            if (!currentCharacter.mageArmorBonuses) {
+                currentCharacter.mageArmorBonuses = {
+                    evasion: 0,
+                    thresholdLower: 0,
+                    thresholdUpper: 0
+                };
+            }
+            
+            // Calculate bonuses
+            const evasionBonus = Math.max(1, currentDex);
+            const lowerThresholdBonus = level;
+            const upperThresholdBonus = level * 2;
+            
+            // Apply evasion bonus to current evasion
+            currentCharacter.evasion = (currentCharacter.evasion || 0) + evasionBonus;
+            
+            // Apply temporary threshold bonuses
+            if (!currentCharacter.tempThreshold) {
+                currentCharacter.tempThreshold = { lower: 0, upper: 0 };
+            }
+            
+            currentCharacter.tempThreshold.lower += lowerThresholdBonus;
+            currentCharacter.tempThreshold.upper += upperThresholdBonus;
+            
+            // Store the applied bonuses for removal later
+            currentCharacter.mageArmorBonuses = {
+                evasion: evasionBonus,
+                thresholdLower: lowerThresholdBonus,
+                thresholdUpper: upperThresholdBonus
+            };
+        }
+        
+        function removeMageArmorBonuses() {
+            if (!currentCharacter || !currentCharacter.mageArmorBonuses) return;
+            
+            const bonuses = currentCharacter.mageArmorBonuses;
+            
+            // Remove evasion bonus
+            currentCharacter.evasion = (currentCharacter.evasion || 0) - bonuses.evasion;
+            
+            // Remove temporary threshold bonuses
+            if (currentCharacter.tempThreshold) {
+                currentCharacter.tempThreshold.lower -= bonuses.thresholdLower;
+                currentCharacter.tempThreshold.upper -= bonuses.thresholdUpper;
+                
+                // Ensure temp thresholds don't go negative
+                currentCharacter.tempThreshold.lower = Math.max(0, currentCharacter.tempThreshold.lower);
+                currentCharacter.tempThreshold.upper = Math.max(0, currentCharacter.tempThreshold.upper);
+            }
+            
+            // Clear the stored bonuses
+            currentCharacter.mageArmorBonuses = {
+                evasion: 0,
+                thresholdLower: 0,
+                thresholdUpper: 0
+            };
+        }
+        
+        function updateMageArmorDisplay() {
+            if (!currentCharacter) return;
+            
+            const section = document.getElementById('mageArmorSection');
+            const checkbox = document.getElementById('mageArmorToggle');
+            
+            // Show section only for Wizard and Sorcerer
+            if (currentCharacter.class === 'Wizard' || currentCharacter.class === 'Sorcerer') {
+                section.style.display = 'block';
+                checkbox.checked = currentCharacter.mageArmorActive || false;
+            } else {
+                section.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
-
-
