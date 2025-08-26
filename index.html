@@ -2881,11 +2881,15 @@
             
             // ALWAYS REMOVE ALL TEMPORARY BONUSES DURING LONG REST (regardless of selection)
             
-            // Remove ALL temporary resource points from ALL resources
+            // Remove ALL temporary resource points from ALL resources and clean up used boxes
             if (currentCharacter.resources) {
                 ['hp', 'stress', 'class', 'spell'].forEach(resourceType => {
                     if (currentCharacter.resources[resourceType]) {
-                        currentCharacter.resources[resourceType].temp = 0;
+                        const resource = currentCharacter.resources[resourceType];
+                        // Remove temporary points
+                        resource.temp = 0;
+                        // Clean up any used boxes that are now beyond the permanent maximum
+                        resource.used = resource.used.filter(index => index < resource.max);
                     }
                 });
             }
@@ -6322,6 +6326,21 @@
         function updateCharacterEvasion() {
             if (!currentCharacter) return;
             
+            // Initialize evasion data if missing
+            if (!currentCharacter.normalEvasionData) {
+                currentCharacter.normalEvasionData = {
+                    base: currentCharacter.normalEvasion || currentCharacter.evasion || 0,
+                    temporary: 0
+                };
+            }
+            
+            if (!currentCharacter.unarmoredDefenseEvasionData) {
+                currentCharacter.unarmoredDefenseEvasionData = {
+                    base: currentCharacter.unarmoredDefenseEvasion || currentCharacter.evasion || 0,
+                    temporary: 0
+                };
+            }
+            
             // Get current mode data
             const isUnarmoredDefense = currentCharacter.unarmoredDefenseActive && !currentCharacter.armorItem;
             const currentEvasionData = isUnarmoredDefense ? currentCharacter.unarmoredDefenseEvasionData : currentCharacter.normalEvasionData;
@@ -6335,7 +6354,10 @@
             currentCharacter.evasion = baseEvasion + tempEvasion + armorEvasion;
             
             // Update display
-            document.getElementById('displayEvasion').textContent = currentCharacter.evasion;
+            const evasionDisplay = document.getElementById('displayEvasion');
+            if (evasionDisplay) {
+                evasionDisplay.textContent = currentCharacter.evasion;
+            }
         }
 
         function addTempEvasion(amount) {
