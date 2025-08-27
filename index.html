@@ -754,10 +754,10 @@
                         <!-- Existing buttons -->
                         <div class="flex gap-2 sm:gap-3 order-2 sm:order-none">
                             <button id="makeRandomBtn" class="bg-purple-500 hover:bg-purple-600 text-white px-3 md:px-4 py-2 rounded-lg transition-colors text-sm md:text-base flex-1 sm:flex-none">
-                                <i class="fas fa-dice mr-1 md:mr-2"></i><span class="sm:hidden md:hidden lg:hidden">Random</span><span class="hidden sm:inline md:inline lg:hidden">Random</span><span class="hidden lg:inline">Make a Random</span>
+                                <i class="fas fa-dice mr-1 md:mr-2"></i><span class="sm:hidden md:hidden lg:inline">Random</span><span class="hidden sm:inline md:inline lg:hidden">Random</span><span class="hidden lg:inline">Make a Random</span>
                             </button>
                             <button id="newCharacterBtn" class="bg-primary hover:bg-primary-dark text-white px-3 md:px-4 py-2 rounded-lg transition-colors text-sm md:text-base flex-1 sm:flex-none">
-                                <i class="fas fa-plus mr-1 md:mr-2"></i><span class="sm:hidden md:hidden lg:hidden">New</span><span class="hidden sm:inline md:inline lg:hidden">New</span><span class="hidden lg:inline">New Character</span>
+                                <i class="fas fa-plus mr-1 md:mr-2"></i><span class="sm:hidden md:hidden lg:inline">New</span><span class="hidden sm:inline md:inline lg:hidden">New</span><span class="hidden lg:inline">New Character</span>
                             </button>
                         </div>
                     </div>
@@ -2857,6 +2857,7 @@
             // Save and refresh
             saveCharacters();
             populateCharacterSheet(currentCharacter);
+            updateCharacterDisplay(); // Update character cards
             
             // Close modal
             document.getElementById('restModal').classList.add('hidden');
@@ -2919,12 +2920,25 @@
                 currentCharacter.evasionData.temporary = 0;
             }
             
+            // Disable Mage Armor during long rest
+            if (currentCharacter.mageArmorActive) {
+                removeMageArmorBonuses();
+                currentCharacter.mageArmorActive = false;
+                
+                // Update the checkbox in the UI
+                const mageArmorCheckbox = document.getElementById('mageArmorToggle');
+                if (mageArmorCheckbox) {
+                    mageArmorCheckbox.checked = false;
+                }
+            }
+            
             // Recalculate current evasion based on active mode
             updateCharacterEvasion();
             
             // Save and refresh
             saveCharacters();
             populateCharacterSheet(currentCharacter);
+            updateCharacterDisplay(); // Update character cards
             
             // Close modal
             document.getElementById('restModal').classList.add('hidden');
@@ -6243,33 +6257,26 @@
             
             const modal = document.getElementById('evasionModal');
             
-            // Initialize separate evasion data for both modes if missing
-            if (!currentCharacter.normalEvasionData) {
-                currentCharacter.normalEvasionData = {
-                    base: currentCharacter.normalEvasion || currentCharacter.evasion || 0,
-                    temporary: 0
+            // Initialize simplified evasion data if missing
+            if (!currentCharacter.evasionData) {
+                currentCharacter.evasionData = {
+                    base: currentCharacter.evasion || 0,
+                    temporary: 0,
+                    unarmoredDefense: 0,
+                    mageArmor: 0
                 };
             }
-            
-            if (!currentCharacter.unarmoredDefenseEvasionData) {
-                currentCharacter.unarmoredDefenseEvasionData = {
-                    base: currentCharacter.unarmoredDefenseEvasion || currentCharacter.evasion || 0,
-                    temporary: 0
-                };
-            }
-            
-            // Get current mode data
-            const isUnarmoredDefense = currentCharacter.unarmoredDefenseActive && !currentCharacter.armorItem;
-            const currentEvasionData = isUnarmoredDefense ? currentCharacter.unarmoredDefenseEvasionData : currentCharacter.normalEvasionData;
             
             // Get armor evasion value
             const armorEvasion = getArmorEvasionValue(currentCharacter);
             
+            // Calculate current total evasion
+            const currentEvasion = getCurrentEvasion(currentCharacter);
+            
             // Update modal display
-            const currentEvasion = (currentEvasionData.base || 0) + (currentEvasionData.temporary || 0) + armorEvasion;
             document.getElementById('currentEvasion').textContent = currentEvasion;
-            document.getElementById('baseEvasion').textContent = currentEvasionData.base || 0;
-            document.getElementById('temporaryEvasion').textContent = currentEvasionData.temporary || 0;
+            document.getElementById('baseEvasion').textContent = currentCharacter.evasionData.base || 0;
+            document.getElementById('temporaryEvasion').textContent = currentCharacter.evasionData.temporary || 0;
             document.getElementById('armorEvasion').textContent = armorEvasion;
             
             document.getElementById('evasionAmount').value = '';
@@ -6282,6 +6289,25 @@
             
             // Get the evasion bonus from armor (can be negative)
             return character.armorItem.bonuses?.evasion || 0;
+        }
+        
+        function getCurrentEvasion(character) {
+            if (!character.evasionData) {
+                character.evasionData = {
+                    base: character.evasion || 0,
+                    temporary: 0,
+                    unarmoredDefense: 0,
+                    mageArmor: 0
+                };
+            }
+            
+            const baseEvasion = character.evasionData.base || 0;
+            const tempEvasion = character.evasionData.temporary || 0;
+            const unarmoredDefenseEvasion = character.evasionData.unarmoredDefense || 0;
+            const mageArmorEvasion = character.evasionData.mageArmor || 0;
+            const armorEvasion = getArmorEvasionValue(character);
+            
+            return baseEvasion + tempEvasion + unarmoredDefenseEvasion + mageArmorEvasion + armorEvasion;
         }
         
         function calculateTotalEvasion(character) {
@@ -6326,32 +6352,18 @@
         function updateCharacterEvasion() {
             if (!currentCharacter) return;
             
-            // Initialize evasion data if missing
-            if (!currentCharacter.normalEvasionData) {
-                currentCharacter.normalEvasionData = {
-                    base: currentCharacter.normalEvasion || currentCharacter.evasion || 0,
-                    temporary: 0
+            // Initialize simplified evasion data if missing
+            if (!currentCharacter.evasionData) {
+                currentCharacter.evasionData = {
+                    base: currentCharacter.evasion || 0,
+                    temporary: 0,
+                    unarmoredDefense: 0,
+                    mageArmor: 0
                 };
             }
-            
-            if (!currentCharacter.unarmoredDefenseEvasionData) {
-                currentCharacter.unarmoredDefenseEvasionData = {
-                    base: currentCharacter.unarmoredDefenseEvasion || currentCharacter.evasion || 0,
-                    temporary: 0
-                };
-            }
-            
-            // Get current mode data
-            const isUnarmoredDefense = currentCharacter.unarmoredDefenseActive && !currentCharacter.armorItem;
-            const currentEvasionData = isUnarmoredDefense ? currentCharacter.unarmoredDefenseEvasionData : currentCharacter.normalEvasionData;
-            
-            // Calculate total evasion
-            const baseEvasion = currentEvasionData.base || 0;
-            const tempEvasion = currentEvasionData.temporary || 0;
-            const armorEvasion = getArmorEvasionValue(currentCharacter);
             
             // Update character's main evasion value
-            currentCharacter.evasion = baseEvasion + tempEvasion + armorEvasion;
+            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
             
             // Update display
             const evasionDisplay = document.getElementById('displayEvasion');
@@ -6363,15 +6375,21 @@
         function addTempEvasion(amount) {
             if (!currentCharacter || !amount || amount < 1) return;
             
-            // Get current mode data
-            const isUnarmoredDefense = currentCharacter.unarmoredDefenseActive && (!currentCharacter.armorItem || currentCharacter.armorItem.isUnarmoredDefense);
-            const currentEvasionData = isUnarmoredDefense ? currentCharacter.unarmoredDefenseEvasionData : currentCharacter.normalEvasionData;
+            // Initialize evasion data if missing
+            if (!currentCharacter.evasionData) {
+                currentCharacter.evasionData = {
+                    base: currentCharacter.evasion || 0,
+                    temporary: 0,
+                    unarmoredDefense: 0,
+                    mageArmor: 0
+                };
+            }
             
-            // Add temporary evasion to current mode
-            currentEvasionData.temporary = (currentEvasionData.temporary || 0) + amount;
+            // Add temporary evasion
+            currentCharacter.evasionData.temporary = (currentCharacter.evasionData.temporary || 0) + amount;
             
             // Update the character's main evasion value
-            updateCharacterEvasion();
+            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
             
             saveCharacters();
             populateCharacterSheet(currentCharacter);
@@ -6382,13 +6400,19 @@
         function adjustBaseEvasion(amount) {
             if (!currentCharacter || !amount) return;
             
-            // Get current mode data
-            const isUnarmoredDefense = currentCharacter.unarmoredDefenseActive && !currentCharacter.armorItem;
-            const currentEvasionData = isUnarmoredDefense ? currentCharacter.unarmoredDefenseEvasionData : currentCharacter.normalEvasionData;
+            // Initialize evasion data if missing
+            if (!currentCharacter.evasionData) {
+                currentCharacter.evasionData = {
+                    base: currentCharacter.evasion || 0,
+                    temporary: 0,
+                    unarmoredDefense: 0,
+                    mageArmor: 0
+                };
+            }
             
             // Get minimum evasion value (1 or armor's evasion value, whichever is higher)
             const minimumEvasion = getMinimumEvasionValue(currentCharacter);
-            const newBaseEvasion = (currentEvasionData.base || 0) + amount;
+            const newBaseEvasion = (currentCharacter.evasionData.base || 0) + amount;
             
             // Check if the new value would go below the minimum
             if (newBaseEvasion < minimumEvasion) {
@@ -6402,11 +6426,11 @@
                 return;
             }
             
-            // Adjust base evasion for current mode
-            currentEvasionData.base = newBaseEvasion;
+            // Adjust base evasion
+            currentCharacter.evasionData.base = newBaseEvasion;
             
             // Update the character's main evasion value
-            updateCharacterEvasion();
+            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
             
             saveCharacters();
             populateCharacterSheet(currentCharacter);
@@ -6417,15 +6441,21 @@
         function resetTempEvasion() {
             if (!currentCharacter) return;
             
-            // Get current mode data
-            const isUnarmoredDefense = currentCharacter.unarmoredDefenseActive && !currentCharacter.armorItem;
-            const currentEvasionData = isUnarmoredDefense ? currentCharacter.unarmoredDefenseEvasionData : currentCharacter.normalEvasionData;
+            // Initialize evasion data if missing
+            if (!currentCharacter.evasionData) {
+                currentCharacter.evasionData = {
+                    base: currentCharacter.evasion || 0,
+                    temporary: 0,
+                    unarmoredDefense: 0,
+                    mageArmor: 0
+                };
+            }
             
-            // Reset temporary evasion only for current mode
-            currentEvasionData.temporary = 0;
+            // Reset temporary evasion only
+            currentCharacter.evasionData.temporary = 0;
             
             // Update the character's main evasion value
-            updateCharacterEvasion();
+            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
             
             saveCharacters();
             populateCharacterSheet(currentCharacter);
@@ -6441,8 +6471,8 @@
             let thresholdLowerEffective = thresholdLowerBase;
             let thresholdUpperEffective = thresholdUpperBase;
             
-            // Apply Unarmored Defense threshold bonuses if active
-            if (character.unarmoredDefenseActive && !character.armorItem) {
+            // Apply Unarmored Defense threshold bonuses if active (allow ceremonial Unarmored Defense armor)
+            if (character.unarmoredDefenseActive && (!character.armorItem || character.armorItem.isUnarmoredDefense)) {
                 if (character.class === 'Monk') {
                     const currentDex = getCurrentDexModifier(character);
                     thresholdLowerEffective += currentDex;
@@ -7114,6 +7144,29 @@
             document.getElementById('editThresholdLower').value = currentCharacter.thresholdLower || 0;
             document.getElementById('editThresholdUpper').value = currentCharacter.thresholdUpper || 0;
             
+            // Handle familiar section
+            const editFamiliarSection = document.getElementById('editFamiliarSection');
+            if (currentCharacter.class === 'Wizard' || currentCharacter.class === 'Warlock') {
+                editFamiliarSection.style.display = 'block';
+                
+                // Set familiar checkbox and name
+                const hasFamiliarCheckbox = document.getElementById('editHasFamiliar');
+                const familiarNameSection = document.getElementById('editFamiliarNameSection');
+                const familiarNameInput = document.getElementById('editFamiliarName');
+                
+                if (currentCharacter.familiar) {
+                    hasFamiliarCheckbox.checked = true;
+                    familiarNameSection.classList.remove('hidden');
+                    familiarNameInput.value = currentCharacter.familiar.name || 'Familiar';
+                } else {
+                    hasFamiliarCheckbox.checked = false;
+                    familiarNameSection.classList.add('hidden');
+                    familiarNameInput.value = '';
+                }
+            } else {
+                editFamiliarSection.style.display = 'none';
+            }
+            
             // Generate resource boxes
             setTimeout(() => {
                 generateResourceBoxes('editHpBoxes', currentCharacter.resources?.hp?.max || currentCharacter.hpMax || 0, 'hp');
@@ -7775,6 +7828,28 @@
             currentCharacter.thresholdLower = parseInt(document.getElementById('editThresholdLower').value) || 0;
             currentCharacter.thresholdUpper = parseInt(document.getElementById('editThresholdUpper').value) || 0;
             
+            // Handle familiar data for Wizard and Warlock
+            if (currentCharacter.class === 'Wizard' || currentCharacter.class === 'Warlock') {
+                if (document.getElementById('editHasFamiliar').checked) {
+                    const familiarName = document.getElementById('editFamiliarName').value.trim() || 'Familiar';
+                    if (!currentCharacter.familiar) {
+                        currentCharacter.familiar = {
+                            name: familiarName,
+                            hpUsed: false,
+                            stressUsed: 0
+                        };
+                    } else {
+                        currentCharacter.familiar.name = familiarName;
+                    }
+                } else {
+                    // Remove familiar if unchecked
+                    currentCharacter.familiar = null;
+                }
+            } else {
+                // Remove familiar if class is changed away from Wizard/Warlock
+                currentCharacter.familiar = null;
+            }
+            
             // Save changes
             saveCharacters();
             updateCharacterDisplay();
@@ -7825,62 +7900,68 @@
             if (!currentCharacter) return;
             
             if (isChecked) {
-                // Check if armor is equipped - auto-remove armor
-                if (currentCharacter.armorItem && !currentCharacter.armorItem.isUnarmoredDefense) {
-                    // Remove armor bonuses and item
-                    removeArmorBonuses(currentCharacter.armorItem.bonuses);
-                    delete currentCharacter.armorItem;
-                }
-                
-                // Auto-equip Unarmored Defense "armor" for display purposes
-                currentCharacter.armorItem = createUnarmoredDefenseArmor(currentCharacter.class);
-                
-                // Switch to Unarmored Defense evasion
+                // Apply Unarmored Defense bonuses
+                applyUnarmoredDefenseBonuses();
                 currentCharacter.unarmoredDefenseActive = true;
-                currentCharacter.evasion = currentCharacter.unarmoredDefenseEvasion;
-                
-                // Apply Unarmored Defense threshold bonuses (both DEX/CON and level-up bonuses)
-                applyUnarmoredDefenseThresholdBonuses();
-                
-                // Update weapon display to show the new Unarmored Defense armor
-                updateWeaponDisplay();
             } else {
-                // Remove Unarmored Defense threshold bonuses
-                removeUnarmoredDefenseThresholdBonuses();
-                
-                // Remove Unarmored Defense "armor"
-                if (currentCharacter.armorItem && currentCharacter.armorItem.isUnarmoredDefense) {
-                    delete currentCharacter.armorItem;
-                }
-                
-                // Switch back to normal evasion
+                // Remove Unarmored Defense bonuses
+                removeUnarmoredDefenseBonuses();
                 currentCharacter.unarmoredDefenseActive = false;
-                currentCharacter.evasion = currentCharacter.normalEvasion;
-                
-                // Update weapon display to remove the Unarmored Defense armor
-                updateWeaponDisplay();
             }
             
             saveCharacters();
             populateCharacterSheet(currentCharacter);
         }
         
-        function applyUnarmoredDefenseBonus() {
+        function applyUnarmoredDefenseBonuses() {
             if (!currentCharacter) return;
             
-            const initialDexMod = getInitialDexModifier(currentCharacter);
+            // Initialize evasion data if missing
+            if (!currentCharacter.evasionData) {
+                currentCharacter.evasionData = {
+                    base: currentCharacter.evasion || 0,
+                    temporary: 0,
+                    unarmoredDefense: 0,
+                    mageArmor: 0
+                };
+            }
             
-            // Only apply if not wearing armor
+            // Add initial DEX modifier to evasion data
+            const initialDexMod = getInitialDexModifier(currentCharacter);
+            currentCharacter.evasionData.unarmoredDefense = initialDexMod;
+            
+            // Update character's main evasion value
+            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+            
+            // Auto-equip ceremonial Unarmored Defense "armor" for display purposes  
             if (!currentCharacter.armorItem) {
-                currentCharacter.evasion = (currentCharacter.evasion || 0) + initialDexMod;
+                currentCharacter.armorItem = createUnarmoredDefenseArmor(currentCharacter.class);
             }
         }
         
-        function removeUnarmoredDefenseBonus() {
+        function removeUnarmoredDefenseBonuses() {
             if (!currentCharacter) return;
             
-            const initialDexMod = getInitialDexModifier(currentCharacter);
-            currentCharacter.evasion = (currentCharacter.evasion || 0) - initialDexMod;
+            // Initialize evasion data if missing
+            if (!currentCharacter.evasionData) {
+                currentCharacter.evasionData = {
+                    base: currentCharacter.evasion || 0,
+                    temporary: 0,
+                    unarmoredDefense: 0,
+                    mageArmor: 0
+                };
+            }
+            
+            // Remove Unarmored Defense evasion bonus
+            currentCharacter.evasionData.unarmoredDefense = 0;
+            
+            // Update character's main evasion value
+            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+            
+            // Remove Unarmored Defense "armor" if present
+            if (currentCharacter.armorItem && currentCharacter.armorItem.isUnarmoredDefense) {
+                delete currentCharacter.armorItem;
+            }
         }
         
         function createUnarmoredDefenseArmor(characterClass) {
