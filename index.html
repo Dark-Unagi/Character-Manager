@@ -754,10 +754,10 @@
                         <!-- Existing buttons -->
                         <div class="flex gap-2 sm:gap-3 order-2 sm:order-none">
                             <button id="makeRandomBtn" class="bg-purple-500 hover:bg-purple-600 text-white px-3 md:px-4 py-2 rounded-lg transition-colors text-sm md:text-base flex-1 sm:flex-none">
-                                <i class="fas fa-dice mr-1 md:mr-2"></i><span class="sm:hidden md:hidden lg:inline">Random</span><span class="hidden sm:inline md:inline lg:hidden">Random</span><span class="hidden lg:inline">Make a Random</span>
+                                <i class="fas fa-dice mr-1 md:mr-2"></i><span class="sm:hidden md:hidden lg:hidden">Random</span><span class="hidden sm:inline md:inline lg:hidden">Random</span><span class="hidden lg:inline">Make a Random</span>
                             </button>
                             <button id="newCharacterBtn" class="bg-primary hover:bg-primary-dark text-white px-3 md:px-4 py-2 rounded-lg transition-colors text-sm md:text-base flex-1 sm:flex-none">
-                                <i class="fas fa-plus mr-1 md:mr-2"></i><span class="sm:hidden md:hidden lg:inline">New</span><span class="hidden sm:inline md:inline lg:hidden">New</span><span class="hidden lg:inline">New Character</span>
+                                <i class="fas fa-plus mr-1 md:mr-2"></i><span class="sm:hidden md:hidden lg:hidden">New</span><span class="hidden sm:inline md:inline lg:hidden">New</span><span class="hidden lg:inline">New Character</span>
                             </button>
                         </div>
                     </div>
@@ -869,6 +869,35 @@
                             <div id="familiarNameSection" class="hidden">
                                 <label class="block text-sm font-medium mb-2">Familiar Name</label>
                                 <input type="text" id="familiarName" placeholder="Familiar" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ranger Companion Section (for Ranger) -->
+                    <div id="companionSection" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg" style="display: none;">
+                        <h3 class="text-lg font-semibold mb-4">Ranger Companion</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="hasCompanion" class="mr-2">
+                                    <span class="text-sm font-medium">Yes, I want a companion</span>
+                                </label>
+                            </div>
+                            <div id="companionDetailsSection" class="hidden space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Companion Name</label>
+                                    <input type="text" id="companionName" placeholder="Companion" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Companion Type</label>
+                                    <select id="companionType" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        <option value="">-- Select Companion Type --</option>
+                                        <option value="Bear">Bear</option>
+                                        <option value="Great Cat">Great Cat</option>
+                                        <option value="Wolf">Wolf</option>
+                                        <option value="Hawk">Hawk</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1140,6 +1169,35 @@
                             <div id="editFamiliarNameSection" class="hidden">
                                 <label class="block text-sm font-medium mb-2">Familiar Name</label>
                                 <input type="text" id="editFamiliarName" placeholder="Familiar" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ranger Companion Section (for Ranger) -->
+                    <div id="editCompanionSection" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg" style="display: none;">
+                        <h3 class="text-lg font-semibold mb-4">Ranger Companion</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="editHasCompanion" class="mr-2">
+                                    <span class="text-sm font-medium">Yes, I want a companion</span>
+                                </label>
+                            </div>
+                            <div id="editCompanionDetailsSection" class="hidden space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Companion Name</label>
+                                    <input type="text" id="editCompanionName" placeholder="Companion" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Companion Type</label>
+                                    <select id="editCompanionType" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        <option value="">-- Select Companion Type --</option>
+                                        <option value="Bear">Bear</option>
+                                        <option value="Great Cat">Great Cat</option>
+                                        <option value="Wolf">Wolf</option>
+                                        <option value="Hawk">Hawk</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1570,6 +1628,55 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Companion -->
+                        <div id="companionSheetSection" class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg" style="display: none;">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-semibold">Companion</h3>
+                                <button id="companionToggle" class="w-6 h-6 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded flex items-center justify-center transition-colors">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                            </div>
+                            <div id="companionContent">
+                                <div id="companionDisplayName" class="text-center font-medium mb-2">Companion</div>
+                                <div id="companionDisplayType" class="text-center text-sm text-gray-600 dark:text-gray-400 mb-3">Bear</div>
+                                <div class="flex justify-between items-center text-xs">
+                                    <!-- HP Section -->
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-xs font-medium mb-1">HP</div>
+                                        <div class="flex gap-1" id="companionHpBoxes">
+                                            <!-- HP boxes will be generated here -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Stress Section -->
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-xs font-medium mb-1">Stress</div>
+                                        <div class="flex gap-1" id="companionStressBoxes">
+                                            <!-- Stress boxes will be generated here -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Evasion Section -->
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-xs font-medium mb-1">Evasion</div>
+                                        <div class="text-sm font-medium" id="companionEvasion">10</div>
+                                    </div>
+                                    
+                                    <!-- Modifier Section -->
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-xs font-medium mb-1">Mod</div>
+                                        <div class="text-sm font-medium" id="companionMod">+2</div>
+                                    </div>
+                                    
+                                    <!-- Threshold Section -->
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-xs font-medium mb-1">Threshold</div>
+                                        <div class="text-sm font-medium" id="companionThreshold">5 / 10</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Middle Column: Ability Scores and Skills -->
@@ -1839,8 +1946,7 @@
                 <input type="number" id="evasionAmount" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Evasion value" min="1">
             </div>
             <div class="flex justify-end space-x-3">
-                <button type="button" id="resetTempEvasion" class="px-4 py-2 bg-gray-500 text-white hover:bg-gray-600 rounded">Reset Temp</button>
-                <button type="button" id="addTempEvasion" class="px-4 py-2 bg-green-500 text-white hover:bg-green-600 rounded">Add Temp</button>
+                <button type="button" id="adjustTempEvasion" class="px-4 py-2 bg-green-500 text-white hover:bg-green-600 rounded">Adjust Temp</button>
                 <button type="button" id="adjustBaseEvasion" class="px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded">Adjust Base</button>
             </div>
         </div>
@@ -2600,6 +2706,46 @@
         // Global state
         let characters = [];
         let currentCharacter = null;
+        
+        // Ranger Companion data
+        const companionTypes = {
+            'Bear': {
+                hp: 2,
+                stress: 2,
+                evasion: 10,
+                mod: 2,
+                damage: 'd6',
+                thresholdLower: 5,
+                thresholdUpper: 10
+            },
+            'Great Cat': {
+                hp: 3,
+                stress: 2,
+                evasion: 10,
+                mod: 3,
+                damage: 'd8',
+                thresholdLower: 5,
+                thresholdUpper: 10
+            },
+            'Wolf': {
+                hp: 2,
+                stress: 3,
+                evasion: 11,
+                mod: 2,
+                damage: 'd6',
+                thresholdLower: 4,
+                thresholdUpper: 8
+            },
+            'Hawk': {
+                hp: 1,
+                stress: 2,
+                evasion: 13,
+                mod: 3,
+                damage: 'd4',
+                thresholdLower: 3,
+                thresholdUpper: 6
+            }
+        };
         
         // Ability score modifier system
         const availableModifiers = [2, 1, 1, 0, 0, -1];
@@ -4097,7 +4243,7 @@
             return character;
         }
 
-        // Navigation
+        // Navigation and initialization
         document.addEventListener('DOMContentLoaded', function() {
             loadCharacters();
             updateCharacterDisplay();
@@ -5223,6 +5369,9 @@
             // Update Familiar display
             updateFamiliarDisplay(character);
             
+            // Update Companion display
+            updateCompanionDisplay(character);
+            
             // Equipment
             updateEquipmentDisplay(character);
             
@@ -5380,7 +5529,7 @@
         }
 
         function saveCharacters() {
-            // Save to localStorage for automatic persistence
+            // Save to localStorage for automatic persistence (if available)
             try {
                 const dataToStore = {
                     version: "1.0",
@@ -5390,8 +5539,8 @@
                 localStorage.setItem('rpg-character-manager-data', JSON.stringify(dataToStore));
                 console.log('Characters saved to localStorage:', characters.length, 'characters');
             } catch (error) {
-                console.error('Error saving to localStorage:', error);
-                // Could show a user notification here if desired
+                // localStorage not available in sandboxed environment - this is expected and fine
+                console.log('localStorage not available in this environment - data will persist during session only');
             }
         }
 
@@ -5408,8 +5557,8 @@
                     }
                 }
             } catch (error) {
-                console.error('Error loading from localStorage:', error);
-                // Fall back to empty array if there's an issue
+                // localStorage not available in sandboxed environment - this is expected and fine
+                console.log('localStorage not available in this environment - starting with empty character list');
             }
             
             // If no valid data in localStorage, start with empty array
@@ -5582,6 +5731,14 @@
             if (e.target.dataset.familiarResource) {
                 handleFamiliarResourceClick(e.target);
             }
+            // Companion toggle functionality
+            if (e.target.id === 'companionToggle' || e.target.closest('#companionToggle')) {
+                toggleCompanionSection();
+            }
+            // Handle companion resource box clicks
+            if (e.target.dataset.companionResource) {
+                handleCompanionResourceClick(e.target);
+            }
         });
 
         function toggleFamiliarSection() {
@@ -5683,6 +5840,181 @@
             }
         }
 
+        function toggleCompanionSection() {
+            const content = document.getElementById('companionContent');
+            const toggleButton = document.getElementById('companionToggle');
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                toggleButton.innerHTML = '<i class="fas fa-minus text-xs"></i>';
+            } else {
+                content.style.display = 'none';
+                toggleButton.innerHTML = '<i class="fas fa-plus text-xs"></i>';
+            }
+        }
+
+        function handleCompanionResourceClick(box) {
+            if (!currentCharacter || !currentCharacter.companion) return;
+            
+            const resourceType = box.dataset.companionResource;
+            const boxId = box.id;
+            
+            if (resourceType === 'hp') {
+                const hpIndex = parseInt(boxId.replace('companionHpBox', '')) - 1;
+                toggleCompanionResourceOrdered(hpIndex, 'hp');
+            } else if (resourceType === 'stress') {
+                const stressIndex = parseInt(boxId.replace('companionStressBox', '')) - 1;
+                toggleCompanionResourceOrdered(stressIndex, 'stress');
+            }
+            
+            saveCharacters();
+        }
+
+        function toggleCompanionResourceOrdered(clickedIndex, resourceType) {
+            if (!currentCharacter || !currentCharacter.companion) return;
+            
+            // Initialize arrays if not present
+            if (!currentCharacter.companion.hpUsed) {
+                currentCharacter.companion.hpUsed = [];
+            }
+            if (!currentCharacter.companion.stressUsed) {
+                currentCharacter.companion.stressUsed = [];
+            }
+            
+            const usedArray = resourceType === 'hp' ? currentCharacter.companion.hpUsed : currentCharacter.companion.stressUsed;
+            const isCurrentlyUsed = usedArray.includes(clickedIndex);
+            
+            if (!isCurrentlyUsed) {
+                // Mark as used - fill from left to clicked index (left to right)
+                for (let i = 0; i <= clickedIndex; i++) {
+                    if (!usedArray.includes(i)) {
+                        usedArray.push(i);
+                    }
+                }
+            } else {
+                // Unmark as used - unfill from clicked index to the right (right to left)
+                for (let i = clickedIndex; i < 10; i++) { // 10 is safe upper bound
+                    const indexInArray = usedArray.indexOf(i);
+                    if (indexInArray > -1) {
+                        usedArray.splice(indexInArray, 1);
+                    }
+                }
+            }
+            
+            // Update display
+            updateCompanionDisplay(currentCharacter);
+        }
+
+        function updateCompanionDisplay(character) {
+            if (!character) return;
+            
+            const companionSection = document.getElementById('companionSheetSection');
+            
+            // Show companion section only if character has a companion
+            if (character.companion) {
+                companionSection.style.display = 'block';
+                
+                // Update companion name and type
+                const nameDisplay = document.getElementById('companionDisplayName');
+                const typeDisplay = document.getElementById('companionDisplayType');
+                
+                if (nameDisplay) {
+                    nameDisplay.textContent = character.companion.name || 'Companion';
+                }
+                
+                if (typeDisplay) {
+                    typeDisplay.textContent = character.companion.type || 'Bear';
+                }
+                
+                // Get companion type data
+                const companionData = companionTypes[character.companion.type] || companionTypes['Bear'];
+                
+                // Update the entire companion content with new layout
+                const companionContent = document.getElementById('companionContent');
+                companionContent.innerHTML = `
+                    <!-- Row 1: Name -->
+                    <div class="text-center font-medium mb-2">${character.companion.name || 'Companion'}</div>
+                    
+                    <!-- Row 2: Type -->
+                    <div class="text-center text-sm text-gray-600 dark:text-gray-400 mb-3">${character.companion.type || 'Bear'}</div>
+                    
+                    <!-- Row 3: HP and Stress -->
+                    <div class="flex justify-center gap-6 mb-3">
+                        <div class="flex flex-col items-center">
+                            <div class="text-xs font-medium mb-1">HP</div>
+                            <div class="flex gap-1" id="companionHpBoxes">
+                                <!-- HP boxes will be generated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col items-center">
+                            <div class="text-xs font-medium mb-1">Stress</div>
+                            <div class="flex gap-1" id="companionStressBoxes">
+                                <!-- Stress boxes will be generated here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 4: Stats -->
+                    <div class="flex justify-between items-center text-xs">
+                        <div class="flex flex-col items-center">
+                            <div class="text-xs font-medium mb-1">Evasion</div>
+                            <div class="text-sm font-medium">${companionData.evasion}</div>
+                        </div>
+                        
+                        <div class="flex flex-col items-center">
+                            <div class="text-xs font-medium mb-1">Mod</div>
+                            <div class="text-sm font-medium">+${companionData.mod}</div>
+                        </div>
+                        
+                        <div class="flex flex-col items-center">
+                            <div class="text-xs font-medium mb-1">Damage</div>
+                            <div class="text-sm font-medium">${companionData.damage}</div>
+                        </div>
+                        
+                        <div class="flex flex-col items-center">
+                            <div class="text-xs font-medium mb-1">Threshold</div>
+                            <div class="text-sm font-medium">${companionData.thresholdLower} / ${companionData.thresholdUpper}</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Now populate the HP and Stress boxes in their new containers
+                const hpContainer = document.getElementById('companionHpBoxes');
+                const stressContainer = document.getElementById('companionStressBoxes');
+                
+                // Update HP boxes
+                for (let i = 0; i < companionData.hp; i++) {
+                    const box = document.createElement('div');
+                    box.className = 'resource-box solid cursor-pointer';
+                    box.id = `companionHpBox${i + 1}`;
+                    box.dataset.companionResource = 'hp';
+                    
+                    if (character.companion.hpUsed && character.companion.hpUsed.includes(i)) {
+                        box.classList.add('used');
+                    }
+                    
+                    hpContainer.appendChild(box);
+                }
+                
+                // Update Stress boxes
+                for (let i = 0; i < companionData.stress; i++) {
+                    const box = document.createElement('div');
+                    box.className = 'resource-box solid cursor-pointer';
+                    box.id = `companionStressBox${i + 1}`;
+                    box.dataset.companionResource = 'stress';
+                    
+                    if (character.companion.stressUsed && character.companion.stressUsed.includes(i)) {
+                        box.classList.add('used');
+                    }
+                    
+                    stressContainer.appendChild(box);
+                }
+            } else {
+                companionSection.style.display = 'none';
+            }
+        }
+
         // Character form submission
         document.getElementById('characterForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -5715,6 +6047,19 @@
                     name: familiarName,
                     hpUsed: false,
                     stressUsed: 0 // 0 = none, 1 = first box, 2 = both boxes
+                };
+            }
+
+            // Handle companion data for Ranger
+            let companionData = null;
+            if (characterClass === 'Ranger' && document.getElementById('hasCompanion').checked) {
+                const companionName = document.getElementById('companionName').value.trim() || 'Companion';
+                const companionType = document.getElementById('companionType').value || 'Bear';
+                companionData = {
+                    name: companionName,
+                    type: companionType,
+                    hpUsed: [], // Array of used HP box indices
+                    stressUsed: [] // Array of used Stress box indices
                 };
             }
 
@@ -5774,6 +6119,8 @@
                 raceBonusValues: { ...raceBonusValues },
                 // Store familiar data
                 familiar: familiarData,
+                // Store companion data
+                companion: companionData,
                 // Initialize weapon and armor properties
                 primaryWeapon: null,
                 secondaryWeapon: null,
@@ -6226,10 +6573,10 @@
             document.getElementById('evasionModal').classList.add('hidden');
         });
 
-        document.getElementById('addTempEvasion').addEventListener('click', function() {
+        document.getElementById('adjustTempEvasion').addEventListener('click', function() {
             const amount = parseInt(document.getElementById('evasionAmount').value);
-            if (amount && amount > 0) {
-                addTempEvasion(amount);
+            if (amount) {
+                adjustTempEvasion(amount);
             }
         });
 
@@ -6238,10 +6585,6 @@
             if (amount) {
                 adjustBaseEvasion(amount);
             }
-        });
-
-        document.getElementById('resetTempEvasion').addEventListener('click', function() {
-            resetTempEvasion();
         });
 
         // Allow Enter key to focus on Add Temp button for evasion
@@ -6372,8 +6715,8 @@
             }
         }
 
-        function addTempEvasion(amount) {
-            if (!currentCharacter || !amount || amount < 1) return;
+        function adjustTempEvasion(amount) {
+            if (!currentCharacter || !amount) return;
             
             // Initialize evasion data if missing
             if (!currentCharacter.evasionData) {
@@ -6385,7 +6728,7 @@
                 };
             }
             
-            // Add temporary evasion
+            // Add the amount (can be positive or negative)
             currentCharacter.evasionData.temporary = (currentCharacter.evasionData.temporary || 0) + amount;
             
             // Update the character's main evasion value
@@ -6660,9 +7003,31 @@
             }
         });
 
-        // Class selection event listeners for familiar section
+        // Companion section event listeners
+        document.getElementById('hasCompanion').addEventListener('change', function() {
+            const companionDetailsSection = document.getElementById('companionDetailsSection');
+            if (this.checked) {
+                companionDetailsSection.classList.remove('hidden');
+            } else {
+                companionDetailsSection.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('editHasCompanion').addEventListener('change', function() {
+            const companionDetailsSection = document.getElementById('editCompanionDetailsSection');
+            if (this.checked) {
+                companionDetailsSection.classList.remove('hidden');
+            } else {
+                companionDetailsSection.classList.add('hidden');
+            }
+        });
+
+        // Class selection event listeners for familiar and companion sections
         document.getElementById('charClass').addEventListener('change', function() {
             const familiarSection = document.getElementById('familiarSection');
+            const companionSection = document.getElementById('companionSection');
+            
+            // Handle Familiar section (Wizard/Warlock)
             if (this.value === 'Wizard' || this.value === 'Warlock') {
                 familiarSection.style.display = 'block';
             } else {
@@ -6672,11 +7037,27 @@
                 document.getElementById('familiarNameSection').classList.add('hidden');
                 document.getElementById('familiarName').value = '';
             }
+            
+            // Handle Companion section (Ranger)
+            if (this.value === 'Ranger') {
+                companionSection.style.display = 'block';
+            } else {
+                companionSection.style.display = 'none';
+                // Reset companion when class changes away from Ranger
+                document.getElementById('hasCompanion').checked = false;
+                document.getElementById('companionDetailsSection').classList.add('hidden');
+                document.getElementById('companionName').value = '';
+                document.getElementById('companionType').value = '';
+            }
+            
             updateClassValues(this.value);
         });
 
         document.getElementById('editCharClass').addEventListener('change', function() {
             const familiarSection = document.getElementById('editFamiliarSection');
+            const companionSection = document.getElementById('editCompanionSection');
+            
+            // Handle Familiar section (Wizard/Warlock)
             if (this.value === 'Wizard' || this.value === 'Warlock') {
                 familiarSection.style.display = 'block';
             } else {
@@ -6685,6 +7066,18 @@
                 document.getElementById('editHasFamiliar').checked = false;
                 document.getElementById('editFamiliarNameSection').classList.add('hidden');
                 document.getElementById('editFamiliarName').value = '';
+            }
+            
+            // Handle Companion section (Ranger)
+            if (this.value === 'Ranger') {
+                companionSection.style.display = 'block';
+            } else {
+                companionSection.style.display = 'none';
+                // Reset companion when class changes away from Ranger
+                document.getElementById('editHasCompanion').checked = false;
+                document.getElementById('editCompanionDetailsSection').classList.add('hidden');
+                document.getElementById('editCompanionName').value = '';
+                document.getElementById('editCompanionType').value = '';
             }
         });
 
@@ -7848,6 +8241,31 @@
             } else {
                 // Remove familiar if class is changed away from Wizard/Warlock
                 currentCharacter.familiar = null;
+            }
+            
+            // Handle companion data for Ranger
+            if (currentCharacter.class === 'Ranger') {
+                if (document.getElementById('editHasCompanion').checked) {
+                    const companionName = document.getElementById('editCompanionName').value.trim() || 'Companion';
+                    const companionType = document.getElementById('editCompanionType').value || 'Bear';
+                    if (!currentCharacter.companion) {
+                        currentCharacter.companion = {
+                            name: companionName,
+                            type: companionType,
+                            hpUsed: [], // Array of used HP box indices
+                            stressUsed: [] // Array of used Stress box indices
+                        };
+                    } else {
+                        currentCharacter.companion.name = companionName;
+                        currentCharacter.companion.type = companionType;
+                    }
+                } else {
+                    // Remove companion if unchecked
+                    currentCharacter.companion = null;
+                }
+            } else {
+                // Remove companion if class is changed away from Ranger
+                currentCharacter.companion = null;
             }
             
             // Save changes
