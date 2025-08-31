@@ -754,10 +754,10 @@
                         <!-- Existing buttons -->
                         <div class="flex gap-2 sm:gap-3 order-2 sm:order-none">
                             <button id="makeRandomBtn" class="bg-purple-500 hover:bg-purple-600 text-white px-3 md:px-4 py-2 rounded-lg transition-colors text-sm md:text-base flex-1 sm:flex-none">
-                                <i class="fas fa-dice mr-1 md:mr-2"></i><span class="sm:hidden md:hidden lg:inline">Random</span><span class="hidden sm:inline md:inline lg:hidden">Random</span><span class="hidden lg:inline">Make a Random</span>
+                                <i class="fas fa-dice mr-1 md:mr-2"></i><span class="sm:hidden md:hidden lg:hidden">Random</span><span class="hidden sm:inline md:inline lg:hidden">Random</span><span class="hidden lg:inline">Make a Random</span>
                             </button>
                             <button id="newCharacterBtn" class="bg-primary hover:bg-primary-dark text-white px-3 md:px-4 py-2 rounded-lg transition-colors text-sm md:text-base flex-1 sm:flex-none">
-                                <i class="fas fa-plus mr-1 md:mr-2"></i><span class="sm:hidden md:hidden lg:inline">New</span><span class="hidden sm:inline md:inline lg:hidden">New</span><span class="hidden lg:inline">New Character</span>
+                                <i class="fas fa-plus mr-1 md:mr-2"></i><span class="sm:hidden md:hidden lg:hidden">New</span><span class="hidden sm:inline md:inline lg:hidden">New</span><span class="hidden lg:inline">New Character</span>
                             </button>
                         </div>
                     </div>
@@ -1946,8 +1946,8 @@
                 <input type="number" id="evasionAmount" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Evasion value" min="1">
             </div>
             <div class="flex justify-end space-x-3">
-                <button type="button" id="resetTempEvasion" class="px-4 py-2 bg-gray-500 text-white hover:bg-gray-600 rounded">Reset Temp</button>
-                <button type="button" id="addTempEvasion" class="px-4 py-2 bg-green-500 text-white hover:bg-green-600 rounded">Add Temp</button>
+               <!-- <button type="button" id="resetTempEvasion" class="px-4 py-2 bg-gray-500 text-white hover:bg-gray-600 rounded">Reset Temp</button>-->
+                <button type="button" id="adjustTempEvasion" class="px-4 py-2 bg-green-500 text-white hover:bg-green-600 rounded">Adjust Temp</button>
                 <button type="button" id="adjustBaseEvasion" class="px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded">Adjust Base</button>
             </div>
         </div>
@@ -6574,10 +6574,10 @@
             document.getElementById('evasionModal').classList.add('hidden');
         });
 
-        document.getElementById('addTempEvasion').addEventListener('click', function() {
+        document.getElementById('adjustTempEvasion').addEventListener('click', function() {
             const amount = parseInt(document.getElementById('evasionAmount').value);
-            if (amount && amount > 0) {
-                addTempEvasion(amount);
+            if (amount) {
+                adjustTempEvasion(amount);
             }
         });
 
@@ -6588,14 +6588,14 @@
             }
         });
 
-        document.getElementById('resetTempEvasion').addEventListener('click', function() {
+        /*document.getElementById('resetTempEvasion').addEventListener('click', function() {
             resetTempEvasion();
-        });
+        });*/
 
         // Allow Enter key to focus on Add Temp button for evasion
         document.getElementById('evasionAmount').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                document.getElementById('addTempEvasion').focus();
+                document.getElementById('adjustTempEvasion').focus();
             }
         });
 
@@ -6720,8 +6720,8 @@
             }
         }
 
-        function addTempEvasion(amount) {
-            if (!currentCharacter || !amount || amount < 1) return;
+        function adjustTempEvasion(amount) {
+            if (!currentCharacter || !amount) return;
             
             // Initialize evasion data if missing
             if (!currentCharacter.evasionData) {
