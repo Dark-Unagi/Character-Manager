@@ -2564,8 +2564,8 @@
             },
         ];
 
-        // Armor database
-        const armorDatabase = [
+        // Armor database - Tier 1
+        const armorDatabaseTier1 = [
             {
                 name: "No Armor",
                 thresholdLower: 3,
@@ -2608,6 +2608,102 @@
             },
         ];
 
+        // Armor database - Tier 2 (+10 to both thresholds)
+        const armorDatabaseTier2 = [
+            {
+                name: "No Armor",
+                thresholdLower: 13,
+                thresholdUpper: 15,
+                armor: 0,
+                feature: "+2 Evasion",
+                bonuses: { thresholdLower: 13, thresholdUpper: 15, evasion: 2 }
+            },
+            {
+                name: "Padded",
+                thresholdLower: 15,
+                thresholdUpper: 21,
+                armor: 2,
+                feature: "+1 Evasion",
+                bonuses: { thresholdLower: 15, thresholdUpper: 21, armor: 2, evasion: 1 }
+            },
+            {
+                name: "Leather",
+                thresholdLower: 16,
+                thresholdUpper: 23,
+                armor: 3,
+                feature: "",
+                bonuses: { thresholdLower: 16, thresholdUpper: 23, armor: 3 }
+            },
+            {
+                name: "Chain",
+                thresholdLower: 17,
+                thresholdUpper: 25,
+                armor: 4,
+                feature: "-1 Evasion",
+                bonuses: { thresholdLower: 17, thresholdUpper: 25, armor: 4, evasion: -1 }
+            },
+            {
+                name: "Plate",
+                thresholdLower: 18,
+                thresholdUpper: 27,
+                armor: 5,
+                feature: "-2 Evasion, -1 DEX",
+                bonuses: { thresholdLower: 18, thresholdUpper: 27, armor: 5, evasion: -2, dex: -1 }
+            },
+        ];
+
+        // Armor database - Tier 3 (+20 to both thresholds from Tier 1)
+        const armorDatabaseTier3 = [
+            {
+                name: "No Armor",
+                thresholdLower: 23,
+                thresholdUpper: 25,
+                armor: 0,
+                feature: "+2 Evasion",
+                bonuses: { thresholdLower: 23, thresholdUpper: 25, evasion: 2 }
+            },
+            {
+                name: "Padded",
+                thresholdLower: 25,
+                thresholdUpper: 31,
+                armor: 2,
+                feature: "+1 Evasion",
+                bonuses: { thresholdLower: 25, thresholdUpper: 31, armor: 2, evasion: 1 }
+            },
+            {
+                name: "Leather",
+                thresholdLower: 26,
+                thresholdUpper: 33,
+                armor: 3,
+                feature: "",
+                bonuses: { thresholdLower: 26, thresholdUpper: 33, armor: 3 }
+            },
+            {
+                name: "Chain",
+                thresholdLower: 27,
+                thresholdUpper: 35,
+                armor: 4,
+                feature: "-1 Evasion",
+                bonuses: { thresholdLower: 27, thresholdUpper: 35, armor: 4, evasion: -1 }
+            },
+            {
+                name: "Plate",
+                thresholdLower: 28,
+                thresholdUpper: 37,
+                armor: 5,
+                feature: "-2 Evasion, -1 DEX",
+                bonuses: { thresholdLower: 28, thresholdUpper: 37, armor: 5, evasion: -2, dex: -1 }
+            },
+        ];
+
+        // Combined armor database getter
+        function getArmorDatabase(tier = 1) {
+            if (tier === 1) return armorDatabaseTier1;
+            if (tier === 2) return armorDatabaseTier2;
+            if (tier === 3) return armorDatabaseTier3;
+            return armorDatabaseTier1; // fallback
+        }
+
         // Global weapon state
         let selectedWeapon = null;
         let currentWeaponType = null; // 'primary', 'secondary', or 'armor'
@@ -2621,7 +2717,7 @@
                     trait: "STR/DEX",
                     range: "Melee",
                     damage: "d4",
-                    feature: "+5/+10, Evasion +1, Armor +1, All Stats +1",
+                    feature: "Wild Beast Transformation",
                     bonuses: {
                         thresholdLower: 5,
                         thresholdUpper: 10,
@@ -2637,7 +2733,7 @@
                     trait: "STR/DEX",
                     range: "Melee",
                     damage: "d6", 
-                    feature: "+10/+15, Evasion +1, Armor +2, All Stats +1",
+                    feature: "Wild Beast Transformation",
                     bonuses: {
                         thresholdLower: 10,
                         thresholdUpper: 15,
@@ -2653,7 +2749,7 @@
                     trait: "STR/DEX", 
                     range: "Melee",
                     damage: "d8",
-                    feature: "+15/+20, Evasion +2, Armor +3, All Stats +1",
+                    feature: "Wild Beast Transformation",
                     bonuses: {
                         thresholdLower: 15,
                         thresholdUpper: 20,
@@ -2669,7 +2765,7 @@
                     trait: "STR/DEX",
                     range: "Melee", 
                     damage: "2d6",
-                    feature: "+20/+25, Evasion +2, Armor +4, All Stats +1",
+                    feature: "Wild Beast Transformation",
                     bonuses: {
                         thresholdLower: 20,
                         thresholdUpper: 25,
@@ -2685,7 +2781,7 @@
                     trait: "STR/DEX",
                     range: "Melee",
                     damage: "2d8", 
-                    feature: "+25/+30, Evasion +3, Armor +5, All Stats +1",
+                    feature: "Wild Beast Transformation",
                     bonuses: {
                         thresholdLower: 25,
                         thresholdUpper: 30,
@@ -3702,7 +3798,7 @@
             // Set modal title and select appropriate database
             let database, titleText, buttonText;
             if (weaponType === 'armor') {
-                database = armorDatabase;
+                database = getArmorDatabase(1); // Default to Tier 1
                 titleText = 'Select Armor';
                 buttonText = 'Add Armor';
             } else {
@@ -3714,8 +3810,32 @@
             title.textContent = titleText;
             document.getElementById('confirmWeapon').textContent = buttonText;
             
-            // Populate list
-            weaponList.innerHTML = database.map((item, index) => {
+            // Add tier selection radio buttons for armor only
+            let tierRadiosHTML = '';
+            if (weaponType === 'armor') {
+                tierRadiosHTML = `
+                    <div class="mb-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <h4 class="text-sm font-medium mb-2">Select Tier:</h4>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="armorTier" value="1" class="mr-2" checked>
+                                <span class="text-sm">Tier 1</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="armorTier" value="2" class="mr-2">
+                                <span class="text-sm">Tier 2</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="armorTier" value="3" class="mr-2">
+                                <span class="text-sm">Tier 3</span>
+                            </label>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Populate list with tier radios if armor
+            weaponList.innerHTML = tierRadiosHTML + database.map((item, index) => {
                 if (weaponType === 'armor') {
                     return `
                         <div class="weapon-item" data-weapon-index="${index}">
@@ -3750,7 +3870,9 @@
                     radio.checked = true;
                     
                     if (weaponType === 'armor') {
-                        selectedArmor = database[parseInt(radio.value)];
+                        const selectedTier = document.querySelector('input[name="armorTier"]:checked')?.value || '1';
+                        const currentDatabase = getArmorDatabase(parseInt(selectedTier));
+                        selectedArmor = currentDatabase[parseInt(radio.value)];
                     } else {
                         selectedWeapon = database[parseInt(radio.value)];
                     }
@@ -3760,6 +3882,16 @@
                     this.classList.add('selected');
                 });
             });
+            
+            // Add event listeners for tier radio buttons (armor only)
+            if (weaponType === 'armor') {
+                weaponList.querySelectorAll('input[name="armorTier"]').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        const selectedTier = parseInt(this.value);
+                        updateArmorTierDisplay(selectedTier, weaponType);
+                    });
+                });
+            }
             
             modal.classList.remove('hidden');
         }
@@ -4038,6 +4170,75 @@
             
             // Refresh the character sheet display (this will update Unarmored Defense display)
             populateCharacterSheet(currentCharacter);
+        }
+
+        function updateArmorTierDisplay(selectedTier, weaponType) {
+            const weaponList = document.getElementById('weaponList');
+            const database = getArmorDatabase(selectedTier);
+            
+            // Clear current selections
+            selectedArmor = null;
+            
+            // Get the tier radio buttons HTML (preserve it)
+            const tierRadiosHTML = `
+                <div class="mb-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <h4 class="text-sm font-medium mb-2">Select Tier:</h4>
+                    <div class="flex space-x-4">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="armorTier" value="1" class="mr-2" ${selectedTier === 1 ? 'checked' : ''}>
+                            <span class="text-sm">Tier 1</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="armorTier" value="2" class="mr-2" ${selectedTier === 2 ? 'checked' : ''}>
+                            <span class="text-sm">Tier 2</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="armorTier" value="3" class="mr-2" ${selectedTier === 3 ? 'checked' : ''}>
+                            <span class="text-sm">Tier 3</span>
+                        </label>
+                    </div>
+                </div>
+            `;
+            
+            // Update the weapon list with new tier data
+            const weaponItemsHTML = database.map((item, index) => {
+                return `
+                    <div class="weapon-item" data-weapon-index="${index}">
+                        <div class="flex items-center">
+                            <input type="radio" name="weaponSelect" class="mr-3" value="${index}">
+                            <div class="flex-1">
+                                <div class="font-semibold">${item.name} | ${item.thresholdLower} / ${item.thresholdUpper} | +${item.armor} Armor</div>
+                                ${item.feature && item.feature !== 'Nothing' ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${item.feature}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Replace the content
+            weaponList.innerHTML = tierRadiosHTML + weaponItemsHTML;
+            
+            // Re-add event listeners to items
+            weaponList.querySelectorAll('.weapon-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    selectedArmor = database[parseInt(radio.value)];
+                    
+                    // Update visual selection
+                    weaponList.querySelectorAll('.weapon-item').forEach(w => w.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Re-add event listeners for tier radio buttons
+            weaponList.querySelectorAll('input[name="armorTier"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const newSelectedTier = parseInt(this.value);
+                    updateArmorTierDisplay(newSelectedTier, weaponType);
+                });
+            });
         }
 
         function updateWeaponDisplay() {
