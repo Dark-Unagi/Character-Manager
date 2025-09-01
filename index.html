@@ -1425,20 +1425,27 @@
 
                 <!-- Character Actions Section -->
                 <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-6">
-                    <h3 class="font-semibold mb-3 text-center">Character Actions</h3>
-                    <div class="flex flex-wrap justify-center gap-3">
-                        <button id="restCharacter" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center min-w-[100px]">
-                            <i class="fas fa-bed mr-1"></i>Rest
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-semibold text-center flex-1">Character Actions</h3>
+                        <button id="characterActionsToggle" class="w-6 h-6 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded flex items-center justify-center transition-colors">
+                            <i class="fas fa-minus text-xs"></i>
                         </button>
-                        <button id="levelUpCharacter" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center min-w-[100px]">
-                            <i class="fas fa-arrow-up mr-1"></i>Level Up
-                        </button>
-                        <button id="saveCharacter" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center min-w-[100px]">
-                            <i class="fas fa-download mr-1"></i>Save
-                        </button>
-                        <button id="deleteCharacter" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center min-w-[100px]">
-                            <i class="fas fa-trash mr-1"></i>Delete
-                        </button>
+                    </div>
+                    <div id="characterActionsContent">
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <button id="restCharacter" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center min-w-[100px]">
+                                <i class="fas fa-bed mr-1"></i>Rest
+                            </button>
+                            <button id="levelUpCharacter" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center min-w-[100px]">
+                                <i class="fas fa-arrow-up mr-1"></i>Level Up
+                            </button>
+                            <button id="saveCharacter" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center min-w-[100px]">
+                                <i class="fas fa-download mr-1"></i>Save
+                            </button>
+                            <button id="deleteCharacter" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center min-w-[100px]">
+                                <i class="fas fa-trash mr-1"></i>Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1492,6 +1499,17 @@
                                 </label>
                                 <div class="text-xs text-purple-600 dark:text-purple-300 mt-1" id="mageArmorDescription">
                                     Add DEX modifier to Evasion and Level/2×Level to Thresholds
+                                </div>
+                            </div>
+                            
+                            <!-- Wild Beast -->
+                            <div id="wildBeastSection" class="mt-4 p-3 bg-green-50 dark:bg-green-900 rounded-lg" style="display: none;">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="wildBeastToggle" class="mr-2">
+                                    <span class="text-sm font-medium text-green-800 dark:text-green-200">Wild Beast</span>
+                                </label>
+                                <div class="text-xs text-green-600 dark:text-green-300 mt-1" id="wildBeastDescription">
+                                    Transform into a wild beast with level-appropriate bonuses
                                 </div>
                             </div>
                         </div>
@@ -2594,6 +2612,281 @@
         let selectedWeapon = null;
         let currentWeaponType = null; // 'primary', 'secondary', or 'armor'
         let selectedArmor = null;
+        
+        // Wild Beast weapon data based on level
+        function getWildBeastWeapon(level) {
+            if (level >= 1 && level <= 2) {
+                return {
+                    name: "Wild Beast 1",
+                    trait: "STR/DEX",
+                    range: "Melee",
+                    damage: "d4",
+                    feature: "Wild Beast Transformation",
+                    bonuses: {
+                        thresholdLower: 5,
+                        thresholdUpper: 10,
+                        evasion: 1,
+                        armor: 1,
+                        str: 1, dex: 1, con: 1, int: 1, wis: 1, cha: 1
+                    },
+                    isWildBeast: true
+                };
+            } else if (level >= 3 && level <= 4) {
+                return {
+                    name: "Wild Beast 2",
+                    trait: "STR/DEX",
+                    range: "Melee",
+                    damage: "d6", 
+                    feature: "Wild Beast Transformation",
+                    bonuses: {
+                        thresholdLower: 10,
+                        thresholdUpper: 15,
+                        evasion: 1,
+                        armor: 2,
+                        str: 1, dex: 1, con: 1, int: 1, wis: 1, cha: 1
+                    },
+                    isWildBeast: true
+                };
+            } else if (level >= 5 && level <= 6) {
+                return {
+                    name: "Wild Beast 3",
+                    trait: "STR/DEX", 
+                    range: "Melee",
+                    damage: "d8",
+                    feature: "Wild Beast Transformation",
+                    bonuses: {
+                        thresholdLower: 15,
+                        thresholdUpper: 20,
+                        evasion: 2,
+                        armor: 3,
+                        str: 1, dex: 1, con: 1, int: 1, wis: 1, cha: 1
+                    },
+                    isWildBeast: true
+                };
+            } else if (level >= 7 && level <= 8) {
+                return {
+                    name: "Wild Beast 4",
+                    trait: "STR/DEX",
+                    range: "Melee", 
+                    damage: "2d6",
+                    feature: "Wild Beast Transformation",
+                    bonuses: {
+                        thresholdLower: 20,
+                        thresholdUpper: 25,
+                        evasion: 2,
+                        armor: 4,
+                        str: 1, dex: 1, con: 1, int: 1, wis: 1, cha: 1
+                    },
+                    isWildBeast: true
+                };
+            } else if (level >= 9 && level <= 10) {
+                return {
+                    name: "Wild Beast 5",
+                    trait: "STR/DEX",
+                    range: "Melee",
+                    damage: "2d8", 
+                    feature: "Wild Beast Transformation",
+                    bonuses: {
+                        thresholdLower: 25,
+                        thresholdUpper: 30,
+                        evasion: 3,
+                        armor: 5,
+                        str: 1, dex: 1, con: 1, int: 1, wis: 1, cha: 1
+                    },
+                    isWildBeast: true
+                };
+            }
+            return null;
+        }
+
+        // Wild Beast toggle functions
+        function handleWildBeastToggle(isChecked) {
+            if (!currentCharacter) return;
+            
+            if (isChecked) {
+                // Apply Wild Beast transformation
+                applyWildBeastTransformation();
+                currentCharacter.wildBeastActive = true;
+            } else {
+                // Remove Wild Beast transformation
+                removeWildBeastTransformation();
+                currentCharacter.wildBeastActive = false;
+            }
+            
+            saveCharacters();
+            populateCharacterSheet(currentCharacter);
+        }
+        
+        function applyWildBeastTransformation() {
+            if (!currentCharacter) return;
+            
+            const level = currentCharacter.level || 1;
+            const wildBeastWeapon = getWildBeastWeapon(level);
+            
+            if (!wildBeastWeapon) return;
+            
+            // Store current equipment for restoration
+            if (!currentCharacter.wildBeastStoredEquipment) {
+                currentCharacter.wildBeastStoredEquipment = {
+                    primaryWeapon: currentCharacter.primaryWeapon ? { ...currentCharacter.primaryWeapon } : null,
+                    secondaryWeapon: currentCharacter.secondaryWeapon ? { ...currentCharacter.secondaryWeapon } : null,
+                    armorItem: currentCharacter.armorItem ? { ...currentCharacter.armorItem } : null,
+                    primaryWeaponBonuses: { ...currentCharacter.primaryWeaponBonuses } || {},
+                    secondaryWeaponBonuses: { ...currentCharacter.secondaryWeaponBonuses } || {},
+                    armorBonuses: { ...currentCharacter.armorBonuses } || {},
+                    primaryWeaponAbilityBonuses: { ...currentCharacter.primaryWeaponAbilityBonuses } || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+                    secondaryWeaponAbilityBonuses: { ...currentCharacter.secondaryWeaponAbilityBonuses } || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+                    armorAbilityBonuses: { ...currentCharacter.armorAbilityBonuses } || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 }
+                };
+            }
+            
+            // Remove current equipment bonuses
+            if (currentCharacter.primaryWeapon) {
+                removeWeaponBonuses(currentCharacter.primaryWeapon.bonuses, 'primary');
+            }
+            if (currentCharacter.secondaryWeapon) {
+                removeWeaponBonuses(currentCharacter.secondaryWeapon.bonuses, 'secondary');
+            }
+            if (currentCharacter.armorItem) {
+                removeArmorBonuses(currentCharacter.armorItem.bonuses);
+            }
+            
+            // Clear current equipment
+            delete currentCharacter.primaryWeapon;
+            delete currentCharacter.secondaryWeapon;
+            delete currentCharacter.armorItem;
+            
+            // Equip Wild Beast weapon
+            currentCharacter.primaryWeapon = { ...wildBeastWeapon };
+            
+            // Apply Wild Beast bonuses
+            applyWildBeastBonuses(wildBeastWeapon.bonuses);
+        }
+        
+        function removeWildBeastTransformation() {
+            if (!currentCharacter || !currentCharacter.wildBeastStoredEquipment) return;
+            
+            // Remove Wild Beast bonuses
+            if (currentCharacter.primaryWeapon && currentCharacter.primaryWeapon.isWildBeast) {
+                removeWildBeastBonuses(currentCharacter.primaryWeapon.bonuses);
+                delete currentCharacter.primaryWeapon;
+            }
+            
+            // Restore stored equipment
+            const stored = currentCharacter.wildBeastStoredEquipment;
+            
+            if (stored.primaryWeapon) {
+                currentCharacter.primaryWeapon = { ...stored.primaryWeapon };
+                currentCharacter.primaryWeaponBonuses = { ...stored.primaryWeaponBonuses };
+                currentCharacter.primaryWeaponAbilityBonuses = { ...stored.primaryWeaponAbilityBonuses };
+                applyWeaponBonuses(stored.primaryWeapon.bonuses, 'primary');
+            }
+            
+            if (stored.secondaryWeapon) {
+                currentCharacter.secondaryWeapon = { ...stored.secondaryWeapon };
+                currentCharacter.secondaryWeaponBonuses = { ...stored.secondaryWeaponBonuses };
+                currentCharacter.secondaryWeaponAbilityBonuses = { ...stored.secondaryWeaponAbilityBonuses };
+                applyWeaponBonuses(stored.secondaryWeapon.bonuses, 'secondary');
+            }
+            
+            if (stored.armorItem) {
+                currentCharacter.armorItem = { ...stored.armorItem };
+                currentCharacter.armorBonuses = { ...stored.armorBonuses };
+                currentCharacter.armorAbilityBonuses = { ...stored.armorAbilityBonuses };
+                applyArmorBonuses(stored.armorItem.bonuses);
+            }
+            
+            // Clear stored equipment
+            delete currentCharacter.wildBeastStoredEquipment;
+        }
+        
+        function applyWildBeastBonuses(bonuses) {
+            if (!currentCharacter || !bonuses) return;
+            
+            // Store Wild Beast bonuses for removal
+            currentCharacter.wildBeastBonuses = {};
+            currentCharacter.wildBeastAbilityBonuses = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+            
+            Object.keys(bonuses).forEach(stat => {
+                const bonus = bonuses[stat];
+                
+                if (stat === 'evasion') {
+                    currentCharacter[stat] = (currentCharacter[stat] || 0) + bonus;
+                    currentCharacter.wildBeastBonuses[stat] = bonus;
+                } else if (stat === 'armor') {
+                    currentCharacter[stat] = (currentCharacter[stat] || 0) + bonus;
+                    currentCharacter.wildBeastBonuses[stat] = bonus;
+                    // Add armor slots
+                    if (!currentCharacter.armorSlots) {
+                        currentCharacter.armorSlots = { total: 0, filled: [], permanent: 0, temporary: 0 };
+                    }
+                    currentCharacter.armorSlots.total += bonus;
+                    currentCharacter.armorSlots.permanent += bonus;
+                } else if (stat === 'hp' || stat === 'stress' || stat === 'class' || stat === 'spell') {
+                    const maxKey = stat + 'Max';
+                    currentCharacter[maxKey] = (currentCharacter[maxKey] || 0) + bonus;
+                    if (currentCharacter.resources && currentCharacter.resources[stat]) {
+                        currentCharacter.resources[stat].max += bonus;
+                    }
+                    currentCharacter.wildBeastBonuses[stat] = bonus;
+                } else if (stat === 'thresholdLower' || stat === 'thresholdUpper') {
+                    currentCharacter[stat] = (currentCharacter[stat] || 0) + bonus;
+                    currentCharacter.wildBeastBonuses[stat] = bonus;
+                } else if (['str', 'dex', 'con', 'int', 'wis', 'cha'].includes(stat)) {
+                    currentCharacter.wildBeastAbilityBonuses[stat] = bonus;
+                }
+            });
+        }
+        
+        function removeWildBeastBonuses(bonuses) {
+            if (!currentCharacter || !bonuses) return;
+            
+            Object.keys(bonuses).forEach(stat => {
+                const bonus = bonuses[stat];
+                
+                if (stat === 'evasion') {
+                    currentCharacter[stat] = (currentCharacter[stat] || 0) - bonus;
+                } else if (stat === 'armor') {
+                    currentCharacter[stat] = (currentCharacter[stat] || 0) - bonus;
+                    // Remove armor slots
+                    if (currentCharacter.armorSlots) {
+                        currentCharacter.armorSlots.total = Math.max(0, currentCharacter.armorSlots.total - bonus);
+                        currentCharacter.armorSlots.permanent = Math.max(0, currentCharacter.armorSlots.permanent - bonus);
+                        currentCharacter.armorSlots.filled = currentCharacter.armorSlots.filled.filter(index => index < currentCharacter.armorSlots.total);
+                    }
+                } else if (stat === 'hp' || stat === 'stress' || stat === 'class' || stat === 'spell') {
+                    const maxKey = stat + 'Max';
+                    currentCharacter[maxKey] = (currentCharacter[maxKey] || 0) - bonus;
+                    if (currentCharacter.resources && currentCharacter.resources[stat]) {
+                        currentCharacter.resources[stat].max -= bonus;
+                        if (currentCharacter.resources[stat].max < 0) {
+                            currentCharacter.resources[stat].max = 0;
+                        }
+                    }
+                } else if (stat === 'thresholdLower' || stat === 'thresholdUpper') {
+                    currentCharacter[stat] = (currentCharacter[stat] || 0) - bonus;
+                }
+            });
+            
+            // Clear Wild Beast bonuses tracking
+            currentCharacter.wildBeastBonuses = {};
+            currentCharacter.wildBeastAbilityBonuses = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+        }
+        
+        function updateWildBeastDisplay() {
+            if (!currentCharacter) return;
+            
+            const section = document.getElementById('wildBeastSection');
+            const checkbox = document.getElementById('wildBeastToggle');
+            
+            // Show section only for Druid
+            if (currentCharacter.class === 'Druid') {
+                section.style.display = 'block';
+                checkbox.checked = currentCharacter.wildBeastActive || false;
+            } else {
+                section.style.display = 'none';
+            }
+        }
 
         // Rest system state
         let restSelectedResources = [];
@@ -3869,11 +4162,23 @@
                 
                 if (!currentCharacter[weaponProperty]) return;
                 
-                // Remove weapon bonuses
-                removeWeaponBonuses(currentCharacter[weaponProperty].bonuses, currentWeaponType);
-                
-                // Remove weapon from character
-                delete currentCharacter[weaponProperty];
+                // Check if this is a Wild Beast weapon
+                if (currentCharacter[weaponProperty].isWildBeast) {
+                    // Handle Wild Beast removal - uncheck the checkbox and restore equipment
+                    currentCharacter.wildBeastActive = false;
+                    const wildBeastCheckbox = document.getElementById('wildBeastToggle');
+                    if (wildBeastCheckbox) {
+                        wildBeastCheckbox.checked = false;
+                    }
+                    // Remove Wild Beast transformation
+                    removeWildBeastTransformation();
+                } else {
+                    // Remove normal weapon bonuses
+                    removeWeaponBonuses(currentCharacter[weaponProperty].bonuses, currentWeaponType);
+                    
+                    // Remove weapon from character
+                    delete currentCharacter[weaponProperty];
+                }
             }
             
             // Update display
@@ -5307,18 +5612,19 @@
             // Threshold temp boxes
             updateThresholdTempBoxes(character);
             
-            // Stats (include race bonuses, weapon bonuses, and armor bonuses)
+            // Stats (include race bonuses, weapon bonuses, armor bonuses, and Wild Beast bonuses)
             const raceAbilityBonuses = character.abilityScoreAllocations || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
             const primaryWeaponAbilityBonuses = character.primaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
             const secondaryWeaponAbilityBonuses = character.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
             const armorAbilityBonuses = character.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+            const wildBeastAbilityBonuses = character.wildBeastAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
             
-            const displayStr = (character.str || 0) + raceAbilityBonuses.str + primaryWeaponAbilityBonuses.str + secondaryWeaponAbilityBonuses.str + armorAbilityBonuses.str;
-            const displayDex = (character.dex || 0) + raceAbilityBonuses.dex + primaryWeaponAbilityBonuses.dex + secondaryWeaponAbilityBonuses.dex + armorAbilityBonuses.dex;
-            const displayCon = (character.con || 0) + raceAbilityBonuses.con + primaryWeaponAbilityBonuses.con + secondaryWeaponAbilityBonuses.con + armorAbilityBonuses.con;
-            const displayInt = (character.int || 0) + raceAbilityBonuses.int + primaryWeaponAbilityBonuses.int + secondaryWeaponAbilityBonuses.int + armorAbilityBonuses.int;
-            const displayWis = (character.wis || 0) + raceAbilityBonuses.wis + primaryWeaponAbilityBonuses.wis + secondaryWeaponAbilityBonuses.wis + armorAbilityBonuses.wis;
-            const displayCha = (character.cha || 0) + raceAbilityBonuses.cha + primaryWeaponAbilityBonuses.cha + secondaryWeaponAbilityBonuses.cha + armorAbilityBonuses.cha;
+            const displayStr = (character.str || 0) + raceAbilityBonuses.str + primaryWeaponAbilityBonuses.str + secondaryWeaponAbilityBonuses.str + armorAbilityBonuses.str + wildBeastAbilityBonuses.str;
+            const displayDex = (character.dex || 0) + raceAbilityBonuses.dex + primaryWeaponAbilityBonuses.dex + secondaryWeaponAbilityBonuses.dex + armorAbilityBonuses.dex + wildBeastAbilityBonuses.dex;
+            const displayCon = (character.con || 0) + raceAbilityBonuses.con + primaryWeaponAbilityBonuses.con + secondaryWeaponAbilityBonuses.con + armorAbilityBonuses.con + wildBeastAbilityBonuses.con;
+            const displayInt = (character.int || 0) + raceAbilityBonuses.int + primaryWeaponAbilityBonuses.int + secondaryWeaponAbilityBonuses.int + armorAbilityBonuses.int + wildBeastAbilityBonuses.int;
+            const displayWis = (character.wis || 0) + raceAbilityBonuses.wis + primaryWeaponAbilityBonuses.wis + secondaryWeaponAbilityBonuses.wis + armorAbilityBonuses.wis + wildBeastAbilityBonuses.wis;
+            const displayCha = (character.cha || 0) + raceAbilityBonuses.cha + primaryWeaponAbilityBonuses.cha + secondaryWeaponAbilityBonuses.cha + armorAbilityBonuses.cha + wildBeastAbilityBonuses.cha;
             
             document.getElementById('displayStr').textContent = displayStr >= 0 ? `+${displayStr}` : displayStr;
             document.getElementById('displayDex').textContent = displayDex >= 0 ? `+${displayDex}` : displayDex;
@@ -5363,6 +5669,9 @@
             
             // Update Mage Armor display
             updateMageArmorDisplay();
+            
+            // Update Wild Beast display
+            updateWildBeastDisplay();
             
             // Update level up button state
             updateLevelUpButtonState(character);
@@ -5723,8 +6032,12 @@
             updateClassValues(this.value);
         });
 
-        // Familiar toggle functionality
+        // Character Actions toggle functionality
         document.addEventListener('click', function(e) {
+            if (e.target.id === 'characterActionsToggle' || e.target.closest('#characterActionsToggle')) {
+                toggleCharacterActionsSection();
+            }
+            // Familiar toggle functionality
             if (e.target.id === 'familiarToggle' || e.target.closest('#familiarToggle')) {
                 toggleFamiliarSection();
             }
@@ -5741,6 +6054,19 @@
                 handleCompanionResourceClick(e.target);
             }
         });
+
+        function toggleCharacterActionsSection() {
+            const content = document.getElementById('characterActionsContent');
+            const toggleButton = document.getElementById('characterActionsToggle');
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                toggleButton.innerHTML = '<i class="fas fa-minus text-xs"></i>';
+            } else {
+                content.style.display = 'none';
+                toggleButton.innerHTML = '<i class="fas fa-plus text-xs"></i>';
+            }
+        }
 
         function toggleFamiliarSection() {
             const content = document.getElementById('familiarContent');
@@ -6912,12 +7238,14 @@
             }
         });
         
-        // Unarmored Defense and Mage Armor toggles
+        // Unarmored Defense, Mage Armor, and Wild Beast toggles
         document.addEventListener('change', function(e) {
             if (e.target.id === 'unarmoredDefenseToggle') {
                 handleUnarmoredDefenseToggle(e.target.checked);
             } else if (e.target.id === 'mageArmorToggle') {
                 handleMageArmorToggle(e.target.checked);
+            } else if (e.target.id === 'wildBeastToggle') {
+                handleWildBeastToggle(e.target.checked);
             }
         });
 
@@ -7563,6 +7891,32 @@
                 }
             } else {
                 editFamiliarSection.style.display = 'none';
+            }
+            
+            // Handle companion section
+            const editCompanionSection = document.getElementById('editCompanionSection');
+            if (currentCharacter.class === 'Ranger') {
+                editCompanionSection.style.display = 'block';
+                
+                // Set companion checkbox, name, and type
+                const hasCompanionCheckbox = document.getElementById('editHasCompanion');
+                const companionDetailsSection = document.getElementById('editCompanionDetailsSection');
+                const companionNameInput = document.getElementById('editCompanionName');
+                const companionTypeSelect = document.getElementById('editCompanionType');
+                
+                if (currentCharacter.companion) {
+                    hasCompanionCheckbox.checked = true;
+                    companionDetailsSection.classList.remove('hidden');
+                    companionNameInput.value = currentCharacter.companion.name || 'Companion';
+                    companionTypeSelect.value = currentCharacter.companion.type || 'Bear';
+                } else {
+                    hasCompanionCheckbox.checked = false;
+                    companionDetailsSection.classList.add('hidden');
+                    companionNameInput.value = '';
+                    companionTypeSelect.value = '';
+                }
+            } else {
+                editCompanionSection.style.display = 'none';
             }
             
             // Generate resource boxes
@@ -8355,6 +8709,20 @@
             
             // Update character's main evasion value
             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+            
+            // Apply threshold bonuses for Barbarians (+1/+1 per level)
+            if (currentCharacter.class === 'Barbarian') {
+                const level = currentCharacter.level || 1;
+                
+                // Initialize Unarmored Defense threshold bonuses
+                if (!currentCharacter.unarmoredDefenseThresholdBonuses) {
+                    currentCharacter.unarmoredDefenseThresholdBonuses = { lower: 0, upper: 0 };
+                }
+                
+                // Apply +1/+1 threshold bonus per level
+                currentCharacter.unarmoredDefenseThresholdBonuses.lower = level;
+                currentCharacter.unarmoredDefenseThresholdBonuses.upper = level;
+            }
             
             // Auto-equip ceremonial Unarmored Defense "armor" for display purposes  
             if (!currentCharacter.armorItem) {
