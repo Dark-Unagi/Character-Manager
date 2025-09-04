@@ -902,6 +902,19 @@
                         </div>
                     </div>
 
+                    <!-- Jack of all Trades Section (for Bard) -->
+                    <div id="jackOfAllTradesSection" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg" style="display: none;">
+                        <h3 class="text-lg font-semibold mb-4">Jack of all Trades</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="hasJackOfAllTrades" class="mr-2">
+                                    <span class="text-sm font-medium">Jack of all Trades</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Ability Scores -->
                     <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
                         <div class="flex justify-between items-center mb-4">
@@ -1198,6 +1211,19 @@
                                         <option value="Hawk">Hawk</option>
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Jack of all Trades Section (for Bard) -->
+                    <div id="editJackOfAllTradesSection" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg" style="display: none;">
+                        <h3 class="text-lg font-semibold mb-4">Jack of all Trades</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="editHasJackOfAllTrades" class="mr-2">
+                                    <span class="text-sm font-medium">Jack of all Trades</span>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -1510,6 +1536,14 @@
                                 </label>
                                 <div class="text-xs text-green-600 dark:text-green-300 mt-1" id="wildBeastDescription">
                                     Transform into a wild beast with level-appropriate bonuses
+                                </div>
+                            </div>
+                            
+                            <!-- Jack of all Trades -->
+                            <div id="jackOfAllTradesSheetSection" class="mt-4 p-3 bg-orange-50 dark:bg-orange-900 rounded-lg" style="display: none;">
+                                <div class="text-sm font-medium text-orange-800 dark:text-orange-200">Jack of all Trades</div>
+                                <div class="text-xs text-orange-600 dark:text-orange-300 mt-1" id="jackOfAllTradesDescription">
+                                    All skills have increased by +X, Ability proficiency is added.
                                 </div>
                             </div>
                         </div>
@@ -6020,6 +6054,9 @@
             // Update Wild Beast display
             updateWildBeastDisplay();
             
+            // Update Jack of all Trades display
+            updateJackOfAllTradesDisplay();
+            
             // Update level up button state
             updateLevelUpButtonState(character);
             
@@ -6044,6 +6081,23 @@
             const primaryWeaponAbilityBonuses = character.primaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
             const secondaryWeaponAbilityBonuses = character.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
             const armorAbilityBonuses = character.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+            const wildBeastAbilityBonuses = character.wildBeastAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+            
+            // Calculate Jack of all Trades bonus if active
+            let jackOfAllTradesBonus = 0;
+            if (character.class === 'Bard' && character.jackOfAllTradesActive) {
+                const level = character.level || 1;
+                if (level >= 1 && level <= 5) {
+                    jackOfAllTradesBonus = 1;
+                } else if (level >= 6 && level <= 9) {
+                    jackOfAllTradesBonus = 2;
+                } else if (level >= 10) {
+                    jackOfAllTradesBonus = 3;
+                }
+                
+                // Debug logging to verify Jack of all Trades is working
+                console.log(`Jack of all Trades active for ${character.name} (Level ${level}): +${jackOfAllTradesBonus} bonus`);
+            }
             
             defaultSkills.forEach(skill => {
                 const baseModifier = character[skill.ability] || 0;
@@ -6051,12 +6105,29 @@
                 const primaryWeaponBonus = primaryWeaponAbilityBonuses[skill.ability] || 0;
                 const secondaryWeaponBonus = secondaryWeaponAbilityBonuses[skill.ability] || 0;
                 const armorBonus = armorAbilityBonuses[skill.ability] || 0;
-                const totalModifier = baseModifier + raceBonus + primaryWeaponBonus + secondaryWeaponBonus + armorBonus;
+                const wildBeastBonus = wildBeastAbilityBonuses[skill.ability] || 0;
+                
+                // Add proficiency bonus if character is proficient in this skill's ability
+                let proficiencyBonus = 0;
+                if (character.proficiencies && character.proficiencies[skill.ability]) {
+                    // Add the ability modifier again if proficient
+                    const totalAbilityModifier = baseModifier + raceBonus + primaryWeaponBonus + secondaryWeaponBonus + armorBonus + wildBeastBonus;
+                    proficiencyBonus = totalAbilityModifier;
+                }
+                
+                const totalModifier = baseModifier + raceBonus + primaryWeaponBonus + secondaryWeaponBonus + armorBonus + wildBeastBonus + jackOfAllTradesBonus;
                 
                 const skillDiv = document.createElement('div');
                 skillDiv.className = 'flex justify-between items-center p-2 bg-white dark:bg-gray-700 rounded hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer';
+                
+                // Add visual indicator for Jack of all Trades bonus
+                let skillDisplayName = skill.name;
+                if (jackOfAllTradesBonus > 0) {
+                    skillDisplayName += ` <span class="text-xs text-orange-500 dark:text-orange-400">(+${jackOfAllTradesBonus} JoAT)</span>`;
+                }
+                
                 skillDiv.innerHTML = `
-                    <span>${skill.name}</span>
+                    <span>${skillDisplayName}</span>
                     <span class="font-semibold">${totalModifier >= 0 ? '+' : ''}${totalModifier}</span>
                 `;
                 skillsList.appendChild(skillDiv);
@@ -6737,6 +6808,12 @@
                 };
             }
 
+            // Handle Jack of all Trades for Bard
+            let jackOfAllTradesActive = false;
+            if (characterClass === 'Bard' && document.getElementById('hasJackOfAllTrades').checked) {
+                jackOfAllTradesActive = true;
+            }
+
             const character = {
                 id: Date.now().toString(),
                 name: document.getElementById('charName').value,
@@ -6795,6 +6872,8 @@
                 familiar: familiarData,
                 // Store companion data
                 companion: companionData,
+                // Store Jack of all Trades data
+                jackOfAllTradesActive: jackOfAllTradesActive,
                 // Initialize weapon and armor properties
                 primaryWeapon: null,
                 secondaryWeapon: null,
@@ -7925,6 +8004,7 @@
         document.getElementById('charClass').addEventListener('change', function() {
             const familiarSection = document.getElementById('familiarSection');
             const companionSection = document.getElementById('companionSection');
+            const jackOfAllTradesSection = document.getElementById('jackOfAllTradesSection');
             
             // Handle Familiar section (Wizard/Warlock)
             if (this.value === 'Wizard' || this.value === 'Warlock') {
@@ -7949,12 +8029,22 @@
                 document.getElementById('companionType').value = '';
             }
             
+            // Handle Jack of all Trades section (Bard)
+            if (this.value === 'Bard') {
+                jackOfAllTradesSection.style.display = 'block';
+            } else {
+                jackOfAllTradesSection.style.display = 'none';
+                // Reset Jack of all Trades when class changes away from Bard
+                document.getElementById('hasJackOfAllTrades').checked = false;
+            }
+            
             updateClassValues(this.value);
         });
 
         document.getElementById('editCharClass').addEventListener('change', function() {
             const familiarSection = document.getElementById('editFamiliarSection');
             const companionSection = document.getElementById('editCompanionSection');
+            const jackOfAllTradesSection = document.getElementById('editJackOfAllTradesSection');
             
             // Handle Familiar section (Wizard/Warlock)
             if (this.value === 'Wizard' || this.value === 'Warlock') {
@@ -7977,6 +8067,15 @@
                 document.getElementById('editCompanionDetailsSection').classList.add('hidden');
                 document.getElementById('editCompanionName').value = '';
                 document.getElementById('editCompanionType').value = '';
+            }
+            
+            // Handle Jack of all Trades section (Bard)
+            if (this.value === 'Bard') {
+                jackOfAllTradesSection.style.display = 'block';
+            } else {
+                jackOfAllTradesSection.style.display = 'none';
+                // Reset Jack of all Trades when class changes away from Bard
+                document.getElementById('editHasJackOfAllTrades').checked = false;
             }
         });
 
@@ -9192,6 +9291,18 @@
                 // Remove companion if class is changed away from Ranger
                 currentCharacter.companion = null;
             }
+
+            // Handle Jack of all Trades for Bard  
+            if (currentCharacter.class === 'Bard') {
+                if (document.getElementById('editHasJackOfAllTrades').checked) {
+                    currentCharacter.jackOfAllTradesActive = true;
+                } else {
+                    currentCharacter.jackOfAllTradesActive = false;
+                }
+            } else {
+                // Remove Jack of all Trades if class is changed away from Bard
+                currentCharacter.jackOfAllTradesActive = false;
+            }
             
             // Save changes
             saveCharacters();
@@ -9537,6 +9648,32 @@
             if (currentCharacter.class === 'Wizard' || currentCharacter.class === 'Sorcerer') {
                 section.style.display = 'block';
                 checkbox.checked = currentCharacter.mageArmorActive || false;
+            } else {
+                section.style.display = 'none';
+            }
+        }
+
+        function updateJackOfAllTradesDisplay() {
+            if (!currentCharacter) return;
+            
+            const section = document.getElementById('jackOfAllTradesSheetSection');
+            const description = document.getElementById('jackOfAllTradesDescription');
+            
+            // Show section only for Bard with Jack of all Trades active
+            if (currentCharacter.class === 'Bard' && currentCharacter.jackOfAllTradesActive) {
+                section.style.display = 'block';
+                
+                // Calculate Jack of all Trades bonus based on level
+                const level = currentCharacter.level || 1;
+                let jackBonus = 1; // Default bonus
+                
+                if (level >= 5 && level <= 7) {
+                    jackBonus = 2;
+                } else if (level >= 8 && level <= 10) {
+                    jackBonus = 3;
+                }
+                
+                description.textContent = `All skills have increased by +${jackBonus}, Ability proficiency is added.`;
             } else {
                 section.style.display = 'none';
             }
