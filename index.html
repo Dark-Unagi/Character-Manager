@@ -1248,27 +1248,27 @@
                             <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
                                 <div class="text-center">
                                     <label class="block text-xs font-medium mb-1">STR</label>
-                                    <input type="number" id="editStrInput" min="-5" max="10" class="w-full px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <input type="number" id="editStrInput" min="-5" max="10" class="w-full px-2 py-1 text-base text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
                                 </div>
                                 <div class="text-center">
                                     <label class="block text-xs font-medium mb-1">DEX</label>
-                                    <input type="number" id="editDexInput" min="-5" max="10" class="w-full px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <input type="number" id="editDexInput" min="-5" max="10" class="w-full px-2 py-1 text-base text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
                                 </div>
                                 <div class="text-center">
                                     <label class="block text-xs font-medium mb-1">CON</label>
-                                    <input type="number" id="editConInput" min="-5" max="10" class="w-full px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <input type="number" id="editConInput" min="-5" max="10" class="w-full px-2 py-1 text-base text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
                                 </div>
                                 <div class="text-center">
                                     <label class="block text-xs font-medium mb-1">INT</label>
-                                    <input type="number" id="editIntInput" min="-5" max="10" class="w-full px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <input type="number" id="editIntInput" min="-5" max="10" class="w-full px-2 py-1 text-base text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
                                 </div>
                                 <div class="text-center">
                                     <label class="block text-xs font-medium mb-1">WIS</label>
-                                    <input type="number" id="editWisInput" min="-5" max="10" class="w-full px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <input type="number" id="editWisInput" min="-5" max="10" class="w-full px-2 py-1 text-base text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
                                 </div>
                                 <div class="text-center">
                                     <label class="block text-xs font-medium mb-1">CHA</label>
-                                    <input type="number" id="editChaInput" min="-5" max="10" class="w-full px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <input type="number" id="editChaInput" min="-5" max="10" class="w-full px-2 py-1 text-base text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
                                 </div>
                             </div>
                         </div>
@@ -2291,6 +2291,53 @@
                 <button type="button" id="cancelCharacterDeletion" class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Cancel</button>
                 <button type="button" id="confirmCharacterDeletion" class="px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded opacity-50 cursor-not-allowed" disabled>Delete Character</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Floating Dice Button -->
+    <div id="floatingDiceButton" class="fixed bottom-6 left-6 z-40">
+        <button class="w-14 h-14 bg-primary hover:bg-primary-dark text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center">
+            <i class="fas fa-dice text-xl"></i>
+        </button>
+    </div>
+
+    <!-- Dice Selection Modal -->
+    <div id="diceSelectionModal" class="fixed bottom-6 left-8 z-50 hidden w-12">
+        <div class="flex flex-col-reverse items-center">
+            <!-- Modal Content -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-600 mb-1 p-1 transform transition-all duration-300 origin-bottom scale-0" id="diceModalContent">
+                <div class="flex flex-col items-center space-y-3">
+                    <!-- Header with counter -->
+                    <div class="flex justify-between items-center mb-1">
+                        <div class="bg-primary text-white px-2 py-1 rounded text-xs font-bold" id="diceCounter">0</div>
+                        <div class="text-center text-xs font-medium text-gray-700 dark:text-gray-300">Roll Dice</div>
+                        <div class="w-6"></div> <!-- Spacer for alignment -->
+                    </div>
+                    
+                    <!-- Dice buttons -->
+                    <button class="dice-option-btn w-12 h-12 bg-red-500 hover:bg-red-600 text-white rounded-full font-bold text-sm transition-colors" data-dice="d4">d4</button>
+                    <button class="dice-option-btn w-12 h-12 bg-orange-500 hover:bg-orange-600 text-white rounded-full font-bold text-sm transition-colors" data-dice="d6">d6</button>
+                    <button class="dice-option-btn w-12 h-12 bg-yellow-500 hover:bg-yellow-600 text-white rounded-full font-bold text-sm transition-colors" data-dice="d8">d8</button>
+                    <button class="dice-option-btn w-12 h-12 bg-green-500 hover:bg-green-600 text-white rounded-full font-bold text-sm transition-colors" data-dice="d10">d10</button>
+                    <button class="dice-option-btn w-12 h-12 bg-blue-500 hover:bg-blue-600 text-white rounded-full font-bold text-sm transition-colors" data-dice="d12">d12</button>
+                    <button class="dice-option-btn w-12 h-12 bg-purple-500 hover:bg-purple-600 text-white rounded-full font-bold text-sm transition-colors" data-dice="d20">d20</button>
+                    
+                    <!-- Roll Dice Button -->
+                    <button id="rollDiceBtn" class="w-12 py-1 bg-green-500 hover:bg-green-600 text-white rounded font-bold text-sm transition-colors mt-2">
+                        Roll Dice
+                    </button>
+                    
+                    <!-- Clear Counter Button -->
+                    <button id="clearDiceBtn" class="w-12 py-1 bg-gray-500 hover:bg-gray-600 text-white rounded text-xs transition-colors">
+                        Clear
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Trigger Button (visible when modal is open) -->
+            <button id="closeDiceModal" class="w-14 h-14 bg-primary hover:bg-primary-dark text-white rounded-full shadow-lg flex items-center justify-center transition-colors absolute bottom-0 -right-20">
+                <i class="fas fa-times text-xl"></i>
+            </button>
         </div>
     </div>
 
@@ -8170,6 +8217,363 @@
                 confirmButton.classList.add('opacity-50', 'cursor-not-allowed');
             }
         });
+
+        // Floating Dice Button Event Listeners
+        document.getElementById('floatingDiceButton').addEventListener('click', function() {
+            showDiceSelectionModal();
+        });
+
+        document.getElementById('closeDiceModal').addEventListener('click', function() {
+            hideDiceSelectionModal();
+        });
+
+        // Dice counter state - track multiple dice types
+        let diceSelections = {
+            d4: 0,
+            d6: 0,
+            d8: 0,
+            d10: 0,
+            d12: 0,
+            d20: 0
+        };
+
+        // Add event listeners for dice option buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('dice-option-btn')) {
+                const diceType = e.target.dataset.dice;
+                incrementDiceCounter(diceType);
+            }
+        });
+
+        // Add event listeners for dice roll and clear buttons
+        document.getElementById('rollDiceBtn').addEventListener('click', function() {
+            const totalDice = Object.values(diceSelections).reduce((sum, count) => sum + count, 0);
+            if (totalDice > 0) {
+                rollAllSelectedDice();
+                resetDiceCounter();
+                hideDiceSelectionModal();
+            }
+        });
+
+        document.getElementById('clearDiceBtn').addEventListener('click', function() {
+            resetDiceCounter();
+        });
+
+        // Dice counter functions
+        function incrementDiceCounter(diceType) {
+            diceSelections[diceType]++;
+            updateDiceCounterDisplay();
+        }
+
+        function resetDiceCounter() {
+            diceSelections = {
+                d4: 0,
+                d6: 0,
+                d8: 0,
+                d10: 0,
+                d12: 0,
+                d20: 0
+            };
+            updateDiceCounterDisplay();
+        }
+
+        function updateDiceCounterDisplay() {
+            // Update the global counter with total dice
+            const totalDice = Object.values(diceSelections).reduce((sum, count) => sum + count, 0);
+            document.getElementById('diceCounter').textContent = totalDice;
+            
+            // Update individual button counters
+            document.querySelectorAll('.dice-option-btn').forEach(btn => {
+                const diceType = btn.dataset.dice;
+                const count = diceSelections[diceType];
+                
+                if (count > 0) {
+                    // Show counter on button
+                    btn.innerHTML = `${diceType} <span class="text-xs">(${count})</span>`;
+                } else {
+                    // Reset button text
+                    btn.textContent = diceType;
+                }
+            });
+        }
+
+        function rollAllSelectedDice() {
+            const allRolls = [];
+            let grandTotal = 0;
+            
+            // Roll each dice type
+            Object.keys(diceSelections).forEach(diceType => {
+                const count = diceSelections[diceType];
+                if (count > 0) {
+                    const sides = parseInt(diceType.substring(1));
+                    const rolls = [];
+                    let subtotal = 0;
+                    
+                    for (let i = 0; i < count; i++) {
+                        const roll = Math.floor(Math.random() * sides) + 1;
+                        rolls.push(roll);
+                        subtotal += roll;
+                    }
+                    
+                    allRolls.push({
+                        diceType: diceType,
+                        count: count,
+                        rolls: rolls,
+                        subtotal: subtotal
+                    });
+                    
+                    grandTotal += subtotal;
+                }
+            });
+            
+            showMultipleDiceTypesResult(allRolls, grandTotal);
+        }
+
+        function rollMultipleDice(diceType, numDice) {
+            const sides = parseInt(diceType.substring(1));
+            const rolls = [];
+            let total = 0;
+            
+            for (let i = 0; i < numDice; i++) {
+                const roll = Math.floor(Math.random() * sides) + 1;
+                rolls.push(roll);
+                total += roll;
+            }
+            
+            showMultipleDiceResult(diceType, numDice, rolls, total);
+        }
+
+        function showMultipleDiceResult(diceType, numDice, rolls, total) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
+                    <div class="text-center">
+                        <div class="mb-4">
+                            <i class="fas fa-dice text-4xl text-primary mb-2"></i>
+                            <h3 class="text-lg font-semibold">${numDice}${diceType.toUpperCase()} Roll</h3>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">Individual rolls:</div>
+                            <div class="text-lg font-medium mb-2">[${rolls.join(', ')}]</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Total:</div>
+                            <div class="text-4xl font-bold text-primary">${total}</div>
+                        </div>
+                        
+                        <div class="flex justify-center space-x-3">
+                            <button type="button" class="roll-again-multiple px-4 py-2 bg-primary text-white hover:bg-primary-dark rounded">
+                                <i class="fas fa-dice mr-1"></i>Roll Again
+                            </button>
+                            <button type="button" class="close-multiple-roll px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Close</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            modal.querySelector('.roll-again-multiple').addEventListener('click', () => {
+                // Re-roll the same dice
+                const newRolls = [];
+                let newTotal = 0;
+                const sides = parseInt(diceType.substring(1));
+                
+                for (let i = 0; i < numDice; i++) {
+                    const roll = Math.floor(Math.random() * sides) + 1;
+                    newRolls.push(roll);
+                    newTotal += roll;
+                }
+                
+                // Update the display
+                modal.querySelector('.text-lg.font-medium').textContent = `[${newRolls.join(', ')}]`;
+                modal.querySelector('.text-4xl.font-bold').textContent = newTotal;
+            });
+            
+            modal.querySelector('.close-multiple-roll').addEventListener('click', () => {
+                modal.remove();
+            });
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.remove();
+                }
+            });
+        }
+
+        function showMultipleDiceTypesResult(allRolls, grandTotal) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            
+            // Build the rolls display
+            let rollsDisplay = '';
+            allRolls.forEach(rollData => {
+                rollsDisplay += `
+                    <div class="mb-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <div class="font-semibold text-sm mb-1">${rollData.count}${rollData.diceType.toUpperCase()}</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Rolls: [${rollData.rolls.join(', ')}]</div>
+                    </div>
+                `;
+            });
+            
+            modal.innerHTML = `
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full mx-4 max-h-[80vh] overflow-y-auto">
+                    <div class="text-center">
+                        <div class="mb-4">
+                            <i class="fas fa-dice text-4xl text-primary mb-2"></i>
+                            <h3 class="text-lg font-semibold">Multiple Dice Roll</h3>
+                        </div>
+                        
+                        <div class="mb-4">
+                            ${rollsDisplay}
+                        </div>
+                        
+                        <div class="mb-6 p-4 bg-primary bg-opacity-10 rounded-lg">
+                            <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Grand Total:</div>
+                            <div class="text-4xl font-bold text-primary">${grandTotal}</div>
+                        </div>
+                        
+                        <div class="flex justify-center space-x-3">
+                            <button type="button" class="roll-again-multi px-4 py-2 bg-primary text-white hover:bg-primary-dark rounded">
+                                <i class="fas fa-dice mr-1"></i>Roll Again
+                            </button>
+                            <button type="button" class="close-multi-roll px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Close</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            modal.querySelector('.roll-again-multi').addEventListener('click', () => {
+                // Re-roll all the dice types
+                const newAllRolls = [];
+                let newGrandTotal = 0;
+                
+                allRolls.forEach(rollData => {
+                    const sides = parseInt(rollData.diceType.substring(1));
+                    const newRolls = [];
+                    let newSubtotal = 0;
+                    
+                    for (let i = 0; i < rollData.count; i++) {
+                        const roll = Math.floor(Math.random() * sides) + 1;
+                        newRolls.push(roll);
+                        newSubtotal += roll;
+                    }
+                    
+                    newAllRolls.push({
+                        diceType: rollData.diceType,
+                        count: rollData.count,
+                        rolls: newRolls,
+                        subtotal: newSubtotal
+                    });
+                    
+                    newGrandTotal += newSubtotal;
+                });
+                
+                // Remove current modal and show new one
+                modal.remove();
+                showMultipleDiceTypesResult(newAllRolls, newGrandTotal);
+            });
+            
+            modal.querySelector('.close-multi-roll').addEventListener('click', () => {
+                modal.remove();
+            });
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.remove();
+                }
+            });
+        }
+
+        function showDiceSelectionModal() {
+            const modal = document.getElementById('diceSelectionModal');
+            const modalContent = document.getElementById('diceModalContent');
+            
+            modal.classList.remove('hidden');
+            
+            // Animate the modal content expanding upward
+            setTimeout(() => {
+                modalContent.classList.remove('scale-0');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function hideDiceSelectionModal() {
+            const modal = document.getElementById('diceSelectionModal');
+            const modalContent = document.getElementById('diceModalContent');
+            
+            // Animate the modal content shrinking
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-0');
+            
+            // Hide the modal after animation
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function rollDice(diceType) {
+            // Extract the number from dice type (e.g., 'd20' -> 20)
+            const sides = parseInt(diceType.substring(1));
+            const roll = Math.floor(Math.random() * sides) + 1;
+            
+            // Show result in a simple modal
+            showSimpleDiceResult(diceType, roll);
+            
+            // Hide the dice selection modal
+            hideDiceSelectionModal();
+        }
+
+        function showSimpleDiceResult(diceType, roll) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
+                    <div class="text-center">
+                        <div class="mb-4">
+                            <i class="fas fa-dice text-4xl text-primary mb-2"></i>
+                            <h3 class="text-lg font-semibold">${diceType.toUpperCase()} Roll</h3>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="text-4xl font-bold text-primary mb-2">${roll}</div>
+                        </div>
+                        
+                        <div class="flex justify-center space-x-3">
+                            <button type="button" class="roll-again-simple px-4 py-2 bg-primary text-white hover:bg-primary-dark rounded">
+                                <i class="fas fa-dice mr-1"></i>Roll Again
+                            </button>
+                            <button type="button" class="close-simple-roll px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Close</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            modal.querySelector('.roll-again-simple').addEventListener('click', () => {
+                const newRoll = Math.floor(Math.random() * parseInt(diceType.substring(1))) + 1;
+                modal.querySelector('.text-4xl').textContent = newRoll;
+            });
+            
+            modal.querySelector('.close-simple-roll').addEventListener('click', () => {
+                modal.remove();
+            });
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.remove();
+                }
+            });
+        }
 
         // Save/Load Characters Event Listeners
         document.getElementById('saveCharactersBtn').addEventListener('click', saveAllCharacters);
