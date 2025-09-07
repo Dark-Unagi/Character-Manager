@@ -710,6 +710,32 @@
             border-color: #1F2937;
         }
 
+/*Divine Dice*/
+        .dice-floating {
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .divine-dice {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid;
+        }
+        
+        .white-die {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-color: #d1d5db;
+            color: #1f2937;
+        }
+        
+        .black-die {
+            background: linear-gradient(145deg, #374151, #1f2937);
+            border-color: #6b7280;
+            color: #ffffff;
+        }
     </style>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
@@ -2321,6 +2347,21 @@
                     <button class="dice-option-btn w-12 h-12 bg-green-500 hover:bg-green-600 text-white rounded-full font-bold text-sm transition-colors" data-dice="d10">d10</button>
                     <button class="dice-option-btn w-12 h-12 bg-blue-500 hover:bg-blue-600 text-white rounded-full font-bold text-sm transition-colors" data-dice="d12">d12</button>
                     <button class="dice-option-btn w-12 h-12 bg-purple-500 hover:bg-purple-600 text-white rounded-full font-bold text-sm transition-colors" data-dice="d20">d20</button>
+
+                     <!-- Divine Button -->
+                    <div class="relative">
+                        <button id="divineBtn" class="w-12 h-12 bg-gradient-to-r from-gray-300 to-gray-800 hover:from-gray-400 hover:to-gray-900 text-white rounded-full font-bold text-sm transition-colors">D</button>
+                        
+                        <!-- Divine Options Modal -->
+                        <div id="divineOptionsModal" class="absolute left-full ml-10 w-40 h-24 top-0 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-600 p-2 hidden transform transition-all duration-200 origin-left scale-0">
+                            <div class="static flex-col space-y-2 items-center">
+                                <div class="text-xs font-medium text-gray-700 dark:text-gray-300 text-center mb-1">Divine Roll</div>
+                                <button id="divineNormal" class=" w-10 h-10 bg-gray-500 hover:bg-gray-600 text-white rounded-full font-bold text-xs transition-colors">Nor</button>
+                                <button id="divineAdvantage" class="w-10 h-10 bg-green-600 hover:bg-green-700 text-white rounded-full font-bold text-xs transition-colors">Adv</button>
+                                <button id="divineDisadvantage" class="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full font-bold text-xs transition-colors">Dis</button>
+                            </div>
+                        </div>
+                    </div>
                     
                     <!-- Roll Dice Button -->
                     <button id="rollDiceBtn" class="w-12 py-1 bg-green-500 hover:bg-green-600 text-white rounded font-bold text-sm transition-colors mt-2">
@@ -2340,6 +2381,22 @@
             </button>
         </div>
     </div>
+
+    <!-- Divine Result Modal -->
+    <div id="divineResultModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Divine Roll Result</h3>
+                <div id="divineRollType" class="text-lg font-semibold mb-4"></div>
+                <div id="divineRollResults" class="flex justify-center items-center space-x-4 mb-6"></div>
+                <div id="divineFinalResult" class="text-3xl font-bold text-primary mb-4"></div>
+                <button id="closeDivineResult" class="px-6 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Dice Roll Result Modal -->
     <div id="diceRollModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
@@ -8518,6 +8575,123 @@
                 modal.classList.add('hidden');
             }, 300);
         }
+
+      // Divine modal functionality
+        divineBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = !divineOptionsModal.classList.contains('hidden');
+            
+            if (isOpen) {
+                closeDivineOptions();
+            } else {
+                divineOptionsModal.classList.remove('hidden');
+                setTimeout(() => {
+                    divineOptionsModal.classList.remove('scale-0');
+                    divineOptionsModal.classList.add('scale-100');
+                }, 10);
+            }
+        });
+
+             function closeDivineOptions() {
+            divineOptionsModal.classList.remove('scale-100');
+            divineOptionsModal.classList.add('scale-0');
+            setTimeout(() => {
+                divineOptionsModal.classList.add('hidden');
+            }, 200);
+        }
+
+        // Close divine options when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!divineBtn.contains(e.target) && !divineOptionsModal.contains(e.target)) {
+                closeDivineOptions();
+            }
+        });
+
+        
+        // Divine roll functions
+        function rollDivine(type) {
+            let whiteDice = [];
+            let blackDice = [];
+            
+            switch(type) {
+                case 'normal':
+                    whiteDice.push(Math.floor(Math.random() * 12) + 1);
+                    blackDice.push(Math.floor(Math.random() * 12) + 1);
+                    break;
+                case 'advantage':
+                    whiteDice.push(Math.floor(Math.random() * 12) + 1);
+                    whiteDice.push(Math.floor(Math.random() * 12) + 1);
+                    blackDice.push(Math.floor(Math.random() * 12) + 1);
+                    break;
+                case 'disadvantage':
+                    whiteDice.push(Math.floor(Math.random() * 12) + 1);
+                    blackDice.push(Math.floor(Math.random() * 12) + 1);
+                    blackDice.push(Math.floor(Math.random() * 12) + 1);
+                    break;
+            }
+            
+            showDivineResult(type, whiteDice, blackDice);
+            closeDivineOptions();
+        }
+
+        function showDivineResult(type, whiteDice, blackDice) {
+            const rollType = document.getElementById('divineRollType');
+            const rollResults = document.getElementById('divineRollResults');
+            const finalResult = document.getElementById('divineFinalResult');
+            
+            // Set roll type
+            const typeNames = {
+                'normal': 'Normal Divine Roll',
+                'advantage': 'Divine Advantage',
+                'disadvantage': 'Divine Disadvantage'
+            };
+            rollType.textContent = typeNames[type];
+            rollType.className = `text-lg font-semibold mb-4 ${
+                type === 'advantage' ? 'text-green-600' : 
+                type === 'disadvantage' ? 'text-red-600' : 'text-gray-600'
+            }`;
+            
+            // Clear previous results
+            rollResults.innerHTML = '';
+            
+            // Show white dice
+            whiteDice.forEach((value, index) => {
+                const die = document.createElement('div');
+                die.className = 'divine-dice white-die w-16 h-16 flex items-center justify-center rounded-lg font-bold text-xl';
+                die.textContent = value;
+                rollResults.appendChild(die);
+            });
+            
+            // Show black dice
+            blackDice.forEach((value, index) => {
+                const die = document.createElement('div');
+                die.className = 'divine-dice black-die w-16 h-16 flex items-center justify-center rounded-lg font-bold text-xl';
+                die.textContent = value;
+                rollResults.appendChild(die);
+            });
+            
+            // Calculate and show final result
+            const whiteTotal = whiteDice.reduce((sum, val) => sum + val, 0);
+            const blackTotal = blackDice.reduce((sum, val) => sum + val, 0);
+            const result = whiteTotal - blackTotal;
+            
+            finalResult.innerHTML = `
+                <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                    White: ${whiteTotal} - Black: ${blackTotal}
+                </div>
+            `;
+            
+            divineResultModal.classList.remove('hidden');
+        }
+
+        // Divine roll event listeners
+        divineNormal.addEventListener('click', () => rollDivine('normal'));
+        divineAdvantage.addEventListener('click', () => rollDivine('advantage'));
+        divineDisadvantage.addEventListener('click', () => rollDivine('disadvantage'));
+
+        closeDivineResult.addEventListener('click', () => {
+            divineResultModal.classList.add('hidden');
+        });
 
         function rollDice(diceType) {
             // Extract the number from dice type (e.g., 'd20' -> 20)
