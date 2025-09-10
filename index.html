@@ -2292,6 +2292,102 @@
         </div>
     </div>
 
+    <!-- Custom Armor Creation Modal -->
+<div id="customArmorModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <h3 class="text-lg font-semibold mb-6">Create Custom Armor</h3>
+        
+        <!-- Armor Name -->
+        <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Armor Name</label>
+            <input type="text" id="customArmorName" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Enter armor name">
+        </div>
+        
+        <!-- Bonuses Section -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium mb-3">Bonuses (adds actual bonuses to character)</label>
+            <div class="space-y-3">
+                <!-- Evasion -->
+                <div class="flex items-center space-x-3">
+                    <input type="checkbox" id="armorEvasionBonus" class="armor-bonus-checkbox">
+                    <label for="armorEvasionBonus" class="text-sm font-medium">Evasion:</label>
+                    <input type="number" id="armorEvasionBonusValue" class="w-20 px-2 py-1 text-base border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700" placeholder="0" disabled>
+                </div>
+                
+                <!-- Armor -->
+                <div class="flex items-center space-x-3">
+                    <input type="checkbox" id="armorArmorBonus" class="armor-bonus-checkbox">
+                    <label for="armorArmorBonus" class="text-sm font-medium">Armor:</label>
+                    <input type="number" id="armorArmorBonusValue" class="w-20 px-2 py-1 text-base border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700" placeholder="0" disabled>
+                </div>
+                
+                <!-- Ability Scores Bonuses -->
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="armorAbilityScoresBonus" class="armor-bonus-checkbox">
+                        <label for="armorAbilityScoresBonus" class="text-sm font-medium">Ability Scores:</label>
+                    </div>
+                    <div id="armorAbilityScoreBonusInputs" class="ml-2 grid grid-cols-2 md:grid-cols-3 gap-2 hidden">
+                        <div class="flex items-center space-x-1">
+                            <label class="text-xs min-w-[28px]">STR:</label>
+                            <input type="number" id="armorStrBonusValue" class="w-12 px-1 py-1 text-base border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700" placeholder="0">
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <label class="text-xs min-w-[28px]">DEX:</label>
+                            <input type="number" id="armorDexBonusValue" class="w-12 px-1 py-1 text-base border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700" placeholder="0">
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <label class="text-xs min-w-[28px]">CON:</label>
+                            <input type="number" id="armorConBonusValue" class="w-12 px-1 py-1 text-base border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700" placeholder="0">
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <label class="text-xs min-w-[28px]">INT:</label>
+                            <input type="number" id="armorIntBonusValue" class="w-12 px-1 py-1 text-base border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700" placeholder="0">
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <label class="text-xs min-w-[28px]">WIS:</label>
+                            <input type="number" id="armorWisBonusValue" class="w-12 px-1 py-1 text-base border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700" placeholder="0">
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <label class="text-xs min-w-[28px]">CHA:</label>
+                            <input type="number" id="armorChaBonusValue" class="w-12 px-1 py-1 text-base border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700" placeholder="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Threshold Lower -->
+                <div class="flex items-center space-x-3">
+                    <input type="checkbox" id="armorThresholdLowerBonus" class="armor-bonus-checkbox">
+                    <label for="armorThresholdLowerBonus" class="text-sm font-medium">Threshold (Lower):</label>
+                    <input type="number" id="armorThresholdLowerBonusValue" class="w-20 px-2 py-1 text-base border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700" placeholder="0" disabled>
+                </div>
+                
+                <!-- Threshold Upper -->
+                <div class="flex items-center space-x-3">
+                    <input type="checkbox" id="armorThresholdUpperBonus" class="armor-bonus-checkbox">
+                    <label for="armorThresholdUpperBonus" class="text-sm font-medium">Threshold (Upper):</label>
+                    <input type="number" id="armorThresholdUpperBonusValue" class="w-20 px-2 py-1 text-base border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700" placeholder="0" disabled>
+                </div>
+                
+                <!-- Notes -->
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="armorNotesBonus" class="armor-bonus-checkbox">
+                        <label for="armorNotesBonus" class="text-sm font-medium">Notes:</label>
+                    </div>
+                    <textarea id="armorNotesBonusValue" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 resize-none" rows="2" placeholder="Custom feature text..." disabled></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex justify-end space-x-3">
+            <button type="button" id="cancelCustomArmor" class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Cancel</button>
+            <button type="button" id="confirmCustomArmor" class="px-4 py-2 bg-green-500 text-white hover:bg-green-600 rounded">Create & Equip</button>
+        </div>
+    </div>
+</div>
+
     <!-- Character Deletion Confirmation Modal -->
     <div id="characterDeletionModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
@@ -3007,13 +3103,609 @@
             return armorDatabaseTier1; // fallback
         }
 
+        // Custom items storage
+let customWeapons = [];
+let customSecondaryWeapons = [];
+let customArmors = [];
+
+// ====== CUSTOM WEAPON CREATION (PRIMARY & SECONDARY) ======
+
+// Enhanced Custom Weapon Creation Function (handles both primary and secondary)
+function createCustomWeaponEnhanced() {
+    const weaponName = document.getElementById('customWeaponName').value.trim();
+    
+    if (!weaponName) {
+        showCustomDialog('Missing Name', 'Please enter a weapon name.');
+        return;
+    }
+    
+    // Collect selected traits
+    const selectedTraits = [];
+    document.querySelectorAll('.trait-checkbox:checked').forEach(checkbox => {
+        selectedTraits.push(checkbox.dataset.trait);
+    });
+    
+    // Collect bonuses
+    const bonuses = {};
+    const features = [];
+    
+    // Evasion bonus
+    if (document.getElementById('evasionBonus').checked) {
+        const value = parseInt(document.getElementById('evasionBonusValue').value) || 0;
+        if (value !== 0) {
+            bonuses.evasion = value;
+            features.push(`${value > 0 ? '+' : ''}${value} Evasion`);
+        }
+    }
+    
+    // Armor bonus
+    if (document.getElementById('armorBonus').checked) {
+        const value = parseInt(document.getElementById('armorBonusValue').value) || 0;
+        if (value !== 0) {
+            bonuses.armor = value;
+            features.push(`${value > 0 ? '+' : ''}${value} Armor`);
+        }
+    }
+    
+    // Ability Score bonuses
+    if (document.getElementById('abilityScoresBonus').checked) {
+        const strValue = parseInt(document.getElementById('strBonusValue').value) || 0;
+        const dexValue = parseInt(document.getElementById('dexBonusValue').value) || 0;
+        const conValue = parseInt(document.getElementById('conBonusValue').value) || 0;
+        const intValue = parseInt(document.getElementById('intBonusValue').value) || 0;
+        const wisValue = parseInt(document.getElementById('wisBonusValue').value) || 0;
+        const chaValue = parseInt(document.getElementById('chaBonusValue').value) || 0;
+        
+        const abilityBonuses = [];
+        if (strValue !== 0) { bonuses.str = strValue; abilityBonuses.push(`STR ${strValue > 0 ? '+' : ''}${strValue}`); }
+        if (dexValue !== 0) { bonuses.dex = dexValue; abilityBonuses.push(`DEX ${dexValue > 0 ? '+' : ''}${dexValue}`); }
+        if (conValue !== 0) { bonuses.con = conValue; abilityBonuses.push(`CON ${conValue > 0 ? '+' : ''}${conValue}`); }
+        if (intValue !== 0) { bonuses.int = intValue; abilityBonuses.push(`INT ${intValue > 0 ? '+' : ''}${intValue}`); }
+        if (wisValue !== 0) { bonuses.wis = wisValue; abilityBonuses.push(`WIS ${wisValue > 0 ? '+' : ''}${wisValue}`); }
+        if (chaValue !== 0) { bonuses.cha = chaValue; abilityBonuses.push(`CHA ${chaValue > 0 ? '+' : ''}${chaValue}`); }
+        
+        if (abilityBonuses.length > 0) {
+            features.push(abilityBonuses.join(', '));
+        }
+    }
+    
+    // Threshold bonuses
+    if (document.getElementById('thresholdLowerBonus').checked) {
+        const value = parseInt(document.getElementById('thresholdLowerBonusValue').value) || 0;
+        if (value !== 0) {
+            bonuses.thresholdLower = value;
+            features.push(`Threshold Lower ${value > 0 ? '+' : ''}${value}`);
+        }
+    }
+    
+    if (document.getElementById('thresholdUpperBonus').checked) {
+        const value = parseInt(document.getElementById('thresholdUpperBonusValue').value) || 0;
+        if (value !== 0) {
+            bonuses.thresholdUpper = value;
+            features.push(`Threshold Upper ${value > 0 ? '+' : ''}${value}`);
+        }
+    }
+    
+    // Notes
+    if (document.getElementById('notesBonus').checked) {
+        const note = document.getElementById('notesBonusValue').value.trim();
+        if (note) {
+            features.push(note);
+        }
+    }
+    
+    // Create the custom weapon
+    const customWeapon = {
+        name: weaponName,
+        trait: selectedTraits.filter(t => ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'].includes(t)).join('/') || 'Custom',
+        range: selectedTraits.filter(t => ['Melee', 'Far', 'Very Far'].includes(t)).join('/') || 'Custom',
+        damage: selectedTraits.filter(t => ['d4', 'd6', 'd8', 'd10', 'd12'].includes(t)).join('/') || 'Custom',
+        feature: features.length > 0 ? features.join(', ') : 'Custom Weapon',
+        bonuses: bonuses,
+        isCustom: true
+    };
+    
+    // Determine if this is for primary or secondary weapon
+    const isPrimary = currentWeaponType === 'primary';
+    const isSecondary = currentWeaponType === 'secondary';
+    
+    if (isPrimary) {
+        // Add to custom primary weapons array
+        customWeapons.push({ ...customWeapon });
+        
+        // Check if character already has a primary weapon
+        if (currentCharacter.primaryWeapon) {
+            showCustomDialog('Weapon Limit', 'Character already has a primary weapon. Remove the current weapon first.');
+            clearCustomWeaponModal();
+            document.getElementById('customWeaponModal').classList.add('hidden');
+            return;
+        }
+        
+        // Equip the custom weapon as primary
+        currentCharacter.primaryWeapon = customWeapon;
+        applyWeaponBonuses(customWeapon.bonuses, 'primary');
+        
+    } else if (isSecondary) {
+        // Add to custom secondary weapons array
+        customSecondaryWeapons.push({ ...customWeapon });
+        
+        // Check if character already has a secondary weapon
+        if (currentCharacter.secondaryWeapon) {
+            showCustomDialog('Weapon Limit', 'Character already has a secondary weapon. Remove the current weapon first.');
+            clearCustomWeaponModal();
+            document.getElementById('customWeaponModal').classList.add('hidden');
+            return;
+        }
+        
+        // Equip the custom weapon as secondary
+        currentCharacter.secondaryWeapon = customWeapon;
+        applyWeaponBonuses(customWeapon.bonuses, 'secondary');
+    }
+    
+    // Update display
+    updateWeaponDisplay();
+    populateCharacterSheet(currentCharacter);
+    
+    // Save changes
+    saveCharacters();
+    
+    // Clear the modal
+    clearCustomWeaponModal();
+    
+    // Close modal
+    document.getElementById('customWeaponModal').classList.add('hidden');
+    
+    const weaponTypeText = isPrimary ? 'Primary Weapon' : 'Secondary Weapon';
+    showCustomDialog('Weapon Created', `Successfully created and equipped "${weaponName}" as ${weaponTypeText}!`);
+}
+
+// ====== CUSTOM ARMOR CREATION ======
+
+function createCustomArmor() {
+    const armorName = document.getElementById('customArmorName').value.trim();
+    
+    if (!armorName) {
+        showCustomDialog('Missing Name', 'Please enter an armor name.');
+        return;
+    }
+    
+    // Collect bonuses
+    const bonuses = {};
+    const features = [];
+    
+    // Evasion bonus
+    if (document.getElementById('armorEvasionBonus').checked) {
+        const value = parseInt(document.getElementById('armorEvasionBonusValue').value) || 0;
+        if (value !== 0) {
+            bonuses.evasion = value;
+            features.push(`${value > 0 ? '+' : ''}${value} Evasion`);
+        }
+    }
+    
+    // Armor bonus
+    if (document.getElementById('armorArmorBonus').checked) {
+        const value = parseInt(document.getElementById('armorArmorBonusValue').value) || 0;
+        if (value !== 0) {
+            bonuses.armor = value;
+            features.push(`${value > 0 ? '+' : ''}${value} Armor`);
+        }
+    }
+    
+    // Ability Score bonuses
+    if (document.getElementById('armorAbilityScoresBonus').checked) {
+        const strValue = parseInt(document.getElementById('armorStrBonusValue').value) || 0;
+        const dexValue = parseInt(document.getElementById('armorDexBonusValue').value) || 0;
+        const conValue = parseInt(document.getElementById('armorConBonusValue').value) || 0;
+        const intValue = parseInt(document.getElementById('armorIntBonusValue').value) || 0;
+        const wisValue = parseInt(document.getElementById('armorWisBonusValue').value) || 0;
+        const chaValue = parseInt(document.getElementById('armorChaBonusValue').value) || 0;
+        
+        const abilityBonuses = [];
+        if (strValue !== 0) { bonuses.str = strValue; abilityBonuses.push(`STR ${strValue > 0 ? '+' : ''}${strValue}`); }
+        if (dexValue !== 0) { bonuses.dex = dexValue; abilityBonuses.push(`DEX ${dexValue > 0 ? '+' : ''}${dexValue}`); }
+        if (conValue !== 0) { bonuses.con = conValue; abilityBonuses.push(`CON ${conValue > 0 ? '+' : ''}${conValue}`); }
+        if (intValue !== 0) { bonuses.int = intValue; abilityBonuses.push(`INT ${intValue > 0 ? '+' : ''}${intValue}`); }
+        if (wisValue !== 0) { bonuses.wis = wisValue; abilityBonuses.push(`WIS ${wisValue > 0 ? '+' : ''}${wisValue}`); }
+        if (chaValue !== 0) { bonuses.cha = chaValue; abilityBonuses.push(`CHA ${chaValue > 0 ? '+' : ''}${chaValue}`); }
+        
+        if (abilityBonuses.length > 0) {
+            features.push(abilityBonuses.join(', '));
+        }
+    }
+    
+    // Threshold bonuses
+    if (document.getElementById('armorThresholdLowerBonus').checked) {
+        const value = parseInt(document.getElementById('armorThresholdLowerBonusValue').value) || 0;
+        if (value !== 0) {
+            bonuses.thresholdLower = value;
+            features.push(`Threshold Lower ${value > 0 ? '+' : ''}${value}`);
+        }
+    }
+    
+    if (document.getElementById('armorThresholdUpperBonus').checked) {
+        const value = parseInt(document.getElementById('armorThresholdUpperBonusValue').value) || 0;
+        if (value !== 0) {
+            bonuses.thresholdUpper = value;
+            features.push(`Threshold Upper ${value > 0 ? '+' : ''}${value}`);
+        }
+    }
+    
+    // Notes
+    if (document.getElementById('armorNotesBonus').checked) {
+        const note = document.getElementById('armorNotesBonusValue').value.trim();
+        if (note) {
+            features.push(note);
+        }
+    }
+    
+    // Create the custom armor
+    const customArmor = {
+        name: armorName,
+        thresholdLower: 10, // Default values for custom armor
+        thresholdUpper: 15,
+        armor: bonuses.armor || 3, // Default armor value
+        feature: features.length > 0 ? features.join(', ') : 'Custom Armor',
+        bonuses: bonuses,
+        isCustom: true
+    };
+    
+    // Add to custom armors array for future use
+    customArmors.push({ ...customArmor });
+    
+    // Add to Tier 3 armor database
+    armorDatabaseTier3.push({ ...customArmor });
+    
+    // Check if character already has armor
+    if (currentCharacter.armorItem) {
+        showCustomDialog('Armor Limit', 'Character already has armor. Remove the current armor first.');
+        clearCustomArmorModal();
+        document.getElementById('customArmorModal').classList.add('hidden');
+        return;
+    }
+    
+    // Equip the custom armor
+    currentCharacter.armorItem = customArmor;
+    
+    // Apply armor bonuses
+    applyArmorBonuses(customArmor.bonuses);
+    
+    // Update display
+    updateWeaponDisplay();
+    populateCharacterSheet(currentCharacter);
+    
+    // Save changes
+    saveCharacters();
+    
+    // Clear the modal
+    clearCustomArmorModal();
+    
+    // Close modal
+    document.getElementById('customArmorModal').classList.add('hidden');
+    
+    showCustomDialog('Armor Created', `Successfully created and equipped "${armorName}"!`);
+}
+
+// ====== ENHANCED MODAL DISPLAY FUNCTIONS ======
+
+// Enhanced showWeaponModal function to include custom weapons
+function showWeaponModalEnhanced(weaponType) {
+    currentWeaponType = weaponType;
+    const modal = document.getElementById('weaponModal');
+    const title = document.getElementById('weaponModalTitle');
+    const weaponList = document.getElementById('weaponList');
+    const makeBtn = document.getElementById('makeWeaponBtn');
+    
+    // Clear previous selection
+    selectedWeapon = null;
+    selectedArmor = null;
+    
+    // Set modal title and select appropriate database
+    let database, titleText, buttonText;
+    if (weaponType === 'armor') {
+        let baseDatabase = getArmorDatabase(1); // Default to Tier 1
+        // Add custom armors to Tier 3 when displaying
+        if (customArmors.length > 0) {
+            // Ensure custom armors are in Tier 3 database
+            customArmors.forEach(armor => {
+                if (!armorDatabaseTier3.find(item => item.name === armor.name)) {
+                    armorDatabaseTier3.push({ ...armor });
+                }
+            });
+        }
+        database = baseDatabase;
+        titleText = 'Select Armor';
+        buttonText = 'Add Armor';
+        makeBtn.classList.remove('hidden');
+    } else {
+        // Combine base database with custom weapons
+        const baseDatabase = weaponType === 'primary' ? primaryWeaponDatabase : secondaryWeaponDatabase;
+        const customWeaponsForType = weaponType === 'primary' ? customWeapons : customSecondaryWeapons;
+        
+        database = [...baseDatabase, ...customWeaponsForType];
+        titleText = weaponType === 'primary' ? 'Select Primary Weapon' : 'Select Secondary Weapon';
+        buttonText = 'Add Weapon';
+        makeBtn.classList.remove('hidden');
+    }
+    
+    title.textContent = titleText;
+    document.getElementById('confirmWeapon').textContent = buttonText;
+    
+    // Add tier selection radio buttons for armor only
+    let tierRadiosHTML = '';
+    if (weaponType === 'armor') {
+        tierRadiosHTML = `
+            <div class="mb-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <h4 class="text-sm font-medium mb-2">Select Tier:</h4>
+                <div class="flex space-x-4">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="radio" name="armorTier" value="1" class="mr-2" checked>
+                        <span class="text-sm">Tier 1</span>
+                    </label>
+                    <label class="flex items-center cursor-pointer">
+                        <input type="radio" name="armorTier" value="2" class="mr-2">
+                        <span class="text-sm">Tier 2</span>
+                    </label>
+                    <label class="flex items-center cursor-pointer">
+                        <input type="radio" name="armorTier" value="3" class="mr-2">
+                        <span class="text-sm">Tier 3</span>
+                    </label>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Populate list with tier radios if armor
+    weaponList.innerHTML = tierRadiosHTML + database.map((item, index) => {
+        if (weaponType === 'armor') {
+            const customLabel = item.isCustom ? ' (Custom)' : '';
+            return `
+                <div class="weapon-item" data-weapon-index="${index}">
+                    <div class="flex items-center">
+                        <input type="radio" name="weaponSelect" class="mr-3" value="${index}">
+                        <div class="flex-1">
+                            <div class="font-semibold">${item.name}${customLabel} | ${item.thresholdLower} / ${item.thresholdUpper} | +${item.armor} Armor</div>
+                            ${item.feature && item.feature !== 'Nothing' ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${item.feature}</div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            const customLabel = item.isCustom ? ' (Custom)' : '';
+            return `
+                <div class="weapon-item" data-weapon-index="${index}">
+                    <div class="flex items-center">
+                        <input type="radio" name="weaponSelect" class="mr-3" value="${index}">
+                        <div class="flex-1">
+                            <div class="font-semibold">${item.name}${customLabel} | ${item.trait} / ${item.range} | ${item.damage}</div>
+                            ${item.feature ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${item.feature}</div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    }).join('');
+    
+    // Add event listeners to items
+    weaponList.querySelectorAll('.weapon-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const radio = this.querySelector('input[type="radio"]');
+            radio.checked = true;
+            
+            if (weaponType === 'armor') {
+                const selectedTier = document.querySelector('input[name="armorTier"]:checked')?.value || '1';
+                const currentDatabase = getArmorDatabase(parseInt(selectedTier));
+                selectedArmor = currentDatabase[parseInt(radio.value)];
+            } else {
+                selectedWeapon = database[parseInt(radio.value)];
+            }
+            
+            // Update visual selection
+            weaponList.querySelectorAll('.weapon-item').forEach(w => w.classList.remove('selected'));
+            this.classList.add('selected');
+        });
+    });
+    
+    // Add event listeners for tier radio buttons (armor only)
+    if (weaponType === 'armor') {
+        weaponList.querySelectorAll('input[name="armorTier"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const selectedTier = parseInt(this.value);
+                updateArmorTierDisplay(selectedTier, weaponType);
+            });
+        });
+    }
+    
+    modal.classList.remove('hidden');
+}
+
+// ====== MODAL CLEARING FUNCTIONS ======
+
+function clearCustomWeaponModal() {
+    // Clear weapon name
+    document.getElementById('customWeaponName').value = '';
+    
+    // Clear all trait checkboxes
+    document.querySelectorAll('.trait-checkbox').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    
+    // Clear all bonus checkboxes and trigger change events to disable inputs
+    document.querySelectorAll('#customWeaponModal .bonus-checkbox').forEach(checkbox => {
+        checkbox.checked = false;
+        
+        // Trigger change event to disable inputs
+        const event = new Event('change');
+        checkbox.dispatchEvent(event);
+    });
+    
+    // Clear all bonus input values
+    document.getElementById('evasionBonusValue').value = '';
+    document.getElementById('armorBonusValue').value = '';
+    document.getElementById('thresholdLowerBonusValue').value = '';
+    document.getElementById('thresholdUpperBonusValue').value = '';
+    document.getElementById('notesBonusValue').value = '';
+    
+    // Clear all ability score bonus inputs
+    document.getElementById('strBonusValue').value = '';
+    document.getElementById('dexBonusValue').value = '';
+    document.getElementById('conBonusValue').value = '';
+    document.getElementById('intBonusValue').value = '';
+    document.getElementById('wisBonusValue').value = '';
+    document.getElementById('chaBonusValue').value = '';
+    
+    // Hide ability score inputs section
+    document.getElementById('abilityScoreBonusInputs').classList.add('hidden');
+}
+
+function clearCustomArmorModal() {
+    // Clear armor name
+    document.getElementById('customArmorName').value = '';
+    
+    // Clear all bonus checkboxes and trigger change events to disable inputs
+    document.querySelectorAll('.armor-bonus-checkbox').forEach(checkbox => {
+        checkbox.checked = false;
+        
+        // Trigger change event to disable inputs
+        const event = new Event('change');
+        checkbox.dispatchEvent(event);
+    });
+    
+    // Clear all bonus input values
+    document.getElementById('armorEvasionBonusValue').value = '';
+    document.getElementById('armorArmorBonusValue').value = '';
+    document.getElementById('armorThresholdLowerBonusValue').value = '';
+    document.getElementById('armorThresholdUpperBonusValue').value = '';
+    document.getElementById('armorNotesBonusValue').value = '';
+    
+    // Clear all ability score bonus inputs
+    document.getElementById('armorStrBonusValue').value = '';
+    document.getElementById('armorDexBonusValue').value = '';
+    document.getElementById('armorConBonusValue').value = '';
+    document.getElementById('armorIntBonusValue').value = '';
+    document.getElementById('armorWisBonusValue').value = '';
+    document.getElementById('armorChaBonusValue').value = '';
+    
+    // Hide ability score inputs section
+    document.getElementById('armorAbilityScoreBonusInputs').classList.add('hidden');
+}
+
+// ====== EVENT LISTENERS ======
+
+// Custom Weapon Creation Modal Event Listeners
+document.getElementById('makeWeaponBtn').addEventListener('click', function() {
+    document.getElementById('weaponModal').classList.add('hidden');
+    if (currentWeaponType === 'armor') {
+        document.getElementById('customArmorModal').classList.remove('hidden');
+    } else {
+        document.getElementById('customWeaponModal').classList.remove('hidden');
+    }
+});
+
+document.getElementById('cancelCustomWeapon').addEventListener('click', function() {
+    document.getElementById('customWeaponModal').classList.add('hidden');
+});
+
+document.getElementById('confirmCustomWeapon').addEventListener('click', function() {
+    createCustomWeaponEnhanced();
+});
+
+// Custom Armor Creation Modal Event Listeners
+document.getElementById('cancelCustomArmor').addEventListener('click', function() {
+    document.getElementById('customArmorModal').classList.add('hidden');
+});
+
+document.getElementById('confirmCustomArmor').addEventListener('click', function() {
+    createCustomArmor();
+});
+
+// Enable/disable weapon bonus input fields based on checkbox state
+document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('bonus-checkbox')) {
+        const checkbox = e.target;
+        const isAbilityScoresBonus = checkbox.id === 'abilityScoresBonus';
+        const isNotesBonus = checkbox.id === 'notesBonus';
+        
+        if (isAbilityScoresBonus) {
+            const inputsContainer = document.getElementById('abilityScoreBonusInputs');
+            if (checkbox.checked) {
+                inputsContainer.classList.remove('hidden');
+                inputsContainer.querySelectorAll('input').forEach(input => input.disabled = false);
+            } else {
+                inputsContainer.classList.add('hidden');
+                inputsContainer.querySelectorAll('input').forEach(input => {
+                    input.disabled = true;
+                    input.value = '';
+                });
+            }
+        } else if (isNotesBonus) {
+            const textArea = document.getElementById('notesBonusValue');
+            textArea.disabled = !checkbox.checked;
+            if (!checkbox.checked) {
+                textArea.value = '';
+            }
+        } else {
+            // Regular bonuses with single input field
+            const inputId = checkbox.id.replace('Bonus', 'BonusValue');
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.disabled = !checkbox.checked;
+                if (!checkbox.checked) {
+                    input.value = '';
+                }
+            }
+        }
+    }
+});
+
+// Enable/disable armor bonus input fields based on checkbox state
+document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('armor-bonus-checkbox')) {
+        const checkbox = e.target;
+        const isAbilityScoresBonus = checkbox.id === 'armorAbilityScoresBonus';
+        const isNotesBonus = checkbox.id === 'armorNotesBonus';
+        
+        if (isAbilityScoresBonus) {
+            const inputsContainer = document.getElementById('armorAbilityScoreBonusInputs');
+            if (checkbox.checked) {
+                inputsContainer.classList.remove('hidden');
+                inputsContainer.querySelectorAll('input').forEach(input => input.disabled = false);
+            } else {
+                inputsContainer.classList.add('hidden');
+                inputsContainer.querySelectorAll('input').forEach(input => {
+                    input.disabled = true;
+                    input.value = '';
+                });
+            }
+        } else if (isNotesBonus) {
+            const textArea = document.getElementById('armorNotesBonusValue');
+            textArea.disabled = !checkbox.checked;
+            if (!checkbox.checked) {
+                textArea.value = '';
+            }
+        } else {
+            // Regular bonuses with single input field
+            const inputId = checkbox.id.replace('Bonus', 'BonusValue');
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.disabled = !checkbox.checked;
+                if (!checkbox.checked) {
+                    input.value = '';
+                }
+            }
+        }
+    }
+});
+
+// ====== REPLACE EXISTING FUNCTIONS ======
+
+// Replace the existing functions with enhanced versions
+showWeaponModal = showWeaponModalEnhanced;
+
         // Global weapon state
         let selectedWeapon = null;
         let currentWeaponType = null; // 'primary', 'secondary', or 'armor'
         let selectedArmor = null;
         
-        // Custom weapons storage
-        let customWeapons = [];
         
         // Wild Beast weapon data based on level
         function getWildBeastWeapon(level) {
@@ -4098,6 +4790,7 @@
             const weaponList = document.getElementById('weaponList');
             const makeBtn = document.getElementById('makeWeaponBtn');
             
+            
             // Clear previous selection
             selectedWeapon = null;
             selectedArmor = null;
@@ -4108,7 +4801,7 @@
                 database = getArmorDatabase(1); // Default to Tier 1
                 titleText = 'Select Armor';
                 buttonText = 'Add Armor';
-                makeBtn.classList.add('hidden'); // Hide Make button for armor
+                makeBtn.classList.remove('hidden'); // Hide Make button for armor
             } else {
                 // Combine database weapons with custom weapons for weapons
                 const baseDatabase = weaponType === 'primary' ? primaryWeaponDatabase : secondaryWeaponDatabase;
@@ -7109,180 +7802,51 @@
             updateAbilitySelectors();
         }
 
-        // Weapon/armor modal event listeners
-        document.addEventListener('click', function(e) {
-            if (e.target.id === 'addPrimaryWeapon') {
-                showWeaponModal('primary');
-            } else if (e.target.id === 'addSecondaryWeapon') {
-                showWeaponModal('secondary');
-            } else if (e.target.id === 'addArmor') {
-                showWeaponModal('armor');
-            }
-        });
+// Weapon/armor modal event listeners
+document.addEventListener('click', function(e) {
+    if (e.target.id === 'addPrimaryWeapon') {
+        showWeaponModal('primary');
+    } else if (e.target.id === 'addSecondaryWeapon') {
+        showWeaponModal('secondary');
+    } else if (e.target.id === 'addArmor') {
+        showWeaponModal('armor');
+    }
+});
 
-        document.getElementById('cancelWeapon').addEventListener('click', function() {
-            document.getElementById('weaponModal').classList.add('hidden');
-        });
+document.getElementById('cancelWeapon').addEventListener('click', function() {
+    document.getElementById('weaponModal').classList.add('hidden');
+});
 
-        document.getElementById('confirmWeapon').addEventListener('click', function() {
-            if (selectedWeapon || selectedArmor) {
-                addWeaponToCharacter();
-            } else {
-                showCustomDialog('No Selection', 'Please select an item first.');
-            }
-        });
+document.getElementById('confirmWeapon').addEventListener('click', function() {
+    if (selectedWeapon || selectedArmor) {
+        addWeaponToCharacter();
+    } else {
+        showCustomDialog('No Selection', 'Please select an item first.');
+    }
+});
 
-        document.getElementById('cancelWeaponRemoval').addEventListener('click', function() {
-            document.getElementById('weaponRemovalModal').classList.add('hidden');
-        });
+document.getElementById('cancelWeaponRemoval').addEventListener('click', function() {
+    document.getElementById('weaponRemovalModal').classList.add('hidden');
+});
 
-        document.getElementById('confirmWeaponRemoval').addEventListener('click', function() {
-            removeWeapon();
-        });
+document.getElementById('confirmWeaponRemoval').addEventListener('click', function() {
+    removeWeapon();
+});
 
-        // Custom Weapon Creation Modal Event Listeners
-        document.getElementById('makeWeaponBtn').addEventListener('click', function() {
-            document.getElementById('weaponModal').classList.add('hidden');
-            document.getElementById('customWeaponModal').classList.remove('hidden');
-        });
+// Modified Custom Weapon Creation Modal Event Listeners
+document.getElementById('makeWeaponBtn').addEventListener('click', function() {
+    document.getElementById('weaponModal').classList.add('hidden');
+    if (currentWeaponType === 'armor') {
+        document.getElementById('customArmorModal').classList.remove('hidden');
+    } else {
+        document.getElementById('customWeaponModal').classList.remove('hidden');
+    }
+});
 
-        document.getElementById('cancelCustomWeapon').addEventListener('click', function() {
-            document.getElementById('customWeaponModal').classList.add('hidden');
-        });
+document.getElementById('cancelCustomWeapon').addEventListener('click', function() {
+    document.getElementById('customWeaponModal').classList.add('hidden');
+});
 
-        document.getElementById('confirmCustomWeapon').addEventListener('click', function() {
-            createCustomWeapon();
-        });
-
-        function createCustomWeapon() {
-            const weaponName = document.getElementById('customWeaponName').value.trim();
-            
-            if (!weaponName) {
-                showCustomDialog('Missing Name', 'Please enter a weapon name.');
-                return;
-            }
-            
-            // Collect selected traits
-            const selectedTraits = [];
-            document.querySelectorAll('.trait-checkbox:checked').forEach(checkbox => {
-                selectedTraits.push(checkbox.dataset.trait);
-            });
-            
-            // Collect bonuses
-            const bonuses = {};
-            const features = [];
-            
-            // Evasion bonus
-            if (document.getElementById('evasionBonus').checked) {
-                const value = parseInt(document.getElementById('evasionBonusValue').value) || 0;
-                if (value !== 0) {
-                    bonuses.evasion = value;
-                    features.push(`${value > 0 ? '+' : ''}${value} Evasion`);
-                }
-            }
-            
-            // Armor bonus
-            if (document.getElementById('armorBonus').checked) {
-                const value = parseInt(document.getElementById('armorBonusValue').value) || 0;
-                if (value !== 0) {
-                    bonuses.armor = value;
-                    features.push(`${value > 0 ? '+' : ''}${value} Armor`);
-                }
-            }
-            
-            // Ability Score bonuses
-            if (document.getElementById('abilityScoresBonus').checked) {
-                const strValue = parseInt(document.getElementById('strBonusValue').value) || 0;
-                const dexValue = parseInt(document.getElementById('dexBonusValue').value) || 0;
-                const conValue = parseInt(document.getElementById('conBonusValue').value) || 0;
-                const intValue = parseInt(document.getElementById('intBonusValue').value) || 0;
-                const wisValue = parseInt(document.getElementById('wisBonusValue').value) || 0;
-                const chaValue = parseInt(document.getElementById('chaBonusValue').value) || 0;
-                
-                const abilityBonuses = [];
-                if (strValue !== 0) { bonuses.str = strValue; abilityBonuses.push(`STR ${strValue > 0 ? '+' : ''}${strValue}`); }
-                if (dexValue !== 0) { bonuses.dex = dexValue; abilityBonuses.push(`DEX ${dexValue > 0 ? '+' : ''}${dexValue}`); }
-                if (conValue !== 0) { bonuses.con = conValue; abilityBonuses.push(`CON ${conValue > 0 ? '+' : ''}${conValue}`); }
-                if (intValue !== 0) { bonuses.int = intValue; abilityBonuses.push(`INT ${intValue > 0 ? '+' : ''}${intValue}`); }
-                if (wisValue !== 0) { bonuses.wis = wisValue; abilityBonuses.push(`WIS ${wisValue > 0 ? '+' : ''}${wisValue}`); }
-                if (chaValue !== 0) { bonuses.cha = chaValue; abilityBonuses.push(`CHA ${chaValue > 0 ? '+' : ''}${chaValue}`); }
-                
-                if (abilityBonuses.length > 0) {
-                    features.push(abilityBonuses.join(', '));
-                }
-            }
-            
-            // Threshold bonuses
-            if (document.getElementById('thresholdLowerBonus').checked) {
-                const value = parseInt(document.getElementById('thresholdLowerBonusValue').value) || 0;
-                if (value !== 0) {
-                    bonuses.thresholdLower = value;
-                    features.push(`Threshold Lower ${value > 0 ? '+' : ''}${value}`);
-                }
-            }
-            
-            if (document.getElementById('thresholdUpperBonus').checked) {
-                const value = parseInt(document.getElementById('thresholdUpperBonusValue').value) || 0;
-                if (value !== 0) {
-                    bonuses.thresholdUpper = value;
-                    features.push(`Threshold Upper ${value > 0 ? '+' : ''}${value}`);
-                }
-            }
-            
-            // Notes
-            if (document.getElementById('notesBonus').checked) {
-                const note = document.getElementById('notesBonusValue').value.trim();
-                if (note) {
-                    features.push(note);
-                }
-            }
-            
-            // Create the custom weapon
-            const customWeapon = {
-                name: weaponName,
-                trait: selectedTraits.filter(t => ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'].includes(t)).join('/') || 'Custom',
-                range: selectedTraits.filter(t => ['Melee', 'Far', 'Very Far'].includes(t)).join('/') || 'Custom',
-                damage: selectedTraits.filter(t => ['d4', 'd6', 'd8', 'd10', 'd12'].includes(t)).join('/') || 'Custom',
-                feature: features.length > 0 ? features.join(', ') : 'Custom Weapon',
-                bonuses: bonuses,
-                isCustom: true
-            };
-            
-            // Add to custom weapons array for future use
-            customWeapons.push({ ...customWeapon });
-            
-            // Check if character already has a primary weapon
-            if (currentCharacter.primaryWeapon) {
-                showCustomDialog('Weapon Limit', 'Character already has a primary weapon. Remove the current weapon first.');
-                
-                // Clear the modal to allow making another weapon
-                clearCustomWeaponModal();
-                document.getElementById('customWeaponModal').classList.add('hidden');
-                return;
-            }
-            
-            // Equip the custom weapon
-            currentCharacter.primaryWeapon = customWeapon;
-            
-            // Apply weapon bonuses
-            applyWeaponBonuses(customWeapon.bonuses, 'primary');
-            
-            // Update display
-            updateWeaponDisplay();
-            populateCharacterSheet(currentCharacter);
-            
-            // Save changes
-            saveCharacters();
-            
-            // Clear the modal to allow making another weapon
-            clearCustomWeaponModal();
-            
-            // Close modal
-            document.getElementById('customWeaponModal').classList.add('hidden');
-            
-            showCustomDialog('Weapon Created', `Successfully created and equipped "${weaponName}"!`);
-        }
-        
         function clearCustomWeaponModal() {
             // Clear weapon name
             document.getElementById('customWeaponName').value = '';
@@ -7358,6 +7922,8 @@
                 }
             }
         });
+
+        
 
         // New Ability Score Modal Event Listeners
         document.getElementById('cancelAbilityScoreNew').addEventListener('click', function() {
@@ -7702,10 +8268,6 @@
                 adjustBaseEvasion(amount);
             }
         });
-
-        /*document.getElementById('resetTempEvasion').addEventListener('click', function() {
-            resetTempEvasion();
-        });*/
 
         // Allow Enter key to focus on Add Temp button for evasion
         document.getElementById('evasionAmount').addEventListener('keypress', function(e) {
