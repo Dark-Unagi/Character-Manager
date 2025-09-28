@@ -7670,7 +7670,7 @@ showWeaponModal = showWeaponModalEnhanced;
                 abilityScoreAllocations: { ...abilityScoreAllocations },
                 // Store initial modifiers for Unarmored Defense (including racial bonuses)
                 initialModifiers: {
-                    dex: selectedModifiers.dex + (abilityScoreAllocations.dex || 0),
+                    dex: selectedModifiers.dex + (abilityScoreAllocations.dex || 2),
                     con: selectedModifiers.con + (abilityScoreAllocations.con || 0)
                 },
                 hpMax: parseInt(document.getElementById('hpMax').value),
@@ -10706,6 +10706,18 @@ document.getElementById('cancelCustomWeapon').addEventListener('click', function
                 // Apply +1/+1 threshold bonus per level
                 currentCharacter.unarmoredDefenseThresholdBonuses.lower = level * 3;
                 currentCharacter.unarmoredDefenseThresholdBonuses.upper = level * 3;
+            }
+            else if (currentCharacter.class === 'Monk') {
+                const level = currentCharacter.level || 1;
+                
+                // Initialize Unarmored Defense threshold bonuses
+                if (!currentCharacter.unarmoredDefenseThresholdBonuses) {
+                    currentCharacter.unarmoredDefenseThresholdBonuses = { lower: 0, upper: 0 };
+                }
+                
+                // Apply +1/+1 threshold bonus per level
+                currentCharacter.unarmoredDefenseThresholdBonuses.lower = level * 2;
+                currentCharacter.unarmoredDefenseThresholdBonuses.upper = level * 2;
             }
             
             // Auto-equip ceremonial Unarmored Defense "armor" for display purposes  
