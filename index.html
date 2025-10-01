@@ -323,6 +323,20 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
+        .coin-button {
+            width: 80px;
+            height: 50px;
+            border: 2px solid #374151;
+            border-radius: 0.375rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.25rem;
+            background-color: #F9FAFB;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
         
         .combat-stat-box:hover {
             background-color: #5D5CDE;
@@ -333,6 +347,46 @@
             border-color: #E5E7EB;
             background-color: #1F2937;
             color: #E5E7EB;
+        }
+        .platinum-stat-box {
+            border-color: #ffffff;
+            background-color: #1F2937;
+            color: #ffffff;
+        }
+        .gold-stat-box {
+            border-color: #fad400;
+            background-color: #1F2937;
+            color: #fad400;
+        }
+        .silver-stat-box {
+            border-color: #aaaaaa;
+            background-color: #1F2937;
+            color: #aaaaaa;
+        }
+        .copper-stat-box {
+            border-color: #9b6500;
+            background-color: #1F2937;
+            color: #9b6500;
+        }
+                .dark .platinum-stat-box {
+            border-color: #ffffff;
+            background-color: #1F2937;
+            color: #ffffff;
+        }
+        .dark .gold-stat-box {
+            border-color: #fad400;
+            background-color: #1F2937;
+            color: #fad400;
+        }
+        .dark .silver-stat-box {
+            border-color: #aaaaaa;
+            background-color: #1F2937;
+            color: #aaaaaa;
+        }
+        .dark .copper-stat-box {
+            border-color: #9b6500;
+            background-color: #1F2937;
+            color: #9b6500;
         }
         
         .dark .combat-stat-box:hover {
@@ -1874,7 +1928,29 @@
                                     <i class="fas fa-plus mr-1"></i>Add
                                 </button>
                             </div>
-
+                            <!--Coins-->
+                            <div class="grid grid-cols-4 gap-2 mb-4">
+                                <div class="text-center">
+                                    <div class="text-xs font-medium mb-1">Platinum</div>
+                                    <button class="coin-button w-full platinum-stat-box hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer" 
+                                            data-coin-type="platinum" id="displayPlatinum">0</button>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-xs font-medium mb-1">Gold</div>
+                                    <button class="coin-button w-full gold-stat-box hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer" 
+                                            data-coin-type="gold" id="displayGold">0</button>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-xs font-medium mb-1">Silver</div>
+                                    <button class="coin-button w-full silver-stat-box hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer" 
+                                            data-coin-type="silver" id="displaySilver">0</button>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-xs font-medium mb-1">Copper</div>
+                                    <button class="coin-button w-full copper-stat-box hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer" 
+                                            data-coin-type="copper" id="displayCopper">0</button>
+                                </div>
+                            </div>
                             <!-- Health Potions Section -->
                             <div class="mb-4 p-3 bg-red-50 dark:bg-red-900 rounded-lg">
                                 <h4 class="font-medium text-red-800 dark:text-red-200 mb-2">Health Potions</h4>
@@ -1924,6 +2000,39 @@
             </form>
         </div>
     </div>
+
+    <!-- Coin Modal -->
+<div id="coinModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
+        <h3 class="text-lg font-bold mb-4 text-gray-900 dark:text-white">
+            Manage <span id="coinTypeName" class="capitalize"></span>
+        </h3>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Current Amount: <span id="currentAmount" class="font-bold"></span>
+            </label>
+            <input type="number" id="coinAmount" 
+                   class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"  placeholder="Enter amount" min="0">
+        </div>
+        <div class="flex justify-between space-x-3">
+            <button id="subtractCoin" class="flex-1 px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded font-medium transition-colors">
+                <i class="fas fa-minus mr-1"></i>Subtract
+            </button>
+            <button id="addCoin" class="flex-1 px-4 py-2 bg-green-500 text-white hover:bg-green-600 rounded font-medium transition-colors">
+                <i class="fas fa-plus mr-1"></i>Add
+            </button>
+        </div>
+        <div class="flex justify-end mt-4">
+                        <button id="convertCoin" class="px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded font-medium transition-colors">
+        <i class="fas fa-exchange-alt mr-1"></i>Convert
+    </button>
+            <button id="closeCoinModal" class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors">
+                Close
+            </button>
+      
+        </div>
+    </div>
+</div>
 
     <!-- Temp Points Modal -->
     <div id="tempPointsModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
@@ -2671,6 +2780,7 @@
     </div>
 
     <script>
+                
         // Dark mode detection
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
@@ -4268,15 +4378,15 @@ showWeaponModal = showWeaponModalEnhanced;
 
         // Default skills list
         const defaultSkills = [
-            { name: 'Athletics', ability: 'str' },
-            { name: 'Acrobatics', ability: 'dex' },
-            { name: 'Stealth', ability: 'dex' },
-            { name: 'Investigation', ability: 'int' },
-            { name: 'History', ability: 'int' },
-            { name: 'Insight', ability: 'wis' },
-            { name: 'Perception', ability: 'wis' },
-            { name: 'Persuasion', ability: 'cha' },
-            { name: 'Deception', ability: 'cha' }
+            { name: 'Athletics (STR)', ability: 'str' },
+            { name: 'Acrobatics (DEX)', ability: 'dex' },
+            { name: 'Stealth (DEX)', ability: 'dex' },
+            { name: 'Investigation (INT)', ability: 'int' },
+            { name: 'History (INT)', ability: 'int' },
+            { name: 'Insight (WIS)', ability: 'wis' },
+            { name: 'Perception (WIS)', ability: 'wis' },
+            { name: 'Persuasion (CHA)', ability: 'cha' },
+            { name: 'Deception (CHA)', ability: 'cha' }
         ];
 
         // New function to handle threshold damage buttons
@@ -5753,7 +5863,13 @@ showWeaponModal = showWeaponModalEnhanced;
                 primaryWeaponAbilityBonuses: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
                 secondaryWeaponAbilityBonuses: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
                 armorAbilityBonuses: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-                weaponProficiency: 1
+                weaponProficiency: 1,
+    coins: {
+        platinum: 0,
+        gold: 0,
+        silver: 0,
+        copper: 0
+    }
             };
             
             return character;
@@ -6814,6 +6930,7 @@ showWeaponModal = showWeaponModalEnhanced;
                     thresholdLowerDisplay += character.unarmoredDefenseThresholdBonuses.lower || 0;
                     thresholdUpperDisplay += character.unarmoredDefenseThresholdBonuses.upper || 0;
                 }
+   
             }
             
             document.getElementById('thresholdLowerDisplay').textContent = thresholdLowerDisplay;
@@ -6897,6 +7014,9 @@ showWeaponModal = showWeaponModalEnhanced;
             
             // Equipment
             updateEquipmentDisplay(character);
+
+            // Update Coins
+            updateAllCoinDisplays();
             
             // Notes
             document.getElementById('characterNotes').value = character.notes || '';
@@ -6958,7 +7078,7 @@ showWeaponModal = showWeaponModalEnhanced;
                 }
                 
                 skillDiv.innerHTML = `
-                    <span>${skillDisplayName}</span>
+                    <span>${skillDisplayName.replace(/\(([A-Z]{3})\)/g, '<span class="text-xs text-gray-500 dark:text-gray-400">($1)</span>')}</span>
                     <span class="font-semibold">${totalModifier >= 0 ? '+' : ''}${totalModifier}</span>
                 `;
                 
@@ -7002,11 +7122,11 @@ showWeaponModal = showWeaponModalEnhanced;
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'flex justify-between items-center p-2 bg-white dark:bg-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors';
                 itemDiv.innerHTML = `
-                    <button class="equipment-item-btn flex-1 text-left font-medium text-primary hover:text-primary-dark cursor-pointer" data-index="${index}">
+                    <button class="equipment-item-btn flex-1 text-left font-medium dark:text-white text-black hover:text-white cursor-pointer" data-index="${index}">
                         ${item.name}
                     </button>
                     <div class="flex items-center space-x-2">
-                        <span class="text-sm text-gray-500">x${item.quantity}</span>
+                        <span class="text-sm dark:text-white text-black">x${item.quantity}</span>
                         <button class="text-red-500 hover:text-red-600 text-sm remove-equipment-btn" data-index="${index}">
                             <i class="fas fa-times"></i>
                         </button>
@@ -7722,7 +7842,13 @@ showWeaponModal = showWeaponModalEnhanced;
                 secondaryWeaponAbilityBonuses: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
                 armorAbilityBonuses: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
                 // Initialize weapon proficiency (starts with 1 circle filled at level 1)
-                weaponProficiency: 1
+                weaponProficiency: 1,
+        coins: {
+            platinum: 0,
+            gold: 0,
+            silver: 0,
+            copper: 0
+        }
             };
             
             characters.push(character);
@@ -8654,6 +8780,35 @@ document.getElementById('cancelCustomWeapon').addEventListener('click', function
                 }
             });
         });
+
+    // Coin modal event listeners
+    document.getElementById('addCoin').addEventListener('click', addCoins);
+    document.getElementById('subtractCoin').addEventListener('click', subtractCoins);
+    document.getElementById('closeCoinModal').addEventListener('click', closeCoinModal);
+    document.getElementById('convertCoin').addEventListener('click', convertCurrentCoin);
+    
+    // Close modal when clicking outside
+    document.getElementById('coinModal').addEventListener('click', function(e) {
+        if (e.target.id === 'coinModal') {
+            closeCoinModal();
+        }
+    });
+
+    // Enter key support in input field
+    document.getElementById('coinAmount').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            addCoins();
+        }
+    });
+
+    // Add click listeners to coin buttons using event delegation
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('coin-button')) {
+            const coinType = e.target.getAttribute('data-coin-type');
+            openCoinModal(coinType);
+        }
+    });
+
 
         // Allow Enter key to confirm temp threshold
         document.getElementById('tempThresholdLower').addEventListener('keypress', function(e) {
@@ -10949,6 +11104,173 @@ document.getElementById('cancelCustomWeapon').addEventListener('click', function
                 section.style.display = 'none';
             }
         }
+
+// Simplified coin management functions (add this to your main JS file)
+let currentCoinType = null;
+
+function initializeCharacterCoins(character) {
+    if (!character.coins) {
+        character.coins = {
+            platinum: 0,
+            gold: 0,
+            silver: 0,
+            copper: 0
+        };
+    }
+}
+
+function openCoinModal(coinType) {
+    if (!currentCharacter) {
+        showCustomDialog('No Character Selected', 'Please select a character first.');
+        return;
+    }
+
+    initializeCharacterCoins(currentCharacter);
+    currentCoinType = coinType;
+    
+    const modal = document.getElementById('coinModal');
+    const coinTypeName = document.getElementById('coinTypeName');
+    const currentAmount = document.getElementById('currentAmount');
+    const coinAmountInput = document.getElementById('coinAmount');
+    const convertButton = document.getElementById('convertCoin');
+
+    coinTypeName.textContent = coinType;
+    currentAmount.textContent = currentCharacter.coins[coinType];
+    coinAmountInput.value = '';
+    coinAmountInput.focus();
+    
+    // Show/hide convert button based on coin type
+    if (coinType === 'platinum') {
+        convertButton.style.display = 'none'; // Hide for platinum since it's the highest
+    } else {
+        convertButton.style.display = 'block';
+        
+        // Update button text to show what it converts to
+        const nextCoin = coinType === 'copper' ? 'Silver' : 
+                        coinType === 'silver' ? 'Gold' : 'Platinum';
+        convertButton.innerHTML = `<i class="fas fa-exchange-alt mr-1"></i>Convert to ${nextCoin}`;
+    }
+
+    modal.classList.remove('hidden');
+}
+
+function closeCoinModal() {
+    document.getElementById('coinModal').classList.add('hidden');
+    currentCoinType = null;
+}
+
+function convertCurrentCoin() {
+    if (!currentCharacter || !currentCoinType) return;
+    
+    initializeCharacterCoins(currentCharacter);
+    
+    let converted = false;
+    
+    switch (currentCoinType) {
+        case 'copper':
+            if (currentCharacter.coins.copper >= 10) {
+                const silverToAdd = Math.floor(currentCharacter.coins.copper / 10);
+                currentCharacter.coins.silver += silverToAdd;
+                currentCharacter.coins.copper = currentCharacter.coins.copper % 10;
+                converted = true;
+            }
+            break;
+            
+        case 'silver':
+            if (currentCharacter.coins.silver >= 10) {
+                const goldToAdd = Math.floor(currentCharacter.coins.silver / 10);
+                currentCharacter.coins.gold += goldToAdd;
+                currentCharacter.coins.silver = currentCharacter.coins.silver % 10;
+                converted = true;
+            }
+            break;
+            
+        case 'gold':
+            if (currentCharacter.coins.gold >= 10) {
+                const platinumToAdd = Math.floor(currentCharacter.coins.gold / 10);
+                currentCharacter.coins.platinum += platinumToAdd;
+                currentCharacter.coins.gold = currentCharacter.coins.gold % 10;
+                converted = true;
+            }
+            break;
+            
+        case 'platinum':
+            // Platinum is the highest denomination, no conversion possible
+            showCustomDialog('Cannot Convert', 'Platinum is the highest coin denomination.');
+            return;
+    }
+    
+    if (converted) {
+        // Update all displays since multiple coin types changed
+        updateAllCoinDisplays();
+        updateCurrentAmountInModal();
+        saveCharacters();
+        
+        // Show success message
+        const nextCoin = currentCoinType === 'copper' ? 'silver' : 
+                        currentCoinType === 'silver' ? 'gold' : 'platinum';
+        showCustomDialog('Conversion Complete', `Successfully converted ${currentCoinType} to ${nextCoin}!`);
+    } else {
+        showCustomDialog('Cannot Convert', `You need at least 10 ${currentCoinType} to convert.`);
+    }
+}
+
+// Update the addCoins function to use conversion
+function addCoins() {
+    const amount = parseInt(document.getElementById('coinAmount').value) || 0;
+    if (amount > 0 && currentCoinType && currentCharacter) {
+        initializeCharacterCoins(currentCharacter);
+        currentCharacter.coins[currentCoinType] += amount;
+        updateCoinDisplay(currentCoinType);
+        updateCurrentAmountInModal();
+        document.getElementById('coinAmount').value = '';
+        saveCharacters();
+        closeCoinModal();
+    }
+}
+function subtractCoins() {
+    const amount = parseInt(document.getElementById('coinAmount').value) || 0;
+    if (amount > 0 && currentCoinType && currentCharacter) {
+        initializeCharacterCoins(currentCharacter);
+        currentCharacter.coins[currentCoinType] = Math.max(0, currentCharacter.coins[currentCoinType] - amount);
+        updateCoinDisplay(currentCoinType);
+        updateCurrentAmountInModal();
+        document.getElementById('coinAmount').value = '';
+        saveCharacters();
+        closeCoinModal();
+    }
+}
+
+function updateCurrentAmountInModal() {
+    if (currentCoinType && currentCharacter) {
+        document.getElementById('currentAmount').textContent = currentCharacter.coins[currentCoinType];
+    }
+}
+
+function updateCoinDisplay(coinType) {
+    const displayElement = document.getElementById(`display${coinType.charAt(0).toUpperCase() + coinType.slice(1)}`);
+    if (displayElement && currentCharacter) {
+        displayElement.textContent = currentCharacter.coins[coinType];
+    }
+}
+
+function updateAllCoinDisplays() {
+    if (!currentCharacter) {
+        // Clear displays when no character is selected
+        ['platinum', 'gold', 'silver', 'copper'].forEach(coinType => {
+            const displayElement = document.getElementById(`display${coinType.charAt(0).toUpperCase() + coinType.slice(1)}`);
+            if (displayElement) {
+                displayElement.textContent = '0';
+            }
+        });
+        return;
+    }
+
+    initializeCharacterCoins(currentCharacter);
+    ['platinum', 'gold', 'silver', 'copper'].forEach(coinType => {
+        updateCoinDisplay(coinType);
+    });
+}
     </script>
 </body>
 </html>
