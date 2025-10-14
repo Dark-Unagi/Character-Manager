@@ -29,15 +29,15 @@ const classDCAbilities = {
         // Class-specific abilities data
 const classAbilities = {
     'Barbarian': [
-        { name: 'Rage <i class="skill1">Stress</i>', description: '<ul><b>Rage: </b><i class="skill1">1 Stress</i><br><li>- Reduce any damage by 1 Hit.</li> <li>- Increase STR +1</li><br><li><i>If one of the below Rage types are selected add the effects to the Rage bonuses plus the other bonuses.</i></li><li><b>Totem Rage:</b> <i class="skill1">1 Stress</i></li><li><b>Bear:</b> +1 HP, +1 Stress, Reduce damage by 1 Hit.</li><li><b>Eagle:</b> +1 Evasion, +1 DEX, Perception Advantage</li><li><b>Tiger:</b> +1 DEX, Jump distance doubles, Jump check with Advantage.</li><li><b>Wolf:</b> +2 When combining Attacks, Advantage on  Tracking.</li><br><li><b>Blood Rage:</b> <i class="skill1">1 Stress</i><li>- Add 1d4 Temp HP. If you are at max this skill will increase it beyond the max.</li><li>- Add 1d6 Temp Stress. If you are at max this skill will increase it beyond the max.</li><li>- Add 1d4 to your Attack Roll. Level 5: 1d6, Level 10: 1d8</li><li>- Add 1 die to your Damage Roll. Level 5: 1 dice, Level 10: 3 Dice</li><li>- Resist any Stress effects incurred by an Enemy.</li><li>- Roll attacks on any creature within melee range. Any successful attacks cause 1 Hit of damage.</li><li>- Cannot receive any Healing while raging.</li><li>- Remove any temporary effects (HP, Stress) when the Blood Rage ends.</li></ul>' },
-        { name: 'Reckless Attack <i class="skill2">1 Stress</i>', description: 'Attack with Advantage, but enemies have Advantage against you until your next turn.' },
-        { name: 'Danger Sense <i class="skill1">1 Stress</i>', description: '<ul><li>- Can make your next <b>DEX Save</b> with Advantage.</li></ul>' },
-        { name: 'Unarmored Defense <i class="barb">Special</i>', description: '<ul><li>- Add your initial <b>DEX</b> to Evasion (min +2).</li> <li>- Add <b class="dark:text-red">DEX</b> to Lower Threshold and <b>DEX & CON</b> Mod to Upper Threshold.</li><li>- Add +3|+3 per level to Threshold.</li></ul>' },
-        { name: 'Feral Instinct <i class="skill1">1 Stress</i>', description: 'Gain Advantage on initiative rolls and cannot be surprised while conscious.' },
+        { name: 'Rage <i class="skill1">Stress</i>', description: '<ul><b class="text-green-600">Rage: </b><i class="skill1">1 Stress</i><br><li>- Reduce any damage by 1 Hit.</li> <li>- Increase STR +1</li><br><li><i>If one of the below Rage types are selected add the effects to the Rage bonuses plus the other bonuses.</i></li><li><b class="text-green-600">Totem Rage:</b> <i class="skill1">1 Stress</i></li><li><b>Bear:</b> +1 HP, +1 Stress, Reduce damage by 1 Hit.</li><li><b>Eagle:</b> +1 Evasion, +1 DEX, Perception Advantage</li><li><b>Tiger:</b> +1 DEX, Jump distance doubles, Jump check with Advantage.</li><li><b>Wolf:</b> +2 When combining Attacks, Advantage on  Tracking.</li><br><li><b class="text-green-600">Blood Rage:</b> <i class="skill1">1 Stress</i><li>- Add 1d4 Temp HP. If you are at max this skill will increase it beyond the max.</li><li>- Add 1d6 Temp Stress. If you are at max this skill will increase it beyond the max.</li><li>- Add 1d4 to your Attack Roll. Level 5: 1d6, Level 10: 1d8</li><li>- Add 1 die to your Damage Roll. Level 5: 1 dice, Level 10: 3 Dice</li><li>- Resist any Stress effects incurred by an Enemy.</li><li>- Roll attacks on any creature within melee range. Any successful attacks cause +1 Hit of damage.</li><li>- <b><u>Cannot</u></b> receive any Healing while raging.</li><li>- Remove any temporary effects (HP, Stress) when the Blood Rage ends.</li></ul>' },
+        { name: 'Reckless Attack <i class="skill2">1 Class</i>', description: 'Attack with Advantage, but enemies have Advantage against you until your next turn.' },
+        { name: 'Danger Sense', description: '<ul><li>- Can make your next <b>DEX Save</b> with Advantage.</li></ul>' },
+        { name: 'Unarmored Defense <i class="skill3">Special</i>', description: '<ul><li>- Add your initial <b>DEX</b> to Evasion (min +2).</li> <li>- Add <b class="dark:text-red">DEX</b> to Lower Threshold and <b>DEX & CON</b> Mod to Upper Threshold.</li><li>- Add +3|+3 per level to Threshold.</li></ul>' },
+        { name: 'Feral Instinct <i class="skill2">1 Class</i>', description: 'Gain Advantage on initiative rolls and cannot be surprised while conscious.' },
         { name: 'Brutal Critical <i class="skill1">Stress</i>', description: '<ul><li> Add 1 die per Stress Point used to your next damage roll.</li></ul>' },
         { name: 'Relentless Rage <i class="skill1">1 Stress</i>', description: '<ul><li>- If you drop to 0HP, you can instead drop to 1HP.</li><li>- Can only use this ability once/combat, but before you lose your last HP.</li></ul>' },
-        { name: 'Fanatical Focus <i class="skill2">1 Stress</i>', description: '<ul><li>- While raging, if you fail a Saving Throw you can choose to roll it again.</li><li?- You must use the new roll.</li></ul>' },
-        { name: 'Echo Howl <i class="skill1">1 Stress</i>', description: '<ul><li>- Cause 1 Stress to all your enemies in close range.</li><li>- Each enemy can roll a <b>WIS Save</b>.</li><li></li>- For each failed Save, add 1 Stress to your allies.</ul>' },
+        { name: 'Fanatical Focus <i class="skill2">1 Class</i>', description: '<ul><li>- While raging, if you fail a Saving Throw you can choose to roll it again.</li><li?- You must use the new roll.</li></ul>' },
+        { name: 'Echo Howl <i class="skill1">1 Stress</i>', description: '<ul><li>- Cause <b>1 Stress</b> to all your enemies in close range.</li><li>- Each enemy can roll a <b>WIS Save</b>.</li><li></li>- For each failed Save, you can select an ally to recover <b>1 Stress</b>.</ul>' },
         { name: 'Cleaver <i class="skill1">1 Stress</i>', description: '<ul><li>- If you do more Hits than the Enemy\'s remaining HP, you can send any remaining Hits to another Creature that is close to the original target.</li></ul>' }
     ],
     'Bard': [
@@ -53,27 +53,27 @@ const classAbilities = {
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description: '<ul><li>- Choose from the selected spell-list.</li><li>- Number of spells is equal to 1 + Level.</li><li>- Spell Save DC is 8+Mod.</li></ul>' }
     ],
     'Cleric': [
-        { name: 'Death\'s Door<i class="skill1">1 Stress</i>', description: '<ul><li>- When you or an ally has a Critical attack against you within Close Range, instead make it a normal Attack.</li></ul>' },
-        { name: 'Channel Divinity<i class="skill2">Class</i>', description: '<ul><li>Create a barrier of Godly energy around you at Very Close Range that Undead cannot cross.</li><li>- All Undead creatures within Close Range will be considered turned from you.</li><li>- A creature caught in the area on creation must make a Con Save, on a failure they will also take 1 Hit and 1 Stress.</li><li>- A creature that is forced into the area through your movement. Will make a CON Save at Advantage and take the penalties for a failure. If they succeed they are no longer restricted by the barrier.</li><li>- A creature that is successfully turned will, not approach or attack you or any ally within close range of you.</li><br><li>Use 1 Class point equal to the monster Tier.</li></ul>' },
-        { name: 'Read Thoughts<i class="skill1">1 Stress</i>', description: '<ul><li>- Surface thoughts and emotions only.</li></ul>' },
-        { name: 'War Attack<i class="skill1">1 Stress</i>', description: '<ul><li>- If you have made an attack already this turn (hit or miss), make a another Melee attack. (<i>It must be on the same target</i>).</li><li>- The Damage is also considered Radiant for this attack only.</li></ul>' },
-        { name: 'Warding Flare<i class="skill1">1 Stress</i>', description: '<ul><li>- Cause a flash of Divine light to momentarily blind the enemy.</li><li>- When a Creature is attacking an Ally, force them to roll at Disadvantage until the start of your next turn.</li></ul>' },
-        { name: 'Blessing<i class="skill2">1 Class</i>', description: '<ul><li>- If you make a Save or Skill check, you can choose to succeed.</li></ul>' },
-        { name: 'Divine Strike<i class="skill2">1 Class</i>', description: '<ul><li>- Increase Damage by +2 for each die.</li></ul>' },
+        { name: 'Death\'s Door <i class="skill1">1 Stress</i>', description: '<ul><li>- When you or an ally has a Critical attack against you within Close Range, instead make it a normal Attack.</li></ul>' },
+        { name: 'Channel Divinity <i class="skill2">Class</i>', description: '<ul><li>Create a barrier of Godly energy around you at Close Range that Undead cannot cross.</li><li>- All Undead creatures within Close Range will be considered turned from you.</li><li>- A creature caught in the area on creation must make a Con Save, on a failure they will also take 1 Hit and 1 Stress.</li><li>- A creature that is forced into the area through your movement. Will make a CON Save at Advantage and take the penalties for a failure. If they succeed they are no longer restricted by the barrier.</li><li>- A creature that is successfully turned will, not approach or attack you or any ally within close range of you.</li><br><li>Use 1 Class point equal to the monster Tier.</li></ul>' },
+        { name: 'Read Thoughts <i class="skill1">1 Stress</i>', description: '<ul><li>- Surface thoughts and emotions only.</li></ul>' },
+        { name: 'War Attack <i class="skill1">1 Stress</i>', description: '<ul><li>- If you have made an attack already this turn (hit or miss), make a another Melee attack. (<i>It must be on the same target</i>).</li><li>- The Damage is also considered Radiant for this attack only.</li></ul>' },
+        { name: 'Warding Flare <i class="skill1">1 Stress</i>', description: '<ul><li>- Cause a flash of Divine light to momentarily blind the enemy.</li><li>- When a Creature is attacking an Ally, force them to roll at Disadvantage until the start of your next turn.</li></ul>' },
+        { name: 'Blessing <i class="skill2">1 Class</i>', description: '<ul><li>- If you make a Save or Skill check, you can choose to succeed.</li></ul>' },
+        { name: 'Divine Strike <i class="skill2">1 Class</i>', description: '<ul><li>- Increase Damage by +2 for each die.</li></ul>' },
         { name: 'Guided Strike<i class="skill2">1 Class</i>', description: '<ul><li>Level 1-5</li><li>- Add +5 to your Attack and Damage Rolls.</li><li>Level 6-10</li><li>- Add +8 to your Attack and Damage Rolls.</li></ul>' },
-        { name: 'Disciple of Life<i class="skill1">1 Stress</i>', description: '<ul><li>- All your Healing skills this action double the return of Hit Points.</li></ul>' },
+        { name: 'Disciple of Life <i class="skill1">1 Stress</i>', description: '<ul><li>- All your Healing skills this action double the return of Hit Points.</li></ul>' },
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is WIS.</i>', description: '<ul><li>- Access to all available Spells within the Cleric domain.</li><li>- Number of spells is equal to 1 + Level + Modifier.</li><li>- Spell Save DC is 8 + Mod.</li></ul>' }
     ],
     'Druid': [
-        { name: 'Wild Beast <i class="skill1">Stress</i>', description: '<ul><li>- Using Stress transform your body into a creature of your choice.</li><li>_<i>1 Stress:</i> Basic</li>  <li>_<i>2 Stress:</i> Can Swim</li>  <li>_<i>3 Stress:</i> Can Fly</li><li><i>4 Stress:</i> Elemental Shape</li><li>- When in Wild Shape form, you cannot cast spells, or use skills that the creature otherwise couldn\'t do.</li></ul>' },
-        { name: 'Fungal Infestation <i class="skill1">1 Stress</i>', description: '<ul><li>- Use fungal spores to infect a creature.</li><li>- The creature must succeed a CON Save</li><li>- On a fail the creature will Attack, Move or do nothing on it\'s turn (Player\'s Choice.)</li></ul>' },
-        { name: 'Radiant Soul <i class="skill1">1 Stress</i>', description: '<ul><li>- Roll 1d4 and add the result to all damage dice.</li><li>- The damage is also considered Radiant.</li></ul>' },
+        { name: 'Wild Beast <i class="skill1">Stress</i>', description: '<ul><li>- Using Stress transform your body into a creature of your choice.</li><li><i class="skill1">1 Stress:</i> Basic</li>  <li><i class="skill1">2 Stress:</i> Can Swim</li>  <li><i class="skill1">3 Stress:</i> Can Fly</li><li><i class="skill1">4 Stress:</i> Elemental Shape</li><li>- When in Wild Shape form, you cannot cast spells, or use skills that the creature otherwise couldn\'t do.</li></ul>' },
+        { name: 'Fungal Infestation <i class="skill2">1 Class</i>', description: '<ul><li>- Use fungal spores to infect a creature.</li><li>- The creature must succeed a CON Save</li><li>- On a fail the creature will Attack, Move or do nothing on it\'s turn (Player\'s Choice.)</li></ul>' },
+        { name: 'Radiant Soul <i class="skill2">1 Class</i>', description: '<ul><li>- Roll 1d4 and add the result to all damage dice.</li><li>- The damage is also considered Radiant.</li></ul>' },
         { name: 'Mighty Summoner <i class="skill1">1 Stress</i>', description: '<ul><li>- All summoned creatures gain an extra 1HP.</li><li>- All creatures Attacks are considered Magical.</li></ul>' },
         { name: 'Natural Recovery <i class="skill2">1 Class</i>', description: '<ul><li>- Select yourself or an Ally.</li><li>- Roll 1d4 and remove that amount of Stress or Hit Points, but not both.</li></ul>' },
         { name: 'Healing Hands <i class="skill1">1 Stress</i>', description: '<ul><li><b>Option 1:</b> <i class="skill2">1 Class</i><li>- Recover 1 Hit Point or 1 Stress Point  or a Poison/Disease.</li> <li><b>Option 2:</b> <i class="skill2">2 Class</i></li><li>- You can roll an attack (this is not your attack action) and on a success, you touch an enemy, roll 1d4 and remove that amount of HP from the target and then touch an ally and they recover the result in HP.</li></ul>' },
-        { name: 'Spirit Totem <i class="skill1">Stress</i>', description: '<ul><li>- <b>Bear:</b> <i class="skill1">1 Stress</i><li>- Add 1 Temp HP to all allies.</li><li>- You gain +1|+2 to your threshold per level.</li><li>- <b>Hawk:</b> <i class="skill2">1 Class</i></li><li>- Can make a combined attack, adding damage together.</li><li>- Perception checks have Advantage.</li><li>- <b>Unicorn:</b> <i class="skill1">1 Stress</i></li><li>- Heal spells add 1 extra HP to all affected.</li><li>- Advantage on checks to detect creatures.</li></ul>' },
-        { name: 'Nature\'s Boon <i class="skill1">1 Stress</i>', description: '<ul><li>- Add +1 to a Stat Ability</li><li>- Add +1 to Evasion</li><li>- Add +1 to Armor Slot</li><li>- Add +1 Hit Point (above max)</li><li>- Add +1 Stress (above max)</li><li>- Gain +1 Spell</li></ul>' },
-        { name: 'Speech of the Woods <i class="skill1">1 Stress</i>', description: '<ul><li>- You learn to speak, read, and write Sylvan.</li><li>- Beasts can understand your speech, and you gain the ability to decipher their noises and motions.</li></ul>' },
+        { name: 'Spirit Totem <i class="skill1">Stress</i>', description: '<ul><li>- <b>Bear:</b> <i class="skill1">1 Stress</i><li>- Add 1 Temp HP to all allies.</li><li>- You gain +1|+2 to your threshold per level.</li><li>- <b>Hawk:</b> <i class="skill2">1 Stress</i></li><li>- Can make a combined attack, adding damage together.</li><li>- Perception checks have Advantage.</li><li>- <b>Unicorn:</b> <i class="skill1">1 Stress</i></li><li>- Heal spells add 1 extra HP to all affected.</li><li>- Advantage on checks to detect creatures.</li></ul>' },
+        { name: 'Nature\'s Boon', description: '<ul><li>- Add +1 to a Stat Ability</li><li>- Add +1 to Evasion</li><li>- Add +1 to Armor Slot</li><li>- Add +1 Hit Point (above max)</li><li>- Add +1 Stress (above max)</li><li>- Gain +1 Spell</li></ul>' },
+        { name: 'Speech of the Woods', description: '<ul><li>- You learn to speak, read, and write Sylvan.</li><li>- Beasts can understand your speech, and you gain the ability to decipher their noises and motions.</li></ul>' },
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is WIS.</i>', description: '<ul><li>- Choose from the selected spell-list.</li><li>- Number of spells is equal to 1 + Level.</li><li>- Spell Save DC is 8 + Mod.</li></ul>' }
     ],
     'Fighter': [
@@ -90,13 +90,13 @@ const classAbilities = {
     ],
     'Monk': [
         { name: 'Unarmored Defense', description: '<ul><li>- Add your initial DEX to Evasion (min +2).</li><li>- Add your current DEX to your (Lower & Upper) Threshold.</li><li>- Add +2|+2 per level to Threshold.</li></ul>' },
-        { name: 'Perfect Self <i class="skill1">1 Stress</i>', description: '<ul><li>- Must use fists.</li><li>Level 1-3</li><li>- +1 Attack Roll</li><li>Level 4-6</li><li>- +2 Attack Roll</li><li>Level 7-10</li><li>- +3 Attack Roll</li></ul>' },
+        { name: 'Perfect Self <i class="skill2">1 Class</i>', description: '<ul><li>- Must use fists.</li><li>Level 1-3</li><li>- +1 Attack Roll</li><li>Level 4-6</li><li>- +2 Attack Roll</li><li>Level 7-10</li><li>- +3 Attack Roll</li></ul>' },
         { name: 'Flurry of Blows <i class="skill1">2 Stress</i>', description: '<ul><li>- Must use fists.</li><li>- Make a series of Attacks equal to your DEX modifier.</li><li>- For each successful roll add that number of dice to the damage roll.</li></ul>' },
         { name: 'Purity of Body <i class="skill1">Stress</i>', description: '<ul><li>- Using Stress you can remove any Poisons and Disease from your body.</li><li>- The tier of the poison will dictate the amount of Stress to use.</li></ul>' },
         { name: 'Stress for Stress <i class="skill1">Stress</i>', description: '<ul><li>- You can give yourself Stress, and when you do also give the same amount to an Enemy (or enemies).</li></ul>' },
         { name: 'Stunning Strike <i class="skill2">1 Class</i>', description: '<ul><li>- Must use fists.</li><li>- Make an attempt to stun your enemy.</li><li>- Target rolls a CON Save. </li><li>- On a Fail target is stunned for 1d4 rounds. (Rolled by the GM)</li></ul>' },
         { name: 'Deflect Missiles <i class="skill2">1 Class</i>', description: '<ul><li>- If a missile attack is directed at you.</li><li>- Roll a DEX Save:</li><li>- On a Fail reduce the damage by 1 Hit.</li><li>- On a Success reduce the damage by 2 Hits.</li></ul>' },
-        { name: 'Danger Sense <i class="skill1">1 Stress</i>', description: '<ul><li>- Can make your DEX Saves with advantage.</li></ul>' },
+        { name: 'Danger Sense', description: '<ul><li>- Can make your DEX Saves with advantage.</li></ul>' },
         { name: 'Stillness of Mind <i class="skill2">1 Class</i>', description: '<ul><li>- Remove 1d4 Stress from either you or an ally.</li></ul>' },
         { name: 'Quivering Palm <i class="skill2">1 Class</i>', description: '<ul><li>- Must use fists.</li><li>- Make 1 Attack to a creature within range.</li><li>- At the start of your next turn (before you take any actions) you Force the target to Roll Divine Die and on a fail you can repeat the damage.</li></ul>' }
     ],
@@ -113,8 +113,8 @@ const classAbilities = {
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description: '<ul><li>- Choose from the selected spell-list.</li><li>- Number of spells is equal to 1 + Level.</li><li>- Spell Save DC is 8 + Mod.</li></ul>' }
     ],
     'Ranger': [
-        { name: 'Favored Enemy', description: '<ul><li>- Select a creature that you gain Advantage with on any Attacks, or Skills that deal with that Creature.</li><li>- Select another creature at level 5 and level 10.</li><li>- The creature cannot be of the Race options. (The GM may allow an exception).</li></ul>' },
-        { name: 'Deft Explorer', description: '<ul><li>- You do not need to use Stress on difficult terrain to move.</li>><li>- Stealth, Survival Skills are with Advantage.</li></ul>' },
+        { name: 'Favored Enemy', description: '<ul><li>- Select a creature that you gain Advantage with on any Attacks, or Skills that deal with that Creature.</li><li>- Select another creature at level 4 and level 8.</li><li>- The creature cannot be of the Race options. (The GM may allow an exception).</li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 1</option><option>Gnoll</option><option>Goblin</option><option>Hobgoblin</option><option>Elf</option><option>Gnome</option><option>Halfling</option><option>Human</option><option>Orc</option><option>Tiefling</option></select></li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 4</option><option>Gnoll</option><option>Goblin</option><option>Hobgoblin</option><option>Elf</option><option>Gnome</option><option>Halfling</option><option>Human</option><option>Orc</option><option>Tiefling</option></select></li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 8</option><option>Gnoll</option><option>Goblin</option><option>Hobgoblin</option><option>Elf</option><option>Gnome</option><option>Halfling</option><option>Human</option><option>Orc</option><option>Tiefling</option></select></li></ul>' },
+        { name: 'Deft Explorer', description: '<ul><li>- You do not need to use Stress on difficult terrain to move.</li><li>- Stealth, Survival Skills are with Advantage.</li></ul>' },
         { name: 'Supernatural Defense <i class="skill1">1 Stress</i>', description: '<ul><li>- You gain temporary bonus to Evasion for this combat equal to the number of your Armor. </li></ul>' },
         { name: 'Hunter\'s Mark <i class="skill2">1 Class</i>', description: '<ul><li>- Mark a Creature within range for the duration of combat. (Or until the creature is removed.)</li><li>- The Ranger can choose to prevent any Stress skill the creature may use (but not GM Tokens).</li><li>- The Creature cannot hide in combat.</li></ul>' },
         { name: 'Ranger Companion', description: '<ul><li>- Select an Animal that can assist the Ranger. This creature can attack on its own. (<i>Using the Ranger\'s Initiative</i>)</li><li>- Use 1 Class Point to make a combined attack and add the damage together.</li></ul>' },
@@ -131,26 +131,26 @@ const classAbilities = {
         { name: 'Steady Aim <i class="skill2">1 Class</i>', description: '<ul><li>- On any successful Attack. Roll 1d4. Success Target is 4.</li><li>- Add 1 Hit to your damage.</li><li>- Hit the target you were aiming for, sword hand, vial on a table.</li></ul>' },
         { name: 'Uncanny Dodge <i class="skill1">1 Stress</i>', description: '<ul><li>- When you are hit with (any) Damage, lower the damage by 1 Hit.</li></ul>' },
         { name: 'Misdirection <i class="skill2">1 Class</i>', description: '<ul><li>- Force a creature to roll 1d6 and subtract it from the result of an Attack Roll.</li></ul>' },
-        { name: 'Poison <i class="skill1">1 Stress</i>', description: '<ul><li>- Tier 1 <i>(Level 1~5)</li><li>- Use 1 Stress Point to make a poison this can be held indefinitely.</li><li>- Use 1 Class Point to roll 1d4 extra damage.</li><li>- Tier 2 <i>(Level 6~7)</i></li>  <li>- Use 2 Stress Points to make a stronger poison.</li>  <li>- Use 2 Class Points to roll 2d4 extra damage</li><li>- The damage will reoccur at the start of the creature\'s turn unless it succeeds a CON Save.</li><li>- Tier 3 <i>(Level 8-9)</i></li><li>- Use 3 Stress Points to create poison.</li><li>- Use 2 Class Points to roll 1d4 on an Attack and add that number to reduce a creatures HP by the result.</li><li>- Tier 4 <i>(Level 10)</i></li><li>- Use 4 Stress Points to create poison.</li><li>- Use 3 Class Points to roll 1d4 on an Attack and add that number to reduce a creatures HP by the result.</li><li>- The damage will reoccur at the start of the creature\'s turn unless it succeeds a CON Save.</li><li>- Creating poison Tier 2 an up will require time to produce decided by the DM. </li></ul>' },
+        { name: 'Poison <i class="skill3">Special</i>', description: '<ul><li>- Tier 1 <i>(Level 1~5)</li><li>- Use 1 Stress Point to make a poison this can be held indefinitely.</li><li>- Use 1 Class Point to roll 1d4 extra damage.</li><li>- Tier 2 <i>(Level 6~7)</i></li>  <li>- Use 2 Stress Points to make a stronger poison.</li>  <li>- Use 2 Class Points to roll 2d4 extra damage</li><li>- The damage will reoccur at the start of the creature\'s turn unless it succeeds a CON Save.</li><li>- Tier 3 <i>(Level 8-9)</i></li><li>- Use 3 Stress Points to create poison.</li><li>- Use 2 Class Points to roll 1d4 on an Attack and add that number to reduce a creatures HP by the result.</li><li>- Tier 4 <i>(Level 10)</i></li><li>- Use 4 Stress Points to create poison.</li><li>- Use 3 Class Points to roll 1d4 on an Attack and add that number to reduce a creatures HP by the result.</li><li>- The damage will reoccur at the start of the creature\'s turn unless it succeeds a CON Save.</li><li>- Creating poison Tier 2 an up will require time to produce decided by the DM. </li></ul>' },
         { name: 'Maker of Fate', description: '<ul><li>- When rolling Divine Dice add an Extra Divine die to the roll.</li></ul>' },
         { name: 'Thief Reflexes', description: '<ul><li>- Roll DEX rolls with Advantage.</li></ul>' },
         { name: 'Stroke of Luck <i class="skill2">1 Class</i>', description: '<ul><li>- Re-roll any die roll and you must use the new roll.</li></ul>' }
     ],
     'Sorcerer': [
-        { name: 'Favored by the Gods <i class="skill1">1 Stress</i>', description: '<ul><li>- If you make an attack and miss, you can roll dice and add it to the Attack Roll.</li><br><li>Level 1-3: 1d4</li><li>Level 4-6: 2d4</li><li>Level 7-10: 3d4</li></ul>' },
+        { name: 'Favored by the Gods <i class="skill2">1 Class</i>', description: '<ul><li>- If you make an attack and miss, you can roll dice and add it to the Attack Roll.</li><br><li>Level 1-3: 1d4</li><li>Level 4-6: 2d4</li><li>Level 7-10: 3d4</li></ul>' },
         { name: 'Font of Magic <i class="skill1">1 Stress</i>', description: '<ul><li>- Can use one Stress and replace it for a Spell Slot or vice versa.</li></ul>' },
-        { name: 'Meta-Magic <i>(All meta-magic must be decided before the spell is cast.)</i>', description: '<ul><li>- <b>Careful Spell</b><i>1 Stress/Person</i></li><li>- Remove an ally from the area or a spells effect.<li>- <b>Empowered Spell</b> <i>1 Stress</i></li><li>- Add 1 damage die, or an extra target.<li>- <b>Seeking Spell</b> <i>1 Class</i></li><li>- If you miss when making an Attack, you can instead cause 1 Hit.<li>- <b>Twinned Spell</b> <i>1 Stress</i></li><li>- If the spell projectile targets a single target you can add on more projectile.</li></ul>' },
-        { name: 'Innate Sorcery <i class="skill1">1 Stress</i>', description: '<ul><li>- You tap into the magic of the dragons.</li><li>- Add 1d10 to your damage roll.</li><li>- The extra damage extends out to Close Range and targets all within range (Allies included).</li><br><li>Type: Black/Acid</li><li>Type: Blue/Lightning</li><li>Type: Green/Poison</li><li>Type: Red/Fire</li><li>Type: White/Cold</li></ul>' },
+        { name: 'Meta-Magic <i class="skill1">1 Stress</i> <i>(All meta-magic must be decided before the spell is cast.)</i>', description: '<ul><li>- <b>Careful Spell</b><i>1 Stress/Person</i></li><li>- Remove an ally from the area or a spells effect.<li>- <b>Empowered Spell</b> <i>1 Stress</i></li><li>- Add 1 damage die, or an extra target.<li>- <b>Seeking Spell</b> <i>1 Stress</i></li><li>- If you miss when making an Attack, you can instead cause 1 Hit.<li>- <b>Twinned Spell</b> <i>1 Stress</i></li><li>- If the spell projectile targets a single target you can add on more projectile.</li></ul>' },
+        { name: 'Innate Sorcery <i class="skill2">1 Class</i>', description: '<ul><li>- You tap into the magic of the dragons.</li><li>- Add 1d10 to your damage roll.</li><li>- The extra damage extends out to Close Range and targets all within range (Allies included).</li><br><li>Type: Black/Acid</li><li>Type: Blue/Lightning</li><li>Type: Green/Poison</li><li>Type: Red/Fire</li><li>Type: White/Cold</li></ul>' },
         { name: 'Storm\'s  Fury <i class="skill1">1 Stress</i>', description: '<ul><li>- When you are hit by an Attack.</li><li>- Return half the damage back to the Attacker with Lightning Damage.</li></ul>' },
-        { name: 'Tides of Chaos <i class="skill1">1 Stress</i>', description: '<ul><li>- You can roll your next Spell Attack with Advantage.</li> <li>- Regardless of the result, your next spell must be with Disadvantage or the Save with Advantage.</li><li>- There is no limit of time on this ability and will only reset after a spell is cast.</li><li>- When reaching Level 10 you can choose to eliminate this with another Stress Point.</li></ul>' },
+        { name: 'Tides of Chaos <i class="skill2">1 Class</i>', description: '<ul><li>- You can roll your next Spell Attack with Advantage.</li> <li>- Regardless of the result, your next spell must be with Disadvantage or the Save with Advantage.</li><li>- There is no limit of time on this ability and will only reset after a spell is cast.</li><li>- When reaching Level 10 you can choose to eliminate this with another Stress Point.</li></ul>' },
         { name: 'Divine Soul <i class="skill2">1 Class</i>', description: '<ul><li>- Temporarily gain +1 Hit Point, +1 Spell Point.<li><li>- Remove after a Long Rest.</li></ul>' },
-        { name: 'Unerathly Recovery <i class="skill2">2 Class</i>', description: '<ul><li>- You and only you recover +2 HP and +2 Stress and +2 Spell.</li></ul>' },
+        { name: 'Unearthly Recovery <i class="skill2">2 Class</i>', description: '<ul><li>- You and only you recover +2 HP and +2 Stress and +2 Spell.</li></ul>' },
         { name: 'Telepathic Speech', description: '<ul><li>- Can sense a living mind within Close range.</li><li>- If you are familiar with the creature you can communicate with it Psychically.</li></ul>' },
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description: '<ul><li>- Choose from the selected spell-list.</li><li>- Number of spells is equal to 1 + Level.<li>- Spell Save DC is 8 + Mod.</li></ul>' }
     ],
     'Warlock': [
-        { name: 'Defy Death <i class="skill1">1 Stress</i>', description: '<ul><li>- You can add 1 Divine Die to your next Divine Roll.</li><li>- For the Warlock this can also be done when they reach 0HP or anytime until next Long Rest.</li></ul>' },
-        { name: 'Spirit Protection <i class="skill1">2 Stress</i>', description: '<ul><li>- Create a physical projection of yourself.</li><li>- The projection can not be targeted and enhanced with any kind of ability.</li><li>- It has half your HP and no Stress, Class or Spell points.</li><li>Level 1-5</li><li>- It can do rudimentary actions, open doors, pull levers.</li><li>- It cannot be more than 1 Distance from you.</li><li>Level 6-10</li><li>- All the above.</li><li>- It can also Attack once on your turn but at half your normal damage.</li></ul>' },
+        { name: 'Defy Death <i class="skill2">1 Class</i>', description: '<ul><li>- You can add 1 Divine Die to your next Divine Roll.</li><li>- For the Warlock this can also be done when they reach 0HP or anytime until next Long Rest.</li></ul>' },
+        { name: 'Spirit Protection <i class="skill2">2 Class</i>', description: '<ul><li>- Create a physical projection of yourself.</li><li>- The projection can not be targeted and enhanced with any kind of ability.</li><li>- It has half your HP and no Stress, Class or Spell points.</li><li>Level 1-5</li><li>- It can do rudimentary actions, open doors, pull levers.</li><li>- It cannot be more than 1 Distance from you.</li><li>Level 6-10</li><li>- All the above.</li><li>- It can also Attack once on your turn but at half your normal damage.</li></ul>' },
         { name: 'Spirit Shield <i class="skill1">1 Stress</i>', description: '<ul><li>- You can reduce the damage against you or an ally by 2d6 for each Stress Point used.</li></ul>' },
         { name: 'Pact Boon', description: '<ul><li>- Add +1 to a Stat Ability</li><li>- Add +1 to Evasion</li><li>- Add +1 to Armor Slot</li><li>- Add +1 to Attack/Damage Rolls</li><li>- Add +1 Hit Point (above max)</li><li>- Add +1 Stress (above max)</li><li>- Gain +1 Spell</li></ul>' },
         { name: 'Necromancer <i class="skill2">1 Class</i>', description: '<ul><li>- You gain the Animate Dead spell (if you do not already have it.)</li><li>- You gain greater control and power of the undead you create.</li> <li>- Roll Divine Dice to decide the Undead that returns.</li><li>- You may also choose to increase the Resource by 2 Class and gain a Divine die to add for either option you wish.</li><br><li>Skeleton: Divine, HP:3, Class:2, Stress:2, Mod:+5, Atk:2d6</li><li><b>1 Stress:</b> Reduce a hit by 1.</li><li><b>1 Class:</b> Add an extra damage die to the damage roll.</li><li><b>Feature:</b> Resistant to peircing damage. (Half Damage).</li><br></li><br><li>Zombie: Fate, HP:4, Class:2, Stress:1, Mod:+5, Atk:2d8</li><li><b>1 Stress:</b> Cause any creature they are currently attacking to roll a CON Save or take 1 Stress caused by their grotesque nature.</li><li><b>1 Class:</b> Add an extra damage die to the damage roll.</li><li><b>Feature:</b> Roll Divine Dice on a success they return with 1HP/O Stress</li></ul>' },
@@ -162,12 +162,12 @@ const classAbilities = {
     ],
     'Wizard': [
         { name: 'Arcane Recovery <i class="skill2">1 Class</i>', description: '<ul><li>- Recover Spell Points equal to half your SP total rounded up.</li></ul>' },
-        { name: 'Signature Spell <i class="skill1">2 Stress</i>', description: '<ul><li>- Select 1 spell and give it +3 to the Save, or add +1 die to the damage roll. Until a Long Rest.</li></ul>' },
-        { name: 'Spell Mastery <i class="skill1">1 Stress</i>', description: '<ul><li>- Selected spells will require 1 less element to cast. </li></ul>' },
+        { name: 'Signature Spell <i class="skill1">Stress</i>', description: '<ul><li>- Select 1 spell and give it a bonus equal to the resource used.</li><li><i class="skill1">1 Stress:</i> +1</li><li><i class="skill1">2 Stress:</i> +2</li><li><i class="skill1">3 Stress:</i> +3</li><li>to the Save, Attack and Damage rolls.</li><li>Until a Long Rest.</li></ul>' },
+        { name: 'Spell Mastery <i class="skill1">1 Stress</i>', description: '<ul><li>- Selected spells will require 1 less element to cast.</li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>--</option><option>Gnoll</option><option>Goblin</option><option>Hobgoblin</option><option>Elf</option><option>Gnome</option><option>Halfling</option><option>Human</option><option>Orc</option><option>Tiefling</option></select></li><li>Until a Long Rest.</li></ul>' },
         { name: 'Spell Sequencer <i class="skill3">Special</i>', description: '<ul><li>Combine certain spells for greater effect, you decide when they trigger. Until a Long Rest.</li><li>- Comprehend Languages + Tongues</li><li>- Mage Armor + Find Familiar</li><li>- Shield + Magic Missile</li> <li>- True Strike + Bolt</li></ul>' },
         { name: 'Awakened Mind <i class="skill2">1 Class</i>', description: '<ul><li>- Your next spell can be cast at lower Spell and Stress Point.</li></ul>' },
         { name: 'Clairvoyant <i class="skill2">2 Class</i>', description: '<ul><li>- You can place yourself at the top or bottom of the Initiative order.</li></ul>' },
-        { name: 'Knowledge is Power <i class="skill1">1 Class</i>', description: '<ul><li>- Gain the ability to automatically know the results of an Arcane check.</li></ul>' },
+        { name: 'Knowledge is Power <i class="skill2">1 Class</i>', description: '<ul><li>- Gain the ability to automatically know the results of an Arcane check.</li></ul>' },
         { name: 'Mystic Glyphs <i class="skill2">Class</i>', description: '<ul><li>Can scribe glyphs on items to temporarily imbue magical effects on them. Until next Long Rest.</li><li>- Level 1~3 / <i class="skill2">1 Class</i> = +1</li> <li>- Level 4~6 / <i class="skill2">2 Class</i> = +2</li><li>- Level 7~10 / <i class="skill2">3 class</i> = +3</li></ul>' },
         { name: 'Arcane Echo <i class="skill3">Special</i>', description: '<ul><li><i>Stress Points equal to half the spell. Minimum 1 Point.</i></li><li>- Reshape the magic of a spell where you are the target of a successful spell and echo out a new spell as a Reaction.</li> <li>- The spell you choose must be of level equal to half the spell. If the spell is not used immediately the energy is lost.</li></ul>' },
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is INT.</i>', description: '<ul><li>A wizard has all spells available to them. However they can only select the number of spells equal to their Level + Casting Modifier.</li><li>- They do not need to memorize spells. Though they can not change their selection.</li><li>- The Spell Save DC is 8 + Casting Modifier.</li><li>- A Wizard can use Class Points as substitute for Spell Points, but not vice versa.</li><li>- A Wizard will gain +1 Spell Point each time they level up. </li></ul>' }
@@ -207,7 +207,10 @@ function openClassAbilitiesModal() {
     const title = document.getElementById('classAbilitiesTitle');
     const classSpecificTitle = document.getElementById('classSpecificTitle');
     
-    title.textContent = `${currentCharacter.class} Abilities Reference`;
+    // Show count in title
+const maxAbilities = getMaxAbilities(currentCharacter.level || 1);
+const currentSelected = getTotalSelectedAbilities();
+title.textContent = `${currentCharacter.class} Abilities Reference (${currentSelected}/${maxAbilities})`;
     classSpecificTitle.textContent = `${currentCharacter.class} Specific Abilities`;
     
     // Clear display first
@@ -215,7 +218,8 @@ function openClassAbilitiesModal() {
     
     populateClassAbilities();
     populateUniversalAbilities();
-    
+    // Update checkbox states after populating
+    updateAbilityCheckboxStates();
     modal.classList.remove('hidden');
 }
 
@@ -265,19 +269,84 @@ function handleAbilityCheckboxChange(checkbox) {
     const type = checkbox.dataset.type;
     const index = parseInt(checkbox.dataset.index);
     
-    if (checkbox.checked) {
-        addAbilityToDisplay(type, index);
-    } else {
-        removeAbilityFromDisplay(type, index);
+// Check if trying to select when at limit
+if (checkbox.checked) {
+    const maxAbilities = getMaxAbilities(currentCharacter.level || 1);
+    const currentSelected = getTotalSelectedAbilities();
+    
+    if (currentSelected > maxAbilities) {
+        // Prevent selection if over limit
+        checkbox.checked = false;
+        showCustomDialog('Ability Limit Reached', `You can only select ${maxAbilities} abilities at level ${currentCharacter.level || 1}.`);
+        return;
     }
     
+    addAbilityToDisplay(type, index);
+} else {
+    removeAbilityFromDisplay(type, index);
+}
+
     // Save selections
     saveClassAbilitiesSelection();
+    // Update checkbox states after any change
+    updateAbilityCheckboxStates();
+    
         // ADD THIS LINE: Update DC Save display when abilities change
     if (currentCharacter) {
         updateDCSaveDisplay(currentCharacter);
         // ADD THIS LINE: Update Spell Casting section visibility
         updateSpellCastingDisplay(currentCharacter);
+    }
+}
+
+// ADD THESE 3 FUNCTIONS RIGHT AFTER your existing handleAbilityCheckboxChange function:
+
+// Calculate maximum abilities allowed based on character level
+function getMaxAbilities(level) {
+    if (!level || level < 1) return 2;
+    return 1 + level; // Level 1 = 2, Level 2 = 3, Level 3 = 4, etc.
+}
+
+// Get total count of selected abilities (class + universal combined)
+function getTotalSelectedAbilities() {
+    if (!currentCharacter || !currentCharacter.classAbilities) return 0;
+    
+    const classSelected = currentCharacter.classAbilities.selectedClass.length;
+    const universalSelected = currentCharacter.classAbilities.selectedUniversal.length;
+    
+    return classSelected + universalSelected;
+}
+
+// Update checkbox states based on selection limit
+function updateAbilityCheckboxStates() {
+    if (!currentCharacter) return;
+    
+    const maxAbilities = getMaxAbilities(currentCharacter.level || 1);
+    const currentSelected = getTotalSelectedAbilities();
+    const hasReachedLimit = currentSelected >= maxAbilities;
+    
+    // Get all unchecked checkboxes (both class and universal)
+    const uncheckedBoxes = document.querySelectorAll('.class-ability-checkbox:not(:checked), .universal-ability-checkbox:not(:checked)');
+    
+    // Enable/disable unchecked boxes based on limit
+    uncheckedBoxes.forEach(checkbox => {
+        checkbox.disabled = hasReachedLimit;
+        
+        // Add visual indication
+        const label = checkbox.closest('label');
+        if (hasReachedLimit) {
+            label.classList.add('opacity-50', 'cursor-not-allowed');
+            label.classList.remove('cursor-pointer');
+        } else {
+            label.classList.remove('opacity-50', 'cursor-not-allowed');
+            label.classList.add('cursor-pointer');
+        }
+    });
+    
+    // Update modal title to show current count
+    const title = document.getElementById('classAbilitiesTitle');
+    if (title) {
+        title.textContent = `${currentCharacter.class} Abilities Reference (${currentSelected}/${maxAbilities})`;
     }
 }
 
@@ -293,7 +362,9 @@ function openSpellSelectionModal() {
     const searchInput = document.getElementById('spellSearchInput');
     
     // Set the class name in modal title
-    classNameElement.textContent = currentCharacter.class;
+  const maxSpells = getMaxSpells(currentCharacter);
+const currentSpells = currentCharacter.knownSpellGroups ? currentCharacter.knownSpellGroups.length : 0;
+classNameElement.textContent = `${currentCharacter.class} (${currentSpells}/${maxSpells})`;
     
     // Clear search and populate spells
     searchInput.value = '';
@@ -329,6 +400,10 @@ function populateSpellsList(characterClass, searchTerm = '') {
         // Check if character already knows this spell group
         const alreadyKnown = currentCharacter.knownSpellGroups && 
                             currentCharacter.knownSpellGroups.some(knownGroup => knownGroup.groupName === group.groupName);
+        // Check spell limits
+const maxSpells = getMaxSpells(currentCharacter);
+const currentSpells = currentCharacter.knownSpellGroups ? currentCharacter.knownSpellGroups.length : 0;
+const atMaxSpells = currentSpells >= maxSpells;
         
         // Create the spells display with separation lines
         const spellsDisplay = group.spells.map((spell, spellIndex) => `
@@ -349,11 +424,11 @@ function populateSpellsList(characterClass, searchTerm = '') {
                 <div class="relative items-start mb-4">
 
                     <button 
-                        class=" absolute top-0 right-0 add-spell-group-btn px-4 py-2 ${alreadyKnown ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'} text-white text-sm rounded transition-colors font-medium"
-                        data-group-index="${groupIndex}"
-                        ${alreadyKnown ? 'disabled' : ''}
+                    class=" absolute top-0 right-0 add-spell-group-btn px-4 py-2 ${(alreadyKnown || atMaxSpells) ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'} text-white text-sm rounded transition-colors font-medium"
+                                            data-group-index="${groupIndex}"
+                        ${(alreadyKnown || atMaxSpells) ? 'disabled' : ''}
                     >
-                        ${alreadyKnown ? 'Known' : 'Add Group'}
+                        ${alreadyKnown ? 'Known' : atMaxSpells ? 'Max Spells' : 'Add Group'}
                     </button>
                 </div>
                 <div class="spells-in-group">
@@ -377,6 +452,15 @@ function populateSpellsList(characterClass, searchTerm = '') {
 function addSpellGroupToCharacter(spellGroup) {
     if (!currentCharacter) return;
     
+// Check spell limits
+const maxSpells = getMaxSpells(currentCharacter);
+const currentSpells = currentCharacter.knownSpellGroups ? currentCharacter.knownSpellGroups.length : 0;
+
+if (currentSpells >= maxSpells) {
+    showCustomDialog('Maximum Spells Reached', `${currentCharacter.name} already knows the maximum number of spell groups (${maxSpells}) for their class and level.`);
+    return;
+}
+
     // Initialize known spell groups array if not present
     if (!currentCharacter.knownSpellGroups) {
         currentCharacter.knownSpellGroups = [];
@@ -608,7 +692,7 @@ function updateDCSaveDisplay(character) {
 
 // Optional: Function to get different styling based on class
 function getDCSaveStyleClass(characterClass) {
-    const baseClasses = 'ms-24 h-8 px-3 py-1 font-semibold mb-3 text-white text-sm text-center font-medium rounded-lg';
+    const baseClasses = 'ms-24 h-8 px-4 py-1 font-semibold mb-3 text-white text-sm text-center font-medium rounded-lg';
     
     switch(characterClass) {
         case 'Bard':
@@ -680,7 +764,34 @@ function updateSpellAttackBonus(character) {
     }
 }
 
-
+// Calculate maximum spells allowed based on class and level
+function getMaxSpells(character) {
+    if (!character.class || !character.level) return 0;
+    
+    const level = character.level;
+    const characterClass = character.class.toLowerCase();
+    
+    // Classes that get 1 + level spells
+    const simpleSpellClasses = ['bard', 'druid', 'paladin', 'ranger', 'sorcerer', 'warlock'];
+    
+    if (simpleSpellClasses.includes(characterClass)) {
+        return 1 + level;
+    }
+    
+    // Cleric and Wizard get spell modifier + level
+    if (characterClass === 'cleric') {
+        const wisModifier = character.currentAbilityScores ? character.currentAbilityScores.wis : (character.wis || 0);
+        return Math.max(0, wisModifier) + level;
+    }
+    
+    if (characterClass === 'wizard') {
+        const intModifier = character.currentAbilityScores ? character.currentAbilityScores.int : (character.int || 0);
+        return Math.max(0, intModifier) + level;
+    }
+    
+    // Default for other classes (no spells)
+    return 0;
+}
 
        
 
@@ -2357,7 +2468,8 @@ showWeaponModal = showWeaponModalEnhanced;
                     currentCharacter[ability] = (currentCharacter[ability] || 0) + option.value;
                 }
             });
-            
+            // After level is updated, add this line:
+            updateAbilityCheckboxStates();
             // Save and refresh
             saveCharacters();
             populateCharacterSheet(currentCharacter);
@@ -6152,7 +6264,7 @@ document.getElementById('cancelCustomWeapon').addEventListener('click', function
             document.getElementById('evasionModal').classList.add('hidden');
         }
         
-        function resetTempEvasion() {
+        /*function resetTempEvasion() {
             if (!currentCharacter) return;
             
             // Initialize evasion data if missing
@@ -6175,7 +6287,7 @@ document.getElementById('cancelCustomWeapon').addEventListener('click', function
             populateCharacterSheet(currentCharacter);
             
             document.getElementById('evasionModal').classList.add('hidden');
-        }
+        }*/
 
         // Helper function to calculate effective threshold values (including Unarmored Defense)
         function getEffectiveThresholdValues(character) {
@@ -8938,3 +9050,4 @@ function updateAllCoinDisplays() {
         updateCoinDisplay(coinType);
     });
 }
+
