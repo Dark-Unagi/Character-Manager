@@ -9225,4 +9225,3 @@ function updateAllCoinDisplays() {
     });
 }
 
-
