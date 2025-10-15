@@ -23,6 +23,96 @@
     </script>
 
     <style>
+/* Tooltip Styles */
+.tooltip-trigger {
+    cursor: help;
+    /*text-decoration: underline;
+    text-decoration-style: dotted;*/
+    text-decoration-color: #5D5CDE;
+    transition: all 0.2s ease;
+}
+
+.tooltip-trigger:hover {
+    color: #5D5CDE;
+}
+
+.tooltip-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.tooltip-content {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    max-width: 90vw;
+    max-width: min(90vw, 400px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.dark .tooltip-content {
+    background: #374151;
+    color: white;
+}
+
+.tooltip-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6B7280;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem;
+}
+
+.tooltip-close:hover {
+    background: #F3F4F6;
+    color: #374151;
+}
+
+.dark .tooltip-close:hover {
+    background: #4B5563;
+    color: white;
+}
+
+.tooltip-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #5D5CDE;
+}
+
+.dark .tooltip-title {
+    color: #8B5CF6;
+}
+
+.tooltip-text {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #374151;
+}
+
+.dark .tooltip-text {
+    color: #D1D5DB;
+}
+
         .skill1 {
             color: rgba(255, 32, 32, 0.677);
         }
@@ -969,7 +1059,7 @@
                     <!-- Familiar Section (for Wizard and Warlock) -->
                     <div id="familiarSection" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg" style="display: none;">
                         <h3 class="text-lg font-semibold mb-4">Familiar</h3>
-                        <span class="text-sm font-medium"><i>You can only use this if you have Spell-Casting and cast <b></b>'Find Famiiar'</b></i></span>
+                        <span class="text-sm font-medium"><i>You can only use this if you have Spell-Casting and cast <b>'Find Famiiar'</b></i></span>
                         <div class="space-y-4">
                             <div>
                                 <label class="flex items-center cursor-pointer">
@@ -987,6 +1077,7 @@
                     <!-- Ranger Companion Section (for Ranger) -->
                     <div id="companionSection" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg" style="display: none;">
                         <h3 class="text-lg font-semibold mb-4">Ranger Companion</h3>
+                        <span class="text-sm font-medium"><i>You can only use this if you have the <b>"Ranger Companion"</b> ability.</i></span>
                         <div class="space-y-4">
                             <div>
                                 <label class="flex items-center cursor-pointer">
@@ -1016,6 +1107,7 @@
                     <!-- Jack of all Trades Section (for Bard) -->
                     <div id="jackOfAllTradesSection" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg" style="display: none;">
                         <h3 class="text-lg font-semibold mb-4">Jack of all Trades</h3>
+                        <span class="text-sm font-medium"><i>You can only use this if you have the <b>"Jack Of All Trades"</b> ability.</i></span>
                         <div class="space-y-4">
                             <div>
                                 <label class="flex items-center cursor-pointer">
@@ -1283,6 +1375,7 @@
                     <!-- Familiar Section (for Wizard and Warlock) -->
                     <div id="editFamiliarSection" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg" style="display: none;">
                         <h3 class="text-lg font-semibold mb-4">Familiar</h3>
+                        <span class="text-sm font-medium"><i>You can only use this if you have Spell-Casting and cast <b>'Find Famiiar'</b></i></span>
                         <div class="space-y-4">
                             <div>
                                 <label class="flex items-center cursor-pointer">
@@ -1300,6 +1393,7 @@
                     <!-- Ranger Companion Section (for Ranger) -->
                     <div id="editCompanionSection" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg" style="display: none;">
                         <h3 class="text-lg font-semibold mb-4">Ranger Companion</h3>
+                        <span class="text-sm font-medium"><i>You can only use this if you have the <b>"Ranger Companion"</b> ability.</i></span>
                         <div class="space-y-4">
                             <div>
                                 <label class="flex items-center cursor-pointer">
@@ -1329,6 +1423,7 @@
                     <!-- Jack of all Trades Section (for Bard) -->
                     <div id="editJackOfAllTradesSection" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg" style="display: none;">
                         <h3 class="text-lg font-semibold mb-4">Jack of all Trades</h3>
+                        <span class="text-sm font-medium"><i>You can only use this if you have the <b>"Jack Of All Trades"</b> ability.</i></span>
                         <div class="space-y-4">
                             <div>
                                 <label class="flex items-center cursor-pointer">
