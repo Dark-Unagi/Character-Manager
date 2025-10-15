@@ -10,6 +10,159 @@
             }
         });
 
+        // Tooltip definitions for character creation terms
+const tooltipDefinitions = {
+    'Character Name': {
+        title: 'Character Name',
+        content: 'The unique name for your character. This will be displayed throughout the game on character sheet.'
+    },
+    'Level': {
+        title: 'Character Level',
+        content: 'Represents your character\'s experience and power. Higher levels unlock new abilities and increase your capabilities. Characters start at Level 1.'
+    },
+    'Race': {
+        title: 'Character Race',
+        content: 'Your character\'s species or heritage. Each race provides unique bonuses, and proficiencies that shape your character\'s strengths.'
+    },
+    'Class': {
+        title: 'Character Class',
+        content: 'Your character\'s profession or calling. Each class has unique abilities, spell-casting capabilities, and combat styles that define how you play.'
+    },
+    'Familiar': {
+        title: 'Familiar',
+        content: 'A magical companion bound to certain spellcasters. Familiars can assist in combat (but not attack), scouting, and provide various utility functions. Available to <b>Wizards and Warlocks</b> with the "Find Familiar" spell.'
+    },
+    'Ranger Companion': {
+        title: 'Ranger Companion',
+        content: 'A loyal animal companion that fights alongside Rangers. These creatures can be trained and provide tactical advantages in combat and exploration.'
+    },
+    'Jack of all Trades': {
+        title: 'Jack of all Trades',
+        content: 'A Bard ability that provides bonus to skills you\'re not proficient in. Represents the Bard\'s versatility and wide range of knowledge.'
+    },
+    'Ability Scores': {
+        title: 'Ability Scores',
+        content: 'Six core statistics that define your character\'s natural talents: Strength (physical power), Dexterity (agility), Constitution (endurance), Intelligence (reasoning), Wisdom (awareness), and Charisma (personality).'
+    },
+    'Strength': {
+        title: 'Strength (STR)',
+        content: 'Measures physical power and muscle. Used for melee attacks, jumping, and carrying capacity and standing your ground.'
+    },
+    'Dexterity': {
+        title: 'Dexterity (DEX)',
+        content: 'Measures agility, reflexes, and balance. Used for ranged attacks, stealth, acrobatics, and determining initiative in combat.'
+    },
+    'Constitution': {
+        title: 'Constitution (CON)',
+        content: 'Measures health, stamina, and vital force. Resistance to disease and poison, and overall endurance.'
+    },
+    'Intelligence': {
+        title: 'Intelligence (INT)',
+        content: 'Measures reasoning ability, memory, and analytical thinking. Used for investigation, arcane knowledge, history, and is the spellcasting ability for Wizards and Warlocks.'
+    },
+    'Wisdom': {
+        title: 'Wisdom (WIS)',
+        content: 'Measures awareness, intuition, and insight. Used for perception, survival, and medicine. Spellcasting ability for Clerics, Druids, and Rangers.'
+    },
+    'Charisma': {
+        title: 'Charisma (CHA)',
+        content: 'Measures personality, leadership, and confidence. Used for persuasion, deception, and intimidation. Spellcasting ability for Bards, Paladins and Sorcerers.'
+    },
+    'HP': {
+        title: 'Hit Points (HP)',
+        content: 'Represents your character\'s health and vitality. When HP reaches 0, your character is unconscious and may be dying. HP can be restored through rest, healing, and magic. Hit Points are directly affected by your Threshold.'
+    },
+    'STRESS': {
+        title: 'Stress',
+        content: 'Represents mental, emotional and physical strain. High stress can affect Hit Points, Exhaution. Managed through rest and specific abilities.'
+    },
+    'CLASS': {
+        title: 'Class Resources',
+        content: 'Required for actioning special abilities, features, or resources unique to your character\'s class.'
+    },
+    'SPELL': {
+        title: 'Spell Slots',
+        content: 'The magical energy used to cast spells. Each spell consumes one or more spell slots. Spell slots are restored after a long rest, and higher-level spells require higher-level slots. Beaware certain spells also use Stress to boost their power.'
+    },
+    'Evasion': {
+        title: 'Evasion',
+        content: 'Your ability to avoid attacks. Higher evasion makes you harder to hit.'
+    },
+    'Armor': {
+        title: 'Armor Slots',
+        content: 'Armor Slots are used to reduce incoming damage. For Example: 1 Armor can reduce 1 Hit Point of damage. Most classes can only use 1 slot at a time.'
+    },
+    'Threshold': {
+        title: 'Threshold',
+        content: 'Represents breaking points or limits for incoming damage. Threshold is directly attached to how much damage a character will take from a successful and therefore how many Hit Points they lose.'
+    }
+};
+
+// Tooltip functionality
+function showTooltip(term) {
+    const definition = tooltipDefinitions[term];
+    if (!definition) return;
+
+    // Create tooltip modal
+    const modal = document.createElement('div');
+    modal.className = 'tooltip-modal';
+    modal.innerHTML = `
+        <div class="tooltip-content">
+            <button class="tooltip-close" onclick="hideTooltip()">&times;</button>
+            <div class="tooltip-title">${definition.title}</div>
+            <div class="tooltip-text">${definition.content}</div>
+        </div>
+    `;
+
+    // Add to page
+    document.body.appendChild(modal);
+
+    // Close on outside click
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            hideTooltip();
+        }
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', function escapeHandler(e) {
+        if (e.key === 'Escape') {
+            hideTooltip();
+            document.removeEventListener('keydown', escapeHandler);
+        }
+    });
+}
+
+function hideTooltip() {
+    const modal = document.querySelector('.tooltip-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Make elements clickable for tooltips
+function initializeTooltips() {
+    // Only target elements within character creation section
+    const characterCreation = document.getElementById('characterCreation');
+    if (!characterCreation) return;
+
+    // Find all labels and headings within character creation
+    const tooltipElements = characterCreation.querySelectorAll('label, h3, .text-sm.font-medium');
+
+    tooltipElements.forEach(element => {
+        const text = element.textContent.trim();
+        
+        // Check if this text has a tooltip definition
+        if (tooltipDefinitions[text]) {
+            element.classList.add('tooltip-trigger');
+            element.addEventListener('click', function(e) {
+                e.preventDefault();
+                showTooltip(text);
+            });
+        }
+    });
+}
+
 // DC Save ability mapping for each class
 const classDCAbilities = {
     'Barbarian': null,      // No DC saves
@@ -113,7 +266,7 @@ const classAbilities = {
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description: '<ul><li>- Choose from the selected spell-list.</li><li>- Number of spells is equal to 1 + Level.</li><li>- Spell Save DC is 8 + Mod.</li></ul>' }
     ],
     'Ranger': [
-        { name: 'Favored Enemy', description: '<ul><li>- Select a creature that you gain Advantage with on any Attacks, or Skills that deal with that Creature.</li><li>- Select another creature at level 4 and level 8.</li><li>- The creature cannot be of the Race options. (The GM may allow an exception).</li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 1</option><option>Gnoll</option><option>Goblin</option><option>Hobgoblin</option><option>Elf</option><option>Gnome</option><option>Halfling</option><option>Human</option><option>Orc</option><option>Tiefling</option></select></li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 4</option><option>Gnoll</option><option>Goblin</option><option>Hobgoblin</option><option>Elf</option><option>Gnome</option><option>Halfling</option><option>Human</option><option>Orc</option><option>Tiefling</option></select></li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 8</option><option>Gnoll</option><option>Goblin</option><option>Hobgoblin</option><option>Elf</option><option>Gnome</option><option>Halfling</option><option>Human</option><option>Orc</option><option>Tiefling</option></select></li></ul>' },
+        { name: 'Favored Enemy', description: '<ul><li>- Select a creature that you gain Advantage with on any Attacks, or Skills that deal with that Creature.</li><li>- Select another creature at level 4 and level 8.</li><li>- The creature cannot be of the Race options. (The GM may allow an exception).</li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 1</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 1</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 1</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li></ul>' },
         { name: 'Deft Explorer', description: '<ul><li>- You do not need to use Stress on difficult terrain to move.</li><li>- Stealth, Survival Skills are with Advantage.</li></ul>' },
         { name: 'Supernatural Defense <i class="skill1">1 Stress</i>', description: '<ul><li>- You gain temporary bonus to Evasion for this combat equal to the number of your Armor. </li></ul>' },
         { name: 'Hunter\'s Mark <i class="skill2">1 Class</i>', description: '<ul><li>- Mark a Creature within range for the duration of combat. (Or until the creature is removed.)</li><li>- The Ranger can choose to prevent any Stress skill the creature may use (but not GM Tokens).</li><li>- The Creature cannot hide in combat.</li></ul>' },
@@ -428,7 +581,7 @@ const atMaxSpells = currentSpells >= maxSpells;
                                             data-group-index="${groupIndex}"
                         ${(alreadyKnown || atMaxSpells) ? 'disabled' : ''}
                     >
-                        ${alreadyKnown ? 'Known' : atMaxSpells ? 'Max Spells' : 'Add Group'}
+                        ${alreadyKnown ? 'Known' : atMaxSpells ? 'Max Spells' : 'Add'}
                     </button>
                 </div>
                 <div class="spells-in-group">
@@ -689,10 +842,29 @@ function updateDCSaveDisplay(character) {
         dcSaveElement.className = getDCSaveStyleClass(character.class);
     }
 }
-
+/*
 // Optional: Function to get different styling based on class
 function getDCSaveStyleClass(characterClass) {
     const baseClasses = 'ms-24 h-8 px-4 py-1 font-semibold mb-3 text-white text-sm text-center font-medium rounded-lg';
+    
+    switch(characterClass) {
+        case 'Bard':
+        case 'Paladin':
+        case 'Sorcerer':
+            return `${baseClasses} border-2 border-solid border-pink-900`; // Charisma classes
+        case 'Cleric':
+        case 'Druid':
+        case 'Ranger':
+            return `${baseClasses} border-2 border-solid border-yellow-900`; // Wisdom classes
+        case 'Warlock':
+        case 'Wizard':
+            return `${baseClasses} border-2 border-solid border-purple-900`; // Intelligence classes
+        default:
+            return `${baseClasses} bg-gray-500`; // Default
+    }
+}*/
+function getDCSaveStyleClass(characterClass) {
+    const baseClasses = 'ms-2 sm:ms-12 md:ms-24 min-h-[2.5rem] px-3 py-2 sm:px-4 sm:py-2 font-semibold mb-3 text-white text-base sm:text-sm text-center rounded-lg whitespace-nowrap max-w-full';
     
     switch(characterClass) {
         case 'Bard':
@@ -3476,6 +3648,8 @@ showWeaponModal = showWeaponModalEnhanced;
         document.addEventListener('DOMContentLoaded', function() {
             loadCharacters();
             updateCharacterDisplay();
+                // Initialize tooltips
+    initializeTooltips();
             
             // Add Save/Load event listeners with null checks
             const saveBtn = document.getElementById('saveCharactersBtn');
