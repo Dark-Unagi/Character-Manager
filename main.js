@@ -341,6 +341,347 @@ const universalAbilities = [
     { name: 'Valiant Aid <i class="skill2">1 Class</i>', description: '<ul><li>- You can give an ally in close range Advantage on their next roll.</li><li>- Alternatively, if the target has Disadvantage they now make a straight normal roll.</li></ul>' }
 ];
 
+// Gallery functionality
+let galleryImages = [];
+let currentImageIndex = 0;
+
+// Open gallery modal
+function openGallery() {
+    if (!currentCharacter) {
+        showCustomDialog('No Character Selected', 'Please select a character first.');
+        return;
+    }
+    
+    const modal = document.getElementById('galleryModal');
+    modal.classList.remove('hidden');
+    loadCharacterImages();
+}
+
+// Close gallery modal
+function closeGallery() {
+    document.getElementById('galleryModal').classList.add('hidden');
+}
+
+// Load character's images
+function loadCharacterImages() {
+    if (currentCharacter.images && currentCharacter.images.length > 0) {
+        galleryImages = currentCharacter.images;
+        currentImageIndex = 0;
+        displayGalleryImages();
+    } else {
+        showGalleryEmpty();
+    }
+}
+
+// Display gallery images
+function displayGalleryImages() {
+    if (galleryImages.length === 0) {
+        showGalleryEmpty();
+        return;
+    }
+    
+    // Show image container and thumbnails
+    document.getElementById('galleryEmpty').classList.add('hidden');
+    document.getElementById('galleryImageContainer').classList.remove('hidden');
+    document.getElementById('galleryThumbnails').classList.remove('hidden');
+    
+    // Display current image
+    showImageAtIndex(currentImageIndex);
+    generateThumbnails();
+}
+
+// Show image at specific index
+function showImageAtIndex(index) {
+    if (index < 0 || index >= galleryImages.length) return;
+    
+    currentImageIndex = index;
+    const image = galleryImages[index];
+    
+    // Update main image
+    const mainImage = document.getElementById('galleryCurrentImage');
+    mainImage.src = image.url;
+    mainImage.alt = image.name || 'Character Image';
+    mainImage.classList.add('gallery-fade-in');
+    
+    // Update counter
+    document.getElementById('galleryCounter').textContent = `${index + 1} of ${galleryImages.length}`;
+    
+    // Update active thumbnail
+    updateActiveThumbnail();
+    
+    // Always show navigation buttons if there are multiple images
+    const showButtons = galleryImages.length > 1;
+    document.getElementById('galleryPrev').style.display = showButtons ? 'block' : 'none';
+    document.getElementById('galleryNext').style.display = showButtons ? 'block' : 'none';
+}
+
+// Generate thumbnails
+function generateThumbnails() {
+    const container = document.getElementById('thumbnailContainer');
+    container.innerHTML = '';
+    
+    galleryImages.forEach((image, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = image.thumbnail || image.url;
+        thumbnail.alt = image.name || 'Character Image';
+        thumbnail.className = 'gallery-thumbnail';
+        thumbnail.dataset.index = index;
+        
+        thumbnail.addEventListener('click', () => {
+            showImageAtIndex(index);
+        });
+        
+        container.appendChild(thumbnail);
+    });
+}
+
+// Update active thumbnail
+function updateActiveThumbnail() {
+    document.querySelectorAll('.gallery-thumbnail').forEach((thumb, index) => {
+        thumb.classList.toggle('active', index === currentImageIndex);
+    });
+}
+
+// Navigation functions with infinite loop
+function showPreviousImage() {
+    if (galleryImages.length === 0) return;
+    
+    if (currentImageIndex > 0) {
+        showImageAtIndex(currentImageIndex - 1);
+    } else {
+        // Loop to last image when at first image
+        showImageAtIndex(galleryImages.length - 1);
+    }
+}
+
+function showNextImage() {
+    if (galleryImages.length === 0) return;
+    
+    if (currentImageIndex < galleryImages.length - 1) {
+        showImageAtIndex(currentImageIndex + 1);
+    } else {
+        // Loop to first image when at last image
+        showImageAtIndex(0);
+    }
+}
+
+// Show empty state
+function showGalleryEmpty() {
+    document.getElementById('galleryEmpty').classList.remove('hidden');
+    document.getElementById('galleryImageContainer').classList.add('hidden');
+    document.getElementById('galleryThumbnails').classList.add('hidden');
+}
+
+// Show loading state
+function showGalleryLoading() {
+    document.getElementById('galleryLoading').classList.remove('hidden');
+    document.getElementById('galleryEmpty').classList.add('hidden');
+    document.getElementById('galleryImageContainer').classList.add('hidden');
+}
+
+// Hide loading state
+function hideGalleryLoading() {
+    document.getElementById('galleryLoading').classList.add('hidden');
+}
+
+// Compress image to reduce storage size
+function compressImage(file, maxWidth = 600, quality = 0.7) {
+    return new Promise((resolve) => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        
+        img.onload = function() {
+            // Calculate new dimensions
+            const ratio = Math.min(maxWidth / img.width, maxWidth / img.height);
+            canvas.width = img.width * ratio;
+            canvas.height = img.height * ratio;
+            
+            // Draw and compress
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+            resolve(compressedDataUrl);
+        };
+        
+        img.src = URL.createObjectURL(file);
+    });
+}
+
+// Handle image upload
+function handleImageUpload(event) {
+    const files = Array.from(event.target.files);
+    if (files.length === 0) return;
+    
+    showGalleryLoading();
+    
+    // Initialize images array if needed
+    if (!currentCharacter.images) {
+        currentCharacter.images = [];
+    }
+    
+    let processedCount = 0;
+    const totalFiles = files.length;
+    
+    files.forEach((file, index) => {
+        if (file.type.startsWith('image/')) {
+            compressImage(file, 600, 0.7).then(compressedDataUrl => {
+                currentCharacter.images.push({
+                    id: `upload_${Date.now()}_${index}`,
+                    name: file.name,
+                    url: compressedDataUrl,
+                    thumbnail: compressedDataUrl,
+                    type: 'upload'
+                });
+                
+                processedCount++;
+                if (processedCount === totalFiles) {
+                    // All files processed
+                    saveCharacters();
+                    loadCharacterImages();
+                    hideGalleryLoading();
+                }
+            });
+        } else {
+            processedCount++;
+            if (processedCount === totalFiles) {
+                saveCharacters();
+                loadCharacterImages();
+                hideGalleryLoading();
+            }
+        }
+    });
+    
+    // Clear the input
+    event.target.value = '';
+}
+
+// Handle image URL addition
+function handleImageUrl() {
+    const urlInput = document.getElementById('imageUrl');
+    const url = urlInput.value.trim();
+    
+    if (!url) return;
+    
+    // Basic URL validation
+    if (!isValidImageUrl(url)) {
+        showCustomDialog('Invalid URL', 'Please enter a valid image URL ending in .jpg, .jpeg, .png, .gif, or .webp');
+        return;
+    }
+    
+    // Initialize images array if needed
+    if (!currentCharacter.images) {
+        currentCharacter.images = [];
+    }
+    
+    // Add image
+    currentCharacter.images.push({
+        id: `url_${Date.now()}`,
+        name: 'External Image',
+        url: url,
+        thumbnail: url,
+        type: 'url'
+    });
+    
+    saveCharacters();
+    loadCharacterImages();
+    urlInput.value = '';
+}
+
+// Validate image URL
+function isValidImageUrl(url) {
+    try {
+        new URL(url);
+        return /\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i.test(url) || 
+               url.includes('imgur.com') || 
+               url.includes('unsplash.com') ||
+               url.includes('picsum.photos');
+    } catch {
+        return false;
+    }
+}
+
+// Delete current image
+function deleteCurrentImage() {
+    if (galleryImages.length === 0) return;
+    
+    const imageToDelete = galleryImages[currentImageIndex];
+    const confirmMessage = `Are you sure you want to delete this image?\n\n${imageToDelete.name || 'Character Image'}`;
+    
+    showConfirmDialog(confirmMessage, () => {
+        // Remove from character images
+        currentCharacter.images = currentCharacter.images.filter(img => img.id !== imageToDelete.id);
+        saveCharacters();
+        
+        // Update gallery display
+        galleryImages.splice(currentImageIndex, 1);
+        
+        if (galleryImages.length === 0) {
+            showGalleryEmpty();
+        } else {
+            // Adjust current index if needed
+            if (currentImageIndex >= galleryImages.length) {
+                currentImageIndex = galleryImages.length - 1;
+            }
+            showImageAtIndex(currentImageIndex);
+            generateThumbnails();
+        }
+    });
+}
+
+// Show confirm dialog (reuse your existing function or create a simple one)
+function showConfirmDialog(message, onConfirm) {
+    if (window.confirm(message)) {
+        onConfirm();
+    }
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Gallery event listeners
+    document.getElementById('openGallery').addEventListener('click', openGallery);
+    document.getElementById('closeGallery').addEventListener('click', closeGallery);
+    document.getElementById('galleryPrev').addEventListener('click', showPreviousImage);
+    document.getElementById('galleryNext').addEventListener('click', showNextImage);
+    document.getElementById('uploadImages').addEventListener('change', handleImageUpload);
+    document.getElementById('addImageUrl').addEventListener('click', handleImageUrl);
+    document.getElementById('deleteCurrentImage').addEventListener('click', deleteCurrentImage);
+    
+    // Enter key for URL input
+    document.getElementById('imageUrl').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            handleImageUrl();
+        }
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        const modal = document.getElementById('galleryModal');
+        if (!modal.classList.contains('hidden')) {
+            switch(e.key) {
+                case 'Escape':
+                    closeGallery();
+                    break;
+                case 'ArrowLeft':
+                    showPreviousImage();
+                    break;
+                case 'ArrowRight':
+                    showNextImage();
+                    break;
+                case 'Delete':
+                    deleteCurrentImage();
+                    break;
+            }
+        }
+    });
+    
+    // Close modal on outside click
+    document.getElementById('galleryModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeGallery();
+        }
+    });
+});
+
 // Class abilities modal functions
 function openClassAbilitiesModal() {
     if (!currentCharacter) {
