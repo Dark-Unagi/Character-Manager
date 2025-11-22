@@ -1,4 +1,4 @@
-        // Dark mode detection
+// Dark mode detection
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
         }
@@ -239,7 +239,7 @@ const classAbilities = {
         { name: 'Know Thy Enemy <i class="skill2">1 Class</i>', description: '<ul><li>- Spend some time examining an opponent and judge 2 of the following:</li><li>- Strength score</li><li>- Dexterity score</li><li>- Constitution score</li><li>- Evasion</li><li>- Current Hit Points</li><li>- Current Stress Points</li></ul>' },
         { name: 'Relentless <i class="skill2">1 Class</i>', description: '<ul><li>- If you have no Stress available.</li><li>- Roll 1d4 and return that much Stress.</li></ul>' },
         { name: 'Battle Master <i class="skill1">1 Stress</i>', description: '<ul><li>- <b>Commander\'s Strike</b> <i class="skill1">1 Stress</i></li><li>- Allow an ally to retaliate when they are hit.</li><li>- <b>Feinting Attack</b> <i class="skill2">1 Class</i></li><li>- Force the Enemy\'s next Attack to be Disadvantage.</li><li>- <b>Goading Attack</b> <i class="skill2">1 Class</i></li><li>- The target must Attack (only) you on their next round.</li><li>- <b>Maneuvering Attack</b> <i class="skill1">1 Stress</i></li><li>- Give an Ally Advantage on their next Attack.</li><li>- <b>Parry</b> <i class="skill2">1 Class</i></li><li>- Reduce an Attack against you by 1 Hit.</li><li>- <b>Pushing Attack</b> <i class="skill1">1 Stress</i></li><li>- Push the target back out of your range.</li><li>- <b>Rally</b> <i class="skill2">1 Class</i></li><li>- Roll 1d4 and remove the result from enemy Stress.</li><li>- Either 1 target or multiple.</li><li>- Return the result to your allies.</li><li>- <b>Sweeping Attack</b> <i class="skill1">1 Stress</i></li><li>- On a successful Attack, select up to 2 more targets in Melee Range and give them 1 Hit.</li><li>- <b>Menacing Attack</b> <i class="skill1">1 Stress</i></li><li>- Force a WIS Save or they become Frightened of you until the end of your next turn.</li></ul>' },
-        { name: 'Fighting Style', description: '<ul><li>- Defender: Add +1 to Evasion.</li><li>- Two-Handed: With 2-Handed weapons your Critical hit is a 19 or 20.</li><li>Dual-Wield: Can use an Off-Hand Weapon and gain it\'s other bonuses.</li><li>- Archer: Add +1 to Ranged Attacks.</li></ul><select id="charStyle" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>--</option><option>Archer +1 Ranged</option><option>Defender +1 Evasion</option><option>2-Handed Crits 19-20</option></select>' }
+        { name: 'Fighting Style', description: '<ul><li>- Archer: Add +1 to Ranged Attacks.</li><li>- Defender: Add +1 to Evasion.</li><li>- Dual-Wield: Can use an Off-Hand Weapon and gain it\'s other bonuses.</li><li>- Two-Handed: With 2-Handed weapons your Critical hit is a 19 or 20.</li><select id="charStyle" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>--</option><option>Archer +1 Ranged</option><option>Defender +1 Evasion</option><option>Dual-Wield: Use Off-Hand</option><option>Two-Handed Crits 19-20</option></select></ul>' }
     ],
     'Monk': [
         { name: 'Unarmored Defense', description: '<ul><li>- Add your initial DEX to Evasion (min +2).</li><li>- Add your current DEX to your (Lower & Upper) Threshold.</li><li>- Add +2|+2 per level to Threshold.</li></ul>' },
@@ -693,8 +693,7 @@ function openClassAbilitiesModal() {
     if (!currentCharacter.classAbilities) {
         currentCharacter.classAbilities = {
             selectedClass: [],
-            selectedUniversal: [],
-            abilitySelectValues: {}
+            selectedUniversal: []
         };
     }
     
@@ -738,7 +737,7 @@ function populateClassAbilities() {
         </label>
     `).join('');
     
-
+    // Restoration is handled after both class and universal abilities are populated
 }
 
 function populateUniversalAbilities() {
@@ -751,7 +750,7 @@ function populateUniversalAbilities() {
         </label>
     `).join('');
     
-
+    // Restoration is handled by restoreClassAbilitiesSelection() called from openClassAbilitiesModal()
 }
 
 function handleAbilityCheckboxChange(checkbox) {
@@ -1059,33 +1058,26 @@ function addAbilityToDisplay(type, index) {
     abilityElement.dataset.type = type;
     abilityElement.dataset.index = index;
     
-    // Insert the original description without changing IDs
     abilityElement.innerHTML = `
         <h5 class="font-semibold text-lg mb-2 text-blue-600 dark:text-blue-400">${ability.name}</h5>
         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${ability.description}</p>
     `;
     
     displayContainer.appendChild(abilityElement);
+}
+
+function removeAbilityFromDisplay(type, index) {
+    const displayContainer = document.getElementById('selectedAbilitiesDisplay');
+    const abilityElement = displayContainer.querySelector(`[data-type="${type}"][data-index="${index}"]`);
     
-    // Add data attributes to select elements for saving/restoring
-    const selectElements = abilityElement.querySelectorAll('select');
-    selectElements.forEach((select, selectIndex) => {
-        // Create a unique key for saving
-        const saveKey = `${type}_${index}_${selectIndex}`;
-        select.dataset.saveKey = saveKey;
-        
-        // Restore value if it exists
-        if (currentCharacter.classAbilities && currentCharacter.classAbilities.abilitySelectValues) {
-            if (currentCharacter.classAbilities.abilitySelectValues[saveKey]) {
-                select.value = currentCharacter.classAbilities.abilitySelectValues[saveKey];
-            }
-        }
-        
-        // Add event listener to save when changed
-        select.addEventListener('change', () => {
-            saveClassAbilitiesSelection();
-        });
-    });
+    if (abilityElement) {
+        abilityElement.remove();
+    }
+    
+    // Add placeholder text back if no abilities are selected
+    if (displayContainer.children.length === 0) {
+        displayContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400 italic">Select abilities to view their details here.</p>';
+    }
 }
 
 function clearSelectedAbilities() {
@@ -1101,8 +1093,7 @@ function saveClassAbilitiesSelection() {
     if (!currentCharacter.classAbilities) {
         currentCharacter.classAbilities = {
             selectedClass: [],
-            selectedUniversal: [],
-            abilitySelectValues: {}
+            selectedUniversal: []
         };
     }
     
@@ -1113,14 +1104,6 @@ function saveClassAbilitiesSelection() {
     // Collect currently checked universal abilities
     const universalCheckboxes = document.querySelectorAll('.universal-ability-checkbox:checked');
     currentCharacter.classAbilities.selectedUniversal = Array.from(universalCheckboxes).map(cb => parseInt(cb.dataset.index));
-    
-    // Save select element values using data-save-key attributes
-    currentCharacter.classAbilities.abilitySelectValues = {};
-    const selectedAbilitiesDisplay = document.getElementById('selectedAbilitiesDisplay');
-    const selectElements = selectedAbilitiesDisplay.querySelectorAll('select[data-save-key]');
-    selectElements.forEach(select => {
-        currentCharacter.classAbilities.abilitySelectValues[select.dataset.saveKey] = select.value;
-    });
     
     // Save using your existing save system
     saveCharacters();
@@ -9598,4 +9581,3 @@ function updateAllCoinDisplays() {
         updateCoinDisplay(coinType);
     });
 }
-
