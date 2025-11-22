@@ -239,7 +239,7 @@ const classAbilities = {
         { name: 'Know Thy Enemy <i class="skill2">1 Class</i>', description: '<ul><li>- Spend some time examining an opponent and judge 2 of the following:</li><li>- Strength score</li><li>- Dexterity score</li><li>- Constitution score</li><li>- Evasion</li><li>- Current Hit Points</li><li>- Current Stress Points</li></ul>' },
         { name: 'Relentless <i class="skill2">1 Class</i>', description: '<ul><li>- If you have no Stress available.</li><li>- Roll 1d4 and return that much Stress.</li></ul>' },
         { name: 'Battle Master <i class="skill1">1 Stress</i>', description: '<ul><li>- <b>Commander\'s Strike</b> <i class="skill1">1 Stress</i></li><li>- Allow an ally to retaliate when they are hit.</li><li>- <b>Feinting Attack</b> <i class="skill2">1 Class</i></li><li>- Force the Enemy\'s next Attack to be Disadvantage.</li><li>- <b>Goading Attack</b> <i class="skill2">1 Class</i></li><li>- The target must Attack (only) you on their next round.</li><li>- <b>Maneuvering Attack</b> <i class="skill1">1 Stress</i></li><li>- Give an Ally Advantage on their next Attack.</li><li>- <b>Parry</b> <i class="skill2">1 Class</i></li><li>- Reduce an Attack against you by 1 Hit.</li><li>- <b>Pushing Attack</b> <i class="skill1">1 Stress</i></li><li>- Push the target back out of your range.</li><li>- <b>Rally</b> <i class="skill2">1 Class</i></li><li>- Roll 1d4 and remove the result from enemy Stress.</li><li>- Either 1 target or multiple.</li><li>- Return the result to your allies.</li><li>- <b>Sweeping Attack</b> <i class="skill1">1 Stress</i></li><li>- On a successful Attack, select up to 2 more targets in Melee Range and give them 1 Hit.</li><li>- <b>Menacing Attack</b> <i class="skill1">1 Stress</i></li><li>- Force a WIS Save or they become Frightened of you until the end of your next turn.</li></ul>' },
-        { name: 'Fighting Style', description: '<ul><li>- Defender: Add +1 to Evasion.</li><li>- Two-Handed: With 2-Handed weapons your Critical hit is a 19 or 20.</li><li>Dual-Wield: Can use an Off-Hand Weapon and gain it\'s other bonuses.</li><li>- Archer: Add +1 to Ranged Attacks.</li></ul>' }
+        { name: 'Fighting Style', description: '<ul><li>- Defender: Add +1 to Evasion.</li><li>- Two-Handed: With 2-Handed weapons your Critical hit is a 19 or 20.</li><li>Dual-Wield: Can use an Off-Hand Weapon and gain it\'s other bonuses.</li><li>- Archer: Add +1 to Ranged Attacks.</li></ul><select id="charStyle" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>--</option><option>Archer +1 Ranged</option><option>Defender +1 Evasion</option><option>2-Handed Crits 19-20</option></select>' }
     ],
     'Monk': [
         { name: 'Unarmored Defense', description: '<ul><li>- Add your initial DEX to Evasion (min +2).</li><li>- Add your current DEX to your (Lower & Upper) Threshold.</li><li>- Add +2|+2 per level to Threshold.</li></ul>' },
@@ -266,7 +266,7 @@ const classAbilities = {
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description: '<ul><li>- Choose from the selected spell-list.</li><li>- Number of spells is equal to 1 + Level.</li><li>- Spell Save DC is 8 + Mod.</li></ul>' }
     ],
     'Ranger': [
-        { name: 'Favored Enemy', description: '<ul><li>- Select a creature that you gain Advantage with on any Attacks, or Skills that deal with that Creature.</li><li>- Select another creature at level 4 and level 8.</li><li>- The creature cannot be of the Race options. (The GM may allow an exception).</li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 1</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 4</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 8</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li></ul>' },
+        { name: 'Favored Enemy', description: '<ul><li>- Select a creature that you gain Advantage with on any Attacks, or Skills that deal with that Creature.</li><li>- Select another creature at level 4 and level 8.</li><li>- The creature cannot be of the Race options. (The GM may allow an exception).</li><li><select id="charEnemy1" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 1</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li><li><select id="charEnemy2" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 4</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li><li><select id="charEnemy3" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 8</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li></ul>' },
         { name: 'Deft Explorer', description: '<ul><li>- You do not need to use Stress on difficult terrain to move.</li><li>- Stealth, Survival Skills are with Advantage.</li></ul>' },
         { name: 'Supernatural Defense <i class="skill1">1 Stress</i>', description: '<ul><li>- You gain temporary bonus to Evasion for this combat equal to the number of your Armor. </li></ul>' },
         { name: 'Hunter\'s Mark <i class="skill2">1 Class</i>', description: '<ul><li>- Mark a Creature within range for the duration of combat. (Or until the creature is removed.)</li><li>- The Ranger can choose to prevent any Stress skill the creature may use (but not GM Tokens).</li><li>- The Creature cannot hide in combat.</li></ul>' },
@@ -316,7 +316,7 @@ const classAbilities = {
     'Wizard': [
         { name: 'Arcane Recovery <i class="skill2">1 Class</i>', description: '<ul><li>- Recover Spell Points equal to half your SP total rounded up.</li></ul>' },
         { name: 'Signature Spell <i class="skill1">Stress</i>', description: '<ul><li>- Select 1 spell and give it a bonus equal to the resource used.</li><li><i class="skill1">1 Stress:</i> +1</li><li><i class="skill1">2 Stress:</i> +2</li><li><i class="skill1">3 Stress:</i> +3</li><li>to the Save, Attack and Damage rolls.</li><li>Until a Long Rest.</li></ul>' },
-        { name: 'Spell Mastery <i class="skill1">1 Stress</i>', description: '<ul><li>- Selected spells will require 1 less element to cast.</li><li><select id="charRace" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>--</option><option>Gnoll</option><option>Goblin</option><option>Hobgoblin</option><option>Elf</option><option>Gnome</option><option>Halfling</option><option>Human</option><option>Orc</option><option>Tiefling</option></select></li><li>Until a Long Rest.</li></ul>' },
+        { name: 'Spell Mastery <i class="skill1">1 Stress</i>', description: '<ul><li>- Selected spells will require 1 less element to cast.</li><li><select id="charSpell" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>--</option><option>Gnoll</option><option>Goblin</option><option>Hobgoblin</option><option>Elf</option><option>Gnome</option><option>Halfling</option><option>Human</option><option>Orc</option><option>Tiefling</option></select></li><li>Until a Long Rest.</li></ul>' },
         { name: 'Spell Sequencer <i class="skill3">Special</i>', description: '<ul><li>Combine certain spells for greater effect, you decide when they trigger. Until a Long Rest.</li><li>- Comprehend Languages + Tongues</li><li>- Mage Armor + Find Familiar</li><li>- Shield + Magic Missile</li> <li>- True Strike + Bolt</li></ul>' },
         { name: 'Awakened Mind <i class="skill2">1 Class</i>', description: '<ul><li>- Your next spell can be cast at lower Spell and Stress Point.</li></ul>' },
         { name: 'Clairvoyant <i class="skill2">2 Class</i>', description: '<ul><li>- You can place yourself at the top or bottom of the Initiative order.</li></ul>' },
@@ -693,7 +693,8 @@ function openClassAbilitiesModal() {
     if (!currentCharacter.classAbilities) {
         currentCharacter.classAbilities = {
             selectedClass: [],
-            selectedUniversal: []
+            selectedUniversal: [],
+            abilitySelectValues: {}
         };
     }
     
@@ -1058,26 +1059,38 @@ function addAbilityToDisplay(type, index) {
     abilityElement.dataset.type = type;
     abilityElement.dataset.index = index;
     
+    // Create unique IDs for select elements
+    let description = ability.description;
+    let selectCounter = 0;
+    description = description.replace(/id="[^"]*"/g, () => {
+        selectCounter++;
+        return `id="ability_${type}_${index}_select_${selectCounter}"`;
+    });
+    
     abilityElement.innerHTML = `
         <h5 class="font-semibold text-lg mb-2 text-blue-600 dark:text-blue-400">${ability.name}</h5>
-        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${ability.description}</p>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${description}</p>
     `;
     
     displayContainer.appendChild(abilityElement);
-}
-
-function removeAbilityFromDisplay(type, index) {
-    const displayContainer = document.getElementById('selectedAbilitiesDisplay');
-    const abilityElement = displayContainer.querySelector(`[data-type="${type}"][data-index="${index}"]`);
     
-    if (abilityElement) {
-        abilityElement.remove();
+    // Restore select values if they exist
+    if (currentCharacter.classAbilities && currentCharacter.classAbilities.abilitySelectValues) {
+        const selectElements = abilityElement.querySelectorAll('select');
+        selectElements.forEach(select => {
+            if (select.id && currentCharacter.classAbilities.abilitySelectValues[select.id]) {
+                select.value = currentCharacter.classAbilities.abilitySelectValues[select.id];
+            }
+        });
     }
     
-    // Add placeholder text back if no abilities are selected
-    if (displayContainer.children.length === 0) {
-        displayContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400 italic">Select abilities to view their details here.</p>';
-    }
+    // Add event listeners to save select values when changed
+    const selectElements = abilityElement.querySelectorAll('select');
+    selectElements.forEach(select => {
+        select.addEventListener('change', () => {
+            saveClassAbilitiesSelection();
+        });
+    });
 }
 
 function clearSelectedAbilities() {
@@ -1093,7 +1106,8 @@ function saveClassAbilitiesSelection() {
     if (!currentCharacter.classAbilities) {
         currentCharacter.classAbilities = {
             selectedClass: [],
-            selectedUniversal: []
+            selectedUniversal: [],
+            abilitySelectValues: {}
         };
     }
     
@@ -1104,6 +1118,16 @@ function saveClassAbilitiesSelection() {
     // Collect currently checked universal abilities
     const universalCheckboxes = document.querySelectorAll('.universal-ability-checkbox:checked');
     currentCharacter.classAbilities.selectedUniversal = Array.from(universalCheckboxes).map(cb => parseInt(cb.dataset.index));
+    
+    // Save select element values from selected abilities
+    currentCharacter.classAbilities.abilitySelectValues = {};
+    const selectedAbilitiesDisplay = document.getElementById('selectedAbilitiesDisplay');
+    const selectElements = selectedAbilitiesDisplay.querySelectorAll('select');
+    selectElements.forEach(select => {
+        if (select.id) {
+            currentCharacter.classAbilities.abilitySelectValues[select.id] = select.value;
+        }
+    });
     
     // Save using your existing save system
     saveCharacters();
