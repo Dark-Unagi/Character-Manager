@@ -712,7 +712,11 @@ title.textContent = `${currentCharacter.class} Abilities Reference (${currentSel
     
     populateClassAbilities();
     populateUniversalAbilities();
-    // Update checkbox states after populating
+    
+    // Restore selections after BOTH class and universal abilities are populated
+    restoreClassAbilitiesSelection();
+    
+    // Update checkbox states after populating and restoring
     updateAbilityCheckboxStates();
     modal.classList.remove('hidden');
 }
@@ -733,8 +737,7 @@ function populateClassAbilities() {
         </label>
     `).join('');
     
-    // Restore selections after populating
-    restoreClassAbilitiesSelection();
+
 }
 
 function populateUniversalAbilities() {
@@ -747,16 +750,7 @@ function populateUniversalAbilities() {
         </label>
     `).join('');
     
-    // Restore selections after populating (but only for universal)
-    if (currentCharacter && currentCharacter.classAbilities) {
-        currentCharacter.classAbilities.selectedUniversal.forEach(index => {
-            const checkbox = document.querySelector(`.universal-ability-checkbox[data-index="${index}"]`);
-            if (checkbox) {
-                checkbox.checked = true;
-                addAbilityToDisplay('universal', index);
-            }
-        });
-    }
+
 }
 
 function handleAbilityCheckboxChange(checkbox) {
@@ -1454,6 +1448,7 @@ function createCustomWeaponEnhanced() {
         currentCharacter.secondaryWeapon = customWeapon;
         applyWeaponBonuses(customWeapon.bonuses, 'secondary');
     }
+
     
     // Update display
     updateWeaponDisplay();
@@ -1677,7 +1672,7 @@ function showWeaponModalEnhanced(weaponType) {
                         <input type="radio" name="weaponSelect" class="mr-3" value="${index}">
                         <div class="flex-1">
                             <div class="font-semibold">${item.name}${customLabel} | ${item.thresholdLower} / ${item.thresholdUpper} | +${item.armor} Armor</div>
-                            ${item.feature && item.feature !== 'Nothing' ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${item.feature}</div>` : ''}
+${item.feature && item.feature !== 'Nothing' ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: <span class="feature-text">${formatFeatureText(item.feature)}</span></div>` : ''}
                         </div>
                     </div>
                 </div>
@@ -1690,7 +1685,7 @@ function showWeaponModalEnhanced(weaponType) {
                         <input type="radio" name="weaponSelect" class="mr-3" value="${index}">
                         <div class="flex-1">
                             <div class="font-semibold">${item.name}${customLabel} | ${item.trait} / ${item.range} | ${item.damage}</div>
-                            ${item.feature ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${item.feature}</div>` : ''}
+${item.feature && item.feature !== 'Nothing' ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: <span class="feature-text">${formatFeatureText(item.feature)}</span></div>` : ''}
                         </div>
                     </div>
                 </div>
@@ -3068,7 +3063,7 @@ showWeaponModal = showWeaponModalEnhanced;
                                 <input type="radio" name="weaponSelect" class="mr-3" value="${index}">
                                 <div class="flex-1">
                                     <div class="font-semibold">${item.name} | ${item.thresholdLower} / ${item.thresholdUpper} | +${item.armor} Armor</div>
-                                    ${item.feature && item.feature !== 'Nothing' ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${item.feature}</div>` : ''}
+${item.feature && item.feature !== 'Nothing' ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: <span class="feature-text">${formatFeatureText(item.feature)}</span></div>` : ''}
                                 </div>
                             </div>
                         </div>
@@ -3080,7 +3075,7 @@ showWeaponModal = showWeaponModalEnhanced;
                                 <input type="radio" name="weaponSelect" class="mr-3" value="${index}">
                                 <div class="flex-1">
                                     <div class="font-semibold">${item.name} | ${item.trait} / ${item.range} | ${item.damage}</div>
-                                    ${item.feature ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${item.feature}</div>` : ''}
+${item.feature ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: <span class="feature-text">${formatFeatureText(item.feature)}</span></div>` : ''}
                                 </div>
                             </div>
                         </div>
@@ -3483,13 +3478,13 @@ showWeaponModal = showWeaponModalEnhanced;
                 document.getElementById('addPrimaryWeapon').addEventListener('click', () => showWeaponModal('primary'));
             } else {
                 const weapon = currentCharacter.primaryWeapon;
-                primaryWeaponDisplay.innerHTML = `
-                    <div class="weapon-display">
-                        <i class="fas fa-times weapon-remove" title="Remove weapon" data-weapon-type="primary"></i>
-                        <div class="font-semibold">${weapon.name} | ${weapon.trait} / ${weapon.range} | ${weapon.damage}</div>
-                        ${weapon.feature ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${weapon.feature}</div>` : ''}
-                    </div>
-                `;
+primaryWeaponDisplay.innerHTML = `
+    <div class="weapon-display">
+        <i class="fas fa-times weapon-remove" title="Remove weapon" data-weapon-type="primary"></i>
+        <div class="font-semibold">${weapon.name} | ${weapon.trait} / ${weapon.range} | ${weapon.damage}</div>
+        ${weapon.feature ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${formatFeatureText(weapon.feature)}</div>` : ''}
+    </div>
+`;
                 
                 // Add remove event listener
                 primaryWeaponDisplay.querySelector('.weapon-remove').addEventListener('click', () => showWeaponRemovalModal('primary'));
@@ -3507,13 +3502,13 @@ showWeaponModal = showWeaponModalEnhanced;
                 document.getElementById('addSecondaryWeapon').addEventListener('click', () => showWeaponModal('secondary'));
             } else {
                 const weapon = currentCharacter.secondaryWeapon;
-                secondaryWeaponDisplay.innerHTML = `
-                    <div class="weapon-display">
-                        <i class="fas fa-times weapon-remove" title="Remove weapon" data-weapon-type="secondary"></i>
-                        <div class="font-semibold">${weapon.name} | ${weapon.trait} / ${weapon.range} | ${weapon.damage}</div>
-                        ${weapon.feature ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${weapon.feature}</div>` : ''}
-                    </div>
-                `;
+secondaryWeaponDisplay.innerHTML = `
+    <div class="weapon-display">
+        <i class="fas fa-times weapon-remove" title="Remove weapon" data-weapon-type="secondary"></i>
+        <div class="font-semibold">${weapon.name} | ${weapon.trait} / ${weapon.range} | ${weapon.damage}</div>
+        ${weapon.feature ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${formatFeatureText(weapon.feature)}</div>` : ''}
+    </div>
+`;
                 
                 // Add remove event listener
                 secondaryWeaponDisplay.querySelector('.weapon-remove').addEventListener('click', () => showWeaponRemovalModal('secondary'));
@@ -3531,13 +3526,13 @@ showWeaponModal = showWeaponModalEnhanced;
                 document.getElementById('addArmor').addEventListener('click', () => showWeaponModal('armor'));
             } else {
                 const armor = currentCharacter.armorItem;
-                armorDisplay.innerHTML = `
-                    <div class="weapon-display">
-                        <i class="fas fa-times weapon-remove" title="Remove armor" data-weapon-type="armor"></i>
-                        <div class="font-semibold">${armor.name} | ${armor.thresholdLower} / ${armor.thresholdUpper} | +${armor.armor} Armor</div>
-                        ${armor.feature && armor.feature !== 'Nothing' ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${armor.feature}</div>` : ''}
-                    </div>
-                `;
+armorDisplay.innerHTML = `
+    <div class="weapon-display">
+        <i class="fas fa-times weapon-remove" title="Remove armor" data-weapon-type="armor"></i>
+        <div class="font-semibold">${armor.name} | ${armor.thresholdLower} / ${armor.thresholdUpper} | +${armor.armor} Armor</div>
+        ${armor.feature && armor.feature !== 'Nothing' ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${formatFeatureText(armor.feature)}</div>` : ''}
+    </div>
+`;
                 
                 // Add remove event listener
                 armorDisplay.querySelector('.weapon-remove').addEventListener('click', () => showWeaponRemovalModal('armor'));
@@ -3691,7 +3686,7 @@ showWeaponModal = showWeaponModalEnhanced;
                         showArmorSlotsModal();
                     });
                     circle.style.cursor = 'pointer';
-                    circle.classList.add('hover:border-primary');
+                    circle.classList.add('hover:border-white');
                 }
                 
                 container.appendChild(circle);
@@ -5455,6 +5450,27 @@ setupAbilityScoreDiceRolling(character);
                 }
             });
         }
+
+// Feature text formatting function
+function formatFeatureText(featureText) {
+    if (!featureText || featureText === 'Nothing') return '';
+    
+    // Split the text on patterns like "- FeatureName:" and create formatted HTML
+    let formatted = featureText;
+    
+    // Replace patterns like "- FeatureName:" with proper formatting
+    formatted = formatted.replace(/- ([^:]+):/g, '<br><strong class="text-blue-600 dark:text-blue-400">• $1:</strong>');
+    
+    // Clean up any leading <br> tags
+    formatted = formatted.replace(/^<br>/, '');
+    
+    // If no special patterns were found, just return the original text
+    if (formatted === featureText) {
+        return featureText;
+    }
+    
+    return formatted;
+}
 
         // Event listeners with null checks
         const makeRandomBtn = document.getElementById('makeRandomBtn');
