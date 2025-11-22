@@ -1059,34 +1059,29 @@ function addAbilityToDisplay(type, index) {
     abilityElement.dataset.type = type;
     abilityElement.dataset.index = index;
     
-    // Create unique IDs for select elements
-    let description = ability.description;
-    let selectCounter = 0;
-    description = description.replace(/id="[^"]*"/g, () => {
-        selectCounter++;
-        return `id="ability_${type}_${index}_select_${selectCounter}"`;
-    });
-    
+    // Insert the original description without changing IDs
     abilityElement.innerHTML = `
         <h5 class="font-semibold text-lg mb-2 text-blue-600 dark:text-blue-400">${ability.name}</h5>
-        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${description}</p>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${ability.description}</p>
     `;
     
     displayContainer.appendChild(abilityElement);
     
-    // Restore select values if they exist
-    if (currentCharacter.classAbilities && currentCharacter.classAbilities.abilitySelectValues) {
-        const selectElements = abilityElement.querySelectorAll('select');
-        selectElements.forEach(select => {
-            if (select.id && currentCharacter.classAbilities.abilitySelectValues[select.id]) {
-                select.value = currentCharacter.classAbilities.abilitySelectValues[select.id];
-            }
-        });
-    }
-    
-    // Add event listeners to save select values when changed
+    // Add data attributes to select elements for saving/restoring
     const selectElements = abilityElement.querySelectorAll('select');
-    selectElements.forEach(select => {
+    selectElements.forEach((select, selectIndex) => {
+        // Create a unique key for saving
+        const saveKey = `${type}_${index}_${selectIndex}`;
+        select.dataset.saveKey = saveKey;
+        
+        // Restore value if it exists
+        if (currentCharacter.classAbilities && currentCharacter.classAbilities.abilitySelectValues) {
+            if (currentCharacter.classAbilities.abilitySelectValues[saveKey]) {
+                select.value = currentCharacter.classAbilities.abilitySelectValues[saveKey];
+            }
+        }
+        
+        // Add event listener to save when changed
         select.addEventListener('change', () => {
             saveClassAbilitiesSelection();
         });
@@ -1119,14 +1114,12 @@ function saveClassAbilitiesSelection() {
     const universalCheckboxes = document.querySelectorAll('.universal-ability-checkbox:checked');
     currentCharacter.classAbilities.selectedUniversal = Array.from(universalCheckboxes).map(cb => parseInt(cb.dataset.index));
     
-    // Save select element values from selected abilities
+    // Save select element values using data-save-key attributes
     currentCharacter.classAbilities.abilitySelectValues = {};
     const selectedAbilitiesDisplay = document.getElementById('selectedAbilitiesDisplay');
-    const selectElements = selectedAbilitiesDisplay.querySelectorAll('select');
+    const selectElements = selectedAbilitiesDisplay.querySelectorAll('select[data-save-key]');
     selectElements.forEach(select => {
-        if (select.id) {
-            currentCharacter.classAbilities.abilitySelectValues[select.id] = select.value;
-        }
+        currentCharacter.classAbilities.abilitySelectValues[select.dataset.saveKey] = select.value;
     });
     
     // Save using your existing save system
