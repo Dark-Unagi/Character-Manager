@@ -827,12 +827,13 @@ function openClassAbilitiesModal() {
     }
 
     // Initialize classAbilities if it doesn't exist (similar to familiar/companion pattern)
-    if (!currentCharacter.classAbilities) {
-        currentCharacter.classAbilities = {
-            selectedClass: [],
-            selectedUniversal: []
-        };
-    }
+if (!currentCharacter.classAbilities) {
+    currentCharacter.classAbilities = {
+        selectedClass: [],
+        selectedUniversal: [],
+        abilitySelectValues: {}
+    };
+}
 
     const modal = document.getElementById('classAbilitiesModal');
     const title = document.getElementById('classAbilitiesTitle');
@@ -1183,24 +1184,45 @@ function updateKnownSpellsDisplay() {
 function addAbilityToDisplay(type, index) {
     const displayContainer = document.getElementById('selectedAbilitiesDisplay');
     const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : universalAbilities[index];
-
+    
     // Remove the placeholder text if it exists
     const placeholder = displayContainer.querySelector('.italic');
     if (placeholder) {
         placeholder.remove();
     }
-
+    
     const abilityElement = document.createElement('div');
     abilityElement.className = 'ability-detail p-3 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-600';
     abilityElement.dataset.type = type;
     abilityElement.dataset.index = index;
-
+    
+    // Insert the original description (preserving all original IDs)
     abilityElement.innerHTML = `
         <h5 class="font-semibold text-lg mb-2 text-blue-600 dark:text-blue-400">${ability.name}</h5>
         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${ability.description}</p>
     `;
-
+    
     displayContainer.appendChild(abilityElement);
+    
+    // Add data attributes to select elements for saving/restoring (without changing IDs)
+    const selectElements = abilityElement.querySelectorAll('select');
+    selectElements.forEach((select, selectIndex) => {
+        // Create a unique key for saving
+        const saveKey = `${type}_${index}_${selectIndex}`;
+        select.dataset.saveKey = saveKey;
+        
+        // Restore value if it exists
+        if (currentCharacter.classAbilities && currentCharacter.classAbilities.abilitySelectValues) {
+            if (currentCharacter.classAbilities.abilitySelectValues[saveKey]) {
+                select.value = currentCharacter.classAbilities.abilitySelectValues[saveKey];
+            }
+        }
+        
+        // Add event listener to save when changed
+        select.addEventListener('change', () => {
+            saveClassAbilitiesSelection();
+        });
+    });
 }
 
 function removeAbilityFromDisplay(type, index) {
@@ -1225,23 +1247,32 @@ function clearSelectedAbilities() {
 
 function saveClassAbilitiesSelection() {
     if (!currentCharacter) return;
-
+    
     // Initialize if needed
     if (!currentCharacter.classAbilities) {
         currentCharacter.classAbilities = {
             selectedClass: [],
-            selectedUniversal: []
+            selectedUniversal: [],
+            abilitySelectValues: {}
         };
     }
-
+    
     // Collect currently checked class abilities
     const classCheckboxes = document.querySelectorAll('.class-ability-checkbox:checked');
     currentCharacter.classAbilities.selectedClass = Array.from(classCheckboxes).map(cb => parseInt(cb.dataset.index));
-
+    
     // Collect currently checked universal abilities
     const universalCheckboxes = document.querySelectorAll('.universal-ability-checkbox:checked');
     currentCharacter.classAbilities.selectedUniversal = Array.from(universalCheckboxes).map(cb => parseInt(cb.dataset.index));
-
+    
+    // Save select element values using data-save-key attributes
+    currentCharacter.classAbilities.abilitySelectValues = {};
+    const selectedAbilitiesDisplay = document.getElementById('selectedAbilitiesDisplay');
+    const selectElements = selectedAbilitiesDisplay.querySelectorAll('select[data-save-key]');
+    selectElements.forEach(select => {
+        currentCharacter.classAbilities.abilitySelectValues[select.dataset.saveKey] = select.value;
+    });
+    
     // Save using your existing save system
     saveCharacters();
 }
