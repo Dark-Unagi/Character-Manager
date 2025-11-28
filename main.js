@@ -2530,6 +2530,40 @@ const companionTypes = {
     }
 };
 
+// Dynamic companion stats scaling function
+function getScaledCompanionStats(companionType, characterLevel) {
+    // Get base stats
+    const baseStats = companionTypes[companionType] || companionTypes['Bear'];
+    
+    // Calculate scaling bonuses based on level
+    let scalingBonus = 0;
+    
+    if (characterLevel >= 9) {
+        scalingBonus = 3; // Level 9-10
+    } else if (characterLevel >= 6) {
+        scalingBonus = 2; // Level 6-8
+    } else if (characterLevel >= 3) {
+        scalingBonus = 1; // Level 3-5
+    } else {
+        scalingBonus = 0; // Level 1-2
+    }
+    
+    // Apply scaling to stats
+    return {
+        hp: baseStats.hp + scalingBonus,
+        stress: baseStats.stress + scalingBonus,
+        evasion: baseStats.evasion, // Evasion doesn't scale
+        mod: baseStats.mod + scalingBonus,
+        damage: baseStats.damage, // Damage doesn't scale
+        thresholdLower: baseStats.thresholdLower + (scalingBonus * 5),
+        thresholdUpper: baseStats.thresholdUpper + (scalingBonus * 5),
+        // Include original for reference
+        _baseStats: baseStats,
+        _scalingBonus: scalingBonus,
+        _characterLevel: characterLevel
+    };
+}
+
 // Ability score modifier system
 const availableModifiers = [2, 1, 1, 0, 0, -1];
 let selectedModifiers = { str: null, dex: null, con: null, int: null, wis: null, cha: null };
@@ -6020,8 +6054,8 @@ function updateCompanionDisplay(character) {
             typeDisplay.textContent = character.companion.type || 'Bear';
         }
 
-        // Get companion type data
-        const companionData = companionTypes[character.companion.type] || companionTypes['Bear'];
+// Get scaled companion type data based on character level
+const companionData = getScaledCompanionStats(character.companion.type, character.level || 1);
 
         // Update the entire companion content with new layout
         const companionContent = document.getElementById('companionContent');
@@ -6029,8 +6063,11 @@ function updateCompanionDisplay(character) {
                     <!-- Row 1: Name -->
                     <div class="text-center font-medium mb-2">${character.companion.name || 'Companion'}</div>
                     
-                    <!-- Row 2: Type -->
-                    <div class="text-center text-sm text-gray-600 dark:text-gray-400 mb-3">${character.companion.type || 'Bear'}</div>
+<!-- Row 2: Type and Level -->
+<div class="text-center text-sm text-gray-600 dark:text-gray-400 mb-3">
+    ${character.companion.type || 'Bear'} (Level ${character.level || 1})
+    ${companionData._scalingBonus > 0 ? `<span class="text-green-500 dark:text-green-400 text-xs ml-1">(+${companionData._scalingBonus} scaling)</span>` : ''}
+</div>
                     
                     <!-- Row 3: HP and Stress -->
                     <div class="flex justify-center gap-6 mb-3">
