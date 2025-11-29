@@ -24,6 +24,43 @@
     </script>
 
     <style>
+/* Ability Section Toggle Styling */
+.ability-section-content {
+    transition: all 0.3s ease;
+    overflow: hidden;
+    max-height: 1000px; /* Large enough for all content */
+    opacity: 1;
+}
+
+.ability-section-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/*.ability-toggle-btn {
+    border: 2px, solid, red;
+    outline: none;
+}
+
+.ability-toggle-btn:focus {
+    ring: 2px;
+    ring-color: #5D5CDE;
+    ring-opacity: 50%;
+}*/
+
+/* Toggle icon animation */
+.ability-toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.ability-toggle-icon.rotated {
+    transform: rotate(180deg);
+}
+
         /* Weapon Damage Button Styling */
         .weapon-damage-btn {
             cursor: pointer;
@@ -3808,23 +3845,46 @@
                     </button>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Left Column: Checkboxes -->
+                <!--<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!- - Left Column: Checkboxes - ->
                     <div>
                         <h4 class="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200" id="classSpecificTitle">
                             Class Specific Abilities
                         </h4>
                         <div id="classSpecificAbilities" class="space-y-2 mb-6">
-                            <!-- Class-specific abilities will be populated here -->
+                            <!- - Class-specific abilities will be populated here - ->
                         </div>
 
                         <h4 class="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">
                             Universal Abilities
                         </h4>
                         <div id="universalAbilities" class="space-y-2">
-                            <!-- Universal abilities will be populated here -->
+                            <!- - Universal abilities will be populated here - ->
                         </div>
                     </div>
+                -->
+
+                <!-- Class Specific Abilities Section -->
+<div class="ability-section-header">
+    <button type="button" class="ability-toggle-btn w-full flex items-center justify-between p-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors" data-target="classSpecificAbilities">
+        <h4 id="classSpecificTitle" class="font-semibold text-lg">Fighter Specific Abilities</h4>
+        <i id="classSpecificToggleIcon" class="fas fa-angle-up text-xs"></i>
+    </button>
+</div>
+<div id="classSpecificAbilities" class="ability-section-content">
+    <!-- abilities list will be populated here -->
+</div>
+
+<!-- Universal Abilities Section -->
+<div class="ability-section-header mt-6">
+    <button type="button" class="ability-toggle-btn w-full flex items-center justify-between p-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors" data-target="universalAbilities">
+        <h4 class="font-semibold text-lg">Universal Abilities</h4>
+        <i id="universalToggleIcon" class="fas fa-angle-up text-xs"></i>
+    </button>
+</div>
+<div id="universalAbilities" class="ability-section-content">
+    <!-- abilities list will be populated here -->
+</div>
 
                     <!-- Right Column: Selected Ability Details -->
                     <div>
@@ -3843,7 +3903,7 @@
     </div>
     <script src="spells.js"></script>
     <script src="weapons.js"></script>
-    <script src="main.js"></script>
+    <script src="abilities.js"></script>
 </body>
 
 </html>
