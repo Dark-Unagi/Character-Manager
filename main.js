@@ -827,13 +827,13 @@ function openClassAbilitiesModal() {
     }
 
     // Initialize classAbilities if it doesn't exist (similar to familiar/companion pattern)
-if (!currentCharacter.classAbilities) {
-    currentCharacter.classAbilities = {
-        selectedClass: [],
-        selectedUniversal: [],
-        abilitySelectValues: {}
-    };
-}
+    if (!currentCharacter.classAbilities) {
+        currentCharacter.classAbilities = {
+            selectedClass: [],
+            selectedUniversal: [],
+            abilitySelectValues: {}
+        };
+    }
 
     const modal = document.getElementById('classAbilitiesModal');
     const title = document.getElementById('classAbilitiesTitle');
@@ -854,6 +854,10 @@ if (!currentCharacter.classAbilities) {
     // Restore selections after BOTH class and universal abilities are populated
     restoreClassAbilitiesSelection();
 
+    // Initialize and restore toggle states
+    initializeAbilitySectionStates();
+    restoreAbilitySectionToggleStates();
+
     // Update checkbox states after populating and restoring
     updateAbilityCheckboxStates();
     modal.classList.remove('hidden');
@@ -861,6 +865,86 @@ if (!currentCharacter.classAbilities) {
 
 function closeClassAbilitiesModal() {
     document.getElementById('classAbilitiesModal').classList.add('hidden');
+}
+
+// =================================================
+// ABILITY SECTION TOGGLE FUNCTIONS
+// =================================================
+
+// Toggle ability section visibility
+function toggleAbilitySection(targetId) {
+    const content = document.getElementById(targetId);
+    const iconId = targetId === 'classSpecificAbilities' ? 'classSpecificToggleIcon' : 'universalToggleIcon';
+    const icon = document.getElementById(iconId);
+
+    if (!content || !icon) return;
+
+    // Toggle collapsed state
+    const isCollapsed = content.classList.contains('collapsed');
+
+    if (isCollapsed) {
+        // Expand section
+        content.classList.remove('collapsed');
+        icon.className = 'fas fa-angle-up text-xs';
+    } else {
+        // Collapse section
+        content.classList.add('collapsed');
+        icon.className = 'fas fa-angle-down text-xs';
+    }
+
+    // Save toggle state for this character
+    saveAbilitySectionToggleState(targetId, !isCollapsed);
+}
+
+// Save toggle state to character data
+function saveAbilitySectionToggleState(sectionId, isCollapsed) {
+    if (!currentCharacter) return;
+
+    if (!currentCharacter.abilitySectionStates) {
+        currentCharacter.abilitySectionStates = {};
+    }
+
+    currentCharacter.abilitySectionStates[sectionId] = isCollapsed;
+    saveCharacters();
+}
+
+// Restore toggle states when modal opens
+function restoreAbilitySectionToggleStates() {
+    if (!currentCharacter || !currentCharacter.abilitySectionStates) return;
+
+    // Restore class specific abilities toggle state
+    const classSpecificCollapsed = currentCharacter.abilitySectionStates['classSpecificAbilities'];
+    if (classSpecificCollapsed) {
+        const content = document.getElementById('classSpecificAbilities');
+        const icon = document.getElementById('classSpecificToggleIcon');
+        if (content && icon) {
+            content.classList.add('collapsed');
+            icon.className = 'fas fa-angle-down text-xs';
+        }
+    }
+
+    // Restore universal abilities toggle state
+    const universalCollapsed = currentCharacter.abilitySectionStates['universalAbilities'];
+    if (universalCollapsed) {
+        const content = document.getElementById('universalAbilities');
+        const icon = document.getElementById('universalToggleIcon');
+        if (content && icon) {
+            content.classList.add('collapsed');
+            icon.className = 'fas fa-angle-down text-xs';
+        }
+    }
+}
+
+// Initialize toggle states for new characters
+function initializeAbilitySectionStates() {
+    if (!currentCharacter) return;
+
+    if (!currentCharacter.abilitySectionStates) {
+        currentCharacter.abilitySectionStates = {
+            'classSpecificAbilities': false, // false = expanded, true = collapsed
+            'universalAbilities': false
+        };
+    }
 }
 
 function populateClassAbilities() {
@@ -1184,40 +1268,40 @@ function updateKnownSpellsDisplay() {
 function addAbilityToDisplay(type, index) {
     const displayContainer = document.getElementById('selectedAbilitiesDisplay');
     const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : universalAbilities[index];
-    
+
     // Remove the placeholder text if it exists
     const placeholder = displayContainer.querySelector('.italic');
     if (placeholder) {
         placeholder.remove();
     }
-    
+
     const abilityElement = document.createElement('div');
     abilityElement.className = 'ability-detail p-3 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-600';
     abilityElement.dataset.type = type;
     abilityElement.dataset.index = index;
-    
+
     // Insert the original description (preserving all original IDs)
     abilityElement.innerHTML = `
         <h5 class="font-semibold text-lg mb-2 text-blue-600 dark:text-blue-400">${ability.name}</h5>
         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${ability.description}</p>
     `;
-    
+
     displayContainer.appendChild(abilityElement);
-    
+
     // Add data attributes to select elements for saving/restoring (without changing IDs)
     const selectElements = abilityElement.querySelectorAll('select');
     selectElements.forEach((select, selectIndex) => {
         // Create a unique key for saving
         const saveKey = `${type}_${index}_${selectIndex}`;
         select.dataset.saveKey = saveKey;
-        
+
         // Restore value if it exists
         if (currentCharacter.classAbilities && currentCharacter.classAbilities.abilitySelectValues) {
             if (currentCharacter.classAbilities.abilitySelectValues[saveKey]) {
                 select.value = currentCharacter.classAbilities.abilitySelectValues[saveKey];
             }
         }
-        
+
         // Add event listener to save when changed
         select.addEventListener('change', () => {
             saveClassAbilitiesSelection();
@@ -1247,7 +1331,7 @@ function clearSelectedAbilities() {
 
 function saveClassAbilitiesSelection() {
     if (!currentCharacter) return;
-    
+
     // Initialize if needed
     if (!currentCharacter.classAbilities) {
         currentCharacter.classAbilities = {
@@ -1256,15 +1340,15 @@ function saveClassAbilitiesSelection() {
             abilitySelectValues: {}
         };
     }
-    
+
     // Collect currently checked class abilities
     const classCheckboxes = document.querySelectorAll('.class-ability-checkbox:checked');
     currentCharacter.classAbilities.selectedClass = Array.from(classCheckboxes).map(cb => parseInt(cb.dataset.index));
-    
+
     // Collect currently checked universal abilities
     const universalCheckboxes = document.querySelectorAll('.universal-ability-checkbox:checked');
     currentCharacter.classAbilities.selectedUniversal = Array.from(universalCheckboxes).map(cb => parseInt(cb.dataset.index));
-    
+
     // Save select element values using data-save-key attributes
     currentCharacter.classAbilities.abilitySelectValues = {};
     const selectedAbilitiesDisplay = document.getElementById('selectedAbilitiesDisplay');
@@ -1272,7 +1356,7 @@ function saveClassAbilitiesSelection() {
     selectElements.forEach(select => {
         currentCharacter.classAbilities.abilitySelectValues[select.dataset.saveKey] = select.value;
     });
-    
+
     // Save using your existing save system
     saveCharacters();
 }
@@ -1970,16 +2054,16 @@ function clearCustomArmorModal() {
 // ATTACK ROLL MODAL EVENT LISTENERS  
 // =================================================
 
-document.getElementById('rollAttackAgain').addEventListener('click', function() {
+document.getElementById('rollAttackAgain').addEventListener('click', function () {
     rerollAttackRoll();
 });
 
-document.getElementById('closeAttackRoll').addEventListener('click', function() {
+document.getElementById('closeAttackRoll').addEventListener('click', function () {
     document.getElementById('attackRollModal').classList.add('hidden');
 });
 
 // Close modal when clicking outside
-document.getElementById('attackRollModal').addEventListener('click', function(e) {
+document.getElementById('attackRollModal').addEventListener('click', function (e) {
     if (e.target.id === 'attackRollModal') {
         document.getElementById('attackRollModal').classList.add('hidden');
     }
@@ -2534,10 +2618,10 @@ const companionTypes = {
 function getScaledCompanionStats(companionType, characterLevel) {
     // Get base stats
     const baseStats = companionTypes[companionType] || companionTypes['Bear'];
-    
+
     // Calculate scaling bonuses based on level
     let scalingBonus = 0;
-    
+
     if (characterLevel >= 9) {
         scalingBonus = 3; // Level 9-10
     } else if (characterLevel >= 6) {
@@ -2547,7 +2631,7 @@ function getScaledCompanionStats(companionType, characterLevel) {
     } else {
         scalingBonus = 0; // Level 1-2
     }
-    
+
     // Apply scaling to stats
     return {
         hp: baseStats.hp + scalingBonus,
@@ -6054,8 +6138,8 @@ function updateCompanionDisplay(character) {
             typeDisplay.textContent = character.companion.type || 'Bear';
         }
 
-// Get scaled companion type data based on character level
-const companionData = getScaledCompanionStats(character.companion.type, character.level || 1);
+        // Get scaled companion type data based on character level
+        const companionData = getScaledCompanionStats(character.companion.type, character.level || 1);
 
         // Update the entire companion content with new layout
         const companionContent = document.getElementById('companionContent');
@@ -6449,20 +6533,20 @@ function clearCustomWeaponModal() {
 // WEAPON DAMAGE MODAL EVENT LISTENERS
 // =================================================
 
-document.getElementById('rollWeaponAgain').addEventListener('click', function() {
+document.getElementById('rollWeaponAgain').addEventListener('click', function () {
     rerollWeaponDamage();
 });
 
-document.getElementById('rollSecondaryWeapon').addEventListener('click', function() {
+document.getElementById('rollSecondaryWeapon').addEventListener('click', function () {
     rollSecondaryWeaponDamage();
 });
 
-document.getElementById('closeWeaponDamage').addEventListener('click', function() {
+document.getElementById('closeWeaponDamage').addEventListener('click', function () {
     document.getElementById('weaponDamageModal').classList.add('hidden');
 });
 
 // Close modal when clicking outside
-document.getElementById('weaponDamageModal').addEventListener('click', function(e) {
+document.getElementById('weaponDamageModal').addEventListener('click', function (e) {
     if (e.target.id === 'weaponDamageModal') {
         document.getElementById('weaponDamageModal').classList.add('hidden');
     }
@@ -7257,6 +7341,18 @@ document.getElementById('classAbilitiesModal').addEventListener('click', functio
     }
 });
 
+// =================================================
+// ABILITY SECTION TOGGLE EVENT LISTENERS
+// =================================================
+
+// Handle ability section toggle button clicks
+document.addEventListener('click', function (e) {
+    if (e.target.closest('.ability-toggle-btn')) {
+        const button = e.target.closest('.ability-toggle-btn');
+        const targetId = button.dataset.target;
+        toggleAbilitySection(targetId);
+    }
+});
 
 // Coin modal event listeners
 document.getElementById('addCoin').addEventListener('click', addCoins);
@@ -7841,7 +7937,7 @@ function showDivineResult(type, whiteDice, blackDice) {
     };
     rollType.textContent = typeNames[type];
     rollType.className = `text-lg font-semibold mb-4 ${type === 'advantage' ? 'text-green-600' :
-            type === 'disadvantage' ? 'text-red-600' : 'text-gray-600'
+        type === 'disadvantage' ? 'text-red-600' : 'text-gray-600'
         }`;
 
     // Clear previous results
@@ -9066,16 +9162,16 @@ function parseDamageString(damageString) {
     // Handle formats like "d8", "2d6", "d8/d12", "2d6/d4"
     const types = damageString.split('/');
     const parsedTypes = [];
-    
+
     types.forEach(type => {
         const trimmedType = type.trim();
-        
+
         // Match patterns like "d8", "2d6", etc.
         const match = trimmedType.match(/^(\d*)d(\d+)$/);
         if (match) {
             const numDice = match[1] ? parseInt(match[1]) : 1;
             const sides = parseInt(match[2]);
-            
+
             parsedTypes.push({
                 originalText: trimmedType,
                 numDice: numDice,
@@ -9084,7 +9180,7 @@ function parseDamageString(damageString) {
             });
         }
     });
-    
+
     return parsedTypes;
 }
 
@@ -9093,13 +9189,13 @@ function rollDamageType(damageType, proficiency) {
     const totalDice = damageType.numDice * proficiency;
     const rolls = [];
     let total = 0;
-    
+
     for (let i = 0; i < totalDice; i++) {
         const roll = Math.floor(Math.random() * damageType.sides) + 1;
         rolls.push(roll);
         total += roll;
     }
-    
+
     return {
         damageType: damageType.originalText,
         diceType: damageType.diceType,
@@ -9114,22 +9210,22 @@ function rollDamageType(damageType, proficiency) {
 // Get weapon ability modifier
 function getWeaponAbilityModifier(weapon) {
     if (!currentCharacter || !weapon.trait) return 0;
-    
+
     // Parse all traits (e.g., "STR", "DEX", "STR/DEX")
     const traits = weapon.trait.split('/').map(t => t.trim().toLowerCase());
-    
+
     const abilityMap = {
         'str': 'str',
-        'dex': 'dex', 
+        'dex': 'dex',
         'con': 'con',
         'int': 'int',
         'wis': 'wis',
         'cha': 'cha'
     };
-    
+
     let highestModifier = -999; // Start with very low number
     let usedAbility = '';
-    
+
     // Check each trait and find the highest modifier
     traits.forEach(trait => {
         const ability = abilityMap[trait];
@@ -9141,33 +9237,33 @@ function getWeaponAbilityModifier(weapon) {
             }
         }
     });
-    
+
     // Store which ability was used for display purposes
     weapon._usedAbilityForDamage = usedAbility;
-    
+
     return highestModifier === -999 ? 0 : highestModifier;
 }
 
 // Main weapon damage rolling function
 function rollWeaponDamage(weaponType = 'primary') {
     if (!currentCharacter) return;
-    
+
     const weapon = weaponType === 'primary' ? currentCharacter.primaryWeapon : currentCharacter.secondaryWeapon;
     if (!weapon) return;
-    
+
     // Get proficiency - only for primary weapons
     const weaponProficiency = weaponType === 'primary' ? (currentCharacter.weaponProficiency || 1) : 1;
-    
+
     // Parse damage string (e.g., "d8", "2d6", "d8/d12")
     const damageTypes = parseDamageString(weapon.damage);
-    
+
     // Get weapon ability modifier
     const abilityModifier = getWeaponAbilityModifier(weapon);
-    
+
     // Roll dice for each damage type
     const rollResults = [];
- 
-    
+
+
     damageTypes.forEach(damageType => {
         const result = rollDamageType(damageType, weaponProficiency);
         rollResults.push(result);
@@ -9183,15 +9279,15 @@ function openWeaponDamageModal() {
         showCustomDialog('No Character Selected', 'Please select a character first.');
         return;
     }
-    
+
     const hasPrimary = currentCharacter.primaryWeapon;
     const hasSecondary = currentCharacter.secondaryWeapon;
-    
+
     if (!hasPrimary && !hasSecondary) {
         showCustomDialog('No Weapons', 'This character has no weapons equipped to roll damage for.');
         return;
     }
-    
+
     if (hasPrimary && !hasSecondary) {
         // Only primary weapon - roll it
         rollWeaponDamage('primary');
@@ -9229,24 +9325,24 @@ function showWeaponSelectionModal() {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(modal);
-    
+
     // Add event listeners
     modal.querySelectorAll('.weapon-choice-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const weaponType = this.dataset.weapon;
             modal.remove();
             rollWeaponDamage(weaponType);
         });
     });
-    
+
     modal.querySelector('.cancel-weapon-choice').addEventListener('click', () => {
         modal.remove();
     });
-    
+
     // Close modal when clicking outside
-    modal.addEventListener('click', function(e) {
+    modal.addEventListener('click', function (e) {
         if (e.target === this) {
             this.remove();
         }
@@ -9261,7 +9357,7 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
     const totalDisplay = document.getElementById('weaponTotalDamage');
     const modifierDisplay = document.getElementById('weaponModifierDisplay');
     const secondaryBtn = document.getElementById('rollSecondaryWeapon');
-    
+
     // Set title
     if (existingResults) {
         title.textContent = `Primary + Secondary Weapon Damage`;
@@ -9269,19 +9365,19 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
         const weaponTypeText = weaponType === 'primary' ? 'Primary' : 'Secondary';
         title.textContent = `${weaponName} (${weaponTypeText}) Damage Roll`;
     }
-    
+
     // Clear and populate results
     resultsContainer.innerHTML = '';
-    
+
     // Handle combined results (primary + secondary)
     if (existingResults) {
         const combinedDiv = document.createElement('div');
         combinedDiv.className = 'space-y-4';
-        
+
         // Primary weapon results
         const primaryDiv = document.createElement('div');
         const primaryTotalsWithModifier = existingResults.primaryResults.map(r => r.total + existingResults.primaryAbilityModifier);
-        
+
         primaryDiv.innerHTML = `
             <h4 class="font-semibold text-lg mb-3 text-blue-600 dark:text-blue-400">
                 ${existingResults.primaryWeaponName} (Primary)
@@ -9303,11 +9399,11 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
                 `).join('')}
             </div>
         `;
-        
+
         // Secondary weapon results
         const secondaryDiv = document.createElement('div');
         const secondaryTotalsWithModifier = rollResults.map(r => r.total + abilityModifier);
-        
+
         secondaryDiv.innerHTML = `
             <h4 class="font-semibold text-lg mb-3 text-green-600 dark:text-green-400">
                 ${weaponName} (Secondary)
@@ -9329,15 +9425,15 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
                 `).join('')}
             </div>
         `;
-        
+
         combinedDiv.appendChild(primaryDiv);
         combinedDiv.appendChild(secondaryDiv);
         resultsContainer.appendChild(combinedDiv);
-        
+
         // Show combined totals side by side WITH modifiers included
         const primaryTotals = existingResults.primaryResults.map((r, i) => `${r.damageType}: ${r.total + existingResults.primaryAbilityModifier}`);
         const secondaryTotals = rollResults.map((r, i) => `${r.damageType}: ${r.total + abilityModifier}`);
-        
+
         totalDisplay.innerHTML = `
             <div class="grid grid-cols-2 gap-4 text-center">
                 <div>
@@ -9350,11 +9446,11 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
                 </div>
             </div>
         `;
-        
+
         // Show both ability modifiers with which ability was used
         const primaryWeapon = currentCharacter.primaryWeapon;
         const secondaryWeapon = currentCharacter.secondaryWeapon;
-        
+
         modifierDisplay.innerHTML = `
             <div class="grid grid-cols-2 gap-4 text-center text-sm">
                 <div>
@@ -9365,17 +9461,17 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
                 </div>
             </div>
         `;
-        
+
         // Hide secondary button since both are now shown
         secondaryBtn.classList.add('hidden');
-        
+
     } else {
         // Single weapon results - keep damage types separate but ADD ability modifier
         rollResults.forEach((result, index) => {
             const finalDamage = result.total + abilityModifier;
             const resultDiv = document.createElement('div');
             resultDiv.className = 'damage-type-result';
-            
+
             // Different display for primary vs secondary weapons
             if (weaponType === 'primary') {
                 resultDiv.innerHTML = `
@@ -9404,10 +9500,10 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
                     </div>
                 `;
             }
-            
+
             resultsContainer.appendChild(resultDiv);
         });
-        
+
         // Show separate totals WITH ability modifier included
         if (rollResults.length > 1) {
             const separateTotals = rollResults.map(r => `${r.damageType}: ${r.total + abilityModifier}`);
@@ -9421,15 +9517,15 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
             const finalTotal = rollResults[0].total + abilityModifier;
             totalDisplay.textContent = finalTotal;
         }
-        
+
         // Show ability modifier with which ability was used
         const weapon = weaponType === 'primary' ? currentCharacter.primaryWeapon : currentCharacter.secondaryWeapon;
         const usedAbility = weapon._usedAbilityForDamage || weapon.trait;
-        
+
         modifierDisplay.innerHTML = `
             <strong>Ability Modifier (${usedAbility}):</strong> ${abilityModifier >= 0 ? '+' : ''}${abilityModifier}
         `;
-        
+
         // Show/hide secondary button based on availability
         if (weaponType === 'primary' && currentCharacter.secondaryWeapon) {
             secondaryBtn.classList.remove('hidden');
@@ -9437,7 +9533,7 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
             secondaryBtn.classList.add('hidden');
         }
     }
-    
+
     // Store data for re-rolling and secondary rolling
     modal.dataset.weaponName = weaponName;
     modal.dataset.weaponType = weaponType;
@@ -9451,12 +9547,12 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
         total: r.total
     })));
     modal.dataset.abilityModifier = abilityModifier;
-    
+
     // Store existing results if this is a combined view
     if (existingResults) {
         modal.dataset.existingResults = JSON.stringify(existingResults);
     }
-    
+
     modal.classList.remove('hidden');
 }
 
@@ -9467,21 +9563,21 @@ function rerollWeaponDamage() {
     const weaponType = modal.dataset.weaponType || 'primary';
     const rollData = JSON.parse(modal.dataset.rollData);
     const abilityModifier = parseInt(modal.dataset.abilityModifier);
-    
+
     // Re-roll all damage types
     const newRollResults = [];
-    
+
     rollData.forEach(data => {
         const rolls = [];
         let total = 0;
-        
+
         for (let i = 0; i < data.totalDice; i++) {
             const sides = parseInt(data.diceType.substring(1));
             const roll = Math.floor(Math.random() * sides) + 1;
             rolls.push(roll);
             total += roll;
         }
-        
+
         const result = {
             damageType: data.damageType,
             diceType: data.diceType,
@@ -9491,10 +9587,10 @@ function rerollWeaponDamage() {
             rolls: rolls,
             total: total
         };
-        
+
         newRollResults.push(result);
     });
-    
+
     // Update the modal with new results
     showWeaponDamageResults(weaponName, newRollResults, abilityModifier, weaponType);
 }
@@ -9502,38 +9598,38 @@ function rerollWeaponDamage() {
 // Roll secondary weapon and add to existing primary results
 function rollSecondaryWeaponDamage() {
     if (!currentCharacter || !currentCharacter.secondaryWeapon) return;
-    
+
     const modal = document.getElementById('weaponDamageModal');
     const primaryWeaponName = modal.dataset.weaponName;
     const primaryRollData = JSON.parse(modal.dataset.rollData);
     const primaryAbilityModifier = parseInt(modal.dataset.abilityModifier);
-    
+
     // Roll secondary weapon
     const secondaryWeapon = currentCharacter.secondaryWeapon;
     const secondaryDamageTypes = parseDamageString(secondaryWeapon.damage);
     const secondaryAbilityModifier = getWeaponAbilityModifier(secondaryWeapon);
-    
+
     // Roll dice for secondary weapon (no proficiency)
     const secondaryRollResults = [];
-    
+
     secondaryDamageTypes.forEach(damageType => {
         const result = rollDamageType(damageType, 1); // Always 1 for secondary (no proficiency)
         secondaryRollResults.push(result);
     });
-    
+
     // Create existing results object for primary weapon
     const existingResults = {
         primaryWeaponName: primaryWeaponName,
         primaryResults: primaryRollData,
         primaryAbilityModifier: primaryAbilityModifier
     };
-    
+
     // Show combined results
     showWeaponDamageResults(
-        secondaryWeapon.name, 
-        secondaryRollResults, 
-        secondaryAbilityModifier, 
-        'secondary', 
+        secondaryWeapon.name,
+        secondaryRollResults,
+        secondaryAbilityModifier,
+        'secondary',
         existingResults
     );
 }
@@ -9543,7 +9639,7 @@ function updateWeaponDisplay() {
     const primaryWeaponDisplay = document.getElementById('primaryWeaponDisplay');
     const secondaryWeaponDisplay = document.getElementById('secondaryWeaponDisplay');
     const armorDisplay = document.getElementById('armorDisplay');
-    
+
     // Update primary weapon display
     if (!currentCharacter || !currentCharacter.primaryWeapon) {
         primaryWeaponDisplay.innerHTML = `
@@ -9551,7 +9647,7 @@ function updateWeaponDisplay() {
                 <i class="fas fa-plus mr-1"></i>Add Primary Weapon
             </button>
         `;
-        
+
         // Re-attach event listener
         document.getElementById('addPrimaryWeapon').addEventListener('click', () => showWeaponModal('primary'));
     } else {
@@ -9563,20 +9659,20 @@ function updateWeaponDisplay() {
                 ${weapon.feature ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${formatFeatureText(weapon.feature)}</div>` : ''}
             </div>
         `;
-        
+
         // Add remove event listener
         primaryWeaponDisplay.querySelector('.weapon-remove').addEventListener('click', () => showWeaponRemovalModal('primary'));
-        
+
         // Add damage roll event listener
         const damageBtn = primaryWeaponDisplay.querySelector('.weapon-damage-btn');
         if (damageBtn) {
-            damageBtn.addEventListener('click', function(e) {
+            damageBtn.addEventListener('click', function (e) {
                 e.stopPropagation();
                 rollWeaponDamage('primary');
             });
         }
     }
-    
+
     // Update secondary weapon display
     if (!currentCharacter || !currentCharacter.secondaryWeapon) {
         secondaryWeaponDisplay.innerHTML = `
@@ -9584,7 +9680,7 @@ function updateWeaponDisplay() {
                 <i class="fas fa-plus mr-1"></i>Add Secondary Weapon
             </button>
         `;
-        
+
         // Re-attach event listener
         document.getElementById('addSecondaryWeapon').addEventListener('click', () => showWeaponModal('secondary'));
     } else {
@@ -9596,20 +9692,20 @@ function updateWeaponDisplay() {
                 ${weapon.feature ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${formatFeatureText(weapon.feature)}</div>` : ''}
             </div>
         `;
-        
+
         // Add remove event listener
         secondaryWeaponDisplay.querySelector('.weapon-remove').addEventListener('click', () => showWeaponRemovalModal('secondary'));
-        
+
         // Add damage roll event listener for secondary weapon
         const damageBtn = secondaryWeaponDisplay.querySelector('.weapon-damage-btn');
         if (damageBtn) {
-            damageBtn.addEventListener('click', function(e) {
+            damageBtn.addEventListener('click', function (e) {
                 e.stopPropagation();
                 rollWeaponDamage('secondary');
             });
         }
     }
-    
+
     // Update armor display (unchanged)
     if (!currentCharacter || !currentCharacter.armorItem) {
         armorDisplay.innerHTML = `
@@ -9617,7 +9713,7 @@ function updateWeaponDisplay() {
                 <i class="fas fa-plus mr-1"></i>Add Armor
             </button>
         `;
-        
+
         // Re-attach event listener
         document.getElementById('addArmor').addEventListener('click', () => showWeaponModal('armor'));
     } else {
@@ -9629,7 +9725,7 @@ function updateWeaponDisplay() {
                 ${armor.feature && armor.feature !== 'Nothing' ? `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Feature: ${formatFeatureText(armor.feature)}</div>` : ''}
             </div>
         `;
-        
+
         // Add remove event listener
         armorDisplay.querySelector('.weapon-remove').addEventListener('click', () => showWeaponRemovalModal('armor'));
     }
@@ -9637,32 +9733,32 @@ function updateWeaponDisplay() {
 
 function makePrimaryWeaponDamageClickable() {
     if (!currentCharacter || !currentCharacter.primaryWeapon) return;
-    
+
     const primaryWeaponDisplay = document.getElementById('primaryWeaponDisplay');
     if (!primaryWeaponDisplay) return;
-    
+
     // Find the damage text in the weapon display
     const weaponDisplay = primaryWeaponDisplay.querySelector('.weapon-display');
     if (!weaponDisplay) return;
-    
+
     const weaponText = weaponDisplay.querySelector('.font-semibold');
     if (!weaponText) return;
-    
+
     // Parse the weapon text to find damage portion
     const weaponTextContent = weaponText.textContent;
     const parts = weaponTextContent.split(' | ');
-    
+
     if (parts.length >= 3) {
         const damageText = parts[2]; // Third part should be damage
-        
+
         // Make damage text clickable
         const clickableDamage = `${parts[0]} | ${parts[1]} | <span class="weapon-damage-btn" title="Click to roll primary weapon damage (with proficiency)">${damageText}</span>`;
         weaponText.innerHTML = clickableDamage;
-        
+
         // Add event listener to the clickable damage
         const damageBtn = weaponText.querySelector('.weapon-damage-btn');
         if (damageBtn) {
-            damageBtn.addEventListener('click', function(e) {
+            damageBtn.addEventListener('click', function (e) {
                 e.stopPropagation();
                 rollWeaponDamage('primary');
             });
@@ -9672,32 +9768,32 @@ function makePrimaryWeaponDamageClickable() {
 
 function makeSecondaryWeaponDamageClickable() {
     if (!currentCharacter || !currentCharacter.secondaryWeapon) return;
-    
+
     const secondaryWeaponDisplay = document.getElementById('secondaryWeaponDisplay');
     if (!secondaryWeaponDisplay) return;
-    
+
     // Find the damage text in the weapon display
     const weaponDisplay = secondaryWeaponDisplay.querySelector('.weapon-display');
     if (!weaponDisplay) return;
-    
+
     const weaponText = weaponDisplay.querySelector('.font-semibold');
     if (!weaponText) return;
-    
+
     // Parse the weapon text to find damage portion
     const weaponTextContent = weaponText.textContent;
     const parts = weaponTextContent.split(' | ');
-    
+
     if (parts.length >= 3) {
         const damageText = parts[2]; // Third part should be damage
-        
+
         // Make damage text clickable
         const clickableDamage = `${parts[0]} | ${parts[1]} | <span class="weapon-damage-btn" title="Click to roll secondary weapon damage (no proficiency)">${damageText}</span>`;
         weaponText.innerHTML = clickableDamage;
-        
+
         // Add event listener to the clickable damage
         const damageBtn = weaponText.querySelector('.weapon-damage-btn');
         if (damageBtn) {
-            damageBtn.addEventListener('click', function(e) {
+            damageBtn.addEventListener('click', function (e) {
                 e.stopPropagation();
                 rollWeaponDamage('secondary');
             });
@@ -9711,15 +9807,15 @@ function openWeaponDamageModal() {
         showCustomDialog('No Character Selected', 'Please select a character first.');
         return;
     }
-    
+
     const hasPrimary = currentCharacter.primaryWeapon;
     const hasSecondary = currentCharacter.secondaryWeapon;
-    
+
     if (!hasPrimary && !hasSecondary) {
         showCustomDialog('No Weapons', 'This character has no weapons equipped to roll damage for.');
         return;
     }
-    
+
     if (hasPrimary && !hasSecondary) {
         // Only primary weapon - roll it
         rollWeaponDamage('primary');
@@ -9757,24 +9853,24 @@ function showWeaponSelectionModal() {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(modal);
-    
+
     // Add event listeners
     modal.querySelectorAll('.weapon-choice-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const weaponType = this.dataset.weapon;
             rollWeaponDamage(weaponType);
             modal.remove();
         });
     });
-    
+
     modal.querySelector('.cancel-weapon-choice').addEventListener('click', () => {
         modal.remove();
     });
-    
+
     // Close modal when clicking outside
-    modal.addEventListener('click', function(e) {
+    modal.addEventListener('click', function (e) {
         if (e.target === this) {
             this.remove();
         }
@@ -9785,7 +9881,7 @@ function showWeaponSelectionModal() {
 function makeWeaponDamageClickable() {
     // Make primary weapon damage clickable
     makePrimaryWeaponDamageClickable();
-    
+
     // Make secondary weapon damage clickable
     makeSecondaryWeaponDamageClickable();
 }
@@ -9800,14 +9896,14 @@ function openAttackRollModal() {
         showCustomDialog('No Character Selected', 'Please select a character first.');
         return;
     }
-    
+
     const attackOptions = getAvailableAttackOptions();
-    
+
     if (attackOptions.length === 0) {
         showCustomDialog('No Attack Options', 'This character has no weapons or spells to make attack rolls with.');
         return;
     }
-    
+
     if (attackOptions.length === 1) {
         // Only one option - roll it directly
         rollAttackRoll(attackOptions[0]);
@@ -9820,7 +9916,7 @@ function openAttackRollModal() {
 // Get all available attack options for the character
 function getAvailableAttackOptions() {
     const options = [];
-    
+
     // Check for primary weapon
     if (currentCharacter.primaryWeapon) {
         options.push({
@@ -9831,18 +9927,18 @@ function getAvailableAttackOptions() {
             weapon: currentCharacter.primaryWeapon
         });
     }
-    
+
     // Check for secondary weapon  
     if (currentCharacter.secondaryWeapon) {
         options.push({
             type: 'weapon',
-            weaponType: 'secondary', 
+            weaponType: 'secondary',
             name: currentCharacter.secondaryWeapon.name,
             description: 'Secondary weapon attack',
             weapon: currentCharacter.secondaryWeapon
         });
     }
-    
+
     // Check for spell attack (if Spell-Casting ability is selected)
     if (hasSpellCastingAbility()) {
         const spellAbility = getSpellcastingAbility();
@@ -9853,7 +9949,7 @@ function getAvailableAttackOptions() {
             ability: spellAbility
         });
     }
-    
+
     return options;
 }
 
@@ -9862,12 +9958,12 @@ function hasSpellCastingAbility() {
     if (!currentCharacter || !currentCharacter.classAbilities || !currentCharacter.classAbilities.selectedClass) {
         return false;
     }
-    
+
     const characterClassAbilities = classAbilities[currentCharacter.class];
     if (!characterClassAbilities) {
         return false;
     }
-    
+
     return currentCharacter.classAbilities.selectedClass.some(index => {
         const ability = characterClassAbilities[index];
         return ability && ability.name && ability.name.toLowerCase().includes('spell-casting');
@@ -9884,7 +9980,7 @@ function getSpellcastingAbility() {
 function showAttackOptionSelectionModal(attackOptions) {
     const modal = document.createElement('div');
     modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-    
+
     const optionsHTML = attackOptions.map((option, index) => `
         <button class="attack-choice-btn w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-primary hover:text-white transition-colors text-left" data-option-index="${index}">
             <div class="font-semibold">${option.name}</div>
@@ -9892,7 +9988,7 @@ function showAttackOptionSelectionModal(attackOptions) {
             ${option.weapon ? `<div class="text-sm font-medium mt-1">${option.weapon.trait}</div>` : ''}
         </button>
     `).join('');
-    
+
     modal.innerHTML = `
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
             <h3 class="text-lg font-semibold mb-4 text-center">Select Attack Type</h3>
@@ -9904,25 +10000,25 @@ function showAttackOptionSelectionModal(attackOptions) {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(modal);
-    
+
     // Add event listeners
     modal.querySelectorAll('.attack-choice-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const optionIndex = parseInt(this.dataset.optionIndex);
             const selectedOption = attackOptions[optionIndex];
             modal.remove();
             rollAttackRoll(selectedOption);
         });
     });
-    
+
     modal.querySelector('.cancel-attack-choice').addEventListener('click', () => {
         modal.remove();
     });
-    
+
     // Close modal when clicking outside
-    modal.addEventListener('click', function(e) {
+    modal.addEventListener('click', function (e) {
         if (e.target === this) {
             this.remove();
         }
@@ -9934,7 +10030,7 @@ function rollAttackRoll(attackOption) {
     const d20Roll = Math.floor(Math.random() * 20) + 1;
     let abilityModifier = 0;
     let abilityUsed = '';
-    
+
     if (attackOption.type === 'weapon') {
         // Use weapon's highest ability modifier
         abilityModifier = getWeaponAbilityModifier(attackOption.weapon);
@@ -9945,9 +10041,9 @@ function rollAttackRoll(attackOption) {
         abilityModifier = currentCharacter.currentAbilityScores[spellAbility] || 0;
         abilityUsed = spellAbility.toUpperCase();
     }
-    
+
     const totalAttack = d20Roll + abilityModifier;
-    
+
     // Show results
     showAttackRollResults(attackOption, d20Roll, abilityModifier, totalAttack, abilityUsed);
 }
@@ -9964,13 +10060,13 @@ function showAttackRollResults(attackOption, d20Roll, abilityModifier, totalAtta
     // Set title and type
     title.textContent = `${attackOption.name} Attack Roll`;
     typeDisplay.textContent = attackOption.description;
-    
+
     // Show breakdown
     breakdownDisplay.textContent = `d20: ${d20Roll} + modifier: ${abilityModifier >= 0 ? '+' : ''}${abilityModifier}`;
-    
+
     // Show total
     totalDisplay.textContent = totalAttack;
-    
+
     // Show which ability was used
     modifierDisplay.innerHTML = `
         <strong>Ability Modifier (${abilityUsed}):</strong> ${abilityModifier >= 0 ? '+' : ''}${abilityModifier}
@@ -9995,7 +10091,7 @@ function showAttackRollResults(attackOption, d20Roll, abilityModifier, totalAtta
     // Store data for re-rolling
     modal.dataset.attackOption = JSON.stringify(attackOption);
     modal.dataset.abilityUsed = abilityUsed;
-    
+
     modal.classList.remove('hidden');
 }
 
