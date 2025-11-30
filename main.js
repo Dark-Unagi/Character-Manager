@@ -5765,22 +5765,47 @@ function showHealthPrompt(title, callback) {
 function formatFeatureText(featureText) {
     if (!featureText || featureText === 'Nothing') return '';
 
-    // Split the text on patterns like "- FeatureName:" and create formatted HTML
-    let formatted = featureText;
+    // Define keywords and their styles
+    const keywordStyles = [
+        { word: 'Stress', className: 'text-orange-600 dark:text-orange-400' },
+        { word: 'HP', className: 'text-green-600 dark:text-green-400' },
+        { word: 'SP', className: 'text-green-600 dark:text-green-400' },
+        { word: 'Class', className: 'text-green-600 dark:text-green-400' },
+        { word: 'Divine', className: 'text-yellow-600 dark:text-yellow-400' },
+        { word: 'Fate', className: 'text-red-600 dark:text-red-400' },
+        // Add more keywords and styles here!
+    ];
 
-    // Replace patterns like "- FeatureName:" with proper formatting
-    formatted = formatted.replace(/- ([^:]+):/g, '<br><strong class="text-blue-600 dark:text-blue-400">• $1:</strong>');
+    const lines = featureText.split(/\r?\n/);
 
-    // Clean up any leading <br> tags
-    formatted = formatted.replace(/^<br>/, '');
+    const formattedLines = lines.map(line => {
+        let out = line;
 
-    // If no special patterns were found, just return the original text
-    if (formatted === featureText) {
-        return featureText;
-    }
+        // 1) Style quoted text: "text" → bold red
+        out = out.replace(/"([^"]+)"/g, '<strong class="text-red-600 dark:text-red-400">$1</strong>');
 
-    return formatted;
+        // 2) Style italic text: __text__ → italic
+        out = out.replace(/_([^_]+)_/g, '<em>$1</em>');
+
+        // 3) Apply keyword styles (outside quotes/italics)
+        keywordStyles.forEach(({ word, className }) => {
+            const regex = new RegExp(`\\b(${word})\\b`, 'g');
+            out = out.replace(regex, `<span class="${className}">$1</span>`);
+        });
+
+        // 4) Style feature headers: - FeatureName:
+        out = out.replace(
+            /^\s*-\s*([^:]+):\s*/,
+            '<strong class="text-blue-600 dark:text-blue-400">• $1:</strong> '
+        );
+
+        return out;
+    });
+
+    return formattedLines.join('<br>');
 }
+
+
 
 // Event listeners with null checks
 const makeRandomBtn = document.getElementById('makeRandomBtn');
