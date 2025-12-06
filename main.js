@@ -5462,6 +5462,7 @@ function populateCharacterSheet(character) {
     setTimeout(() => {
         makeWeaponDamageClickable();
     }, 100);
+
 }
 
 function generateSkillsList(character) {
@@ -5668,42 +5669,88 @@ function showEquipmentQuantityModal(itemIndex) {
 }
 
 function saveCharacters() {
-    // Save to localStorage for automatic persistence
     try {
+        const uiState = {};
+
+        // List all your content IDs here
+        const sectionIds = [
+            'characterActionsContent',
+            'characterStatsContent',
+            'characterResourceContent',
+            'characterThresholdContent',
+            'characterAbilityContent',
+            'characterSkillsContent',
+            'characterWeaponsContent',
+            'characterEquipmentContent',
+            'characterNotesContent',
+            'familiarContent',
+            'companionContent',
+            'spellCastingContent'
+            // Add more as needed
+        ];
+
+        sectionIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                const isVisible = el.style.display !== 'none';
+                uiState[id] = isVisible;
+            }
+        });
+
         const dataToStore = {
             version: "1.0",
             saveDate: new Date().toISOString(),
-            characters: characters
+            characters: characters,
+            uiState: uiState
         };
+
         localStorage.setItem('rpg-character-manager-data', JSON.stringify(dataToStore));
-        console.log('Characters saved to localStorage:', characters.length, 'characters');
+        console.log('Characters and UI state saved to localStorage');
     } catch (error) {
         console.error('Error saving to localStorage:', error);
-        // Could show a user notification here if desired
     }
 }
 
+
 function loadCharacters() {
-    // Load from localStorage if available
     try {
         const storedData = localStorage.getItem('rpg-character-manager-data');
         if (storedData) {
             const data = JSON.parse(storedData);
-            if (data.characters && Array.isArray(data.characters)) {
+
+            // Load characters
+            if (Array.isArray(data.characters)) {
                 characters = data.characters;
                 console.log('Characters loaded from localStorage:', characters.length, 'characters');
-                return;
+            } else {
+                characters = [];
+                console.log('No valid character data found, starting fresh');
             }
+
+            // Restore UI state
+            if (data.uiState) {
+                Object.entries(data.uiState).forEach(([id, isVisible]) => {
+                    const content = document.getElementById(id);
+                    const toggle = document.querySelector(`[id="${id.replace('Content', 'Toggle')}"]`);
+                    if (content) content.style.display = isVisible ? 'block' : 'none';
+                    if (toggle) {
+                        toggle.innerHTML = isVisible
+                            ? '<i class="fas fa-angle-up text-xs"></i>'
+                            : '<i class="fas fa-angle-down text-xs"></i>';
+                    }
+                });
+            }
+
+            return;
         }
     } catch (error) {
         console.error('Error loading from localStorage:', error);
-        // Fall back to empty array if there's an issue
     }
 
-    // If no valid data in localStorage, start with empty array
     characters = [];
     console.log('Started with empty character list');
 }
+
 
 function removeEquipment(index) {
     if (currentCharacter && currentCharacter.equipment) {
@@ -5909,28 +5956,20 @@ document.getElementById('charClass').addEventListener('change', function () {
 
 // Character Actions toggle functionality
 document.addEventListener('click', function (e) {
-    if (e.target.id === 'characterActionsToggle' || e.target.closest('#characterActionsToggle')) {
-        toggleCharacterActionsSection();
-    }
-    // Familiar toggle functionality
-    if (e.target.id === 'familiarToggle' || e.target.closest('#familiarToggle')) {
-        toggleFamiliarSection();
-    }
     // Handle familiar resource box clicks
     if (e.target.dataset.familiarResource) {
         handleFamiliarResourceClick(e.target);
-    }
-    // Companion toggle functionality
-    if (e.target.id === 'companionToggle' || e.target.closest('#companionToggle')) {
-        toggleCompanionSection();
     }
     // Handle companion resource box clicks
     if (e.target.dataset.companionResource) {
         handleCompanionResourceClick(e.target);
     }
-    // ADD THIS: Spell Casting toggle functionality
-    if (e.target.id === 'spellCastingToggle' || e.target.closest('#spellCastingToggle')) {
-        toggleSpellCastingSection();
+});
+document.addEventListener('click', function (e) {
+    const toggle = e.target.closest('button[id$="Toggle"]');
+    if (toggle) {
+        const sectionName = toggle.id.replace('Toggle', '');
+        toggleSection(sectionName);
     }
 });
 
@@ -5952,30 +5991,19 @@ document.getElementById('spellSelectionModal').addEventListener('click', functio
     }
 });
 
-function toggleCharacterActionsSection() {
-    const content = document.getElementById('characterActionsContent');
-    const toggleButton = document.getElementById('characterActionsToggle');
+function toggleSection(sectionName) {
+    const content = document.getElementById(`${sectionName}Content`);
+    const toggleButton = document.getElementById(`${sectionName}Toggle`);
 
-    if (content.style.display === 'none') {
-        content.style.display = 'block';
-        toggleButton.innerHTML = '<i class="fas fa-angle-up text-xs"></i>';
-    } else {
-        content.style.display = 'none';
-        toggleButton.innerHTML = '<i class="fas fa-angle-down text-xs"></i>';
-    }
-}
+    if (!content || !toggleButton) return;
 
-function toggleFamiliarSection() {
-    const content = document.getElementById('familiarContent');
-    const toggleButton = document.getElementById('familiarToggle');
+    const isHidden = content.style.display === 'none';
+    content.style.display = isHidden ? 'block' : 'none';
+    toggleButton.innerHTML = isHidden
+        ? '<i class="fas fa-angle-up text-xs"></i>'
+        : '<i class="fas fa-angle-down text-xs"></i>';
 
-    if (content.style.display === 'none') {
-        content.style.display = 'block';
-        toggleButton.innerHTML = '<i class="fas fa-angle-up text-xs"></i>';
-    } else {
-        content.style.display = 'none';
-        toggleButton.innerHTML = '<i class="fas fa-angle-down text-xs"></i>';
-    }
+    saveCharacters(); // Save the new state
 }
 
 function handleFamiliarResourceClick(box) {
@@ -6061,19 +6089,6 @@ function updateFamiliarDisplay(character) {
         }
     } else {
         familiarSection.style.display = 'none';
-    }
-}
-
-function toggleCompanionSection() {
-    const content = document.getElementById('companionContent');
-    const toggleButton = document.getElementById('companionToggle');
-
-    if (content.style.display === 'none') {
-        content.style.display = 'block';
-        toggleButton.innerHTML = '<i class="fas fa-angle-up text-xs"></i>';
-    } else {
-        content.style.display = 'none';
-        toggleButton.innerHTML = '<i class="fas fa-angle-down text-xs"></i>';
     }
 }
 
@@ -6255,6 +6270,55 @@ function updateCompanionDisplay(character) {
     }
 }
 
+// Enhanced showCustomDialog to support callbacks
+function showCustomDialog(title, message, onConfirm = null) {
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+
+    const buttons = onConfirm ? `
+        <div class="flex justify-end space-x-3">
+            <button class="cancel-btn px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Cancel</button>
+            <button class="confirm-btn px-4 py-2 bg-primary text-white hover:bg-primary-dark rounded">Confirm</button>
+        </div>
+    ` : `
+        <div class="flex justify-end">
+            <button class="ok-btn px-4 py-2 bg-primary text-white hover:bg-primary-dark rounded">OK</button>
+        </div>
+    `;
+
+    modal.innerHTML = `
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
+            <h3 class="text-lg font-semibold mb-4">${title}</h3>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">${message}</p>
+            ${buttons}
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    if (onConfirm) {
+        modal.querySelector('.confirm-btn').addEventListener('click', () => {
+            onConfirm();
+            modal.remove();
+        });
+        modal.querySelector('.cancel-btn').addEventListener('click', () => {
+            modal.remove();
+        });
+    } else {
+        modal.querySelector('.ok-btn').addEventListener('click', () => {
+            modal.remove();
+        });
+    }
+
+    modal.addEventListener('click', function (e) {
+        if (e.target === this) {
+            this.remove();
+        }
+    });
+}
+
+
+//
 // Character form submission
 document.getElementById('characterForm').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -6875,8 +6939,19 @@ function toggleHealthPotion(index) {
         currentCharacter.healthPotions = [false, false, false, false];
     }
 
-    // Toggle the potion state
-    currentCharacter.healthPotions[index] = !currentCharacter.healthPotions[index];
+    const isCurrentlyFilled = currentCharacter.healthPotions[index];
+
+    if (!isCurrentlyFilled) {
+        // Adding a potion - fill from left to right up to clicked index
+        for (let i = 0; i <= index; i++) {
+            currentCharacter.healthPotions[i] = true;
+        }
+    } else {
+        // Removing a potion - unfill from clicked index to the right
+        for (let i = index; i < currentCharacter.healthPotions.length; i++) {
+            currentCharacter.healthPotions[i] = false;
+        }
+    }
 
     // Regenerate circles to update display
     generateHealthPotionCircles(currentCharacter);
@@ -6897,11 +6972,84 @@ function useHealthPotion() {
         return;
     }
 
+    // Show modal to choose heal target
+    showHealthPotionModal();
+}
+
+// Health Potion button event listener
+document.addEventListener('click', function (e) {
+    if (e.target.id === 'useHealthPotion' || e.target.closest('#useHealthPotion')) {
+        useHealthPotion();
+    }
+});
+
+// Show health potion modal with heal options
+function showHealthPotionModal() {
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+    modal.innerHTML = `
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
+            <div class="text-center mb-4">
+                <i class="fas fa-heart text-4xl text-red-500 mb-2"></i>
+                <h3 class="text-lg font-semibold">Use Health Potion</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Roll 1d6 for healing</p>
+            </div>
+            
+            <div class="space-y-3 mb-6">
+                <button id="healSelfBtn" class="w-full p-3 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors font-medium">
+                    <i class="fas fa-user mr-2"></i>Heal Self
+                    <div class="text-sm opacity-90">Apply healing to your HP</div>
+                </button>
+                
+                <button id="healAllyBtn" class="w-full p-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors font-medium">
+                    <i class="fas fa-users mr-2"></i>Heal Ally
+                    <div class="text-sm opacity-90">Show roll result only</div>
+                </button>
+            </div>
+            
+            <div class="flex justify-center">
+                <button id="cancelHealthPotion" class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Cancel</button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Add event listeners
+    modal.querySelector('#healSelfBtn').addEventListener('click', () => {
+        modal.remove();
+        healSelf();
+    });
+
+    modal.querySelector('#healAllyBtn').addEventListener('click', () => {
+        modal.remove();
+        healAlly();
+    });
+
+    modal.querySelector('#cancelHealthPotion').addEventListener('click', () => {
+        modal.remove();
+    });
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.remove();
+        }
+    });
+}
+
+// Heal self - original functionality
+function healSelf() {
+    if (!currentCharacter) return;
+
+    // Remove one health potion (from rightmost available)
+    const availablePotionIndex = getLastAvailablePotion();
+    if (availablePotionIndex === -1) return;
+    
+    currentCharacter.healthPotions[availablePotionIndex] = false;
+
     // Roll 1d6
     const roll = Math.floor(Math.random() * 6) + 1;
-
-    // Remove one health potion (unfill the first available one)
-    currentCharacter.healthPotions[availablePotionIndex] = false;
 
     // Restore HP by removing 'roll' amount of used HP boxes
     if (!currentCharacter.resources || !currentCharacter.resources.hp) {
@@ -6932,16 +7080,44 @@ function useHealthPotion() {
     saveCharacters();
 
     // Show result message
-    const message = `Used health potion! Rolled ${roll} and restored ${pointsRestored} HP.`;
+    const message = `Used health potion! Rolled ${roll} and restored ${pointsRestored} HP to yourself.`;
     showCustomDialog('Health Potion Used', message);
 }
 
-// Health Potion button event listener
-document.addEventListener('click', function (e) {
-    if (e.target.id === 'useHealthPotion' || e.target.closest('#useHealthPotion')) {
-        useHealthPotion();
+// Heal ally - just show roll result
+function healAlly() {
+    if (!currentCharacter) return;
+
+    // Remove one health potion (from rightmost available)
+    const availablePotionIndex = getLastAvailablePotion();
+    if (availablePotionIndex === -1) return;
+    
+    currentCharacter.healthPotions[availablePotionIndex] = false;
+
+    // Roll 1d6
+    const roll = Math.floor(Math.random() * 6) + 1;
+
+    // Update display (remove potion but don't heal self)
+    generateHealthPotionCircles(currentCharacter);
+    saveCharacters();
+
+    // Show result message for ally healing
+    const message = `Used health potion for ally! Rolled ${roll} HP healing.\n\nApply this healing to your chosen ally.`;
+    showCustomDialog('Health Potion Used for Ally', message);
+}
+
+// Helper function to get the rightmost available potion
+function getLastAvailablePotion() {
+    if (!currentCharacter.healthPotions) return -1;
+    
+    // Find the rightmost (highest index) available potion
+    for (let i = currentCharacter.healthPotions.length - 1; i >= 0; i--) {
+        if (currentCharacter.healthPotions[i] === true) {
+            return i;
+        }
     }
-});
+    return -1;
+}
 
 // Evasion Modal Event Listeners
 document.getElementById('cancelEvasion').addEventListener('click', function () {
@@ -10897,6 +11073,7 @@ function updateAllCoinDisplays() {
         });
         return;
     }
+
 
     initializeCharacterCoins(currentCharacter);
     ['platinum', 'gold', 'silver', 'copper'].forEach(coinType => {
