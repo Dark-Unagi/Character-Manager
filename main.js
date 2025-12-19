@@ -339,7 +339,49 @@ const classAbilities = {
         { name: 'Unsettling Words <i class="skill2">1 Class</i>', description: '<ul><li>- You can force a creature\'s next roll to be with Disadvantage.</li><li>- They will also take 1 Stress.</li></ul>' },
         { name: 'Song of Valor <i class="skill2">1 Class</i>', description: '<ul><li>- You can increase by +1 an Attack for you or an ally, and the damage by +1 die.</li></ul>' },
         { name: 'Silver Tongue <i class="skill2">1 Class</i>', description: '<ul><li>- Enemies within Close range must make a Save or be entranced in distraction.</li><li>- On their next turn they will act out their distraction.</li><li>- They will not attack their own allies or self harm, however they may perform other simple tasks like opening a door.</li></ul>' },
-        { name: 'Performer\'s Boon', description: '<ul><li><i>Select 1</i></li><li>- Add +1 to a Stat Ability</li><li>- Add +1 to Evasion</li><li>- Add +1 to Armor Slot</li><li>- Add +1 to Attack/Damage Rolls</li><li>- Add +1 Hit Point (above max)</li><li>- Add +1 Stress (above max)</li><li>- Gain +1 Spell.</li></ul>' },
+        {
+            name: 'Performer\'s Boon', description: `
+<ul>
+    <li><i>Select 1 option:</i></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="performersBoon" value="ability" class="boon-radio">
+        <span>Add +1 to a Stat Ability</span>
+        <select id="performersBoonAbility" class="ml-2 px-2 py-1 text-sm border rounded boon-select" style="display: none;">
+            <option value="">--</option>
+            <option value="str">STR</option>
+            <option value="dex">DEX</option>
+            <option value="con">CON</option>
+            <option value="int">INT</option>
+            <option value="wis">WIS</option>
+            <option value="cha">CHA</option>
+        </select>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="performersBoon" value="evasion" class="boon-radio">
+        <span>Add +1 to Evasion</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="performersBoon" value="armor" class="boon-radio">
+        <span>Add +1 to Armor Slot</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="performersBoon" value="attack" class="boon-radio">
+        <span>Add +1 to Attack/Damage Rolls</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="performersBoon" value="hp" class="boon-radio">
+        <span>Add +1 Hit Point (above max)</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="performersBoon" value="stress" class="boon-radio">
+        <span>Add +1 Stress (above max)</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="performersBoon" value="spell" class="boon-radio">
+        <span>Add +1 Spell Point</span>
+    </label></li>
+</ul>` }
+        ,
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description: '<ul><li>- Choose from the selected spell-list.</li><li>- Number of spells is equal to 1 + Level.</li><li>- Spell Save DC is 8+Mod.</li></ul>' }
     ],
     'Cleric': [
@@ -355,14 +397,55 @@ const classAbilities = {
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is WIS.</i>', description: '<ul><li>- Access to all available Spells within the Cleric domain.</li><li>- Number of spells is equal to 1 + Level + Modifier.</li><li>- Spell Save DC is 8 + Mod.</li></ul>' }
     ],
     'Druid': [
-        { name: 'Wild Beast <i class="skill1">Stress</i>', description: '<ul><li>- Using Stress transform your body into a creature of your choice.</li><li><i class="skill1">1 Stress:</i> Basic</li>  <li><i class="skill1">2 Stress:</i> Can Swim</li>  <li><i class="skill1">3 Stress:</i> Can Fly</li><li><i class="skill1">4 Stress:</i> Elemental Shape</li><li>- When in Wild Shape form, you cannot cast spells, or use skills that the creature otherwise couldn\'t do.</li></ul>' },
-        { name: 'Fungal Infestation <i class="skill2">1 Class</i>', description: '<ul><li>- Use fungal spores to infect a creature.</li><li>- The creature must succeed a CON Save</li><li>- On a fail the creature will Attack, Move or do nothing on it\'s turn (Player\'s Choice.)</li></ul>' },
+        { name: 'Wild Beast <i class="skill1">Stress</i>', description: '<ul><li>- Using Stress transform your body into a creature of your choice. (Until you decide to stop or the next Short Rest).</li><li><i class="skill1">1 Stress:</i> Basic Beast</li>  <li><i class="skill1">2 Stress:</i> Can Swim</li>  <li><i class="skill1">3 Stress:</i> Can Fly</li><li>- When in Wild Shape form, you cannot cast spells, or use skills that the creature otherwise couldn\'t do.</li><li>- You gain bonuses to Evasion, Armor, Threholds and Ability Scores, increasing every 2 levels.</li></ul>' },
+        { name: 'Fungal Infestation <i class="skill2">1 Class</i>', description: '<ul><li>- Use fungal spores to infect a creature.</li><li>- The creature must succeed a CON Save. (Repeat at the end of each turn).</li><li>- On a fail the creature will Attack, Move or do nothing on it\'s turn (Player\'s Choice.)</li></ul>' },
         { name: 'Radiant Soul <i class="skill2">1 Class</i>', description: '<ul><li>- Roll 1d4 and add the result to all damage dice.</li><li>- The damage is also considered Radiant.</li></ul>' },
-        { name: 'Mighty Summoner <i class="skill1">1 Stress</i>', description: '<ul><li>- All summoned creatures gain an extra 1HP.</li><li>- All creatures Attacks are considered Magical.</li></ul>' },
+        { name: 'Mighty Summoner <i class="skill1">1 Stress</i>', description: '<ul><li>- Can summon 1d4 Fey Beasts and will follow your instruction as best they can.</li><li>- <b>Divine Roll:</b> Small: <i>Divine</i>, Medium: <i>Fate</i>, Large: <i>Crit</i></li><li>- All creatures Attacks are considered Magical.</li><hr class = "m-2"><li><b>Small:</b> <b>HP:</b> 3, <b>Stress:</b> 1, <b>Mod:</b> +2, <b>Atk:</b> 1d6, <b>Feature:</b> <i class="skill1">1 Stress:</i> Force Stress.</li><li><b>Medium:</b> <b>HP:</b> 4, <b>Stress:</b> 1, <b>Mod:</b> +3, <b>Atk:</b> 1d8, <b>Feature:</b> <i class="skill1">1 Stress:</i> Pack Tactics.</li><li><b>Large:</b> <b>HP:</b> 5, <b>Stress:</b> 1, <b>Mod:</b> +4, <b>Atk:</b> 2d8, <b>Feature:</b> ,<i class="skill1">1 Stress:</i> Add 1 extra damage die.</li></ul>' },
         { name: 'Natural Recovery <i class="skill2">1 Class</i>', description: '<ul><li>- Select yourself or an Ally.</li><li>- Roll 1d4 and remove that amount of Stress or Hit Points, but not both.</li></ul>' },
         { name: 'Healing Hands <i class="skill1">1 Stress</i>', description: '<ul><li><b>Option 1:</b> <i class="skill2">1 Class</i><li>- Recover 1 Hit Point or 1 Stress Point  or a Poison/Disease.</li> <li><b>Option 2:</b> <i class="skill2">2 Class</i></li><li>- You can roll an attack (this is not your attack action) and on a success, you touch an enemy, roll 1d4 and remove that amount of HP from the target and then touch an ally and they recover the result in HP.</li></ul>' },
-        { name: 'Spirit Totem <i class="skill1">Stress</i>', description: '<ul><li>- <b>Bear:</b> <i class="skill1">1 Stress</i><li>- Add 1 Temp HP to all allies.</li><li>- You gain +1|+2 to your threshold per level.</li><li>- <b>Hawk:</b> <i class="skill2">1 Stress</i></li><li>- Can make a combined attack, adding damage together.</li><li>- Perception checks have Advantage.</li><li>- <b>Unicorn:</b> <i class="skill1">1 Stress</i></li><li>- Heal spells add 1 extra HP to all affected.</li><li>- Advantage on checks to detect creatures.</li></ul>' },
-        { name: 'Nature\'s Boon', description: '<ul><li>- Add +1 to a Stat Ability</li><li>- Add +1 to Evasion</li><li>- Add +1 to Armor Slot</li><li>- Add +1 Hit Point (above max)</li><li>- Add +1 Stress (above max)</li><li>- Gain +1 Spell</li></ul>' },
+        { name: 'Spirit Totem <i class="skill1">Stress</i>', description: '<ul><li>The Totem will  last Until the end of Combat or the Druid is Unconscious.</li><li>- <b>Bear:</b> <i class="skill1">1 Stress</i><li>- Add 1 Temp HP to all allies.</li><li>- You gain +1|+2 to your threshold per level.</li><li>- <b>Hawk:</b> <i class="skill1">1 Stress</i></li><li>- Select 1 ally, they can combine attack with you once this combat.</li><li>- Attacks against you are with <b>Disadvantage</b>.</li><li>- <b>Unicorn:</b> <i class="skill1">1 Stress</i></li><li>- Heal spells add 1 extra HP to all affected.</li><li>- Advantage on checks to detect creatures.</li></ul>' },
+        {
+            name: 'Nature\'s Boon', description: `
+<ul>
+    <li><i>Select 1 option:</i></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="naturesBoon" value="ability" class="boon-radio">
+        <span>Add +1 to a Stat Ability</span>
+        <select id="naturesBoonAbility" class="ml-2 px-2 py-1 text-sm border rounded boon-select" style="display: none;">
+            <option value="">--</option>
+            <option value="str">STR</option>
+            <option value="dex">DEX</option>
+            <option value="con">CON</option>
+            <option value="int">INT</option>
+            <option value="wis">WIS</option>
+            <option value="cha">CHA</option>
+        </select>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="naturesBoon" value="evasion" class="boon-radio">
+        <span>Add +1 to Evasion</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="naturesBoon" value="armor" class="boon-radio">
+        <span>Add +1 to Armor Slot</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="naturesBoon" value="attack" class="boon-radio">
+        <span>Add +1 to Attack/Damage Rolls</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="naturesBoon" value="hp" class="boon-radio">
+        <span>Add +1 Hit Point (above max)</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="naturesBoon" value="stress" class="boon-radio">
+        <span>Add +1 Stress (above max)</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="naturesBoon" value="spell" class="boon-radio">
+        <span>Add +1 Spell Point</span>
+    </label></li>
+</ul>` },
         { name: 'Speech of the Woods', description: '<ul><li>- You learn to speak, read, and write Sylvan.</li><li>- Beasts can understand your speech, and you gain the ability to decipher their noises and motions.</li></ul>' },
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is WIS.</i>', description: '<ul><li>- Choose from the selected spell-list.</li><li>- Number of spells is equal to 1 + Level.</li><li>- Spell Save DC is 8 + Mod.</li></ul>' }
     ],
@@ -399,19 +482,101 @@ const classAbilities = {
         { name: 'Aura of Guardian <i class="skill1">1 Stress</i>', description: '<ul><li>- You can decide to take the damage of an ally.</li><li>- The damage cannot be reduced.</li></ul>' },
         { name: 'Aura of Protection <i class="skill1">1 Stress</i>', description: '<ul><li>- Select an ally in Close range and they gain +2 to Evasion.</li></ul>' },
         { name: 'Channel Divinity <i class="skill2">Class</i>', description: '<ul><li>- Create a barrier of Godly energy around you at Very Close Range that Undead cannot cross.</li><li>- All Undead creatures within Close Range will be considered turned from you.</li><li>- A creature caught in the area on creation must make a Con Save, on a failure they will also take 1 Hit and 1 Stress.</li><li>- A creature that is forced into the area through your movement. Will make a CON Save at Advantage and take the penalties for a failure. If they succeed they are no longer restricted by the barrier.</li><li>- A creature that is successfully turned will, not approach or attack you or any ally within close range of you.</li><br><li>Tier 1: <i>2 Class</i></li><li>Tier 2: <i>3 Class</i></li><li>Tier 3: <i>4 Class</i></li><li>Tier 4: <i>5 Class</i></li><li>Tier 5: <i>6 Class</i></li></ul>' },
-        { name: 'Champion\'s Boon', description: '<ul><li>- Add +1 to a Stat Ability</li><li>- Add +1 to Evasion</li><li>- Add +1 to Armor Slot</li><li>- Add +1 to Attack/Damage Rolls</li><li>- Add +1 Hit Point (above max)</li><li>- Add +1 Stress (above max)</li><li>- Gain +1 Spell</li></ul>' },
+        {
+            name: 'Champion\'s Boon', description: `
+<ul>
+    <li><i>Select 1 option:</i></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="championsBoon" value="ability" class="boon-radio">
+        <span>Add +1 to a Stat Ability</span>
+        <select id="championsBoonAbility" class="ml-2 px-2 py-1 text-sm border rounded boon-select" style="display: none;">
+            <option value="">--</option>
+            <option value="str">STR</option>
+            <option value="dex">DEX</option>
+            <option value="con">CON</option>
+            <option value="int">INT</option>
+            <option value="wis">WIS</option>
+            <option value="cha">CHA</option>
+        </select>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="championsBoon" value="evasion" class="boon-radio">
+        <span>Add +1 to Evasion</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="championsBoon" value="armor" class="boon-radio">
+        <span>Add +1 to Armor Slot</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="championsBoon" value="attack" class="boon-radio">
+        <span>Add +1 to Attack/Damage Rolls</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="championsBoon" value="hp" class="boon-radio">
+        <span>Add +1 Hit Point (above max)</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="championsBoon" value="stress" class="boon-radio">
+        <span>Add +1 Stress (above max)</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="championsBoon" value="spell" class="boon-radio">
+        <span>Add +1 Spell Point</span>
+    </label></li>
+</ul>` },
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description: '<ul><li>- Choose from the selected spell-list.</li><li>- Number of spells is equal to 1 + Level.</li><li>- Spell Save DC is 8 + Mod.</li></ul>' }
     ],
     'Ranger': [
-        { name: 'Favored Enemy', description: '<ul><li>- Select a creature that you gain Advantage with on any Attacks, or Skills that deal with that Creature.</li><li>- Select another creature at level 4 and level 8.</li><li>- The creature cannot be of the Race options. (The GM may allow an exception).</li><li><select id="charEnemy1" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 1</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li><li><select id="charEnemy2" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 4</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li><li><select id="charEnemy3" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 8</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li></ul>' },
+        { name: 'Favored Enemy', description: '<ul><li>- Select a creature that you gain Advantage with on any Attacks, or Skills that deal with that Creature.</li><li>- Select another creature at level 4 and level 8.</li><li><select id="charEnemy1" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 1</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li><li><select id="charEnemy2" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 4</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li><li><select id="charEnemy3" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 8</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves</option></select></li></ul>' },
         { name: 'Deft Explorer', description: '<ul><li>- You do not need to use Stress on difficult terrain to move.</li><li>- Stealth, Survival Skills are with Advantage.</li></ul>' },
         { name: 'Supernatural Defense <i class="skill1">1 Stress</i>', description: '<ul><li>- You gain temporary bonus to Evasion for this combat equal to the number of your Armor. </li></ul>' },
-        { name: 'Hunter\'s Mark <i class="skill2">1 Class</i>', description: '<ul><li>- Mark a Creature within range for the duration of combat. (Or until the creature is removed.)</li><li>- The Ranger can choose to prevent any Stress skill the creature may use (but not GM Tokens).</li><li>- The Creature cannot hide in combat.</li></ul>' },
-        { name: 'Ranger Companion', description: '<ul><li>- Select an Animal that can assist the Ranger. This creature can attack on its own. (<i>Using the Ranger\'s Initiative</i>)</li><li>- Use 1 Class Point to make a combined attack and add the damage together.</li></ul>' },
-        { name: 'Tireless <i class="skill1">1 Stress</i>', description: '<ul><li>_When you drop to 1 Hit Point or Stress._</li><li>- You roll 1d4 and can add it to your Hit Points.</li></ul>' },
+        { name: 'Hunter\'s Mark <i class="skill2">1 Class</i>', description: '<ul><li>- Mark a Creature within range for the duration of combat. (Or until the creature is removed.)</li><li>- Instantly learn 1 aspect of the creature.</li><li>- The target has Disadvantage on Attack rolls against all except the ranger.</li><li>- The Creature cannot hide in combat.</li></ul>' },
+        { name: 'Ranger Companion', description: '<ul><li>- Select an Animal that can assist the Ranger. This creature can attack on its own. (<i>Using the Ranger\'s Initiative</i>)</li><li>- Use <i class="skill2">1 Class</i> to make a combined attack and add the damage together. (<i>Ranger Class Point</i>)</li><li><b>Defender:</b> <i class="skill1">1 Stress</i> - Give the Ranger +1 Evasion. (Until the next Short Rest)</li><li><b>Eye Gouge: </b><i class="skill1">1 Stress</i> - Causes blindness until the start of your next round.</li><li><b>Rend: </b><i class="skill1">1 Stress</i> - Your beast can add +1 Damage die to their damage.</li><li><b>Sentinel:</b> <i class="skill1">2 Stress:</i> - Only in Wilderness, the Ranger gains <b>Advantage</b> on initiative rolls. (Until next Long Rest).</li></ul>' },
+        { name: 'Tireless <i class="skill1">1 Stress</i>', description: '<ul><li>When you drop to 1 Hit Point or Class.</li><li>- Roll 1d4 and add it to your Hit Points.</li></ul>' },
         { name: 'Nature\'s Veil <i class="skill2">1 Class</i>', description: '<ul><li>- When in the wilderness, you can become hidden and do not need to roll to do so.</li></ul>' },
-        { name: 'Feral Senses <i class="skill1">1 Stress</i>', description: '<ul><li>- When Attacking creatures you cannot see you do not have Disadvantage.</li></ul>' },
-        { name: 'Ranger\'s Boon', description: '<ul><li>- Add +1 to a Stat Ability</li><li>- Add +1 to Evasion</li><li>- Add +1 to Armor Slot</li><li>- Add +1 to Attack/Damage Rolls</li><li>- Add +1 Hit Point (above max)</li><li>- Add +1 Stress (above max)</li><li>- Gain +1 Spell</li></ul>' },
+        { name: 'Feral Senses <i class="skill1">1 Stress</i>', description: '<ul><li>- When Attacking creatures you cannot see you do not have Disadvantage. (Until end of Combat)</li></ul>' },
+        {
+            name: 'Ranger\'s Boon', description: `
+<ul>
+    <li><i>Select 1 option:</i></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="rangersBoon" value="ability" class="boon-radio">
+        <span>Add +1 to a Stat Ability</span>
+        <select id="rangersBoonAbility" class="ml-2 px-2 py-1 text-sm border rounded boon-select" style="display: none;">
+            <option value="">--</option>
+            <option value="str">STR</option>
+            <option value="dex">DEX</option>
+            <option value="con">CON</option>
+            <option value="int">INT</option>
+            <option value="wis">WIS</option>
+            <option value="cha">CHA</option>
+        </select>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="rangersBoon" value="evasion" class="boon-radio">
+        <span>Add +1 to Evasion</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="rangersBoon" value="armor" class="boon-radio">
+        <span>Add +1 to Armor Slot</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="rangersBoon" value="attack" class="boon-radio">
+        <span>Add +1 to Attack/Damage Rolls</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="rangersBoon" value="hp" class="boon-radio">
+        <span>Add +1 Hit Point (above max)</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="rangersBoon" value="stress" class="boon-radio">
+        <span>Add +1 Stress (above max)</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="rangersBoon" value="spell" class="boon-radio">
+        <span>Add +1 Spell Point</span>
+    </label></li>
+</ul>` },
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is WIS.</i>', description: '<ul><li>- Choose from the selected spell-list.</li><li>- Number of spells is equal to 1 + Level.</li><li>- Spell Save DC is 8 + Mod.</li></ul>' }
     ],
     'Rogue': [
@@ -439,15 +604,56 @@ const classAbilities = {
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description: '<ul><li>- Choose from the selected spell-list.</li><li>- Number of spells is equal to 1 + Level.<li>- Spell Save DC is 8 + Mod.</li></ul>' }
     ],
     'Warlock': [
-        { name: 'Defy Death <i class="skill2">1 Class</i>', description: '<ul><li>- You can add 1 Divine Die to your next Divine Roll.</li><li>- For the Warlock this can also be done when they reach 0HP or anytime until next Long Rest.</li></ul>' },
-        { name: 'Spirit Protection <i class="skill2">2 Class</i>', description: '<ul><li>- Create a physical projection of yourself.</li><li>- The projection can not be targeted and enhanced with any kind of ability.</li><li>- It has half your HP and no Stress, Class or Spell points.</li><li>Level 1-5</li><li>- It can do rudimentary actions, open doors, pull levers.</li><li>- It cannot be more than 1 Distance from you.</li><li>Level 6-10</li><li>- All the above.</li><li>- It can also Attack once on your turn but at half your normal damage.</li></ul>' },
-        { name: 'Spirit Shield <i class="skill1">1 Stress</i>', description: '<ul><li>- You can reduce the damage against you or an ally by 2d6 for each Stress Point used.</li></ul>' },
-        { name: 'Pact Boon', description: '<ul><li>- Add +1 to a Stat Ability</li><li>- Add +1 to Evasion</li><li>- Add +1 to Armor Slot</li><li>- Add +1 to Attack/Damage Rolls</li><li>- Add +1 Hit Point (above max)</li><li>- Add +1 Stress (above max)</li><li>- Gain +1 Spell</li></ul>' },
-        { name: 'Necromancer <i class="skill2">1 Class</i>', description: '<ul><li>- You gain the Animate Dead spell (if you do not already have it.)</li><li>- You gain greater control and power of the undead you create.</li> <li>- Roll Divine Dice to decide the Undead that returns.</li><li>- You may also choose to increase the Resource by 2 Class and gain a Divine die to add for either option you wish.</li><br><li>Skeleton: Divine, HP:3, Class:2, Stress:2, Mod:+5, Atk:2d6</li><li><b>1 Stress:</b> Reduce a hit by 1.</li><li><b>1 Class:</b> Add an extra damage die to the damage roll.</li><li><b>Feature:</b> Resistant to peircing damage. (Half Damage).</li><br></li><br><li>Zombie: Fate, HP:4, Class:2, Stress:1, Mod:+5, Atk:2d8</li><li><b>1 Stress:</b> Cause any creature they are currently attacking to roll a CON Save or take 1 Stress caused by their grotesque nature.</li><li><b>1 Class:</b> Add an extra damage die to the damage roll.</li><li><b>Feature:</b> Roll Divine Dice on a success they return with 1HP/O Stress</li></ul>' },
+        { name: 'Defy Death <i class="skill2">1 Class</i>', description: '<ul><li>- You can add 1 Divine Die to your next Divine Roll (Until next Long Rest).</li><li>- This can also be called on if you are at 0HP.</li></ul>' },
+        { name: 'Spirit Projection <i class="skill2">2 Class</i>', description: '<ul><li>- Create a physical projection of yourself.</li><li>- The projection cannot be targeted and enhanced with any ability.</li><li>- It has half your HP and no Stress, Class or Spell points.</li><li><b>Level 1-5</b></li><li>- It can do rudimentary actions, open doors, pull levers.</li><li>- It cannot be more than 1 Distance from you.</li><li><b>Level 6-10</b></li><li>- All the above.</li><li>- It can also Attack once on your turn with half your normal damage.</li></ul>' },
+        { name: 'Spirit Shield <i class="skill1">1 Stress</i>', description: '<ul><li>- You can reduce the damage against you or an ally by <b>2d6 for each Stress Point</b> used.</li></ul>' },
+        { name: 'Patron\'s Blessing', description: '<ul><li>For your devotion, your patron has decided to gift you a piece of Equipment to help further it\'s Godly Presence to the masses and protect its flock. (Discuss with the GM).</li></ul>' },
+        { name: 'Necromancer <i class="skill2">1 Class</i>', description: '<ul><li>- You gain the <b>Animate Dead</b> spell (if you do not already have it.)</li><li>- You gain greater control and power of the undead you create. (Until next Short Rest).</li> <li>- Roll Divine Dice to decide the Undead that returns.</li><li>- You may also choose to increase the Resource by <i class="skill2">2 Class</i> and gain a Divine die to add for either option you wish.</li><hr class = "m-2"><li><b>Skeleton:</b> <i>Divine</i>, <b>HP:3, Class:2, Stress:2, Mod:+5, Atk:2d6</b></li><li><b>1 Stress:</b> Reduce a hit by 1.</li><li><b>1 Class:</b> Add an extra damage die to the damage roll.</li><li><b>Feature:</b> Resistant to peircing damage. (Half Damage).</li><br><li><b>Zombie:</b> <i>Fate</i>, <b>HP:4, Class:2, Stress:1, Mod:+5, Atk:2d8</b></li><li><b>1 Stress:</b> Cause any creature they are currently attacking to roll a CON Save or take 1 Stress caused by their grotesque nature.</li><li><b>1 Class:</b> Add an extra damage die to the damage roll.</li><li><b>Feature:</b> Roll Divine Dice on a success they return with 1HP/0 Stress</li></ul>' },
         { name: 'Stress for Stress <i class="skill2">1 Class</i>', description: '<ul><li>- When you take Stress, you can also cause 1 Stress to an Enemy.</li><li>- Or you can return the same amount to an Ally within Close Range.</li></ul>' },
         { name: 'Tokens of the Departed <i class="skill2">1 Class</i> <i>(To use the item)</i>', description: '<ul><li>- You can take items from your kills.<li>- Roll Divine Die and if the roll favors the Divine.</li><li>- The items can be uses to enhance your own abilities.</li><li>- Discuss with the GM on what can be enhanced.</li><li>- The items lose their power and mystic after 1 use.</li></ul>' },
         { name: 'Blood for Blood <i class="skill1">1 Stress</i>', description: '<ul><li>- When you take Damage, you can also cause 1 Hit to an Enemy.</li><li>- Or you can return the same amount of HP to an Ally within Close Range.</li></ul>' },
-        { name: 'Patron\'s Blessing', description: '<ul><li>- For your devotion, your patron has decided to gift you a piece of Equipment to help further it\'s Godly Presence to the masses and protect its flock. (Discuss with the GM).</li></ul>' },
+        {
+            name: 'Pact Boon', description: `
+<ul>
+    <li><i>Select 1 option:</i></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="pactBoon" value="ability" class="boon-radio">
+        <span>Add +1 to a Stat Ability</span>
+        <select id="pactBoonAbility" class="ml-2 px-2 py-1 text-sm border rounded boon-select" style="display: none;">
+            <option value="">--</option>
+            <option value="str">STR</option>
+            <option value="dex">DEX</option>
+            <option value="con">CON</option>
+            <option value="int">INT</option>
+            <option value="wis">WIS</option>
+            <option value="cha">CHA</option>
+        </select>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="pactBoon" value="evasion" class="boon-radio">
+        <span>Add +1 to Evasion</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="pactBoon" value="armor" class="boon-radio">
+        <span>Add +1 to Armor Slot</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="pactBoon" value="attack" class="boon-radio">
+        <span>Add +1 to Attack/Damage Rolls</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="pactBoon" value="hp" class="boon-radio">
+        <span>Add +1 Hit Point (above max)</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="pactBoon" value="stress" class="boon-radio">
+        <span>Add +1 Stress (above max)</span>
+    </label></li>
+    <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
+        <input type="radio" name="pactBoon" value="spell" class="boon-radio">
+        <span>Add +1 Spell Point</span>
+    </label></li>
+</ul>` },
         { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is INT.</i>', description: '<ul><li>- Choose from the selected spell-list.</li><li>- Number of spells is equal to 1 + Level.</li><li>- Spell Save DC is 8 + Modifier.</li></ul>' }
     ],
     'Wizard': [
@@ -996,6 +1202,14 @@ function handleAbilityCheckboxChange(checkbox) {
         removeAbilityFromDisplay(type, index);
     }
 
+    // Special handling for Necromancer ability
+    if (currentCharacter && currentCharacter.class === 'Warlock') {
+        const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+        if (ability && ability.name.toLowerCase().includes('necromancer')) {
+            handleNecromancerAbility(checkbox.checked);
+        }
+    }
+
     // Save selections
     saveClassAbilitiesSelection();
     // Update checkbox states after any change
@@ -1092,14 +1306,20 @@ function populateSpellsList(characterClass, searchTerm = '') {
     const spellsList = document.getElementById('spellsList');
     const classSpellGroups = spellLists[characterClass] || [];
 
-    // Filter spell groups based on search term
-    const filteredGroups = classSpellGroups.filter(group =>
-        group.groupName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        group.spells.some(spell =>
-            spell.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            spell.description.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-    );
+    // Filter spell groups based on search term and necromancer hiding
+    const filteredGroups = classSpellGroups.filter(group => {
+        // Check if spell should be hidden due to Necromancer ability
+        if (shouldHideSpellFromSelection(group)) {
+            return false;
+        }
+
+        // Apply search filter
+        return group.groupName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            group.spells.some(spell =>
+                spell.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                spell.description.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+    });
 
     if (filteredGroups.length === 0) {
         spellsList.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 py-4">No spell groups found</div>';
@@ -1216,16 +1436,27 @@ function removeSpellGroupFromCharacter(groupIndex) {
 function updateKnownSpellsDisplay() {
     const knownSpellsList = document.getElementById('knownSpellsList');
 
-    if (!currentCharacter || !currentCharacter.knownSpellGroups || currentCharacter.knownSpellGroups.length === 0) {
+    // Combine regular spells and necromancer bonus spells
+    const regularSpells = currentCharacter.knownSpellGroups || [];
+    const bonusSpells = currentCharacter.necromancerBonusSpells || [];
+    const allSpells = [...regularSpells, ...bonusSpells];
+
+    if (allSpells.length === 0) {
         knownSpellsList.innerHTML = '<div class="text-sm text-gray-600 dark:text-gray-400 text-center py-4">No spell groups known. Click "Add Spells" to learn new spell groups.</div>';
         return;
     }
 
-    knownSpellsList.innerHTML = currentCharacter.knownSpellGroups.map((group, groupIndex) => {
+    knownSpellsList.innerHTML = allSpells.map((group, groupIndex) => {
+        const isBonus = group.isNecromancerBonus;
+        const actualIndex = isBonus ? -1 : regularSpells.findIndex(g => g === group); // -1 for bonus spells
+
         // Create the spells display with separation lines
         const spellsDisplay = group.spells.map((spell, spellIndex) => `
             <div class="spell-in-known-group ${spellIndex > 0 ? 'border-t border-gray-300 dark:border-gray-500 pt-2 mt-2' : ''}">
-                <h6 class="font-semibold text-sm mb-1">${spell.name}</h6>
+                <h6 class="font-semibold text-sm mb-1">
+                    ${spell.name}
+                    ${isBonus ? '<span class="text-xs bg-purple-500 text-white px-2 py-1 rounded ml-2">BONUS</span>' : ''}
+                </h6>
                 <div class="text-xs text-gray-600 dark:text-gray-400 space-y-1">
                     <p>${spell.description}</p>
                     ${spell.range ? `<p><strong>Range:</strong> ${spell.range}</p>` : ''}
@@ -1237,17 +1468,18 @@ function updateKnownSpellsDisplay() {
         `).join('');
 
         return `
-            <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-3 bg-gray-50 dark:bg-gray-700">
-                <div class="flex justify-end items-start mb-3">
-
-                    <button 
-                        class="remove-spell-group-btn text-red-500 hover:text-red-600 text-sm"
-                        data-group-index="${groupIndex}"
-                        title="Remove spell group"
-                    >
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
+            <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-3 ${isBonus ? 'bg-purple-50 dark:bg-purple-900' : 'bg-gray-50 dark:bg-gray-700'}">
+                ${!isBonus ? `
+                    <div class="flex justify-end items-start mb-3">
+                        <button 
+                            class="remove-spell-group-btn text-red-500 hover:text-red-600 text-sm"
+                            data-group-index="${actualIndex}"
+                            title="Remove spell group"
+                        >
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                ` : '<div class="mb-3 text-center text-xs text-purple-600 dark:text-purple-300 font-medium">Necromancer Bonus Spell</div>'}
                 <div class="known-spells-in-group">
                     ${spellsDisplay}
                 </div>
@@ -1255,11 +1487,13 @@ function updateKnownSpellsDisplay() {
         `;
     }).join('');
 
-    // Add event listeners to remove buttons
+    // Add event listeners to remove buttons (only for regular spells)
     knownSpellsList.querySelectorAll('.remove-spell-group-btn').forEach(btn => {
         btn.addEventListener('click', function () {
             const groupIndex = parseInt(this.dataset.groupIndex);
-            removeSpellGroupFromCharacter(groupIndex);
+            if (groupIndex >= 0) { // Only allow removal of regular spells
+                removeSpellGroupFromCharacter(groupIndex);
+            }
         });
     });
 }
@@ -1307,7 +1541,49 @@ function addAbilityToDisplay(type, index) {
             saveClassAbilitiesSelection();
         });
     });
+
+    // ADD THIS NEW CODE FOR BOON HANDLING:
+
+    // Check if this is a boon ability and add special handling
+    if (isBoonAbility(ability.name)) {
+        const boonName = getBoonNameFromAbility(ability.name);
+
+        // Add event listeners to boon radio buttons
+        const boonRadios = abilityElement.querySelectorAll('.boon-radio');
+        boonRadios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                if (this.checked) {
+                    handleBoonRadioChange(this);
+                }
+            });
+        });
+
+        // Add event listeners to ability select dropdowns
+        const boonSelects = abilityElement.querySelectorAll('.boon-select');
+        boonSelects.forEach(select => {
+            select.addEventListener('change', function () {
+                const radio = abilityElement.querySelector(`input[name="${boonName}"][value="ability"]`);
+                if (radio && radio.checked) {
+                    handleBoonRadioChange(radio);
+                }
+            });
+        });
+
+        // Restore previous boon selection
+        restoreBoonSelection(boonName, abilityElement);
+    }
 }
+
+// Helper function to get boon name from ability name
+function getBoonNameFromAbility(abilityName) {
+    if (abilityName.includes('Performer\'s Boon')) return 'performersBoon';
+    if (abilityName.includes('Nature\'s Boon')) return 'naturesBoon';
+    if (abilityName.includes('Champion\'s Boon')) return 'championsBoon';
+    if (abilityName.includes('Ranger\'s Boon')) return 'rangersBoon';
+    if (abilityName.includes('Pact Boon')) return 'pactBoon';
+    return '';
+}
+
 
 function removeAbilityFromDisplay(type, index) {
     const displayContainer = document.getElementById('selectedAbilitiesDisplay');
@@ -1381,6 +1657,444 @@ function restoreClassAbilitiesSelection() {
             addAbilityToDisplay('universal', index);
         }
     });
+}
+
+// =================================================
+// NECROMANCER ABILITY SYSTEM
+// =================================================
+
+// Handle Necromancer ability selection/deselection
+function handleNecromancerAbility(isSelected) {
+    if (!currentCharacter || currentCharacter.class !== 'Warlock') return;
+    
+    if (isSelected) {
+        applyNecromancerBonus();
+    } else {
+        removeNecromancerBonus();
+    }
+}
+
+// Apply Necromancer ability bonus
+function applyNecromancerBonus() {
+    // Initialize tracking arrays
+    if (!currentCharacter.knownSpellGroups) {
+        currentCharacter.knownSpellGroups = [];
+    }
+    if (!currentCharacter.necromancerBonusSpells) {
+        currentCharacter.necromancerBonusSpells = [];
+    }
+    
+    // Check if they have Animate Dead in regular spells
+    const animateDeadIndex = currentCharacter.knownSpellGroups.findIndex(group => 
+        group.spells.some(spell => spell.name.includes('Animate Dead') && !spell.name.includes('Control'))
+    );
+    
+    if (animateDeadIndex !== -1) {
+        // Store the original Animate Dead for potential restoration
+        currentCharacter.storedAnimateDead = { ...currentCharacter.knownSpellGroups[animateDeadIndex] };
+        
+        // Remove Animate Dead from regular spells (frees up a slot)
+        currentCharacter.knownSpellGroups.splice(animateDeadIndex, 1);
+        
+        // Add Control Dead as bonus spell
+        addControlDeadAsBonus();
+        
+        showCustomDialog('Spell Upgraded', 'Animate Dead has been upgraded to Control Dead (bonus spell)! You now have a free spell slot available.');
+    } else {
+        // No Animate Dead found - just add Control Dead as bonus
+        addControlDeadAsBonus();
+        showCustomDialog('Necromancer Bonus', 'You gained Control Dead as a bonus spell (doesn\'t count against spell limits)!');
+    }
+    
+    // Update displays
+    updateKnownSpellsDisplay();
+    updateSpellCastingDisplay(currentCharacter);
+    populateSpellsList(currentCharacter.class, document.getElementById('spellSearchInput')?.value || '');
+    saveCharacters();
+}
+
+// Remove Necromancer ability bonus
+function removeNecromancerBonus() {
+    // Remove Control Dead bonus spell
+    if (currentCharacter.necromancerBonusSpells) {
+        currentCharacter.necromancerBonusSpells = [];
+    }
+    
+    // Try to restore Animate Dead if there's space and player had it before
+    if (currentCharacter.storedAnimateDead) {
+        const currentSpellCount = currentCharacter.knownSpellGroups?.length || 0;
+        const maxSpells = getMaxSpells(currentCharacter);
+        
+        if (currentSpellCount < maxSpells) {
+            // Space available - restore Animate Dead
+            if (!currentCharacter.knownSpellGroups) {
+                currentCharacter.knownSpellGroups = [];
+            }
+            currentCharacter.knownSpellGroups.push({ ...currentCharacter.storedAnimateDead });
+            
+            showCustomDialog('Necromancer Removed', 'Control Dead bonus spell removed. Animate Dead has been restored to your spell list.');
+        } else {
+            // No space - don't restore
+            showCustomDialog('Necromancer Removed', 'Control Dead bonus spell removed. Animate Dead could not be restored due to spell limit. You can manually select it again if desired.');
+        }
+        
+        // Clear stored spell
+        delete currentCharacter.storedAnimateDead;
+    } else {
+        showCustomDialog('Necromancer Removed', 'Control Dead bonus spell has been removed.');
+    }
+    
+    // Update displays
+    updateKnownSpellsDisplay();
+    updateSpellCastingDisplay(currentCharacter);
+    populateSpellsList(currentCharacter.class, document.getElementById('spellSearchInput')?.value || '');
+    saveCharacters();
+}
+
+// Replace existing Animate Dead with Control Dead
+function replaceAnimateDeadWithControlDead(animateDeadIndex) {
+    // Find Control Dead spell from spell lists
+    const warlockSpells = spellLists['Warlock'] || [];
+    const controlDeadGroup = warlockSpells.find(group =>
+        group.spells.some(spell => spell.name.includes('Control Dead'))
+    );
+
+    if (controlDeadGroup) {
+        // Replace the existing Animate Dead with Control Dead
+        currentCharacter.knownSpellGroups[animateDeadIndex] = { ...controlDeadGroup };
+    }
+}
+
+// Add Control Dead as bonus spell (doesn't count against limit)
+function addControlDeadAsBonus() {
+    // Find Control Dead spell from spell lists
+    const warlockSpells = spellLists['Warlock'] || [];
+    const controlDeadGroup = warlockSpells.find(group =>
+        group.spells.some(spell => spell.name.includes('Control Dead'))
+    );
+
+    if (controlDeadGroup) {
+        // Add Control Dead as bonus spell
+        const bonusSpell = { ...controlDeadGroup };
+        bonusSpell.isNecromancerBonus = true; // Mark as bonus spell
+
+        // Add to bonus spells tracking (separate from regular spells)
+        currentCharacter.necromancerBonusSpells.push(bonusSpell);
+    }
+}
+
+// Remove necromancer bonus spells
+function removeNecromancerBonusSpells() {
+    if (!currentCharacter.necromancerBonusSpells) return;
+
+    // Clear all necromancer bonus spells
+    currentCharacter.necromancerBonusSpells = [];
+
+    showCustomDialog('Bonus Spell Removed', 'Control Dead bonus spell has been removed.');
+}
+
+// Add Spell-Casting ability automatically
+function addSpellCastingAbility() {
+    if (!currentCharacter.classAbilities) {
+        currentCharacter.classAbilities = {
+            selectedClass: [],
+            selectedUniversal: [],
+            abilitySelectValues: {}
+        };
+    }
+
+    // Find Spell-Casting ability index for Warlock
+    const warlockAbilities = classAbilities['Warlock'] || [];
+    const spellCastingIndex = warlockAbilities.findIndex(ability =>
+        ability.name.toLowerCase().includes('spell-casting')
+    );
+
+    if (spellCastingIndex !== -1 && !currentCharacter.classAbilities.selectedClass.includes(spellCastingIndex)) {
+        // Add Spell-Casting to selected abilities (but don't count against limit)
+        currentCharacter.classAbilities.selectedClass.push(spellCastingIndex);
+        currentCharacter.spellCastingFromNecromancer = true; // Flag to track this
+    }
+}
+
+// Check if spell should be hidden from selection
+function shouldHideSpellFromSelection(group) {
+    if (!currentCharacter || currentCharacter.class !== 'Warlock') return false;
+    
+    const hasNecromancer = hasNecromancerAbility();
+    
+    // ALWAYS hide Control Dead - it's never selectable (only available as bonus)
+    if (group.spells.some(spell => spell.name.includes('Control Dead'))) {
+        return true;
+    }
+    
+    // Hide Animate Dead if Necromancer is selected
+    if (hasNecromancer && group.spells.some(spell => 
+        spell.name.includes('Animate Dead') && !spell.name.includes('Control')
+    )) {
+        return true;
+    }
+    
+    return false;
+}
+
+// Check if character has Necromancer ability selected
+function hasNecromancerAbility() {
+    if (!currentCharacter || !currentCharacter.classAbilities || !currentCharacter.classAbilities.selectedClass) {
+        return false;
+    }
+
+    const characterClassAbilities = classAbilities[currentCharacter.class];
+    if (!characterClassAbilities) {
+        return false;
+    }
+
+    return currentCharacter.classAbilities.selectedClass.some(index => {
+        const ability = characterClassAbilities[index];
+        return ability && ability.name && ability.name.toLowerCase().includes('necromancer');
+    });
+}
+
+// =================================================
+// BOON SYSTEM FUNCTIONS
+// =================================================
+
+// Handle boon radio button changes
+function handleBoonRadioChange(radio) {
+    const boonName = radio.name;
+    const boonValue = radio.value;
+    const abilitySelect = document.getElementById(`${boonName}Ability`);
+
+    // Show/hide ability dropdown for ability selection
+    if (boonValue === 'ability' && abilitySelect) {
+        abilitySelect.style.display = 'inline-block';
+    } else if (abilitySelect) {
+        abilitySelect.style.display = 'none';
+        abilitySelect.value = ''; // Clear selection when hidden
+    }
+
+    // Apply the boon bonus immediately
+    applyBoonBonus(boonName, boonValue, abilitySelect?.value);
+
+    // Save the selection
+    saveBoonSelection(boonName, boonValue, abilitySelect?.value);
+}
+
+// Apply boon bonus to character
+function applyBoonBonus(boonName, boonType, selectedAbility = null) {
+    if (!currentCharacter) return;
+
+    // Remove any existing boon bonus first
+    removeBoonBonus(boonName);
+
+    // Initialize boon bonuses if not present
+    if (!currentCharacter.boonBonuses) {
+        currentCharacter.boonBonuses = {};
+    }
+
+    switch (boonType) {
+        case 'ability':
+            if (selectedAbility) {
+                // Add +1 to selected ability score
+                currentCharacter[selectedAbility] = (currentCharacter[selectedAbility] || 0) + 1;
+                currentCharacter.boonBonuses[boonName] = { type: 'ability', ability: selectedAbility };
+            }
+            break;
+
+        case 'evasion':
+            // Add +1 to base evasion
+            if (!currentCharacter.evasionData) {
+                currentCharacter.evasionData = {
+                    base: currentCharacter.evasion || 0,
+                    temporary: 0,
+                    unarmoredDefense: 0,
+                    mageArmor: 0
+                };
+            }
+            currentCharacter.evasionData.base += 1;
+            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+            currentCharacter.boonBonuses[boonName] = { type: 'evasion' };
+            break;
+
+        case 'armor':
+            // Add +1 to armor slots
+            currentCharacter.armor = (currentCharacter.armor || 0) + 1;
+            if (!currentCharacter.armorSlots) {
+                currentCharacter.armorSlots = { total: 0, filled: [], permanent: 0, temporary: 0 };
+            }
+            currentCharacter.armorSlots.total += 1;
+            currentCharacter.armorSlots.permanent += 1;
+            currentCharacter.boonBonuses[boonName] = { type: 'armor' };
+            break;
+
+        case 'attack':
+            // Add +1 to attack and damage rolls (stored for future use)
+            if (!currentCharacter.attackDamageBonus) {
+                currentCharacter.attackDamageBonus = 0;
+            }
+            currentCharacter.attackDamageBonus += 1;
+            currentCharacter.boonBonuses[boonName] = { type: 'attack' };
+            break;
+
+        case 'hp':
+            // Add +1 HP above max
+            currentCharacter.hpMax = (currentCharacter.hpMax || 0) + 1;
+            if (!currentCharacter.resources) {
+                currentCharacter.resources = {
+                    hp: { max: 0, used: [], temp: 0 },
+                    stress: { max: 0, used: [], temp: 0 },
+                    class: { max: 0, used: [], temp: 0 },
+                    spell: { max: 0, used: [], temp: 0 }
+                };
+            }
+            currentCharacter.resources.hp.max += 1;
+            currentCharacter.boonBonuses[boonName] = { type: 'hp' };
+            break;
+
+        case 'stress':
+            // Add +1 Stress above max
+            currentCharacter.stressMax = (currentCharacter.stressMax || 0) + 1;
+            if (!currentCharacter.resources) {
+                currentCharacter.resources = {
+                    hp: { max: 0, used: [], temp: 0 },
+                    stress: { max: 0, used: [], temp: 0 },
+                    class: { max: 0, used: [], temp: 0 },
+                    spell: { max: 0, used: [], temp: 0 }
+                };
+            }
+            currentCharacter.resources.stress.max += 1;
+            currentCharacter.boonBonuses[boonName] = { type: 'stress' };
+            break;
+
+        case 'spell':
+            // Add +1 to spell maximum
+            currentCharacter.spellMax = (currentCharacter.spellMax || 0) + 1;
+            if (!currentCharacter.resources) {
+                currentCharacter.resources = {
+                    hp: { max: 0, used: [], temp: 0 },
+                    stress: { max: 0, used: [], temp: 0 },
+                    class: { max: 0, used: [], temp: 0 },
+                    spell: { max: 0, used: [], temp: 0 }
+                };
+            }
+            currentCharacter.resources.spell.max += 1;
+            currentCharacter.boonBonuses[boonName] = { type: 'spell' };
+            break;
+    }
+
+    // Update character sheet display
+    populateCharacterSheet(currentCharacter);
+    saveCharacters();
+}
+
+// Remove existing boon bonus
+function removeBoonBonus(boonName) {
+    if (!currentCharacter || !currentCharacter.boonBonuses || !currentCharacter.boonBonuses[boonName]) {
+        return;
+    }
+
+    const bonus = currentCharacter.boonBonuses[boonName];
+
+    switch (bonus.type) {
+        case 'ability':
+            if (bonus.ability) {
+                currentCharacter[bonus.ability] = (currentCharacter[bonus.ability] || 0) - 1;
+            }
+            break;
+
+        case 'evasion':
+            if (currentCharacter.evasionData) {
+                currentCharacter.evasionData.base -= 1;
+                currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+            }
+            break;
+
+        case 'armor':
+            currentCharacter.armor = Math.max(0, (currentCharacter.armor || 0) - 1);
+            if (currentCharacter.armorSlots) {
+                currentCharacter.armorSlots.total = Math.max(0, currentCharacter.armorSlots.total - 1);
+                currentCharacter.armorSlots.permanent = Math.max(0, currentCharacter.armorSlots.permanent - 1);
+                currentCharacter.armorSlots.filled = currentCharacter.armorSlots.filled.filter(index => index < currentCharacter.armorSlots.total);
+            }
+            break;
+
+        case 'attack':
+            currentCharacter.attackDamageBonus = Math.max(0, (currentCharacter.attackDamageBonus || 0) - 1);
+            break;
+
+        case 'hp':
+            currentCharacter.hpMax = Math.max(0, (currentCharacter.hpMax || 0) - 1);
+            if (currentCharacter.resources) {
+                currentCharacter.resources.hp.max = Math.max(0, currentCharacter.resources.hp.max - 1);
+            }
+            break;
+
+        case 'stress':
+            currentCharacter.stressMax = Math.max(0, (currentCharacter.stressMax || 0) - 1);
+            if (currentCharacter.resources) {
+                currentCharacter.resources.stress.max = Math.max(0, currentCharacter.resources.stress.max - 1);
+            }
+            break;
+
+        case 'spell':
+            currentCharacter.spellMax = Math.max(0, (currentCharacter.spellMax || 0) - 1);
+            if (currentCharacter.resources) {
+                currentCharacter.resources.spell.max = Math.max(0, currentCharacter.resources.spell.max - 1);
+            }
+            break;
+    }
+}
+
+// Save boon selection to character data
+function saveBoonSelection(boonName, boonType, selectedAbility = null) {
+    if (!currentCharacter) return;
+
+    if (!currentCharacter.boonSelections) {
+        currentCharacter.boonSelections = {};
+    }
+
+    currentCharacter.boonSelections[boonName] = {
+        type: boonType,
+        ability: selectedAbility
+    };
+
+    saveCharacters();
+}
+
+// Restore boon selections when ability is displayed
+function restoreBoonSelection(boonName, abilityElement) {
+    if (!currentCharacter || !currentCharacter.boonSelections || !currentCharacter.boonSelections[boonName]) {
+        return;
+    }
+
+    const selection = currentCharacter.boonSelections[boonName];
+
+    // Find and check the appropriate radio button
+    const radio = abilityElement.querySelector(`input[name="${boonName}"][value="${selection.type}"]`);
+    if (radio) {
+        radio.checked = true;
+
+        // Show ability dropdown if needed
+        if (selection.type === 'ability' && selection.ability) {
+            const abilitySelect = abilityElement.querySelector(`#${boonName}Ability`);
+            if (abilitySelect) {
+                abilitySelect.style.display = 'inline-block';
+                abilitySelect.value = selection.ability;
+            }
+        }
+    }
+}
+
+// Check if an ability is a boon ability
+function isBoonAbility(abilityName) {
+    const boonAbilities = [
+        'Performer\'s Boon',
+        'Nature\'s Boon',
+        'Champion\'s Boon',
+        'Ranger\'s Boon',
+        'Pact Boon'
+    ];
+
+    return boonAbilities.some(boon => abilityName.includes(boon.replace('\'', '\'')));
 }
 
 // Function to calculate DC Save for a character
@@ -1493,14 +2207,38 @@ function updateSpellCastingDisplay(character) {
     if (!character) return;
 
     const spellCastingSection = document.getElementById('spellCastingSheetSection');
+    const addSpellsBtn = document.getElementById('addSpellsBtn');
     const hasSpellCastingSelected = checkSpellCastingSelected(character);
+    const hasNecromancer = hasNecromancerAbility();
 
-    // Show section only if Spell-Casting ability is selected
-    if (hasSpellCastingSelected) {
+    // Show section if Spell-Casting is selected OR if character has Necromancer ability
+    if (hasSpellCastingSelected || hasNecromancer) {
         spellCastingSection.style.display = 'block';
 
+        // Enable/disable Add Spells button based on actual Spell-Casting ability
+        if (addSpellsBtn) {
+            if (hasSpellCastingSelected) {
+                addSpellsBtn.disabled = false;
+                addSpellsBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                addSpellsBtn.title = 'Add new spells to your repertoire';
+            } else {
+                // Has Necromancer but not Spell-Casting
+                addSpellsBtn.disabled = true;
+                addSpellsBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                addSpellsBtn.title = 'Requires Spell-Casting ability to add more spells';
+            }
+        }
+
         // Update spell attack bonus if applicable
-        updateSpellAttackBonus(character);
+        if (hasSpellCastingSelected) {
+            updateSpellAttackBonus(character);
+        } else {
+            // Show N/A for spell attack if only Necromancer
+            const spellAttackElement = document.getElementById('spellAttackBonus');
+            if (spellAttackElement) {
+                spellAttackElement.textContent = 'N/A';
+            }
+        }
 
         // Update known spell groups display
         updateKnownSpellsDisplay();
@@ -1526,6 +2264,9 @@ function updateSpellAttackBonus(character) {
 // Calculate maximum spells allowed based on class and level
 function getMaxSpells(character) {
     if (!character.class || !character.level) return 0;
+
+    // Count only regular spells, not necromancer bonus spells
+    const regularSpellCount = character.knownSpellGroups ? character.knownSpellGroups.length : 0;
 
     const level = character.level;
     const characterClass = character.class.toLowerCase();
@@ -2194,7 +2935,7 @@ function getWildBeastWeapon(level) {
             trait: "STR/DEX",
             range: "Melee",
             damage: "d4",
-            feature: "Wild Beast Transformation",
+            feature: "Ev +1, Arm +1, Thres 5 | 10, Stats +1",
             bonuses: {
                 thresholdLower: 5,
                 thresholdUpper: 10,
@@ -2210,13 +2951,13 @@ function getWildBeastWeapon(level) {
             trait: "STR/DEX",
             range: "Melee",
             damage: "d6",
-            feature: "Wild Beast Transformation",
+            feature: "Ev +1, Arm +2, Thres 10 | 15, Stats +2",
             bonuses: {
                 thresholdLower: 10,
                 thresholdUpper: 15,
                 evasion: 1,
                 armor: 2,
-                str: 1, dex: 1, con: 1, int: 1, wis: 1, cha: 1
+                str: 2, dex: 2, con: 2, int: 2, wis: 2, cha: 2
             },
             isWildBeast: true
         };
@@ -2226,13 +2967,13 @@ function getWildBeastWeapon(level) {
             trait: "STR/DEX",
             range: "Melee",
             damage: "d8",
-            feature: "Wild Beast Transformation",
+            feature: "Ev +2, Arm +3, Thres 15 | 20, Stats +3",
             bonuses: {
                 thresholdLower: 15,
                 thresholdUpper: 20,
                 evasion: 2,
                 armor: 3,
-                str: 1, dex: 1, con: 1, int: 1, wis: 1, cha: 1
+                str: 3, dex: 3, con: 3, int: 3, wis: 3, cha: 3
             },
             isWildBeast: true
         };
@@ -2242,13 +2983,13 @@ function getWildBeastWeapon(level) {
             trait: "STR/DEX",
             range: "Melee",
             damage: "2d6",
-            feature: "Wild Beast Transformation",
+            feature: "Ev +2, Arm +4, Thres 20 | 25, Stats +4",
             bonuses: {
                 thresholdLower: 20,
                 thresholdUpper: 25,
                 evasion: 2,
                 armor: 4,
-                str: 1, dex: 1, con: 1, int: 1, wis: 1, cha: 1
+                str: 4, dex: 4, con: 4, int: 4, wis: 4, cha: 4
             },
             isWildBeast: true
         };
@@ -2258,13 +2999,13 @@ function getWildBeastWeapon(level) {
             trait: "STR/DEX",
             range: "Melee",
             damage: "2d8",
-            feature: "Wild Beast Transformation",
+            feature: "Ev +3, Arm +5, Thres 25 | 30, Stats +5",
             bonuses: {
                 thresholdLower: 25,
                 thresholdUpper: 30,
                 evasion: 3,
                 armor: 5,
-                str: 1, dex: 1, con: 1, int: 1, wis: 1, cha: 1
+                str: 5, dex: 5, con: 5, int: 5, wis: 5, cha: 5
             },
             isWildBeast: true
         };
@@ -2778,6 +3519,35 @@ const classData = {
         thresholdUpper: 1,
     }
 };
+
+// Equipment package data
+const equipmentPackages = {
+    'explorer': [
+        { name: 'Bedroll', quantity: 1 },
+        { name: 'Rope (50ft)', quantity: 1 },
+        { name: 'Explorer Tools', quantity: 1 },
+        { name: 'Torch', quantity: 3 },
+        { name: 'Tinderbox', quantity: 1 },
+        { name: 'Waterskin', quantity: 1 },
+    ],
+    'scholar': [
+        { name: 'Bedroll', quantity: 1 },
+        { name: 'Candle', quantity: 1 },
+        { name: 'Charcoal', quantity: 1 },
+        { name: 'Paper', quantity: 1 },
+        { name: 'Scholar Tools', quantity: 1 },
+        { name: 'Torch', quantity: 1 },
+        { name: 'Vials', quantity: 3 },
+        { name: 'Waterskin', quantity: 1 }
+    ],
+    'none': []
+};
+
+// Function to get selected equipment package
+function getSelectedEquipmentPackage() {
+    const selectedRadio = document.querySelector('input[name="equipmentPackage"]:checked');
+    return selectedRadio ? selectedRadio.value : 'explorer'; // Default to explorer
+}
 
 // Default skills list
 const defaultSkills = [
@@ -4254,7 +5024,8 @@ function createRandomCharacter() {
         },
         thresholdLower: thresholdLowerValue,
         thresholdUpper: thresholdUpperValue,
-        equipment: [],
+        equipment: getRandomEquipmentPackage(),
+        healthPotions: [true, false, false, false], // Start with 1 health potion
         notes: '',
         selectedRaceBonuses: [0, 1], // First two bonuses
         selectedRaceProficiencies: selectedProficiencies,
@@ -4272,14 +5043,19 @@ function createRandomCharacter() {
         weaponProficiency: 1,
         coins: {
             platinum: 0,
-            gold: 0,
+            gold: Math.floor(Math.random() * 4 + 1) * 10, // Random 1d4 × 10 for random characters
             silver: 0,
             copper: 0
         },
         classAbilities: {
             selectedClass: [],
             selectedUniversal: []
-        }
+        },
+        boonSelections: {},
+        boonBonuses: {},
+        attackDamageBonus: 0,
+        necromancerBonusSpells: [], // Track bonus spells separately
+        spellCastingFromNecromancer: false, // Track if spell-casting shown due to necromancer
     };
 
     return character;
@@ -4921,6 +5697,10 @@ function toggleResourceBoxOrdered(clickedBox) {
         // Update character cards to reflect the current HP status
         updateCharacterDisplay();
     }
+}
+
+function roll1d4() {
+    return Math.floor(Math.random() * 4) + 1;
 }
 
 function showTempPointsModal(resourceType) {
@@ -6317,6 +7097,55 @@ function showCustomDialog(title, message, onConfirm = null) {
     });
 }
 
+// Get equipment for new character based on selected package
+function getEquipmentForNewCharacter() {
+    const selectedPackage = getSelectedEquipmentPackage();
+    const packageItems = equipmentPackages[selectedPackage] || [];
+
+    // Create a copy of the package items
+    return packageItems.map(item => ({ ...item }));
+}
+
+// Get starting gold for new character based on selected package
+function getStartingGoldForNewCharacter() {
+    const selectedPackage = getSelectedEquipmentPackage();
+
+    let goldAmount = 0;
+
+    switch (selectedPackage) {
+        case 'explorer':
+            // 1d4+2 × 10 gold
+            const explorerRoll = Math.floor(Math.random() * 4) + 1; // 1d4
+            goldAmount = (explorerRoll + 2) * 10; // Add 2, then multiply by 10
+            break;
+
+        case 'scholar':
+            // 1d4 × 10 gold
+            const scholarRoll = Math.floor(Math.random() * 4) + 1; // 1d4
+            goldAmount = scholarRoll * 10; // Multiply by 10
+            break;
+
+        case 'none':
+            // No starting gold
+            goldAmount = 0;
+            break;
+
+        default:
+            goldAmount = 0;
+    }
+
+    return goldAmount;
+}
+
+// Get random equipment package for random character creation
+function getRandomEquipmentPackage() {
+    const packages = ['explorer', 'scholar', 'none'];
+    const randomPackage = packages[Math.floor(Math.random() * packages.length)];
+    const packageItems = equipmentPackages[randomPackage] || [];
+
+    // Create a copy of the package items
+    return packageItems.map(item => ({ ...item }));
+}
 
 //
 // Character form submission
@@ -6420,7 +7249,7 @@ document.getElementById('characterForm').addEventListener('submit', function (e)
         },
         thresholdLower: parseInt(document.getElementById('thresholdLower').value),
         thresholdUpper: parseInt(document.getElementById('thresholdUpper').value),
-        equipment: [],
+        equipment: getEquipmentForNewCharacter(),
         notes: '',
         // Store race selections
         selectedRaceBonuses: [...selectedRaceBonuses],
@@ -6445,9 +7274,10 @@ document.getElementById('characterForm').addEventListener('submit', function (e)
         armorAbilityBonuses: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
         // Initialize weapon proficiency (starts with 1 circle filled at level 1)
         weaponProficiency: 1,
+        healthPotions: [true, false, false, false], // Start with 1 health potion
         coins: {
             platinum: 0,
-            gold: 0,
+            gold: getStartingGoldForNewCharacter(),
             silver: 0,
             copper: 0
         },
@@ -7031,7 +7861,7 @@ function showHealthPotionModal() {
     });
 
     // Close modal when clicking outside
-    modal.addEventListener('click', function(e) {
+    modal.addEventListener('click', function (e) {
         if (e.target === this) {
             this.remove();
         }
@@ -7045,7 +7875,7 @@ function healSelf() {
     // Remove one health potion (from rightmost available)
     const availablePotionIndex = getLastAvailablePotion();
     if (availablePotionIndex === -1) return;
-    
+
     currentCharacter.healthPotions[availablePotionIndex] = false;
 
     // Roll 1d6
@@ -7091,7 +7921,7 @@ function healAlly() {
     // Remove one health potion (from rightmost available)
     const availablePotionIndex = getLastAvailablePotion();
     if (availablePotionIndex === -1) return;
-    
+
     currentCharacter.healthPotions[availablePotionIndex] = false;
 
     // Roll 1d6
@@ -7109,7 +7939,7 @@ function healAlly() {
 // Helper function to get the rightmost available potion
 function getLastAvailablePotion() {
     if (!currentCharacter.healthPotions) return -1;
-    
+
     // Find the rightmost (highest index) available potion
     for (let i = currentCharacter.healthPotions.length - 1; i >= 0; i--) {
         if (currentCharacter.healthPotions[i] === true) {
