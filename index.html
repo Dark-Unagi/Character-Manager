@@ -1341,26 +1341,57 @@
             display: inline-block;
             margin-top: 0.25rem;
         }
+
+        /* Equipment Package Selection Styling */
+.equipment-package-option {
+    min-height: 80px;
+    transition: all 0.2s ease;
+}
+
+.equipment-package-option:hover {
+    border-color: #5D5CDE;
+    transform: translateY(-1px);
+}
+
+.equipment-package-option input[type="radio"]:checked + .font-medium {
+    color: #5D5CDE;
+}
+
+.equipment-package-option:has(input[type="radio"]:checked) {
+    border-color: #5D5CDE;
+    background-color: rgba(93, 92, 222, 0.05);
+}
+
+.dark .equipment-package-option:has(input[type="radio"]:checked) {
+    background-color: rgba(93, 92, 222, 0.1);
+}
+
+/* Boon Radio Button Styling */
+.boon-radio {
+    accent-color: #5D5CDE;
+}
+
+.boon-select {
+    border-color: #d1d5db;
+    background-color: white;
+    color: #374151;
+}
+
+.dark .boon-select {
+    border-color: #6b7280;
+    background-color: #374151;
+    color: #e5e7eb;
+}
+
+.boon-select:focus {
+    outline: none;
+    border-color: #5D5CDE;
+}
     </style>
 
 </head>
 
 <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
-    <!--    
-     Navigation 
-    <nav class="bg-primary dark:bg-primary-dark shadow-lg sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex justify-between items-center h-16">
-                <h1 class="text-white text-xl font-bold">RPG Character Manager</h1>
-                <div class="flex space-x-4">
-                    <button id="charactersTab" class="text-white hover:text-gray-200 px-3 py-2 rounded active-tab">
-                        <i class="fas fa-users mr-2"></i>Characters
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
- -->
 
     <!-- Hidden file input for loading characters -->
     <input type="file" id="loadFileInput" accept=".json" style="display: none;">
@@ -1490,6 +1521,36 @@
                             </div>
                         </div>
 
+                        <!-- Equipment Package Selection -->
+<div class="col-span-2">
+    <label class="block text-sm font-medium mb-2">Starting Equipment Package</label>
+    <div class="grid grid-cols-3 gap-4">
+        <label class="equipment-package-option flex flex-col items-center p-3 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <input type="radio" name="equipmentPackage" value="explorer" class="mb-2" checked>
+            <div class="font-medium text-sm">Explorer</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 text-center">
+                Bedroll, Rope, Explorer Tools, Torch ×3, Tinderbox, Waterskin, (Healing Potion x1, Gold)
+            </div>
+        </label>
+        
+        <label class="equipment-package-option flex flex-col items-center p-3 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <input type="radio" name="equipmentPackage" value="scholar" class="mb-2">
+            <div class="font-medium text-sm">Scholar</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 text-center">
+                Bedroll, Candle, Charcoal, Paper, Scholar Tools, Torch, Vials ×3, Waterskin, (Healing Potion x1, Gold)
+            </div>
+        </label>
+        
+        <label class="equipment-package-option flex flex-col items-center p-3 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <input type="radio" name="equipmentPackage" value="none" class="mb-2">
+            <div class="font-medium text-sm">None</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 text-center">
+                Start with no equipment
+            </div>
+        </label>
+    </div>
+</div>
+
                         <!-- Race Bonuses and Proficiencies Combined -->
                         <div id="raceBonusSection" class="mt-4 hidden">
                             <label class="block text-sm font-medium mb-2">Race Bonuses & Ability Scores (Select up to
@@ -1578,10 +1639,10 @@
                                     Trades"</b> ability.</i></span>
                         <div class="space-y-4">
                             <div>
-                                <label class="flex items-center cursor-pointer">
+                                <h4 class="flex items-center cursor-pointer">
                                     <input type="checkbox" id="hasJackOfAllTrades" class="mr-2">
-                                    <span class="text-sm font-medium">Jack of all Trades</span>
-                                </label>
+                                    <span class="text-sm font-semibold">Jack of all Trades</span>
+                                </h4>
                             </div>
                         </div>
                     </div>
