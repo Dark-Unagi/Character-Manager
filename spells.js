@@ -27,7 +27,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Bard 3",
             spells: [
                 {
@@ -56,7 +56,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Bard 4",
             spells: [
                 {
@@ -85,7 +85,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Bard 5",
             spells: [
                 {
@@ -114,7 +114,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Bard 6",
             spells: [
                 {
@@ -143,7 +143,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Bard 7",
             spells: [
                 {
@@ -156,7 +156,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Bard 8",
             spells: [
                 {
@@ -169,7 +169,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Bard 9",
             spells: [
                 {
@@ -182,7 +182,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Bard 10",
             spells: [
                 {
@@ -203,7 +203,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Bard 11",
             spells: [
                 {
@@ -216,7 +216,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Bard 12",
             spells: [
                 {
@@ -237,7 +237,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Bard 13",
             spells: [
                 {
@@ -250,7 +250,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Bard 14",
             spells: [
                 {
@@ -292,7 +292,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 3",
             spells: [
                 {
@@ -329,7 +329,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Cleric 4",
             spells: [
                 {
@@ -358,7 +358,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Cleric 5",
             spells: [
                 {
@@ -371,10 +371,10 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 6",
             spells: [
-               {
+                {
                     name: "Mending <i class='text-sm text-orange-500'>1 Spell</i>",
                     description: "<ul><li>- The spell repairs any small object. </li><li>- The object can be no bigger than 1m².</li><li>- It does not return any magical effect the item might have had.</li></ul>",
                     range: "Touch",
@@ -384,7 +384,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 7",
             spells: [
                 {
@@ -413,7 +413,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Cleric 8",
             spells: [
                 {
@@ -434,7 +434,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 9",
             spells: [
                 {
@@ -447,7 +447,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 10",
             spells: [
                 {
@@ -468,7 +468,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Cleric 11",
             spells: [
                 {
@@ -489,7 +489,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Cleric 12",
             spells: [
                 {
@@ -510,7 +510,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 13",
             spells: [
                 {
@@ -523,7 +523,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 14",
             spells: [
                 {
@@ -544,7 +544,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Cleric 15",
             spells: [
                 {
@@ -565,7 +565,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Cleric 16",
             spells: [
                 {
@@ -578,7 +578,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 17",
             spells: [
                 {
@@ -607,7 +607,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 18",
             spells: [
                 {
@@ -620,7 +620,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 19",
             spells: [
                 {
@@ -633,7 +633,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 20",
             spells: [
                 {
@@ -646,7 +646,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 21",
             spells: [
                 {
@@ -667,7 +667,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 22",
             spells: [
                 {
@@ -688,7 +688,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 23",
             spells: [
                 {
@@ -701,7 +701,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 24",
             spells: [
                 {
@@ -722,7 +722,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Cleric 25",
             spells: [
                 {
@@ -735,7 +735,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 26",
             spells: [
                 {
@@ -756,7 +756,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Cleric 27",
             spells: [
                 {
@@ -769,7 +769,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 28",
             spells: [
                 {
@@ -782,7 +782,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Cleric 29",
             spells: [
                 {
@@ -1053,7 +1053,7 @@ const spellLists = {
                 }
             ]
         },
-                        {
+        {
             groupName: "Paladin 5",
             spells: [
                 {
@@ -1302,7 +1302,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Sorcerer 2",
             spells: [
                 {
@@ -1360,7 +1360,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Sorcerer 4",
             spells: [
                 {
@@ -1389,7 +1389,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Sorcerer 5",
             spells: [
                 {
@@ -1418,7 +1418,7 @@ const spellLists = {
                 }
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 6",
             spells: [
                 {
@@ -1447,7 +1447,7 @@ const spellLists = {
                 }
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 7",
             spells: [
                 {
@@ -1460,7 +1460,7 @@ const spellLists = {
                 },
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 8",
             spells: [
                 {
@@ -1487,7 +1487,7 @@ const spellLists = {
                     save: "",
                     damage: ""
                 },
-                                {
+                {
                     name: "Globe of Invulnerability <i class='text-sm text-orange-500'>2 Spell / 3 Stress</i>",
                     description: "<ul><li>- Create a magical hand of force. The hand can be transparent or visible.</li><li>- The hand has a STR mod equal to your own and is able to take simple actions like opening door, pulling levels, retrieving objects, push or pull an object.</li><li>- It can not do damage.</li></ul>",
                     range: "Self",
@@ -1497,7 +1497,7 @@ const spellLists = {
                 }
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 9",
             spells: [
                 {
@@ -1510,7 +1510,7 @@ const spellLists = {
                 },
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 10",
             spells: [
                 {
@@ -1531,7 +1531,7 @@ const spellLists = {
                 },
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 11",
             spells: [
                 {
@@ -1544,7 +1544,7 @@ const spellLists = {
                 },
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 12",
             spells: [
                 {
@@ -1557,7 +1557,7 @@ const spellLists = {
                 },
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 13",
             spells: [
                 {
@@ -1570,7 +1570,7 @@ const spellLists = {
                 },
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 14",
             spells: [
                 {
@@ -1583,7 +1583,7 @@ const spellLists = {
                 },
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 15",
             spells: [
                 {
@@ -1604,7 +1604,7 @@ const spellLists = {
                 },
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 16",
             spells: [
                 {
@@ -1617,7 +1617,7 @@ const spellLists = {
                 },
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 17",
             spells: [
                 {
@@ -1630,7 +1630,7 @@ const spellLists = {
                 },
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 18",
             spells: [
                 {
@@ -1659,7 +1659,7 @@ const spellLists = {
                 }
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 19",
             spells: [
                 {
@@ -1688,7 +1688,7 @@ const spellLists = {
                 }
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 20",
             spells: [
                 {
@@ -1701,7 +1701,7 @@ const spellLists = {
                 },
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 21",
             spells: [
                 {
@@ -1714,7 +1714,7 @@ const spellLists = {
                 },
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 22",
             spells: [
                 {
@@ -1735,7 +1735,7 @@ const spellLists = {
                 },
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 23",
             spells: [
                 {
@@ -1756,7 +1756,7 @@ const spellLists = {
                 }
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 24",
             spells: [
                 {
@@ -1777,7 +1777,7 @@ const spellLists = {
                 }
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 25",
             spells: [
                 {
@@ -1806,7 +1806,7 @@ const spellLists = {
                 }
             ]
         },
-                        {
+        {
             groupName: "Sorcerer 26",
             spells: [
                 {
@@ -1819,7 +1819,7 @@ const spellLists = {
                 },
             ]
         },
-                                {
+        {
             groupName: "Sorcerer 27",
             spells: [
                 {
@@ -1848,7 +1848,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Warlock 2",
             spells: [
                 {
@@ -1893,7 +1893,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Warlock 3",
             spells: [
                 {
@@ -1914,7 +1914,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Warlock 4",
             spells: [
                 {
@@ -1943,7 +1943,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Warlock 5",
             spells: [
                 {
@@ -1956,7 +1956,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Warlock 6",
             spells: [
                 {
@@ -1985,7 +1985,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Warlock 7",
             spells: [
                 {
@@ -2014,7 +2014,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Warlock 8",
             spells: [
                 {
@@ -2043,7 +2043,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Warlock 9",
             spells: [
                 {
@@ -2064,7 +2064,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Warlock 10",
             spells: [
                 {
@@ -2077,7 +2077,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Warlock 11",
             spells: [
                 {
@@ -2090,12 +2090,12 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Warlock 12",
             spells: [
                 {
                     name: "Animate Dead <i class='text-sm text-orange-500'>3 Spell / 1 Stress</i>",
-                    description: "<ul><li>- A pile of bones or decaying corpse you can see, stitch together to create a skeleton or zombie.</li><li>Roll Divine Dice to decide the option that returns. <i>Divine: Skeleton / Fate: Zombie</i></li><li>- For 1 Stress you may animate an additional target.</li><li><b>Skeleton</b> <b>HP:</b> 2, <b>Stress:</b> 1, <b>Class:</b> 2, <b>Evasion:</b> 11, <b>Mod:</b> +2, <b>Damage:</b> 2d6, <b>Threshold:</b> 5 | 11</li><li><b>Zombie</b> <b>HP:</b> 2, <b>Stress:</b> 2, <b>Class:</b> 1, <b>Evasion:</b> 10, <b>Mod:</b> +2, <b>Damage:</b> 2d8, <b>Threshold:</b> 6 | 12</li><li>- At Level 5 you can increase their HP +1 and Mod to +5.</li></ul>",
+                    description: "<ul><li>- A pile of bones or decaying corpse you can see, stitch together to create a skeleton or zombie.</li><li>Roll Divine Dice to decide the option that returns. <i>Divine: Skeleton / Fate: Zombie / Crit: +1 creature and player's choice.</i></li><li>- For 1 Stress you may animate an additional target.</li><hr class='m-1'><li><b>Skeleton</b> <b>HP:</b> 2, <b>Stress:</b> 1, <b>Class:</b> 2, <b>Evasion:</b> 11, <b>Mod:</b> +2, <b>Damage:</b> 2d6, <b>Threshold:</b> 5 | 11</li><hr class='m-1'><li><b>Zombie</b> <b>HP:</b> 2, <b>Stress:</b> 2, <b>Class:</b> 1, <b>Evasion:</b> 10, <b>Mod:</b> +2, <b>Damage:</b> 2d8, <b>Threshold:</b> 6 | 12</li><hr class='m-1'><li>- At Level 5 you can increase their HP +1 and Mod to +3.</li></ul>",
                     range: "Close",
                     duration: "Instant",
                     save: "",
@@ -2103,7 +2103,21 @@ const spellLists = {
                 },
             ]
         },
+        {
+            groupName: "Control Dead",
+            spells: [
                 {
+                    name: "Control Dead <i class='text-sm text-orange-500'>3 Spell / 1 Stress</i>",
+                    description: "<ul><li>- A pile of bones or decaying corpse you can see, stitch together to create a skeleton or zombie.</li><li>Roll Divine Dice to decide the option that returns. <i>Divine: Skeleton / Fate: Zombie / Crit: +1 creature and player's choice.</i></li><li>- For 1 Stress you may animate an additional target.</li><hr class='m-1'><li><b>Skeleton</b> <b>HP:</b> 3, <b>Stress:</b> 2, <b>Class:</b> 2, <b>Evasion:</b> 11, <b>Mod:</b> +5, <b>Damage:</b> 2d6, <b>Threshold:</b> 5 | 11</li><li><b>Features:</b> 1 Stress: Reduce a hit by 1. 1 Class: Add an extra damage die to the damage roll. Feature: Resistant to piercing damage. (Half Damage).</li><hr class='m-1'><li><b>Zombie</b> <b>HP:</b> 4, <b>Stress:</b> 1, <b>Class:</b> 2, <b>Evasion:</b> 10, <b>Mod:</b> +5, <b>Damage:</b> 2d8, <b>Threshold:</b> 6 | 12</li><li>1 Stress: Cause any creature they are currently attacking to roll a CON Save to take 1 Stress caused by their grotesque nature. 1 Class: Add an extra damage die to the damage roll. Feature: Death: Roll Divine Dice on a success they return with 1HP/0 Stress.</li><hr class='m-1'><li>- At Level 5 you can increase Undead HP +1 and Mod to +6.</li></ul>",
+                    range: "Close",
+                    duration: "Instant",
+                    save: "",
+                    damage: "",
+                    isNecromancerSpell: true // Special flag to identify this spell
+                }
+            ]
+        },
+        {
             groupName: "Warlock 13",
             spells: [
                 {
@@ -2124,7 +2138,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Warlock 14",
             spells: [
                 {
@@ -2145,7 +2159,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Warlock 15",
             spells: [
                 {
@@ -2166,7 +2180,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Warlock 16",
             spells: [
                 {
@@ -2195,7 +2209,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 2",
             spells: [
                 {
@@ -2240,7 +2254,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 3",
             spells: [
                 {
@@ -2253,7 +2267,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 4",
             spells: [
                 {
@@ -2274,7 +2288,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 5",
             spells: [
                 {
@@ -2303,7 +2317,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 6",
             spells: [
                 {
@@ -2316,7 +2330,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 7",
             spells: [
                 {
@@ -2345,7 +2359,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 8",
             spells: [
                 {
@@ -2374,7 +2388,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 9",
             spells: [
                 {
@@ -2403,7 +2417,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 10",
             spells: [
                 {
@@ -2432,7 +2446,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 11",
             spells: [
                 {
@@ -2445,7 +2459,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 12",
             spells: [
                 {
@@ -2458,7 +2472,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 13",
             spells: [
                 {
@@ -2487,7 +2501,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 14",
             spells: [
                 {
@@ -2514,9 +2528,9 @@ const spellLists = {
                     save: "",
                     damage: ""
                 },
-                                {
+                {
                     name: "Globe of Invulnerability <i class='text-sm text-orange-500'>2 Spell / 3 Stress</i>",
-                    description: "<ul><li>- Create a magical hand of force. The hand can be transparent or visible.</li><li>- The hand has a STR mod equal to your own and is able to take simple actions like opening door, pulling levels, retrieving objects, push or pull an object.</li><li>- It can not do damage.</li></ul>",
+                    description: "<ul><li>- Any spell cast at 3 Spell or lower where you are the exact target fails.</li><li>- Any ranged attack from magical means +1 bolt, arrows of fire etc do so without the magical enhancements.</li></ul>",
                     range: "Self",
                     duration: "1 Minute",
                     save: "",
@@ -2524,7 +2538,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 15",
             spells: [
                 {
@@ -2537,7 +2551,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 16",
             spells: [
                 {
@@ -2566,7 +2580,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 17",
             spells: [
                 {
@@ -2579,7 +2593,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 18",
             spells: [
                 {
@@ -2600,7 +2614,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 19",
             spells: [
                 {
@@ -2621,7 +2635,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 20",
             spells: [
                 {
@@ -2634,7 +2648,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 21",
             spells: [
                 {
@@ -2647,7 +2661,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 22",
             spells: [
                 {
@@ -2660,7 +2674,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 23",
             spells: [
                 {
@@ -2673,7 +2687,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 24",
             spells: [
                 {
@@ -2694,7 +2708,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 25",
             spells: [
                 {
@@ -2707,7 +2721,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 26",
             spells: [
                 {
@@ -2736,7 +2750,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 27",
             spells: [
                 {
@@ -2749,7 +2763,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 28",
             spells: [
                 {
@@ -2762,7 +2776,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 29",
             spells: [
                 {
@@ -2791,7 +2805,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 30",
             spells: [
                 {
@@ -2804,7 +2818,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 31",
             spells: [
                 {
@@ -2833,7 +2847,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 32",
             spells: [
                 {
@@ -2846,7 +2860,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 33",
             spells: [
                 {
@@ -2875,7 +2889,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 34",
             spells: [
                 {
@@ -2888,7 +2902,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 35",
             spells: [
                 {
@@ -2901,7 +2915,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 36",
             spells: [
                 {
@@ -2922,7 +2936,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 37",
             spells: [
                 {
@@ -2949,7 +2963,7 @@ const spellLists = {
                     save: "",
                     damage: ""
                 },
-                                {
+                {
                     name: "Wall of Ice <i class='text-sm text-orange-500'>3 Spell / 3 Stress</i>",
                     description: "<ul><li>- Create a wall of solid ice up to 15ft high, 50ft long, 1ft thick.</li><li>- If a creature Starts or Ends their turn in the Wall space they are pushed back in the direction of the caster's choice.</li><li>- The caster can designate a side that emanates cold energy, any creature within close range. Must make a CON Save or take cold damage.</li><li>- The wall is 10HP, Threshold 15 | 25.</li></ul>",
                     range: "Far",
@@ -2967,7 +2981,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 38",
             spells: [
                 {
@@ -2988,7 +3002,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 39",
             spells: [
                 {
@@ -3009,7 +3023,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 40",
             spells: [
                 {
@@ -3038,7 +3052,7 @@ const spellLists = {
                 }
             ]
         },
-                {
+        {
             groupName: "Wizard 41",
             spells: [
                 {
@@ -3051,7 +3065,7 @@ const spellLists = {
                 },
             ]
         },
-                {
+        {
             groupName: "Wizard 42",
             spells: [
                 {
