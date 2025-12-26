@@ -363,9 +363,10 @@ const classAbilities = {
             <li>Add 1 die per Stress Point used to your next damage roll.</li>
     </ul>` },
         { name: 'Relentless Rage <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+    `<ul>      
             <li>- If you drop to 0HP, you can instead drop to 1HP.</li>
-            <li>- Can only use this ability once/combat, but before you lose your last HP.</li>
+            <li>- Can only use this ability once/combat (Until next Long Rest). </li>
+            <li>- But <u>before</u> you lose your last HP.</li>  
     </ul>` },
         { name: 'Fanatical Focus <i class="skill2">1 Class</i>', description: 
     `<ul>
@@ -498,12 +499,17 @@ const classAbilities = {
 </ul>` },
         { name: 'Channel Divinity <i class="skill2">Class</i>', description: 
 `<ul>
-    <li>Create a barrier of Godly energy around you at Close Range that Undead cannot cross.</li>
-    <li>- All Undead creatures within Close Range will be considered turned from you.</li>
-    <li>- A creature caught in the area on creation must make a Con Save, on a failure they will also take 1 Hit and 1 Stress.</li>
-    <li>- A creature that is forced into the area through your movement. Will make a CON Save at Advantage and take the penalties for a failure. If they succeed they are no longer restricted by the barrier.</li>
-    <li>- A creature that is successfully turned will, not approach or attack you or any ally within close range of you.</li><br>
-    <li>Use 1 Class point equal to the monster Tier.</li>
+    <li><b>Turn Undead</b></li>
+    <li>Use <b>1 Class</b> point equal to the monster Tier.</li>
+        <li>- Create a barrier of Godly energy around you at Close Range that Undead cannot cross.</li>
+        <li>- All Undead creatures within Close Range caught in the area on creation must make a Con Save, on a failure they will also take 1 Hit and 1 Stress.</li>
+        <li>- A creature that is forced into the area through your movement. Will make a CON Save at <b>Advantage</b> and take the penalties on a failure.</li>
+        <li>If they succeed they are no longer restricted by the barrier and take no penalties.</li>
+        <li>- A creature that is successfully turned will, not approach or attack you or any ally within close range of you.</li><hr class="m-2">
+    <li><b>Level 6: Commune with the Dead</b></li>
+        <li>- Requires <b>5 Stress/5 Class</b>, A successful <b>Divine Roll</b> and is <i><u>limited</u></i> in Response.</li>
+        <li>- Can answer 'Yes/No' questions only.</li>
+        <li><i>Questions equal to CHA score (min 1).</i></li>
 </ul>` },
         { name: 'Read Thoughts <i class="skill1">1 Stress</i>', description: 
 `<ul>
@@ -544,6 +550,7 @@ const classAbilities = {
     <li>- Spell Save DC is 8 + Mod.</li>
 </ul>` }
     ],
+
     'Druid': [
         { name: 'Wild Beast <i class="skill1">Stress</i>', description: 
 `<ul>
@@ -735,6 +742,7 @@ const classAbilities = {
         </select>
     </ul>` }
     ],
+
     'Monk': [
         { name: 'Unarmored Defense', description: 
     `<ul>
@@ -795,6 +803,7 @@ const classAbilities = {
         <li>- At the start of your next turn (before you take any actions) you Force the target to Roll Divine Die and on a fail you can repeat the damage.</li>
     </ul>` }
     ],
+
     'Paladin': [
         { name: 'Divine Sense <i class="skill1">1 Stress</i>', description: 
     `<ul>
@@ -804,49 +813,55 @@ const classAbilities = {
     `<ul>
         <li>- Target an ally (in touch range) and initiate one of the below options.</li>
         <li><i>Select one Option</i></li>
-            <li>- Recover 1d4 Health</li>
-            <li>- Recover 1d4 Stress</li>
+            <li>- Recover 1d4+1 HP</li>
+            <li>- Recover 1d4+1 Stress</li>
             <li>- Remove 1 Poison or Disease</li>
-            <li>- Cannot use on self</li>
+            <li>- <b>Cannot use on self.</b></li>
     </ul>` },
         { name: 'Smite <i class="skill2">1 Class</i>', description: 
     `<ul>
+        <li>On a successful Attack.</li>
         <li>- Add 1 damage die to your Damage roll.</li>
         <li>- Roll 1d4 and cause that much Stress</li>
-        <li>- If the creature is a demon or undead - Add 2 damage dice and cause maximum Stress.</li>
+        <li>- If the creature is a demon or undead - Add 2 Damage dice and cause maximum Stress.</li>
     </ul>` },
         { name: 'Armor Master <i class="skill2">1 Class</i>', description: 
     `<ul>
         <li>- Utilize your Armor Slots better.</li>
-        <li>- Use up to 2 Slots at a time to reduce damage.</li>
+        <li>- Use up to 2 Slots to reduce damage.</li>
     </ul>` },
-        { name: 'Protective Spirit <i class="skill2">1 Class</i>', description: 
+        { name: 'Protective Warden <i class="skill2">1 Class</i>', description: 
     `<ul>
         <li>- You can place yourself in harms way to protect your allies.</li>
+        <li>- You <u>must</u> be in Close range of the ally.</li>
         <li>- Use as many of your Armor Slots necessary to reduce an ally\'s damage by an equal amount.</li>
     </ul>` },
         { name: 'Aura of Guardian <i class="skill1">1 Stress</i>', description: 
     `<ul>
-        <li>- You can decide to take the damage of an ally.</li>
+        <li>- You can decide to take the complete damage of an ally.</li>
+        <li>- You <u>must</u> be in Close range of the ally.</li>
         <li>- The damage cannot be reduced.</li>
+        <li>- You also force the creature's next Attack to be <b>Disadvantage</b>.</li>
     </ul>` },
         { name: 'Aura of Protection <i class="skill1">1 Stress</i>', description: 
     `<ul>
         <li>- Select an ally in Close range and they gain +2 to Evasion.</li>
+        <li>- Until the End of Combat.</li>
     </ul>` },
         { name: 'Channel Divinity <i class="skill2">Class</i>', description: 
     `<ul>
-        <li>- Create a barrier of Godly energy around you at Very Close Range that Undead cannot cross.</li>
-        <li>- All Undead creatures within Close Range will be considered turned from you.</li>
-        <li>- A creature caught in the area on creation must make a Con Save, on a failure they will also take 1 Hit and 1 Stress.</li>
-        <li>- A creature that is forced into the area through your movement. Will make a CON Save at Advantage and take the penalties for a failure. If they succeed they are no longer restricted by the barrier.</li>
-        <li>- A creature that is successfully turned will, not approach or attack you or any ally within close range of you.</li><br>
-            <li>Tier 1: <i>2 Class</i></li>
-            <li>Tier 2: <i>3 Class</i></li>
-            <li>Tier 3: <i>4 Class</i></li>
-            <li>Tier 4: <i>5 Class</i></li>
-            <li>Tier 5: <i>6 Class</i></li>
-    </ul>` },
+    <li><b>Turn Undead</b></li>
+    <li>Use <b>2 Class</b> point equal to the monster Tier.</li>
+        <li>- Create a barrier of Godly energy around you at Close Range that Undead cannot cross.</li>
+        <li>- All Undead creatures within Close Range caught in the area on creation must make a Con Save, on a failure they will also take 1 Hit and 1 Stress.</li>
+        <li>- A creature that is forced into the area through your movement. Will make a CON Save at <b>Advantage</b> and take the penalties on a failure.</li>
+        <li>If they succeed they are no longer restricted by the barrier and take no penalties.</li>
+        <li>- A creature that is successfully turned will, not approach or attack you or any ally within close range of you.</li><hr class="m-2">
+    <li><b>Level 6: Commune with the Dead</b></li>
+        <li>- Requires <b>6 Stress/6 Class</b>, A successful <b>Divine Roll</b> and is <i><u>limited</u></i> in Response.</li>
+        <li>- Can answer 'Yes/No' questions only.</li>
+        <li><i>Questions equal to CHA score (min 1).</i></li>
+</ul>` },
         {
             name: 'Champion\'s Boon', description: `
 <ul>
@@ -896,6 +911,7 @@ const classAbilities = {
         <li>- Spell Save DC is 8 + Mod.</li>
     </ul>` }
     ],
+
     'Ranger': [
         { name: 'Favored Enemy', description: `
     <ul>
@@ -998,6 +1014,7 @@ const classAbilities = {
         <li>- Spell Save DC is 8 + Mod.</li>
     </ul>` }
     ],
+
     'Rogue': [
         { name: 'Sneak Attack <i class="skill2">1 Class</i>', description: 
     `<ul>
@@ -1029,38 +1046,41 @@ const classAbilities = {
     </ul>` },
         { name: 'Misdirection <i class="skill2">1 Class</i>', description: 
     `<ul>
-        <li>- Force a creature to roll 1d6 and subtract it from the result of an Attack Roll.</li>
+        <li>- Force a creature to roll <b>Divine Dice</b></li>
+        <li>- If the result is <b>Fate</b>, they miss the Attack.</li>
+        <li>- On a <b>Crit</b> the target will also take <b>1 Stress</b> and their next Attack is with <b>Disadvantage</b></li>
     </ul>` },
         { name: 'Poison <i class="skill3">Special</i>', description: 
     `<ul>
-        <li>- Tier 1 <i>(Level 1~5)</li>
+        <li>- <b>Tier 1</b> <i>(Level 1~5)</i></li>
             <li>- Use 1 Stress Point to make a poison this can be held indefinitely.</li>
-            <li>- Use 1 Class Point to roll 1d4 extra damage.</li>
-        <li>- Tier 2 <i>(Level 6~7)</i></li>  <li>- Use 2 Stress Points to make a stronger poison.</li>  
+            <li>- Use 1 Class Point to roll 1d4 extra damage.</li><hr class="m-2">
+        <li>- <b>Tier 2</b> <i>(Level 6~7)</i></li>  <li>- Use 2 Stress Points to make a stronger poison.</li> 
             <li>- Use 2 Class Points to roll 2d4 extra damage</li>
-            <li>- The damage will reoccur at the start of the creature\'s turn unless it succeeds a CON Save.</li>
-        <li>- Tier 3 <i>(Level 8-9)</i></li>
+            <li>- The damage will reoccur at the start of the creature\'s turn unless it succeeds a CON Save.</li><hr class="m-2">
+        <li>- <b>Tier 3</b> <i>(Level 8-9)</i></li>
             <li>- Use 3 Stress Points to create poison.</li>
-            <li>- Use 2 Class Points to roll 1d4 on an Attack and add that number to reduce a creatures HP by the result.</li>
-        <li>- Tier 4 <i>(Level 10)</i></li>
+            <li>- Use 2 Class Points to roll 1d4 on an Attack and add that number to reduce a creatures HP by the result.</li><hr class="m-2">
+        <li>- <b>Tier 4</b> <i>(Level 10)</i></li>
             <li>- Use 4 Stress Points to create poison.</li>
             <li>- Use 3 Class Points to roll 1d4 on an Attack and add that number to reduce a creatures HP by the result.</li>
-            <li>- The damage will reoccur at the start of the creature\'s turn unless it succeeds a CON Save.</li>
-        <li>- Creating poison Tier 2 and up will require time to produce decided by the DM. </li>
+            <li>- The damage repeats at the start of the creature's turn until it succeeds a <b>CON</b> Save.</li><hr class="m-2">
+        <li>- <b class="skill3">Creating poison Tier 2 and up will require time to produce decided by the DM.</b></li>
     </ul>` },
         { name: 'Maker of Fate', description: 
     `<ul>
-        <li>- When rolling Divine Dice add an Extra Divine die to the roll.</li>
+        <li>- When rolling <b>Divine</b> Dice add an Extra Divine die to the roll.</li>
     </ul>` },
         { name: 'Thief Reflexes', description: 
     `<ul>
-        <li>- Roll DEX rolls with Advantage.</li>
+        <li>- Roll <b>DEX</b> rolls with <b>Advantage</b>.</li>
     </ul>` },
         { name: 'Stroke of Luck <i class="skill2">1 Class</i>', description: 
     `<ul>
-        <li>- Re-roll any die roll and you must use the new roll.</li>
+        <li>- Re-roll <u>any</u> die roll, but you <u>must</u> use the new roll.</li>
     </ul>` }
     ],
+
     'Sorcerer': [
         { name: 'Favored by the Gods <i class="skill2">1 Class</i>', description: 
     `<ul>
@@ -1128,6 +1148,7 @@ const classAbilities = {
         <li>- Spell Save DC is 8 + Mod.</li>
     </ul>` }
     ],
+
     'Warlock': [
         { name: 'Defy Death <i class="skill2">1 Class</i>', description: 
     `<ul>
@@ -1273,7 +1294,8 @@ const classAbilities = {
     </ul>` },
         { name: 'Awakened Mind <i class="skill2">1 Class</i>', description: 
     `<ul>
-        <li>- Your next spell can be cast at lower Spell and Stress Point.</li>
+        <li>- Add 10|15 Threshold to Mage Armor.</li>
+        <li>- Add +1 to Armor.</li>
     </ul>` },
         { name: 'Clairvoyant <i class="skill2">2 Class</i>', description: 
     `<ul>
@@ -1281,7 +1303,8 @@ const classAbilities = {
     </ul>` },
         { name: 'Knowledge is Power <i class="skill2">1 Class</i>', description: 
     `<ul>
-        <li>- Gain the ability to automatically know the results of an Arcane check.</li>
+        <li>- Gain <b>Advantage on Arcane Checks.</b>.</li>
+        <li>- Add +1 Damage die to next damage roll.</li>
     </ul>` },
         { name: 'Mystic Glyphs <i class="skill2">Class</i>', description: 
     `<ul>
@@ -1752,19 +1775,9 @@ function openClassAbilitiesModal() {
 
 // Always repopulate Signature Spell dropdown when modal opens
 setTimeout(() => {
-    populateSignatureSpellDropdown();
-
-    if (currentCharacter.signatureSpellSelection) {
-        const select = document.getElementById('signatureSpellSelect');
-        if (select) {
-            select.value = currentCharacter.signatureSpellSelection;
-        }
-
-        const resultDisplay = document.getElementById('signatureSpellResult');
-        if (resultDisplay) {
-            resultDisplay.innerHTML = `<div class="text-sm text-purple-600 dark:text-purple-400"><i class="fas fa-star mr-1"></i>${currentCharacter.signatureSpellSelection} is your Signature Spell!</div>`;
-        }
-    }
+    populateSignatureSpellDropdowns();
+updateSignatureSpellResultDisplay();
+   
 }, 50);
 
 
@@ -2259,6 +2272,13 @@ function updateKnownSpellsDisplay() {
             }
         });
     });
+    
+// Restore Signature Spell dropdowns after UI rebuild
+if (hasSignatureSpellAbility()) {
+    populateSignatureSpellDropdowns();
+    updateSignatureSpellResultDisplay();
+}
+
 }
 
 
@@ -7119,10 +7139,10 @@ function generateSkillsList(character) {
          let adIndicator = '';
          if (adSetting.mode === 'advantage') {
              const alwaysClass = adSetting.always ? ' always' : '';
-             adIndicator = `<span class="skill-ad-indicator advantage${alwaysClass}" title="Advantage${adSetting.always ? ' (Always)' : ''}">A</span>`;
+             adIndicator = `<span class="skill-ad-indicator text-sm advantage${alwaysClass}" title="Advantage${adSetting.always ? ' (Always)' : ''}">A</span>`;
          } else if (adSetting.mode === 'disadvantage') {
              const alwaysClass = adSetting.always ? ' always' : '';
-             adIndicator = `<span class="skill-ad-indicator disadvantage${alwaysClass}" title="Disadvantage${adSetting.always ? ' (Always)' : ''}">D</span>`;
+             adIndicator = `<span class="skill-ad-indicator text-sm disadvantage${alwaysClass}" title="Disadvantage${adSetting.always ? ' (Always)' : ''}">D</span>`;
          }
  
 
@@ -12956,7 +12976,7 @@ function updateAllCoinDisplays() {
          const settings = tempAdvantageSettings[skillKey] || { mode: 'none', always: false };
  
          const row = document.createElement('div');
-         row.className = 'advantage-skill-row';
+         row.className = "grid grid-cols-[1fr,2rem,2rem,2rem,2rem] gap-2 items-center px-2 py-1";
          row.dataset.skillKey = skillKey;
  
          // Extract just the skill name without the ability in parentheses
@@ -12964,24 +12984,24 @@ function updateAllCoinDisplays() {
          const abilityMatch = skill.name.match(/\(([A-Z]{3})\)/);
          const abilityTag = abilityMatch ? `<span class="text-xs text-gray-500 dark:text-gray-400 ml-1">(${abilityMatch[1]})</span>` : '';
  
-         row.innerHTML = `
-             <span class="text-sm font-medium">${skillDisplayName}${abilityTag}</span>
-             <div class="ad-radio-group advantage w-12 flex justify-center">
+         row.innerHTML = ` 
+         <span class="text-sm font-medium">${skillDisplayName}${abilityTag}</span>
+             <div class="ad-radio-group advantage w-8 flex justify-center">
                  <input type="radio" name="ad_${skillKey}" value="advantage"
                      ${settings.mode === 'advantage' ? 'checked' : ''}
                      data-skill="${skillKey}" data-type="mode">
              </div>
-             <div class="ad-radio-group disadvantage w-12 flex justify-center">
+             <div class="ad-radio-group disadvantage w-8 flex justify-center">
                  <input type="radio" name="ad_${skillKey}" value="disadvantage"
                      ${settings.mode === 'disadvantage' ? 'checked' : ''}
                      data-skill="${skillKey}" data-type="mode">
              </div>
-             <div class="ad-radio-group w-12 flex justify-center">
+             <div class="ad-radio-group w-8 flex justify-center">
                  <input type="radio" name="ad_${skillKey}" value="none"
                      ${settings.mode === 'none' ? 'checked' : ''}
                      data-skill="${skillKey}" data-type="mode">
              </div>
-             <div class="w-14 flex justify-center">
+             <div class="w-8 flex justify-center">
                  <input type="checkbox" class="always-checkbox"
                      ${settings.always ? 'checked' : ''}
                      ${settings.mode === 'none' ? 'disabled' : ''}
@@ -14532,9 +14552,6 @@ function hasSignatureSpellAbility() {
         currentCharacter.classAbilities.selectedClass.includes(signatureSpellIndex);
 }
 
-// ==================== WIZARD ARMOR PENALTY ====================
-
-
  // ==================== WIZARD ARMOR PENALTY ====================
  
  /**
@@ -14550,7 +14567,7 @@ function hasSignatureSpellAbility() {
  
      // No penalty for these armor types
      if (armorName === 'nothing selected' ||
-         armorName === 'none' ||
+         armorName === 'no armor' ||
          armorName === '' ||
          armorName.includes('mage armor')) {
          return false;
