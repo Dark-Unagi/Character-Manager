@@ -168,26 +168,33 @@
             background-color: #f9fafb;
             border-radius: 8px;
             border-left: 4px solid #5D5CDE;
+            color: black;
         }
 
         .dark .damage-type-result {
             background-color: #374151;
+            color: rgb(255, 255, 255);
         }
 
         .damage-rolls-display {
             font-family: 'Courier New', monospace;
             font-weight: bold;
-            color: #5D5CDE;
+            color: #000000;
+        }
+        .dark .damage-rolls-display {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #ffffff;
         }
 
         .proficiency-indicator {
             font-size: 0.75rem;
-            color: #6b7280;
+            color: #000000;
             font-style: italic;
         }
 
         .dark .proficiency-indicator {
-            color: #9ca3af;
+            color: #ffffff;
         }
 
         /*===ATTACK ROLL STYLING===*/
@@ -1387,6 +1394,783 @@
     outline: none;
     border-color: #5D5CDE;
 }
+
+/* Advantage/Disadvantage Indicator Styles */
+.skill-ad-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: bold;
+    margin-left: 6px;
+    flex-shrink: 0;
+}
+
+.skill-ad-indicator.advantage {
+    background-color: #10B981;
+    color: white;
+}
+
+.skill-ad-indicator.disadvantage {
+    background-color: #EF4444;
+    color: white;
+}
+
+.skill-ad-indicator.always {
+    box-shadow: 0 0 0 2px #5D5CDE;
+}
+
+/* Advantage Modal Radio Button Styles */
+.ad-radio-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ad-radio-group input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #9CA3AF;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ad-radio-group input[type="radio"]:hover {
+    border-color: #5D5CDE;
+}
+
+.ad-radio-group input[type="radio"]:checked {
+    border-color: #5D5CDE;
+    background-color: #5D5CDE;
+}
+
+.ad-radio-group.advantage input[type="radio"]:checked {
+    border-color: #10B981;
+    background-color: #10B981;
+}
+
+.ad-radio-group.disadvantage input[type="radio"]:checked {
+    border-color: #EF4444;
+    background-color: #EF4444;
+}
+
+.dark .ad-radio-group input[type="radio"] {
+    border-color: #6B7280;
+}
+
+.dark .ad-radio-group input[type="radio"]:hover {
+    border-color: #818CF8;
+}
+
+/* Always Checkbox Styles */
+.always-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #9CA3AF;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.always-checkbox:hover {
+    border-color: #5D5CDE;
+}
+
+.always-checkbox:checked {
+    border-color: #5D5CDE;
+    background-color: #5D5CDE;
+}
+
+.always-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.always-checkbox:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.dark .always-checkbox {
+    border-color: #6B7280;
+}
+
+.dark .always-checkbox:hover {
+    border-color: #818CF8;
+}
+
+/* Skill row in advantage modal */
+.advantage-skill-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto auto;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #F9FAFB;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s ease;
+}
+
+.advantage-skill-row:hover {
+    background-color: #F3F4F6;
+}
+
+.dark .advantage-skill-row {
+    background-color: #374151;
+}
+
+.dark .advantage-skill-row:hover {
+    background-color: #4B5563;
+}
+
+/* Equipment Add Button Disabled State */
+#addEquipment.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Equipment limit warning text */
+.equipment-limit-warning {
+    color: #EF4444;
+}
+
+/* Drop equipment checkbox item */
+.drop-equipment-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #F9FAFB;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.drop-equipment-item:hover {
+    background-color: #F3F4F6;
+}
+
+.drop-equipment-item.selected {
+    background-color: #FEE2E2;
+    border: 1px solid #EF4444;
+}
+
+.dark .drop-equipment-item {
+    background-color: #374151;
+}
+
+.dark .drop-equipment-item:hover {
+    background-color: #4B5563;
+}
+
+.dark .drop-equipment-item.selected {
+    background-color: #7F1D1D;
+    border: 1px solid #EF4444;
+}
+
+.drop-equipment-checkbox {
+    width: 18px;
+    height: 18px;
+    margin-right: 0.75rem;
+    accent-color: #EF4444;
+}
+
+/* Monsters Section Styles */
+.monsters-section {
+    background-color: #F0FDF4;
+    border: 1px solid #86EFAC;
+}
+
+.dark .monsters-section {
+    background-color: #14532D;
+    border-color: #166534;
+}
+
+.monster-card {
+    background-color: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.dark .monster-card {
+    background-color: #064E3B;
+    border-color: #047857;
+}
+
+.monster-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.monster-name {
+    font-weight: 600;
+    color: #065F46;
+}
+
+.dark .monster-name {
+    color: #6EE7B7;
+}
+
+.monster-dismiss {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #EF4444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.monster-dismiss:hover {
+    background-color: #DC2626;
+}
+
+.monster-stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    text-align: center;
+    font-size: 0.75rem;
+}
+
+.monster-stat-label {
+    font-weight: 500;
+    color: #6B7280;
+}
+
+.dark .monster-stat-label {
+    color: #9CA3AF;
+}
+
+.monster-stat-value {
+    font-weight: 600;
+    color: #1F2937;
+}
+
+.dark .monster-stat-value {
+    color: #F3F4F6;
+}
+
+.monster-resources {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #A7F3D0;
+}
+
+.dark .monster-resources {
+    border-color: #047857;
+}
+
+.monster-resource-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.monster-resource-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: #6B7280;
+    margin-bottom: 2px;
+}
+
+.dark .monster-resource-label {
+    color: #9CA3AF;
+}
+
+.monster-resource-boxes {
+    display: flex;
+    gap: 3px;
+}
+
+.monster-resource-box {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #10B981;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: bold;
+    color: transparent;
+}
+
+.monster-resource-box:hover {
+    background-color: rgba(16, 185, 129, 0.2);
+}
+
+.monster-resource-box.filled {
+    background-color: #10B981;
+    color: white;
+}
+
+.monster-resource-box.hp {
+    border-color: #EF4444;
+}
+
+.monster-resource-box.hp.filled {
+    background-color: #EF4444;
+}
+
+.monster-resource-box.stress {
+    border-color: #8B5CF6;
+}
+
+.monster-resource-box.stress.filled {
+    background-color: #8B5CF6;
+}
+
+.monster-feature {
+    font-size: 0.7rem;
+    color: #4B5563;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed #D1D5DB;
+    font-style: italic;
+}
+
+.dark .monster-feature {
+    color: #9CA3AF;
+    border-color: #4B5563;
+}
+
+.summon-btn {
+    background-color: #10B981;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.summon-btn:hover {
+    background-color: #059669;
+}
+
+.summon-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.clear-monsters-btn {
+    background-color: #EF4444;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: background-color 0.2s ease;
+}
+
+.clear-monsters-btn:hover {
+    background-color: #DC2626;
+}
+
+.monsters-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.summon-result-banner {
+    background-color: #D1FAE5;
+    border: 1px solid #6EE7B7;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #065F46;
+}
+
+.dark .summon-result-banner {
+    background-color: #064E3B;
+    border-color: #10B981;
+    color: #A7F3D0;
+}
+
+/* Spirit Projection Section Styles (Warlock) */
+.spirit-projection-section {
+    background-color: #EDE9FE;
+    border: 1px solid #A78BFA;
+}
+
+.dark .spirit-projection-section {
+    background-color: #4C1D95;
+    border-color: #7C3AED;
+}
+
+.spirit-projection-card {
+    background-color: #F5F3FF;
+    border: 1px solid #C4B5FD;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+}
+
+.dark .spirit-projection-card {
+    background-color: #5B21B6;
+    border-color: #8B5CF6;
+}
+
+.spirit-projection-name {
+    font-weight: 600;
+    color: #5B21B6;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.dark .spirit-projection-name {
+    color: #C4B5FD;
+}
+
+.spirit-projection-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    text-align: center;
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.spirit-projection-stat-label {
+    font-weight: 500;
+    color: #6B7280;
+}
+
+.dark .spirit-projection-stat-label {
+    color: #9CA3AF;
+}
+
+.spirit-projection-stat-value {
+    font-weight: 600;
+    color: #1F2937;
+}
+
+.dark .spirit-projection-stat-value {
+    color: #F3F4F6;
+}
+
+.spirit-projection-resources {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #C4B5FD;
+}
+
+.dark .spirit-projection-resources {
+    border-color: #7C3AED;
+}
+
+.spirit-projection-resource-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.spirit-projection-resource-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: #6B7280;
+    margin-bottom: 2px;
+}
+
+.dark .spirit-projection-resource-label {
+    color: #9CA3AF;
+}
+
+.spirit-projection-resource-boxes {
+    display: flex;
+    gap: 3px;
+}
+
+.spirit-projection-resource-box {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #8B5CF6;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: bold;
+    color: transparent;
+}
+
+.spirit-projection-resource-box:hover {
+    background-color: rgba(139, 92, 246, 0.2);
+}
+
+.spirit-projection-resource-box.filled {
+    background-color: #8B5CF6;
+    color: white;
+}
+
+.spirit-projection-resource-box.hp {
+    border-color: #EF4444;
+}
+
+.spirit-projection-resource-box.hp.filled {
+    background-color: #EF4444;
+}
+
+.spirit-projection-resource-box.stress {
+    border-color: #8B5CF6;
+}
+
+.spirit-projection-resource-box.stress.filled {
+    background-color: #8B5CF6;
+}
+
+.spirit-projection-feature {
+    font-size: 0.7rem;
+    color: #4B5563;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed #C4B5FD;
+    font-style: italic;
+}
+
+.dark .spirit-projection-feature {
+    color: #9CA3AF;
+    border-color: #7C3AED;
+}
+
+.projection-btn {
+    background-color: #8B5CF6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.projection-btn:hover {
+    background-color: #7C3AED;
+}
+
+.projection-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.dismiss-projection-btn {
+    background-color: #EF4444;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: background-color 0.2s ease;
+}
+
+.dismiss-projection-btn:hover {
+    background-color: #DC2626;
+}
+
+.spirit-projection-container {
+    margin-top: 0.5rem;
+}
+
+.spirit-projection-damage {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #7C3AED;
+    margin-top: 0.25rem;
+}
+
+.dark .spirit-projection-damage {
+    color: #A78BFA;
+}
+
+/* Tireless Ability Button (Ranger) */
+.tireless-btn {
+    background-color: #10B981;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.tireless-btn:hover {
+    background-color: #059669;
+}
+
+.tireless-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.tireless-result {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background-color: #D1FAE5;
+    border: 1px solid #10B981;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    color: #065F46;
+}
+
+.dark .tireless-result {
+    background-color: #064E3B;
+    border-color: #10B981;
+    color: #A7F3D0;
+}
+
+.tireless-result.error {
+    background-color: #FEE2E2;
+    border-color: #EF4444;
+    color: #991B1B;
+}
+
+.dark .tireless-result.error {
+     background-color: #7F1D1D;
+     border-color: #EF4444;
+     color: #FECACA;
+ }
+ 
+ /* Arcane Recovery Ability Button (Wizard) */
+ .arcane-recovery-btn {
+     background-color: #8B5CF6;
+     color: white;
+     padding: 0.5rem 1rem;
+     border-radius: 0.5rem;
+     font-size: 0.875rem;
+     font-weight: 600;
+     border: none;
+     cursor: pointer;
+     display: inline-flex;
+     align-items: center;
+     gap: 0.5rem;
+     transition: background-color 0.2s ease;
+     margin-top: 0.75rem;
+ }
+ 
+ .arcane-recovery-btn:hover {
+     background-color: #7C3AED;
+ }
+ 
+ .arcane-recovery-btn:disabled {
+     opacity: 0.5;
+     cursor: not-allowed;
+ }
+ 
+ .arcane-recovery-result {
+     margin-top: 0.5rem;
+     padding: 0.5rem 0.75rem;
+     background-color: #EDE9FE;
+     border: 1px solid #8B5CF6;
+     border-radius: 0.375rem;
+     font-size: 0.875rem;
+     color: #5B21B6;
+ }
+ 
+ .dark .arcane-recovery-result {
+     background-color: #4C1D95;
+     border-color: #8B5CF6;
+     color: #DDD6FE;
+ }
+ 
+ .arcane-recovery-result.error {
+     background-color: #FEE2E2;
+     border-color: #EF4444;
+     color: #991B1B;
+ }
+ 
+ .dark .arcane-recovery-result.error {    
+    background-color: #7F1D1D;
+    border-color: #EF4444;
+    color: #FECACA;
+}
+
+ /* Signature Spell Dropdown (Wizard) */
+ .signature-spell-dropdowns {
+     display: flex;
+     flex-direction: column;
+     gap: 8px;
+ }
+ 
+ .signature-spell-slot {
+     transition: opacity 0.3s ease, max-height 0.3s ease;
+ }
+ 
+ .signature-spell-slot.hidden {
+     display: none;
+ }
+ .signature-spell-select {
+     border: 2px solid #8B5CF6;
+     background-color: #FAF5FF;
+ }
+ 
+ .dark .signature-spell-select {
+     background-color: #2D1F47;
+     border-color: #A78BFA;
+ }
+ 
+ .signature-spell-select:focus {
+     border-color: #7C3AED;
+     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3); 
+    }
+    
+    .signature-spell-select option:disabled {
+     color: #9CA3AF;
+     font-style: italic;
+ }
+ 
+ .dark .signature-spell-select option:disabled {
+     color: #6B7280; }
     </style>
 
 </head>
@@ -1567,6 +2351,16 @@
                                 <!-- Race proficiency buttons will be populated here -->
                             </div>
                         </div>
+
+                         <!-- Equipment Limit Toggle -->
+                         <div class="mt-4">
+                             <label class="flex items-center cursor-pointer">
+                                 <input type="checkbox" id="equipmentLimitEnabled" checked
+                                     class="w-5 h-5 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                 <span class="ml-3 text-sm font-medium">Enable Equipment Limit</span>
+                                 <span class="ml-2 text-xs text-gray-500 dark:text-gray-400">(Based on STR modifier)</span>
+                             </label>
+                         </div>
 
                         <!-- Ability Score Results -->
                         <div id="abilityScoreResultsSection" class="mt-4 hidden">
@@ -1891,6 +2685,7 @@
                                     <option>Tiefling</option>
                                 </select>
                             </div>
+
                             <div>
                                 <label class="block text-sm font-medium mb-2">Class</label>
                                 <select id="editCharClass"
@@ -1911,6 +2706,16 @@
                                 </select>
                             </div>
                         </div>
+
+                        <!-- Equipment Limit Toggle (Edit Screen) -->
+                                 <div class="mt-3">
+                                     <label class="flex items-center cursor-pointer">
+                                         <input type="checkbox" id="editEquipmentLimitEnabled" checked
+                                             class="w-5 h-5 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                         <span class="ml-3 text-sm font-medium">Enable Equipment Limit</span>
+                                         <span class="ml-2 text-xs text-gray-500 dark:text-gray-400">(Based on STR)</span>
+                                     </label>
+                                 </div>
 
                         <!-- Race Bonuses and Proficiencies Combined -->
                         <div id="editRaceBonusSection" class="mt-4 hidden">
@@ -2326,6 +3131,13 @@
                                     <i class="fas fa-angle-up text-xs"></i>
                                 </button>
                             </div>
+                            <!-- Wizard Armor Penalty Warning Banner -->
+                             <div id="wizardArmorPenaltyWarning" class="hidden mt-2 p-2 bg-red-100 dark:bg-red-900 border border-red-300 dark:border-red-700 rounded-lg text-xs text-red-700 dark:text-red-300">
+                                 <div class="flex items-center">
+                                     <i class="fas fa-exclamation-triangle mr-2"></i>
+                                     <span><strong>Armor Penalty:</strong> Attacks with Disadvantage • DC Save -5 • Spell Costs +1</span>
+                                 </div>
+                             </div>
                             <div id="characterStatsContent">
                                 <div class="flex items-center space-x-3 mb-4">
                                     <div class="text-center">
@@ -2573,6 +3385,36 @@
                             </div>
                         </div>
 
+                        <!-- Spirit Projection (Warlock) -->
+                        <div id="spiritProjectionSheetSection" class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg spirit-projection-section"
+                            style="display: none;">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-semibold">Spirit Projection</h3>
+                                <div class="flex items-center gap-2">
+                                    <button id="dismissProjectionBtn" class="dismiss-projection-btn" style="display: none;">
+                                        <i class="fas fa-times mr-1"></i>Dismiss
+                                    </button>
+                                    <button id="spiritProjectionToggle"
+                                        class="w-6 h-6 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded flex items-center justify-center transition-colors">
+                                        <i class="fas fa-angle-up text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="spiritProjectionContent">
+                                <!-- Projection Button -->
+                                <div id="projectionButtonContainer" class="flex justify-center mb-3">
+                                    <button id="createProjectionBtn" class="projection-btn">
+                                        <i class="fas fa-ghost"></i>
+                                        <span>Projection</span>
+                                    </button>
+                                </div>
+                                <!-- Spirit Projection Container -->
+                                <div id="spiritProjectionContainer" class="spirit-projection-container">
+                                    <!-- Projection card will be generated here -->
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Companion -->
                         <div id="companionSheetSection" class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg"
                             style="display: none;">
@@ -2621,6 +3463,38 @@
                                         <div class="text-xs font-medium mb-1">Threshold</div>
                                         <div class="text-sm font-medium" id="companionThreshold">5 / 10</div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Monsters (Mighty Summoner) -->
+                        <div id="monstersSheetSection" class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg monsters-section"
+                            style="display: none;">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-semibold">Summoned Monsters</h3>
+                                <div class="flex items-center gap-2">
+                                    <button id="clearMonstersBtn" class="clear-monsters-btn" style="display: none;">
+                                        <i class="fas fa-trash-alt mr-1"></i>Clear All
+                                    </button>
+                                    <button id="monstersToggle"
+                                        class="w-6 h-6 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded flex items-center justify-center transition-colors">
+                                        <i class="fas fa-angle-up text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="monstersContent">
+                                <!-- Summon Button -->
+                                <div class="flex justify-center mb-3">
+                                    <button id="summonMonstersBtn" class="summon-btn">
+                                        <i class="fas fa-paw"></i>
+                                        <span>Summon Monsters</span>
+                                    </button>
+                                </div>
+                                <!-- Summon Result Banner (hidden by default) -->
+                                <div id="summonResultBanner" class="summon-result-banner" style="display: none;"></div>
+                                <!-- Monsters Container -->
+                                <div id="monstersContainer" class="monsters-container">
+                                    <!-- Monster cards will be generated here -->
                                 </div>
                             </div>
                         </div>
@@ -2695,6 +3569,11 @@
                         <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
                             <div class="flex items-baseline">
                                 <h3 class="font-semibold mb-3">Skills</h3>
+                                <button id="openAdvantageModal"
+                                    class="ml-2 px-2 py-1 text-xs bg-primary text-white hover:bg-primary-dark rounded transition-colors"
+                                    title="Set Advantage/Disadvantage for skills">
+                                    Add A/D
+                                </button>
                                 <button id="characterSkillsToggle"
                                     class="ml-auto w-6 h-6 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded flex items-center justify-center transition-colors">
                                     <i class="fas fa-angle-up text-xs"></i>
@@ -2812,10 +3691,12 @@
                         <!-- Equipment -->
                         <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
                             <div class="flex justify-between items-center mb-3">
-                                <div class="flex items-baseline"></div>
-                                <h3 class="font-semibold">Equipment</h3>
+                                <div class="flex items-center">
+                                    <h3 class="font-semibold">Equipment</h3>
+                                    <span id="equipmentLimitDisplay" class="ml-2 text-xs text-gray-500 dark:text-gray-400">(0/10)</span>
+                                </div>
                                 <div class="flex items-center space-x-2 ml-auto">
-                                <button id="addEquipment" class="text-white hover:text-primary-dark dark:text-black">
+                                <button id="addEquipment" class="text-white hover:text-primary-dark dark:text-black transition-opacity">
                                     <i class="fas fa-plus mr-1"></i>Add
                                 </button>
                                 <button id="characterEquipmentToggle"
@@ -3047,6 +3928,36 @@
                                 Item</button>
                         </div>
                     </form>
+                </div>
+            </div>
+
+            <!-- Drop Equipment Modal (shown when STR mod decreases below equipment limit) -->
+            <div id="dropEquipmentModal"
+                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full mx-4 max-h-[80vh] overflow-y-auto">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-exclamation-triangle text-yellow-500 text-xl mr-3"></i>
+                        <h3 class="text-lg font-semibold">Equipment Limit Exceeded</h3>
+                    </div>
+                    <p id="dropEquipmentMessage" class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                        Your STR modifier has decreased. You must drop items to meet your new equipment limit.
+                    </p>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-sm font-medium mb-2">
+                            <span>Select items to drop:</span>
+                            <span id="dropCountDisplay" class="text-red-500">0 / 0 required</span>
+                        </div>
+                        <div id="dropEquipmentList" class="space-y-2 max-h-60 overflow-y-auto">
+                            <!-- Equipment items with checkboxes will be generated here -->
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <button id="confirmDropEquipment"
+                            class="px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled>
+                            Drop Selected Items
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -3838,6 +4749,48 @@
                 </div>
             </div>
 
+            <!-- Advantage/Disadvantage Modal -->
+            <div id="advantageModal"
+                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-lg w-full mx-4 max-h-[85vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">Set Advantage/Disadvantage</h3>
+                        <button id="closeAdvantageModal" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                        Set advantage or disadvantage for each skill. Check "Always" to automatically roll with the selected modifier.
+                    </p>
+
+                    <!-- Header Row -->
+                    <div class="grid grid-cols-[1fr,auto,auto,auto,auto] gap-2 mb-2 text-xs font-semibold text-gray-600 dark:text-gray-400 px-2">
+                        <span>Skill</span>
+                        <span class="text-center w-12">Adv</span>
+                        <span class="text-center w-12">Dis</span>
+                        <span class="text-center w-12">None</span>
+                        <span class="text-center w-14">Always</span>
+                    </div>
+
+                    <!-- Skills List -->
+                    <div id="advantageSkillsList" class="space-y-2">
+                        <!-- Skills will be generated here -->
+                    </div>
+
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button id="resetAdvantageSettings"
+                            class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+                            Reset All
+                        </button>
+                        <button id="saveAdvantageSettings"
+                            class="px-4 py-2 bg-primary text-white hover:bg-primary-dark rounded">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Level Up Modal -->
             <div id="levelUpModal"
                 class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
@@ -4022,7 +4975,7 @@
                         <!-- Total Damage Display -->
                         <div class="mb-6 p-4 bg-primary bg-opacity-10 rounded-lg">
                             <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Damage:</div>
-                            <div class="text-4xl font-bold text-primary" id="weaponTotalDamage">0</div>
+                            <div class="text-4xl font-bold text-black dark:text-white" id="weaponTotalDamage">0</div>
                         </div>
 
                         <!-- Ability Modifier Display -->
@@ -4146,9 +5099,9 @@
                 </div>
             </div>
         </div>
-        <script src="spells.js"></script>
-        <script src="weapons.js"></script>
-        <script src="main.js"></script>
+        <script src="testspells.js"></script>
+        <script src="testweapons.js"></script>
+        <script src="test.js"></script>
 </body>
 
 </html>
