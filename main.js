@@ -319,11 +319,13 @@ const classDCAbilities = {
 // Class-specific abilities data
 const classAbilities = {
     'Barbarian': [
-        { name: 'Rage <i class="skill1">Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Rage <i class="skill1">Stress</i>', description:
+                `<ul>
         <b class="text-green-600">Rage: </b><i class="skill1">1 Stress</i><br>
             <li>- Reduce any damage by 1 Hit.</li> <li>- Increase STR +1</li><br>
             <li><i>If one of the below Rage types are selected add the effects to the Rage bonuses plus the other bonuses.</i></li>
+            <li>- Until the End of Combat or your decide to end it.</li>
         <li><b class="text-green-600">Totem Rage:</b> <i class="skill1">1 Stress</i></li>
             <li><b>Bear:</b> +1 HP, +1 Stress, Reduce damage by 1 Hit.</li>
             <li><b>Eagle:</b> +1 Evasion, +1 DEX, Perception <b>Advantage</b>.</li>
@@ -340,54 +342,64 @@ const classAbilities = {
             <li>- <b><u>Cannot</u></b> receive any Healing while raging.</li>
             <li>- Remove any temporary effects (HP, Stress) when the Blood Rage ends.</li>
     </ul>` },
-        { name: 'Reckless Attack <i class="skill2">1 Class</i>', description:
-    `<ul>
-            <li>Attack with <b>Advantage</b>, but enemies have <b>Advantage</b> against you until your next turn.</li>
+        {
+            name: 'Reckless Attack <i class="skill2">1 Class</i>', description:
+                `<ul>
+            <li>Make an Attack with <b>Advantage</b>, but enemies have <b>Advantage</b> against you on their next Attack.</li>
     </ul>` },
-        { name: 'Danger Sense', description: 
-    `<ul>
+        {
+            name: 'Danger Sense', description:
+                `<ul>
             <li>- Can make your <b>DEX Saves</b> with <b>Advantage</b>.</li>
     </ul>` },
-        { name: 'Unarmored Defense <i class="skill3">Special</i>', description:
-    `<ul>
+        {
+            name: 'Unarmored Defense <i class="skill3">Special</i>', description:
+                `<ul>
             <li>- Add +2 and your initial <b>DEX</b> to Evasion.</li> 
             <li>- Add <b>DEX</b> to Lower Threshold and <b>DEX & CON</b> Mod to Upper Threshold.</li>
             <li>- Add +3|+3 per level to Threshold.</li>
     </ul>` },
-        { name: 'Feral Instinct <i class="skill2">1 Class</i>', description:
-    `<ul>
+        {
+            name: 'Feral Instinct <i class="skill2">1 Class</i>', description:
+                `<ul>
             <li>Gain <b>Advantage</b> on Initiative rolls and cannot be surprised while conscious.</li>
     </ul>` },
-    { name: 'Brutal Critical <i class="skill1">Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Brutal Critical <i class="skill1">Stress</i>', description:
+                `<ul>
             <li>Add 1 die per Stress Point used to your next damage roll.</li>
     </ul>` },
-        { name: 'Relentless Rage <i class="skill1">1 Stress</i>', description: 
-    `<ul>      
+        {
+            name: 'Relentless Rage <i class="skill1">1 Stress</i>', description:
+                `<ul>      
             <li>- If you drop to 0HP, you can instead drop to 1HP.</li>
             <li>- Can only use this ability once/combat (Until next Long Rest). </li>
             <li>- But <u>before</u> you lose your last HP.</li>  
     </ul>` },
-        { name: 'Fanatical Focus <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Fanatical Focus <i class="skill2">1 Class</i>', description:
+                `<ul>
             <li>- While raging, if you fail a Saving Throw you can choose to roll it again.</li>
             <li>- You must use the new roll.</li>
     </ul>` },
-        { name: 'Echo Howl <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Echo Howl <i class="skill1">1 Stress</i>', description:
+                `<ul>
             <li>- Cause <b>1 Stress</b> to all your enemies in close range.</li>
             <li>- Each enemy can roll a <b>WIS Save</b>.</li>
             <li>- For each failed Save, you can select an ally to recover <b>1 Stress</b>.</li>
     </ul>` },
-        { name: 'Cleaver <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Cleaver <i class="skill1">1 Stress</i>', description:
+                `<ul>
             <li>- If you do more Hits than the Enemy\'s remaining HP, you can send any remaining Hits to another Creature that is close to the original target.</li>
     </ul>` }
     ],
 
     'Bard': [
-        { name: 'Bardic Inspiration <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Bardic Inspiration <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Give an ally an Inspiration Die. (held until the next Long Rest)</li>
         <li>- <b>Level 1:</b> 1d4, <b>Level 5:</b> 1d6, <b>Level 8:</b> 1d8.</li>
         <li><i>The die can be used to...</i></li>
@@ -396,25 +408,29 @@ const classAbilities = {
             <li>- Recover Class.</li>
             <li>- Add the result to a Skill, Save, Attack or Damage Roll.</li>
     </ul>` },
-        { name: 'Jack of All Trades', description: 
-    `<ul>
+        {
+            name: 'Jack of All Trades', description:
+                `<ul>
         <li>- You gain one more Ability Score Proficiency.</li>
         <li>- All your skill checks gain +1 to rolls. (+2 at Level 5, +3 at Level 8)</li>
     </ul>` },
-        { name: 'Song of Rest <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Song of Rest <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- You and your allies can recover by +1 any Hit Points or Stress recovered from a Short Rest.</li>
         <li>- On a Long Rest also select 1 extra Resource to recover 1 point.</li>
     </ul>` },
-        { name: 'Counter Charm <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Counter Charm <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- You can remove the Charmed condition from an ally.</li>
         <li>At Level 5</li>
         <li>- You can now also remove a Frightened condition.</li>
         <li>- <i>Note:</i> It is one or the other, but not both.</li>
     </ul>` },
-        { name: 'Blade Flourish <i class="skill1">Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Blade Flourish <i class="skill1">Stress</i>', description:
+                `<ul>
         <li><i class="skill1">1 Stress</i></li>
             <li>- Increase Attack +1</li>
             <li>- On a successful Attack cause 1 Stress.</li>
@@ -426,17 +442,20 @@ const classAbilities = {
             <li>- Add 3d4 Psychic Damage.</li>
             <li>- Cause 3 Stress.</li>
     </ul>` },
-        { name: 'Unsettling Words <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Unsettling Words <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- You can force a creature\'s next roll to be with Disadvantage.</li>
         <li>- They will also take 1 Stress.</li>
     </ul>` },
-        { name: 'Song of Valor <i class="skill2">1 Class</i>', description: 
-    `<ul>
-        <li>- You can increase by +1 an Attack for you or an ally, and the damage by +1 die.</li>
+        {
+            name: 'Song of Valor <i class="skill2">1 Class</i>', description:
+                `<ul>
+        <li>- You or an ally can increase their next Attack and the Damage die by +1.</li>
     </ul>` },
-        { name: 'Silver Tongue <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Silver Tongue <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Enemies within Close range must make a Save or be entranced in distraction.</li>
         <li>- All failed Saves take on the the following options...</li>
         <li>- <b>Option 1:</b> The target take 1d10 <b>Psychic</b> damage.</li>
@@ -485,23 +504,26 @@ const classAbilities = {
     </label></li>
 </ul>` }
         ,
-        { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description: 
-`<ul>
+        {
+            name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description:
+                `<ul>
     <li>- Choose from the selected spell-list.</li><li>- Number of spells is equal to 1 + Level.</li>
     <li>- Spell Save DC is 8+Mod.</li>
 </ul>` }
     ],
 
     'Cleric': [
-        { name: 'Death\'s Door <i class="skill1">1 Stress</i>', description:
-`<ul>
+        {
+            name: 'Death\'s Door <i class="skill1">1 Stress</i>', description:
+                `<ul>
     <li>- When you or an ally has a Critical attack against you within Close Range, instead make it a normal Attack.</li>
 </ul>` },
-        { name: 'Channel Divinity <i class="skill2">Class</i>', description: 
-`<ul>
+        {
+            name: 'Channel Divinity <i class="skill2">Class</i>', description:
+                `<ul>
     <li><b>Turn Undead</b></li>
     <li>Use <b>1 Class</b> point equal to the monster Tier.</li>
-        <li>- Create a barrier of Godly energy around you at Close Range that Undead cannot cross.</li>
+        <li>- Create a barrier of Godly energy around you at Close Range that Undead cannot cross. Until the End of Combat.</li>
         <li>- All Undead creatures within Close Range caught in the area on creation must make a Con Save, on a failure they will also take 1 Hit and 1 Stress.</li>
         <li>- A creature that is forced into the area through your movement. Will make a CON Save at <b>Advantage</b> and take the penalties on a failure.</li>
         <li>If they succeed they are no longer restricted by the barrier and take no penalties.</li>
@@ -511,40 +533,48 @@ const classAbilities = {
         <li>- Can answer 'Yes/No' questions only.</li>
         <li><i>Questions equal to CHA score (min 1).</i></li>
 </ul>` },
-        { name: 'Read Thoughts <i class="skill1">1 Stress</i>', description: 
-`<ul>
+        {
+            name: 'Read Thoughts <i class="skill1">1 Stress</i>', description:
+                `<ul>
     <li>- Surface thoughts and emotions only.</li>
 </ul>` },
-        { name: 'War Attack <i class="skill1">1 Stress</i>', description:
-`<ul>
+        {
+            name: 'War Attack <i class="skill1">1 Stress</i>', description:
+                `<ul>
     <li>- If you have made an attack already this turn (hit or miss), make a another Melee attack. (<i>It must be on the same target</i>).</li>
     <li>- The Damage is also considered Radiant for this attack only.</li>
 </ul>` },
-        { name: 'Warding Flare <i class="skill1">1 Stress</i>', description: 
-`<ul>
+        {
+            name: 'Warding Flare <i class="skill1">1 Stress</i>', description:
+                `<ul>
     <li>- Cause a flash of Divine light to momentarily blind the enemy.</li>
-    <li>- When a Creature is attacking an Ally, force them to roll at Disadvantage until the start of your next turn.</li>
+    <li>- When a Creature is attacking an Ally, force them to roll at <b>Disadvantage</b> until the start of your next turn.</li>
 </ul>` },
-        { name: 'Blessing <i class="skill2">1 Class</i>', description: 
-`<ul>
+        {
+            name: 'Blessing <i class="skill2">1 Class</i>', description:
+                `<ul>
     <li>- If you make a Save or Skill check, you can choose to succeed.</li>
 </ul>` },
-        { name: 'Divine Strike <i class="skill2">1 Class</i>', description: 
-`<ul>
+        {
+            name: 'Divine Strike <i class="skill2">1 Class</i>', description:
+                `<ul>
     <li>- Increase Damage by +2 for each die.</li>
 </ul>` },
-        { name: 'Guided Strike<i class="skill2">1 Class</i>', description: 
-`<ul>
+        {
+            name: 'Guided Strike<i class="skill2">1 Class</i>', description:
+                `<ul>
     <li>Level 1-5</li>
     <li>- Add +5 to your Attack and Damage Rolls.</li><li>Level 6-10</li>
     <li>- Add +8 to your Attack and Damage Rolls.</li>
 </ul>` },
-        { name: 'Disciple of Life <i class="skill1">1 Stress</i>', description: 
-`<ul>
+        {
+            name: 'Disciple of Life <i class="skill1">1 Stress</i>', description:
+                `<ul>
     <li>- All your Healing skills this action double the return of Hit Points.</li>
 </ul>` },
-        { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is WIS.</i>', description: 
-`<ul>
+        {
+            name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is WIS.</i>', description:
+                `<ul>
     <li>- Access to all available Spells within the Cleric domain.</li>
     <li>- Number of spells is equal to 1 + Level + Modifier.</li>
     <li>- Spell Save DC is 8 + Mod.</li>
@@ -552,8 +582,9 @@ const classAbilities = {
     ],
 
     'Druid': [
-        { name: 'Wild Beast <i class="skill1">Stress</i>', description: 
-`<ul>
+        {
+            name: 'Wild Beast <i class="skill1">Stress</i>', description:
+                `<ul>
     <li>- Using Stress transform your body into a creature of your choice. (Until you decide to stop or the next Short Rest).</li>
     <li><i class="skill1">1 Stress:</i> Basic Beast</li>  
     <li><i class="skill1">2 Stress:</i> Can Swim</li>  
@@ -561,37 +592,43 @@ const classAbilities = {
     <li>- When in Wild Shape form, you cannot cast spells, or use skills that the creature otherwise couldn't do.</li>
     <li>- You gain bonuses to Evasion, Armor, Threholds and Ability Scores, increasing every 2 levels.</li>
 </ul>` },
-        { name: 'Fungal Infestation <i class="skill2">1 Class</i>', description: 
-`<ul>
+        {
+            name: 'Fungal Infestation <i class="skill2">1 Class</i>', description:
+                `<ul>
     <li>- Use fungal spores to infect a creature.</li>
     <li>- The creature must succeed a CON Save. (Repeat at the end of each turn).</li>
     <li>- On a fail the creature will Attack, Move or do nothing on it\'s turn (Player\'s Choice.)</li>
 </ul>` },
-        { name: 'Radiant Soul <i class="skill2">1 Class</i>', description: 
-`<ul>
+        {
+            name: 'Radiant Soul <i class="skill2">1 Class</i>', description:
+                `<ul>
     <li>- Roll 1d4 and add the result to all damage dice.</li>
     <li>- The damage is also considered Radiant.</li>
 </ul>` },
-        { name: 'Mighty Summoner <i class="skill1">1 Stress</i>', description: `<ul>
-            <li>- Can summon 1d4 Fey Beasts and will follow your instruction as best they can.</li>
+        {
+            name: 'Mighty Summoner <i class="skill1">1 Stress</i>', description: `<ul>
+            <li>- Can summon 1d4 Fey Beasts and will follow your instruction as best they can. Until the end of Combat.</li>
             <li>- All creatures Attacks are considered Magical.</li>
             <li>- All creatures use the Druid's Initiative and Attack with 1 Attack roll.</li>
             <li>- <b>Level 5:</b> Summoned Beasts is 1d4+1</li> 
         </ul>` },
-        { name: 'Natural Recovery <i class="skill2">1 Class</i>', description:
-        `<ul>
+        {
+            name: 'Natural Recovery <i class="skill2">1 Class</i>', description:
+                `<ul>
             <li>- Select yourself or an Ally.</li>
             <li>- Roll 1d4 and remove that amount of Stress or Hit Points, but not both.</li>
         </ul>` },
-        { name: 'Healing Hands <i class="skill1">1 Stress</i>', description: 
-        `<ul>
+        {
+            name: 'Healing Hands <i class="skill1">1 Stress</i>', description:
+                `<ul>
             <li><b>Option 1:</b> <i class="skill2">1 Class</i></li>
             <li>- Recover 1 Hit Point or 1 Stress Point or a Poison/Disease.</li>
             <li><b>Option 2:</b> <i class="skill2">2 Class</i></li>
             <li>- You can roll an attack (this is not your attack action) and on a success, you touch an enemy, roll 1d4 and remove that amount of HP from the target and then touch an ally and they recover the result in HP.</li>
         </ul>` },
-        { name: 'Spirit Totem <i class="skill1">Stress</i>', description: 
-        `<ul>
+        {
+            name: 'Spirit Totem <i class="skill1">Stress</i>', description:
+                `<ul>
             <li>The Totem will  last Until the end of Combat or the Druid is Unconscious.</li>
             <li>- <b>Bear:</b> <i class="skill1">1 Stress</i><li>- Add 1 Temp HP to all allies.</li>
                 <li>- You gain +1|+2 to your threshold per level.</li>
@@ -643,51 +680,61 @@ const classAbilities = {
         <span>Add +1 Spell Point</span>
     </label></li>
 </ul>` },
-        { name: 'Speech of the Woods', description: 
-        `<ul>
+        {
+            name: 'Speech of the Woods', description:
+                `<ul>
             <li>- You learn to speak, read, and write Sylvan.</li>
             <li>- Beasts can understand your speech, and you gain the ability to decipher their noises and motions.</li>
         </ul>` },
-        { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is WIS.</i>', description: 
-        `<ul>
+        {
+            name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is WIS.</i>', description:
+                `<ul>
             <li>- Choose from the selected spell-list.</li>
             <li>- Number of spells is equal to 1 + Level.</li>
             <li>- Spell Save DC is 8 + Mod.</li>
         </ul>` }
     ],
-    
+
     'Fighter': [
-        { name: 'Action Surge <i class="skill1">1 Stress</i>', description: 
-    `<ul>
-        <li>- Take an extra action.</li><li>- Attack - Make another Attack.</li>
-        <li>- Defend - The next Attack against you is at Disadvantage.</li>
+        {
+            name: 'Action Surge <i class="skill1">1 Stress</i>', description:
+                `<ul>
+        <li>- Take an extra action this turn.</li>
+        <li>- Attack - Make another Attack.</li>
+        <li>- Defend - The next Attack against you is at <b>Disadvantage</b>.</li>
         <li>- Move - Move extra distance.</li>
     </ul>` },
-        { name: 'Rune Carver <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Rune Carver <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- When you make a successful Attack you can apply one of the below.</li>
         <li>- <b>Fire:</b> Inflicts the <b>Burning</b> condition. 1d10 Fire damage on this attack and at the start of your next turn. The target can make a <b>CON Save</b>.</li><hr class = "m-1">
         <li>- <b>Stone:</b> Forces the Enemy to take 1d10 <b>Psychic</b> damage. The target can make a <b>WIS Save</b></li>
         <li>- On a successful Save the target resists the effects.</li>
     </ul>` },
-        { name: 'Second Wind <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Second Wind <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- Roll 1d4 and recover that many Hit Points and half as much to Class.</li>
     </ul>` },
-        { name: 'Armor Master <i class="skill2">1 Class</i>', description: 
-    `<ul>  
+        {
+            name: 'Armor Master <i class="skill2">1 Class</i>', description:
+                `<ul>  
         <li>- You can use as much armor that you have available to reduce Damage.</li>
     </ul>` },
-        { name: 'Giant\'s Might <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Giant\'s Might <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Your STR modifier doubles until the end of your next trun.</li>
     </ul>` },
-        { name: 'Indomitable <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Indomitable <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- You can Re-Roll a failed save, but you must use the new result.</li>
     </ul>` },
-        { name: 'Know Thy Enemy <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Know Thy Enemy <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Spend some time examining an opponent and judge 2 of the following:</li><hr class = "m-2">
         <li><i>Roll 2*1d6</i></li>
             <li>1. Strength score</li>
@@ -698,21 +745,23 @@ const classAbilities = {
             <li>6. Current Stress Points</li><hr class = "m-2">
         <li>The Fighter also gains <b>Advantage</b> on their next Attack.</li>
     </ul>` },
-        { name: 'Relentless <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Relentless <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- If you have no Stress available.</li>
         <li>- Roll 1d4 and return that much Stress.</li>
     </ul>` },
-        { name: 'Battle Master <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Battle Master <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- <b>Commander's Strike</b> <i class="skill1">1 Stress</i></li>
             <li>- Allow an ally to retaliate when they are hit.</li>
         <li>- <b>Feinting Attack</b> <i class="skill2">1 Class</i></li>
-            <li>- Force the Enemy\'s next Attack to be Disadvantage.</li>
+            <li>- Force the Enemy's next Attack to be <b>Disadvantage</b>.</li>
         <li>- <b>Goading Attack</b> <i class="skill2">1 Class</i></li>
             <li>- The target must Attack (only) you on their next round.</li>
         <li>- <b>Maneuvering Attack</b> <i class="skill1">1 Stress</i></li>
-            <li>- Give an Ally Advantage on their next Attack.</li>
+            <li>- Give an Ally <b>Advantage</b> on their next Attack.</li>
         <li>- <b>Parry</b> <i class="skill2">1 Class</i></li>
             <li>- Reduce an Attack against you by 1 Hit.</li>
         <li>- <b>Pushing Attack</b> <i class="skill1">1 Stress</i></li>
@@ -726,8 +775,9 @@ const classAbilities = {
         <li>- <b>Menacing Attack</b> <i class="skill1">1 Stress</i></li>
             <li>- Force a WIS Save or they become Frightened of you until the end of your next turn.</li>
     </ul>` },
-        { name: 'Fighting Style', description: 
-    `<ul>
+        {
+            name: 'Fighting Style', description:
+                `<ul>
         <li><i class="skill3">Select 1</i></li>
         <li>- <b>Archer:</b> Add +1 to Ranged Attacks.</li>
         <li>- <b>Defender:</b> Add +1 to Evasion.</li>
@@ -744,60 +794,70 @@ const classAbilities = {
     ],
 
     'Monk': [
-        { name: 'Unarmored Defense', description: 
-    `<ul>
+        {
+            name: 'Unarmored Defense', description:
+                `<ul>
         <li>- Add your initial DEX to Evasion (min +2).</li>
         <li>- Add your current DEX to your (Lower & Upper) Threshold.</li>
         <li>- Add +2|+2 per level to Threshold.</li>
     </ul>` },
-        { name: 'Perfect Self <i class="skill2">1 Class</i>', description: 
-    `<ul>
-        <li>- Must use fists.</li><li>Level 1-3</li>
+        {
+            name: 'Perfect Self <i class="skill2">1 Class</i>', description:
+                `<ul>
+        <li>- Must use fists. Your next Attack gains...</li><li>Level 1-3</li>
             <li>- +1 Attack Roll</li>
         <li>Level 4-6</li>
             <li>- +2 Attack Roll</li>
         <li>Level 7-10</li>
             <li>- +3 Attack Roll</li>
     </ul>` },
-        { name: 'Flurry of Blows <i class="skill1">2 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Flurry of Blows <i class="skill1">2 Stress</i>', description:
+                `<ul>
         <li>- Must use fists.</li>
         <li>- Make a series of Attacks equal to your DEX modifier.</li>
         <li>- For each successful roll add that number of dice to the damage roll.</li>
     </ul>` },
-        { name: 'Purity of Body <i class="skill1">Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Purity of Body <i class="skill1">Stress</i>', description:
+                `<ul>
         <li>- Using Stress you can remove any Poisons and Disease from your body.</li>
         <li>- The tier of the poison will dictate the amount of Stress to use.</li>
     </ul>` },
-        { name: 'Stress for Stress <i class="skill1">Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Stress for Stress <i class="skill1">Stress</i>', description:
+                `<ul>
         <li>- You can give yourself Stress, and when you do also give the same amount to an Enemy (or enemies).</li>
     </ul>` },
-        { name: 'Stunning Strike <i class="skill2">1 Class</i>', description:
-    `<ul>
-        <li>- Must use fists.</li>
+        {
+            name: 'Stunning Strike <i class="skill2">1 Class</i>', description:
+                `<ul>
+        <li>- Must use fists. On your next Attack.</li>
         <li>- Make an attempt to stun your enemy.</li>
         <li>- Target rolls a CON Save. </li>
         <li>- On a Fail target is stunned for 1d4 rounds. (Rolled by the GM)</li>
     </ul>` },
-        { name: 'Deflect Missiles <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Deflect Missiles <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- If a missile attack is directed at you.</li>
         <li>- Roll a DEX Save:</li>
         <li>- On a Fail reduce the damage by 1 Hit.</li>
         <li>- On a Success reduce the damage by 2 Hits.</li>
     </ul>` },
-        { name: 'Danger Sense', description: 
-    `<ul>
+        {
+            name: 'Danger Sense', description:
+                `<ul>
         <li>- Can make your DEX Saves with advantage.</li>
     </ul>` },
-        { name: 'Stillness of Mind <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Stillness of Mind <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Remove 1d4 Stress from either you or an ally.</li>
     </ul>` },
-        { name: 'Quivering Palm <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Quivering Palm <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Must use fists.</li>
         <li>- Make 1 Attack to a creature within range.</li>
         <li>- At the start of your next turn (before you take any actions) you Force the target to Roll Divine Die and on a fail you can repeat the damage.</li>
@@ -805,12 +865,14 @@ const classAbilities = {
     ],
 
     'Paladin': [
-        { name: 'Divine Sense <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Divine Sense <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- You sense evil and unnatural creatures within Close range.</li>
     </ul>` },
-        { name: 'Lay on Hands <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Lay on Hands <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Target an ally (in touch range) and initiate one of the below options.</li>
         <li><i>Select one Option</i></li>
             <li>- Recover 1d4+1 HP</li>
@@ -818,41 +880,47 @@ const classAbilities = {
             <li>- Remove 1 Poison or Disease</li>
             <li>- <b>Cannot use on self.</b></li>
     </ul>` },
-        { name: 'Smite <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Smite <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>On a successful Attack.</li>
         <li>- Add 1 damage die to your Damage roll.</li>
         <li>- Roll 1d4 and cause that much Stress</li>
         <li>- If the creature is a demon or undead - Add 2 Damage dice and cause maximum Stress.</li>
     </ul>` },
-        { name: 'Armor Master <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Armor Master <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Utilize your Armor Slots better.</li>
         <li>- Use up to 2 Slots to reduce damage.</li>
     </ul>` },
-        { name: 'Protective Warden <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Protective Warden <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- You can place yourself in harms way to protect your allies.</li>
         <li>- You <u>must</u> be in Close range of the ally.</li>
-        <li>- Use as many of your Armor Slots necessary to reduce an ally\'s damage by an equal amount.</li>
+        <li>- Use as many of your Armor Slots necessary to reduce an ally's damage by an equal amount.</li>
     </ul>` },
-        { name: 'Aura of Guardian <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Aura of Guardian <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- You can decide to take the complete damage of an ally.</li>
         <li>- You <u>must</u> be in Close range of the ally.</li>
         <li>- The damage cannot be reduced.</li>
         <li>- You also force the creature's next Attack to be <b>Disadvantage</b>.</li>
     </ul>` },
-        { name: 'Aura of Protection <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Aura of Protection <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- Select an ally in Close range and they gain +2 to Evasion.</li>
         <li>- Until the End of Combat.</li>
     </ul>` },
-        { name: 'Channel Divinity <i class="skill2">Class</i>', description: 
-    `<ul>
+        {
+            name: 'Channel Divinity <i class="skill2">Class</i>', description:
+                `<ul>
     <li><b>Turn Undead</b></li>
     <li>Use <b>2 Class</b> point equal to the monster Tier.</li>
-        <li>- Create a barrier of Godly energy around you at Close Range that Undead cannot cross.</li>
+        <li>- Create a barrier of Godly energy around you at Close Range that Undead cannot cross. Until the End of Combat.</li>
         <li>- All Undead creatures within Close Range caught in the area on creation must make a Con Save, on a failure they will also take 1 Hit and 1 Stress.</li>
         <li>- A creature that is forced into the area through your movement. Will make a CON Save at <b>Advantage</b> and take the penalties on a failure.</li>
         <li>If they succeed they are no longer restricted by the barrier and take no penalties.</li>
@@ -904,8 +972,9 @@ const classAbilities = {
         <span>Add +1 Spell Point</span>
     </label></li>
 </ul>` },
-        { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description: 
-    `<ul>
+        {
+            name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description:
+                `<ul>
         <li>- Choose from the selected spell-list.</li>
         <li>- Number of spells is equal to 1 + Level.</li>
         <li>- Spell Save DC is 8 + Mod.</li>
@@ -913,7 +982,8 @@ const classAbilities = {
     ],
 
     'Ranger': [
-        { name: 'Favored Enemy', description: `
+        {
+            name: 'Favored Enemy', description: `
     <ul>
         <li>- Select a creature that you gain Advantage with on any Attacks, or Skills that deal with that Creature.
         </li>
@@ -926,43 +996,50 @@ const classAbilities = {
                 <li><select id="charEnemy3" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"><option>Level 8</option><option>Ankhegs/Owlbears</option><option>Bugbears/Ogres</option><option>Carrion Crawlers/Ettercaps</option><option>Dragons</option><option>Giants</option><option>Goblins/Hobgoblins</option><option>Kobolds/Bullywugs</option><option>Lizardfolk/Displacer Beasts</option><option>Lycanthropes</option><option>Oozes/Blights</option><option>Orcs/Gnolls</option><option>Shapechangers/Dryads</option><option>Skeletons/Zombies</option><option>Spiders</option><option>Wolves
             </option></select></li>
     </ul>` },
-        { name: 'Deft Explorer', description: 
-    `<ul>
+        {
+            name: 'Deft Explorer', description:
+                `<ul>
         <li>- You do not need to use Stress on difficult terrain to move.</li>
         <li>- Stealth, Survival Skills gain Advantage.</li>
     </ul>` },
-        { name: 'Supernatural Defense <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Supernatural Defense <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- You gain temporary bonus to Evasion for this combat equal to the number of your Armor. </li>
     </ul>` },
-        { name: 'Hunter\'s Mark <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Hunter\'s Mark <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Mark a Creature within range for the duration of combat. (Or until the creature is removed.)</li>
         <li>- Instantly learn 1 aspect of the creature.</li>
         <li>- The target has Disadvantage on Attack rolls against all except the ranger.</li>
         <li>- The Creature cannot hide in combat.</li>
     </ul>` },
-        { name: 'Ranger Companion', description: 
-    `<ul>
+        {
+            name: 'Ranger Companion', description:
+                `<ul>
         <li>- Select an Animal that can assist the Ranger. This creature can attack on its own. (<i>Using the Ranger\'s Initiative</i>)</li>
         <li>- Use <i class="skill2">1 Class</i> to make a combined attack and add the damage together. (<i>Ranger Class Point</i>)</li>
             <li><b>Defender:</b> <i class="skill1">1 Stress</i> - Give the Ranger +1 Evasion. (Until the next Short Rest)</li>
             <li><b>Eye Gouge: </b><i class="skill1">1 Stress</i> - Causes blindness until the start of your next round.</li><li><b>Rend: </b><i class="skill1">1 Stress</i> - Your beast can add +1 Damage die to their damage.</li>
             <li><b>Sentinel:</b> <i class="skill1">2 Stress:</i> - Only in Wilderness, the Ranger gains <b>Advantage</b> on initiative rolls. (Until next Long Rest).</li>
     </ul>` },
-        { name: 'Tireless <i class="skill1">1 Stress</i>', description:
-    `<ul>
+        {
+            name: 'Tireless <i class="skill1">1 Stress</i>', description:
+                `<ul>
     <li>When you drop to 1 Hit Point or Class.</li>
     <li>- Roll 1d4 and add it to your Hit Points.</li>
     </ul>
         <button class="tireless-btn" id="tirelessActivateBtn"><i class="fas fa-dice-d20"></i><span>Activate Tireless</span></button>
         <div id="tirelessResultDisplay"></div>` },
-        { name: 'Nature\'s Veil <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Nature\'s Veil <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- When in the wilderness, you can become hidden and do not need to roll to do so.</li>
     </ul>` },
-        { name: 'Feral Senses <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Feral Senses <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- When Attacking creatures you cannot see you do not have Disadvantage. (Until end of Combat)</li>
     </ul>` },
         {
@@ -1007,8 +1084,9 @@ const classAbilities = {
         <span>Add +1 Spell Point</span>
     </label></li>
 </ul>` },
-        { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is WIS.</i>', description: 
-    `<ul>
+        {
+            name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is WIS.</i>', description:
+                `<ul>
         <li>- Choose from the selected spell-list.</li>
         <li>- Number of spells is equal to 1 + Level.</li>
         <li>- Spell Save DC is 8 + Mod.</li>
@@ -1016,42 +1094,49 @@ const classAbilities = {
     ],
 
     'Rogue': [
-        { name: 'Sneak Attack <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Sneak Attack <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Level 1~3 Add 1d6 to your damage roll.</li>
         <li>- Level 4-6 Add 2d6 to your damage roll.</li>
         <li>- Level 7-10 Add 3d6 to your damage roll.</li>
     </ul>` },
-        { name: 'Assassinate <i class="skill1">Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Assassinate <i class="skill1">Stress</i>', description:
+                `<ul>
         <li>- 1 Stress: <i>Level 1~5</i> Add one hit to the total of damage. Ex. If the damage is 3 Hits, increase it to 4Hits.</li>
         <li>- 2 Stress: Level <i>6~10</i> Add two hits to the total of damage. Ex. If the damage is 3 Hits, increase it to 5Hits.</li>
     </ul>` },
-        { name: 'Cunning Action <i class="skill3">Special</i>', description: 
-    `<ul>
+        {
+            name: 'Cunning Action <i class="skill3">Special</i>', description:
+                `<ul>
         <li>- Gain the ability to</li>
             <li>- Hide <i class="skill1">1 Stress</i>: Auto hide in right conditions.</li>
             <li>- Dodge <i class="skill2">1 Class</i>: Lower a Hit by 1.</li>
             <li>- Move <i class="skill1">1 Stress</i>: Travel one extra distance of combat.</li>
     </ul>` },
-        { name: 'Steady Aim <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Steady Aim <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- On any successful Attack. Roll 1d4. Success Target is 4.</li>
         <li>- Add 1 Hit to your damage.</li>
         <li>- Hit the target you were aiming for, sword hand, vial on a table.</li>
     </ul>` },
-        { name: 'Uncanny Dodge <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Uncanny Dodge <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- When you are hit with (any) Damage, lower the damage by 1 Hit.</li>
     </ul>` },
-        { name: 'Misdirection <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Misdirection <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Force a creature to roll <b>Divine Dice</b></li>
         <li>- If the result is <b>Fate</b>, they miss the Attack.</li>
         <li>- On a <b>Crit</b> the target will also take <b>1 Stress</b> and their next Attack is with <b>Disadvantage</b></li>
     </ul>` },
-        { name: 'Poison <i class="skill3">Special</i>', description: 
-    `<ul>
+        {
+            name: 'Poison <i class="skill3">Special</i>', description:
+                `<ul>
         <li>- <b>Tier 1</b> <i>(Level 1~5)</i></li>
             <li>- Use 1 Stress Point to make a poison this can be held indefinitely.</li>
             <li>- Use 1 Class Point to roll 1d4 extra damage.</li><hr class="m-2">
@@ -1067,34 +1152,40 @@ const classAbilities = {
             <li>- The damage repeats at the start of the creature's turn until it succeeds a <b>CON</b> Save.</li><hr class="m-2">
         <li>- <b class="skill3">Creating poison Tier 2 and up will require time to produce decided by the DM.</b></li>
     </ul>` },
-        { name: 'Maker of Fate', description: 
-    `<ul>
+        {
+            name: 'Maker of Fate', description:
+                `<ul>
         <li>- When rolling <b>Divine</b> Dice add an Extra Divine die to the roll.</li>
     </ul>` },
-        { name: 'Thief Reflexes', description: 
-    `<ul>
+        {
+            name: 'Thief Reflexes', description:
+                `<ul>
         <li>- Roll <b>DEX</b> rolls with <b>Advantage</b>.</li>
     </ul>` },
-        { name: 'Stroke of Luck <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Stroke of Luck <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Re-roll <u>any</u> die roll, but you <u>must</u> use the new roll.</li>
     </ul>` }
     ],
 
     'Sorcerer': [
-        { name: 'Favored by the Gods <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Favored by the Gods <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- If you make an attack and miss, you can roll dice and add it to the Attack Roll.</li><br>
             <li>Level 1-3: 1d4</li>
             <li>Level 4-6: 2d4</li>
             <li>Level 7-10: 3d4</li>
     </ul>` },
-        { name: 'Font of Magic <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Font of Magic <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- Can use one Stress and replace it for a Spell Slot or vice versa.</li>
     </ul>` },
-        { name: 'Meta-Magic <i class="skill1">1 Stress</i> <i>(All meta-magic must be decided before the spell is cast.)</i>', description: 
-    `<ul>
+        {
+            name: 'Meta-Magic <i class="skill1">1 Stress</i> <i>(All meta-magic must be decided before the spell is cast.)</i>', description:
+                `<ul>
         <li>- <b>Careful Spell</b><i>1 Stress/Person</i></li>
         <li>- Remove an ally from the area or a spells effect.</li>
         <li>- <b>Empowered Spell</b> <i>1 Stress</i></li>
@@ -1104,8 +1195,9 @@ const classAbilities = {
         <li>- <b>Twinned Spell</b> <i>1 Stress</i></li>
         <li>- If the spell projectile targets a single target you can add on more projectile.</li>
     </ul>` },
-        { name: 'Innate Sorcery <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Innate Sorcery <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- You tap into the magic of the dragons.</li>
         <li>- Add 1d10 to your damage roll.</li>
         <li>- The extra damage extends out to Close Range and targets all within range (Allies included).</li><br>
@@ -1115,34 +1207,40 @@ const classAbilities = {
             <li>Type: Red/Fire</li>
             <li>Type: White/Cold</li>
     </ul>` },
-        { name: 'Storm\'s  Fury <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Storm\'s  Fury <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- When you are hit by an Attack.</li>
         <li>- Return half the damage back to the Attacker with Lightning Damage.</li>
     </ul>` },
-        { name: 'Tides of Chaos <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Tides of Chaos <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- You can roll your next Spell Attack with Advantage.</li> 
         <li>- Regardless of the result, your next spell must be with Disadvantage or the Save with Advantage.</li>
         <li>- There is no limit of time on this ability and will only reset after a spell is cast.</li>
         <li>- When reaching Level 10 you can choose to eliminate this with another Stress Point.</li>
     </ul>` },
-        { name: 'Divine Soul <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Divine Soul <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Temporarily gain +1 Hit Point, +1 Spell Point.</li>
         <li>- Remove after a Long Rest.</li>
     </ul>` },
-        { name: 'Unearthly Recovery <i class="skill2">2 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Unearthly Recovery <i class="skill2">2 Class</i>', description:
+                `<ul>
         <li>- You and only you recover +2 HP and +2 Stress and +2 Spell.</li>
     </ul>` },
-        { name: 'Telepathic Speech', description: 
-    `<ul>
+        {
+            name: 'Telepathic Speech', description:
+                `<ul>
         <li>- Can sense a living mind within Close range.</li>
         <li>- If you are familiar with the creature you can communicate with it Psychically.</li>
     </ul>` },
-        { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description: 
-    `<ul>
+        {
+            name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is CHA.</i>', description:
+                `<ul>
         <li>- Choose from the selected spell-list.</li>
         <li>- Number of spells is equal to 1 + Level.</li>
         <li>- Spell Save DC is 8 + Mod.</li>
@@ -1150,13 +1248,15 @@ const classAbilities = {
     ],
 
     'Warlock': [
-        { name: 'Defy Death <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Defy Death <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- You can add 1 Divine Die to your next Divine Roll (Until next Long Rest).</li>
         <li>- This can also be called on if you are at 0HP.</li>
     </ul>` },
-        { name: 'Spirit Projection <i class="skill2">2 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Spirit Projection <i class="skill2">2 Class</i>', description:
+                `<ul>
         <li>- Create a physical projection of yourself.</li>
         <li>- The projection cannot be targeted and enhanced with any ability.</li>
         <li>- It has half your HP and no Stress, Class or Spell points.</li>
@@ -1167,16 +1267,19 @@ const classAbilities = {
             <li>- All the above.</li>
             <li>- It can also Attack once on your turn with half your normal damage.</li>
     </ul>` },
-        { name: 'Spirit Shield <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Spirit Shield <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- You can reduce the damage against you or an ally by <b>2d6 for each Stress Point</b> used.</li>
     </ul>` },
-        { name: 'Patron\'s Blessing', description: 
-    `<ul>
+        {
+            name: 'Patron\'s Blessing', description:
+                `<ul>
         <li>For your devotion, your patron has decided to gift you a piece of Equipment to help further it\'s Godly Presence to the masses and protect its flock. (Discuss with the GM).</li>
     </ul>` },
-        { name: 'Necromancer <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Necromancer <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- You gain the <b>Animate Dead</b> spell (if you do not already have it.)</li>
         <li>- You gain greater control and power of the undead you create. (Until next Short Rest).</li> 
         <li>- Roll Divine Dice to decide the Undead that returns.</li>
@@ -1189,21 +1292,24 @@ const classAbilities = {
             <li><b>1 Class:</b> Add an extra damage die to the damage roll.</li>
             <li><b>Feature:</b> Roll Divine Dice on a success they return with 1HP/0 Stress</li>
     </ul>` },
-        { name: 'Stress for Stress <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Stress for Stress <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- When you take Stress, you can also cause 1 Stress to an Enemy.</li>
         <li>- Or you can return the same amount to an Ally within Close Range.</li>
     </ul>` },
-        { name: 'Tokens of the Departed <i class="skill2">1 Class</i> <i>(To use the item)</i>', description: 
-    `<ul>
+        {
+            name: 'Tokens of the Departed <i class="skill2">1 Class</i> <i>(To use the item)</i>', description:
+                `<ul>
         <li>- You can take items from your kills.</li>
         <li>- Roll Divine Die and if the roll favors the Divine.</li>
         <li>- The items can be uses to enhance your own abilities.</li>
         <li>- Discuss with the GM on what can be enhanced.</li>
         <li>- The items lose their power and mystic after 1 use.</li>
     </ul>` },
-        { name: 'Blood for Blood <i class="skill1">1 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Blood for Blood <i class="skill1">1 Stress</i>', description:
+                `<ul>
         <li>- When you take Damage, you can also cause 1 Hit to an Enemy.</li>
         <li>- Or you can return the same amount of HP to an Ally within Close Range.</li>
     </ul>` },
@@ -1249,8 +1355,9 @@ const classAbilities = {
         <span>Add +1 Spell Point</span>
     </label></li>
 </ul>` },
-        { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is INT.</i>', description: 
-    `<ul>
+        {
+            name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is INT.</i>', description:
+                `<ul>
         <li>- Choose from the selected spell-list.</li>
         <li>- Number of spells is equal to 1 + Level.</li>
         <li>- Spell Save DC is 8 + Modifier.</li>
@@ -1258,14 +1365,16 @@ const classAbilities = {
     ],
 
     'Wizard': [
-        { name: 'Arcane Recovery <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Arcane Recovery <i class="skill2">1 Class</i>', description:
+                `<ul>
     <li>- Recover Spell Points equal to half your SP total rounded up.</li>
     </ul>
     <button class="arcane-recovery-btn" id="arcaneRecoveryActivateBtn"><i class="fas fa-magic"></i><span>Activate Arcane Recovery</span></button>
     <div id="arcaneRecoveryResultDisplay"></div>` },
-        { name: 'Signature Spell <i class="skill3">Special</i>', description: 
-    `<ul>
+        {
+            name: 'Signature Spell <i class="skill3">Special</i>', description:
+                `<ul>
         <li>- Select spell(s) to become your Signature Spell(s).</li>
         <li>- <b>Lv 1-5:</b> 1 spell | <b>Lv 6-9:</b> 2 spells | <b>Lv 10:</b> 3 spells</li>
         <li>- These spells become Bonus Spells (don\'t count against spell limit).</li>
@@ -1280,47 +1389,56 @@ const classAbilities = {
             <select id="signatureSpellSelect3" class="signature-spell-select w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-purple-500 focus:border-transparent"><option value="">-- Select Signature Spell --</option></select></div>
         </div>
         <div id="signatureSpellResult" class="mt-2"></div>` },
-        { name: 'Spell Mastery <i class="skill1">2 Stress</i>', description: 
-    `<ul>
+        {
+            name: 'Spell Mastery <i class="skill1">2 Stress</i>', description:
+                `<ul>
         <li>- Select a spell and give it +3 to the Save, or add +1 die to the damage roll. (Until a Long Rest).</li>
     </ul>` },
-        { name: 'Spell Sequencer <i class="skill3">Special</i>', description: 
-    `<ul>
+        {
+            name: 'Spell Sequencer <i class="skill3">Special</i>', description:
+                `<ul>
         <li>Combine certain spells for greater effect, you decide when they trigger. Until a Long Rest.</li>
             <li>- Comprehend Languages + Tongues</li>
             <li>- Mage Armor + Find Familiar</li>
             <li>- Shield + Magic Missile</li> 
             <li>- True Strike + Bolt</li>
     </ul>` },
-        { name: 'Awakened Mind <i class="skill2">1 Class</i>', description: 
-    `<ul>
-        <li>- Add 10|15 Threshold to Mage Armor.</li>
-        <li>- Add +1 to Armor.</li>
-    </ul>` },
-        { name: 'Clairvoyant <i class="skill2">2 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Awakened Mind <i class="skill2">1 Class</i>', description:
+                `<ul>
+        <li>- Add +1 to INT.</li>
+         <li>- Add +1 Armor (Slot).</li>
+         <li>- When Mage Armor is active: +10 Lower Threshold, +15 Upper Threshold.</li>
+        </ul>` },
+        {
+            name: 'Clairvoyant <i class="skill2">2 Class</i>', description:
+                `<ul>
         <li>- You can place yourself at the top or bottom of the Initiative order.</li>
     </ul>` },
-        { name: 'Knowledge is Power <i class="skill2">1 Class</i>', description: 
-    `<ul>
+        {
+            name: 'Knowledge is Power <i class="skill2">1 Class</i>', description:
+                `<ul>
         <li>- Gain <b>Advantage on Arcane Checks.</b>.</li>
         <li>- Add +1 Damage die to next damage roll.</li>
     </ul>` },
-        { name: 'Mystic Glyphs <i class="skill2">Class</i>', description: 
-    `<ul>
+        {
+            name: 'Mystic Glyphs <i class="skill2">Class</i>', description:
+                `<ul>
         <li>Can scribe glyphs on items to temporarily imbue magical effects on them. (Until next Long Rest).</li>
             <li>- Level 1~3 / <i class="skill2">1 Class</i> = +1</li> 
             <li>- Level 4~6 / <i class="skill2">2 Class</i> = +2</li>
             <li>- Level 7~10 / <i class="skill2">3 class</i> = +3</li>
     </ul>` },
-        { name: 'Arcane Echo <i class="skill3">Special</i>', description: 
-    `<ul>
+        {
+            name: 'Arcane Echo <i class="skill3">Special</i>', description:
+                `<ul>
         <li><i>Stress Points equal to half the spell. Minimum 1 Point.</i></li>
         <li>- Reshape the magic of a spell where you are the target of a successful spell and echo out a new spell as a Reaction.</li> 
         <li>- The spell you choose must be of level equal to half the spell. If the spell is not used immediately the energy is lost.</li>
     </ul>` },
-        { name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is INT.</i>', description: 
-    `<ul>
+        {
+            name: 'Spell-Casting <i class="skill3 text-xs">Spell Mod is INT.</i>', description:
+                `<ul>
         <li>A wizard has all spells available to them. However they can only select the number of spells equal to their Level + Casting Modifier.</li>
         <li>- They do not need to memorize spells. Though they can not change their selection.</li>
         <li>- The Spell Save DC is 8 + Casting Modifier.</li>
@@ -1332,58 +1450,68 @@ const classAbilities = {
 
 // Universal abilities available to all classes
 const universalAbilities = [
-    { name: 'Blind Sense', description: 
-`<ul>
-    <li>- When fighting in the dark or when your vision is obstructed you are <u>NOT</u> penalized with Disadvantage.</li>
+    {
+        name: 'Blind Sense', description:
+            `<ul>
+    <li>- When fighting in the dark or when your vision is obstructed you are <u>NOT</u> penalized with <b>Disadvantage</b>.</li>
 </ul>` },
-    { name: 'Crimson Rite <i class="skill3">Special</i>', description: 
-`<ul> 
+    {
+        name: 'Crimson Rite <i class="skill3">Special</i>', description:
+            `<ul> 
     <li>- Use your HP to enhance yourself. <i>(Select 1 from below.)</i></li>
     <li>- Add a bonus "to Hit" equal to the HP you used.</li>
     <li>- Add extra damage dice equal to the HP you used.</li>
     <li>- Gain Advantage to Divine Rolls (Req. <b>2HP</b>)</li>
 </ul>` },
-    { name: 'Expertise', description: 
-`<ul>
+    {
+        name: 'Expertise', description:
+            `<ul>
     <li>- You can pick another Ability stat to be proficient with.</li>
     <li>- Add +1 to the other Ability Scores of you are already proficient in.</li>
 </ul>` },
-    { name: 'Extra Attack <i class="skill1">1 Stress</i>', description: 
-`<ul>
-    <li>- <strong>Option 1</strong>: Can attack twice against a single creature in a turn. Roll damage for each attack and total the damage.</li>
-    <li>- <strong>Option 2</strong>: Can attack twice in a turn. Roll damage for each attack separately and apply to separate creatures.</li>
+    {
+        name: 'Extra Attack <i class="skill1">1 Stress</i>', description:
+            `<ul>
+    <li>- <strong>Option 1</strong>: Can attack twice against a single target this turn. Roll damage for each attack and total the damage.</li>
+    <li>- <strong>Option 2</strong>: Can attack twice this turn. Roll damage for each attack separately and apply to separate creatures.</li>
 </ul>` },
-    { name: 'Fast Movement <i class="skill1">1 Stress</i>', description: 
-`<ul>
+    {
+        name: 'Fast Movement <i class="skill1">1 Stress</i>', description:
+            `<ul>
     <li>- Can move extra quick, moving one more distance tier than normal.</li>
 </ul>` },
-    { name: 'Grappler <i class="skill2">1 Class</i>', description: 
-`<ul>
+    {
+        name: 'Grappler <i class="skill2">1 Class</i>', description:
+            `<ul>
     <li>- Double your <b>STR/DEX</b> modifier to you Grapple roll.</li>
     <li>- When grappling you can use this skill to restrain and immobilize an enemy.</li>
-    <li>- The creature cannot move or make an attack.</li>
+    <li>- The target cannot move or make an attack.</li>
     <li>- An attack you make will require <i class="skill1">1 Stress</i> on a successful hit, you can only deal <b>1 Hit<b/>.</li>
 </ul>` },
-    { name: 'Off-Hand', description: 
-`<ul>
+    {
+        name: 'Off-Hand', description:
+            `<ul>
     <li>- Gain the use of fighting with your off-hand and the features of the off-hand weapon.</li>
     <li>- Add the damage dice to your total damage on any successful Attack roll.</li>
 </ul>` },
-    { name: 'Retaliation <i class="skill1">1 Stress</i>', description: 
-`<ul>
+    {
+        name: 'Retaliation <i class="skill1">1 Stress</i>', description:
+            `<ul>
     <li>After an Enemy attack "Success or Failure", you can return an attack.</li>
     <li>- If a creature moves out of your range reach you can choose to make an attack. <i>(Cannot use other abilities with this action.)</i></li>
 </ul>` },
-    { name: 'Tactician <i class="skill3">Special</i>', description: 
-`<ul>
+    {
+        name: 'Tactician <i class="skill3">Special</i>', description:
+            `<ul>
     <li>- When an ally Attacks, and you choose to join in a combined Attack.</li>
     <li>- The <b>Stress</b> you use is reduced by...</li>
     <li><b>Level 1-5:</b> -1 Stress.</li>
     <li><b>Level 6-10:</b> -2 Stress.</li>
-    <li><i>Note: A combined Attack without Tactician requires 3 Stress.</i></li>
+    <li><i>Note: A combined Attack without Tactician requires 4 Stress.</i></li>
 </ul>` },
-    { name: 'Valiant Aid <i class="skill2">1 Class</i>', description: 
-`<ul>
+    {
+        name: 'Valiant Aid <i class="skill2">1 Class</i>', description:
+            `<ul>
     <li>- You can give an ally in close range <b>Advantage</b> on their next roll.</li>
     <li>- Alternatively, if the target has <b>Disadvantage</b> they now make a straight normal roll.</li>
 </ul>` }
@@ -1771,14 +1899,14 @@ function openClassAbilitiesModal() {
 
     // Update checkbox states after populating and restoring
     updateAbilityCheckboxStates();
-   
 
-// Always repopulate Signature Spell dropdown when modal opens
-setTimeout(() => {
-    populateSignatureSpellDropdowns();
-updateSignatureSpellResultDisplay();
-   
-}, 50);
+
+    // Always repopulate Signature Spell dropdown when modal opens
+    setTimeout(() => {
+        populateSignatureSpellDropdowns();
+        updateSignatureSpellResultDisplay();
+
+    }, 50);
 
 
 
@@ -1927,13 +2055,21 @@ function handleAbilityCheckboxChange(checkbox) {
         }
     }
 
-// Special handling for Signature Spell ability (Wizard)
-     if (currentCharacter && currentCharacter.class === 'Wizard') {
-         const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
-         if (ability && ability.name.toLowerCase().includes('signature spell')) {
-             handleSignatureSpellAbility(checkbox.checked);
-         }
-     }
+    // Special handling for Signature Spell ability (Wizard)
+    if (currentCharacter && currentCharacter.class === 'Wizard') {
+        const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+        if (ability && ability.name.toLowerCase().includes('signature spell')) {
+            handleSignatureSpellAbility(checkbox.checked);
+        }
+    }
+
+    // Special handling for Awakened Mind ability (Wizard)
+    if (currentCharacter && currentCharacter.class === 'Wizard') {
+        const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+        if (ability && ability.name.toLowerCase().includes('awakened mind')) {
+            handleAwakenedMindAbility(checkbox.checked);
+        }
+    }
 
     // Save selections
     saveClassAbilitiesSelection();
@@ -2031,18 +2167,18 @@ function closeSpellSelectionModal() {
     document.getElementById('spellSelectionModal').classList.add('hidden');
 }
 
- /**
-  * Update the spell modal title to show current spell count
-  * This provides live updates when spells are added/removed
-  */
- function updateSpellModalTitle() {
-     const classNameElement = document.getElementById('spellModalClassName');
-     if (!classNameElement || !currentCharacter) return;
- 
-     const maxSpells = getMaxSpells(currentCharacter);
-     const currentSpells = currentCharacter.knownSpellGroups ? currentCharacter.knownSpellGroups.length : 0;
-     classNameElement.textContent = `${currentCharacter.class} (${currentSpells}/${maxSpells})`;
- }
+/**
+ * Update the spell modal title to show current spell count
+ * This provides live updates when spells are added/removed
+ */
+function updateSpellModalTitle() {
+    const classNameElement = document.getElementById('spellModalClassName');
+    if (!classNameElement || !currentCharacter) return;
+
+    const maxSpells = getMaxSpells(currentCharacter);
+    const currentSpells = currentCharacter.knownSpellGroups ? currentCharacter.knownSpellGroups.length : 0;
+    classNameElement.textContent = `${currentCharacter.class} (${currentSpells}/${maxSpells})`;
+}
 
 function populateSpellsList(characterClass, searchTerm = '') {
     const spellsList = document.getElementById('spellsList');
@@ -2148,7 +2284,7 @@ function addSpellGroupToCharacter(spellGroup) {
     // Add spell group to character
     currentCharacter.knownSpellGroups.push({ ...spellGroup });
 
-   // Update displays
+    // Update displays
     updateKnownSpellsDisplay();
     updateSpellModalTitle(); // Live update spell count in modal
     populateSpellsList(currentCharacter.class, document.getElementById('spellSearchInput').value);
@@ -2172,7 +2308,7 @@ function removeSpellGroupFromCharacter(groupIndex) {
 
     // Update display
     updateKnownSpellsDisplay();
-// Update spell count in modal title if modal is open
+    // Update spell count in modal title if modal is open
     updateSpellModalTitle();
 
     // Save changes
@@ -2206,28 +2342,28 @@ function updateKnownSpellsDisplay() {
         return;
     }
     // Check for Wizard armor penalty
-     const wizardArmorPenalty = hasWizardArmorPenalty(currentCharacter);
+    const wizardArmorPenalty = hasWizardArmorPenalty(currentCharacter);
 
     knownSpellsList.innerHTML = allSpells.map((group, groupIndex) => {
         const isNecromancerBonus = group.isNecromancerBonus;
-         const isSignatureBonus = group.isSignatureSpell;
-         const isBonus = isNecromancerBonus || isSignatureBonus;
+        const isSignatureBonus = group.isSignatureSpell;
+        const isBonus = isNecromancerBonus || isSignatureBonus;
         const actualIndex = isBonus ? -1 : regularSpells.findIndex(g => g === group); // -1 for bonus spells
 
-// Determine bonus label
-         let bonusLabel = '';
-         if (isSignatureBonus) {
-             bonusLabel = '<div class="mb-3 text-center text-xs text-purple-600 dark:text-purple-300 font-medium"><i class="fas fa-star mr-1"></i>Signature Spell</div>';
-         } else if (isNecromancerBonus) {
-             bonusLabel = '<div class="mb-3 text-center text-xs text-purple-600 dark:text-purple-300 font-medium">Necromancer Bonus Spell</div>';
-         }
+        // Determine bonus label
+        let bonusLabel = '';
+        if (isSignatureBonus) {
+            bonusLabel = '<div class="mb-3 text-center text-xs text-purple-600 dark:text-purple-300 font-medium"><i class="fas fa-star mr-1"></i>Signature Spell</div>';
+        } else if (isNecromancerBonus) {
+            bonusLabel = '<div class="mb-3 text-center text-xs text-purple-600 dark:text-purple-300 font-medium">Necromancer Bonus Spell</div>';
+        }
 
         // Create the spells display with separation lines
-         const spellsDisplay = group.spells.map((spell, spellIndex) => {
-             // Apply Wizard armor penalty to spell name (increases costs) - but not for signature spells
-             const displaySpellName = isSignatureBonus ? spell.name : applyWizardArmorPenaltyToSpellName(spell.name, wizardArmorPenalty);
- 
-             return `
+        const spellsDisplay = group.spells.map((spell, spellIndex) => {
+            // Apply Wizard armor penalty to spell name (increases costs) - but not for signature spells
+            const displaySpellName = isSignatureBonus ? spell.name : applyWizardArmorPenaltyToSpellName(spell.name, wizardArmorPenalty);
+
+            return `
             <div class="spell-in-known-group ${spellIndex > 0 ? 'border-t border-gray-300 dark:border-gray-500 pt-2 mt-2' : ''}">
                 <h6 class="font-semibold text-sm mb-1">
                     ${displaySpellName}
@@ -2272,12 +2408,12 @@ function updateKnownSpellsDisplay() {
             }
         });
     });
-    
-// Restore Signature Spell dropdowns after UI rebuild
-if (hasSignatureSpellAbility()) {
-    populateSignatureSpellDropdowns();
-    updateSignatureSpellResultDisplay();
-}
+
+    // Restore Signature Spell dropdowns after UI rebuild
+    if (hasSignatureSpellAbility()) {
+        populateSignatureSpellDropdowns();
+        updateSignatureSpellResultDisplay();
+    }
 
 }
 
@@ -2449,7 +2585,7 @@ function restoreClassAbilitiesSelection() {
 // Handle Necromancer ability selection/deselection
 function handleNecromancerAbility(isSelected) {
     if (!currentCharacter || currentCharacter.class !== 'Warlock') return;
-    
+
     if (isSelected) {
         applyNecromancerBonus();
     } else {
@@ -2466,29 +2602,29 @@ function applyNecromancerBonus() {
     if (!currentCharacter.necromancerBonusSpells) {
         currentCharacter.necromancerBonusSpells = [];
     }
-    
+
     // Check if they have Animate Dead in regular spells
-    const animateDeadIndex = currentCharacter.knownSpellGroups.findIndex(group => 
+    const animateDeadIndex = currentCharacter.knownSpellGroups.findIndex(group =>
         group.spells.some(spell => spell.name.includes('Animate Dead') && !spell.name.includes('Control'))
     );
-    
+
     if (animateDeadIndex !== -1) {
         // Store the original Animate Dead for potential restoration
         currentCharacter.storedAnimateDead = { ...currentCharacter.knownSpellGroups[animateDeadIndex] };
-        
+
         // Remove Animate Dead from regular spells (frees up a slot)
         currentCharacter.knownSpellGroups.splice(animateDeadIndex, 1);
-        
+
         // Add Control Dead as bonus spell
         addControlDeadAsBonus();
-        
+
         showCustomDialog('Spell Upgraded', 'Animate Dead has been upgraded to Control Dead (bonus spell)! You now have a free spell slot available.');
     } else {
         // No Animate Dead found - just add Control Dead as bonus
         addControlDeadAsBonus();
         showCustomDialog('Necromancer Bonus', 'You gained Control Dead as a bonus spell (doesn\'t count against spell limits)!');
     }
-    
+
     // Update displays
     updateKnownSpellsDisplay();
     updateSpellCastingDisplay(currentCharacter);
@@ -2502,31 +2638,31 @@ function removeNecromancerBonus() {
     if (currentCharacter.necromancerBonusSpells) {
         currentCharacter.necromancerBonusSpells = [];
     }
-    
+
     // Try to restore Animate Dead if there's space and player had it before
     if (currentCharacter.storedAnimateDead) {
         const currentSpellCount = currentCharacter.knownSpellGroups?.length || 0;
         const maxSpells = getMaxSpells(currentCharacter);
-        
+
         if (currentSpellCount < maxSpells) {
             // Space available - restore Animate Dead
             if (!currentCharacter.knownSpellGroups) {
                 currentCharacter.knownSpellGroups = [];
             }
             currentCharacter.knownSpellGroups.push({ ...currentCharacter.storedAnimateDead });
-            
+
             showCustomDialog('Necromancer Removed', 'Control Dead bonus spell removed. Animate Dead has been restored to your spell list.');
         } else {
             // No space - don't restore
             showCustomDialog('Necromancer Removed', 'Control Dead bonus spell removed. Animate Dead could not be restored due to spell limit. You can manually select it again if desired.');
         }
-        
+
         // Clear stored spell
         delete currentCharacter.storedAnimateDead;
     } else {
         showCustomDialog('Necromancer Removed', 'Control Dead bonus spell has been removed.');
     }
-    
+
     // Update displays
     updateKnownSpellsDisplay();
     updateSpellCastingDisplay(currentCharacter);
@@ -2602,21 +2738,21 @@ function addSpellCastingAbility() {
 // Check if spell should be hidden from selection
 function shouldHideSpellFromSelection(group) {
     if (!currentCharacter || currentCharacter.class !== 'Warlock') return false;
-    
+
     const hasNecromancer = hasNecromancerAbility();
-    
+
     // ALWAYS hide Control Dead - it's never selectable (only available as bonus)
     if (group.spells.some(spell => spell.name.includes('Control Dead'))) {
         return true;
     }
-    
+
     // Hide Animate Dead if Necromancer is selected
-    if (hasNecromancer && group.spells.some(spell => 
+    if (hasNecromancer && group.spells.some(spell =>
         spell.name.includes('Animate Dead') && !spell.name.includes('Control')
     )) {
         return true;
     }
-    
+
     return false;
 }
 
@@ -2919,17 +3055,17 @@ function updateDCSaveDisplay(character) {
         dcSaveElement.style.display = 'none';
     } else {
         // Apply Wizard armor penalty (-5 to DC Save)
-         const hasArmorPenalty = hasWizardArmorPenalty(character);
-         if (hasArmorPenalty) {
-             dcSave -= 5;
-         }
+        const hasArmorPenalty = hasWizardArmorPenalty(character);
+        if (hasArmorPenalty) {
+            dcSave -= 5;
+        }
         // Show and update the DC save value
         dcSaveElement.style.display = 'inline-block';
         if (hasArmorPenalty) {
-             dcSaveElement.innerHTML = `DC Save ${dcSave} <span class="text-xs text-red-500">(-5 Armor)</span>`;
-         } else {
-             dcSaveElement.textContent = `DC Save ${dcSave}`;
-         }
+            dcSaveElement.innerHTML = `DC Save ${dcSave} <span class="text-xs text-red-500">(-5 Armor)</span>`;
+        } else {
+            dcSaveElement.textContent = `DC Save ${dcSave}`;
+        }
 
         // Optional: Add different background colors based on class
         dcSaveElement.className = getDCSaveStyleClass(character.class);
@@ -3005,9 +3141,9 @@ function updateSpellCastingDisplay(character) {
 
     // Show section if Spell-Casting is selected OR if character has Necromancer ability
     const hasSignatureSpell = hasSignatureSpellAbility();
- 
-     // Show section if Spell-Casting is selected OR if character has Necromancer or Signature Spell ability
-     if (hasSpellCastingSelected || hasNecromancer || hasSignatureSpell) {
+
+    // Show section if Spell-Casting is selected OR if character has Necromancer or Signature Spell ability
+    if (hasSpellCastingSelected || hasNecromancer || hasSignatureSpell) {
         spellCastingSection.style.display = 'block';
 
         // Enable/disable Add Spells button based on actual Spell-Casting ability
@@ -5031,11 +5167,11 @@ function addWeaponToCharacter() {
     updateWeaponDisplay();
 
     // Update Wizard armor penalty displays (DC Save, spell costs, and warning banner)
-     if (currentCharacter.class === 'Wizard') {
-         updateDCSaveDisplay(currentCharacter);
-         updateKnownSpellsDisplay();
-         updateWizardArmorPenaltyWarning(currentCharacter);
-     }
+    if (currentCharacter.class === 'Wizard') {
+        updateDCSaveDisplay(currentCharacter);
+        updateKnownSpellsDisplay();
+        updateWizardArmorPenaltyWarning(currentCharacter);
+    }
 
     // Save changes
     saveCharacters();
@@ -6315,11 +6451,11 @@ function resetCharacterForm() {
     document.getElementById('classMax').value = 0;
     document.getElementById('spellMax').value = 0;
 
-// Reset equipment limit checkbox to default (checked)
-     const equipmentLimitCheckbox = document.getElementById('equipmentLimitEnabled');
-     if (equipmentLimitCheckbox) {
-         equipmentLimitCheckbox.checked = true;
-     }
+    // Reset equipment limit checkbox to default (checked)
+    const equipmentLimitCheckbox = document.getElementById('equipmentLimitEnabled');
+    if (equipmentLimitCheckbox) {
+        equipmentLimitCheckbox.checked = true;
+    }
 
     // Initialize resource boxes
     setTimeout(() => {
@@ -6921,6 +7057,7 @@ function populateCharacterSheet(character) {
     let thresholdLowerDisplay = thresholdLowerBase;
     let thresholdUpperDisplay = thresholdUpperBase;
 
+
     // Apply Unarmored Defense threshold bonuses if active (allow ceremonial Unarmored Defense armor)
     if (character.unarmoredDefenseActive && (!character.armorItem || character.armorItem.isUnarmoredDefense)) {
         if (character.class === 'Monk') {
@@ -6954,13 +7091,14 @@ function populateCharacterSheet(character) {
     const secondaryWeaponAbilityBonuses = character.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const armorAbilityBonuses = character.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const wildBeastAbilityBonuses = character.wildBeastAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+    const awakenedMindAbilityBonuses = character.awakenedMindAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
 
-    const displayStr = (character.str || 0) + raceAbilityBonuses.str + primaryWeaponAbilityBonuses.str + secondaryWeaponAbilityBonuses.str + armorAbilityBonuses.str + wildBeastAbilityBonuses.str;
-    const displayDex = (character.dex || 0) + raceAbilityBonuses.dex + primaryWeaponAbilityBonuses.dex + secondaryWeaponAbilityBonuses.dex + armorAbilityBonuses.dex + wildBeastAbilityBonuses.dex;
-    const displayCon = (character.con || 0) + raceAbilityBonuses.con + primaryWeaponAbilityBonuses.con + secondaryWeaponAbilityBonuses.con + armorAbilityBonuses.con + wildBeastAbilityBonuses.con;
-    const displayInt = (character.int || 0) + raceAbilityBonuses.int + primaryWeaponAbilityBonuses.int + secondaryWeaponAbilityBonuses.int + armorAbilityBonuses.int + wildBeastAbilityBonuses.int;
-    const displayWis = (character.wis || 0) + raceAbilityBonuses.wis + primaryWeaponAbilityBonuses.wis + secondaryWeaponAbilityBonuses.wis + armorAbilityBonuses.wis + wildBeastAbilityBonuses.wis;
-    const displayCha = (character.cha || 0) + raceAbilityBonuses.cha + primaryWeaponAbilityBonuses.cha + secondaryWeaponAbilityBonuses.cha + armorAbilityBonuses.cha + wildBeastAbilityBonuses.cha;
+    const displayStr = (character.str || 0) + raceAbilityBonuses.str + primaryWeaponAbilityBonuses.str + secondaryWeaponAbilityBonuses.str + armorAbilityBonuses.str + wildBeastAbilityBonuses.str + awakenedMindAbilityBonuses.str;
+    const displayDex = (character.dex || 0) + raceAbilityBonuses.dex + primaryWeaponAbilityBonuses.dex + secondaryWeaponAbilityBonuses.dex + armorAbilityBonuses.dex + wildBeastAbilityBonuses.dex + awakenedMindAbilityBonuses.dex;
+    const displayCon = (character.con || 0) + raceAbilityBonuses.con + primaryWeaponAbilityBonuses.con + secondaryWeaponAbilityBonuses.con + armorAbilityBonuses.con + wildBeastAbilityBonuses.con + awakenedMindAbilityBonuses.con;
+    const displayInt = (character.int || 0) + raceAbilityBonuses.int + primaryWeaponAbilityBonuses.int + secondaryWeaponAbilityBonuses.int + armorAbilityBonuses.int + wildBeastAbilityBonuses.int + awakenedMindAbilityBonuses.int;
+    const displayWis = (character.wis || 0) + raceAbilityBonuses.wis + primaryWeaponAbilityBonuses.wis + secondaryWeaponAbilityBonuses.wis + armorAbilityBonuses.wis + wildBeastAbilityBonuses.wis + awakenedMindAbilityBonuses.wis;
+    const displayCha = (character.cha || 0) + raceAbilityBonuses.cha + primaryWeaponAbilityBonuses.cha + secondaryWeaponAbilityBonuses.cha + armorAbilityBonuses.cha + wildBeastAbilityBonuses.cha + awakenedMindAbilityBonuses.cha;
 
     document.getElementById('displayStr').textContent = displayStr >= 0 ? `+${displayStr}` : displayStr;
     document.getElementById('displayDex').textContent = displayDex >= 0 ? `+${displayDex}` : displayDex;
@@ -7033,7 +7171,7 @@ function populateCharacterSheet(character) {
 
     // Update Companion display
     updateCompanionDisplay(character);
-    
+
     // Update Monsters display (Mighty Summoner)
     updateMonstersDisplay(character);
 
@@ -7046,16 +7184,16 @@ function populateCharacterSheet(character) {
     // Update Coins
     updateAllCoinDisplays();
 
-    
+
 
     // Update DC Save display
     updateDCSaveDisplay(character);
 
     // Update Wizard armor penalty warning banner
-     updateWizardArmorPenaltyWarning(character);
- 
-     // Update Spell Casting display
-updateSpellCastingDisplay(character);
+    updateWizardArmorPenaltyWarning(character);
+
+    // Update Spell Casting display
+    updateSpellCastingDisplay(character);
 
     // Notes
     document.getElementById('characterNotes').value = character.notes || '';
@@ -7134,17 +7272,17 @@ function generateSkillsList(character) {
             skillDisplayName += ` <span class="text-xs text-orange-500 dark:text-orange-400">(+${jackOfAllTradesBonus} JoAT)</span>`;
         }
 
-                 // Get advantage/disadvantage setting for this skill
-         const adSetting = getSkillAdvantageSetting(skill.name);
-         let adIndicator = '';
-         if (adSetting.mode === 'advantage') {
-             const alwaysClass = adSetting.always ? ' always' : '';
-             adIndicator = `<span class="skill-ad-indicator text-sm advantage${alwaysClass}" title="Advantage${adSetting.always ? ' (Always)' : ''}">A</span>`;
-         } else if (adSetting.mode === 'disadvantage') {
-             const alwaysClass = adSetting.always ? ' always' : '';
-             adIndicator = `<span class="skill-ad-indicator text-sm disadvantage${alwaysClass}" title="Disadvantage${adSetting.always ? ' (Always)' : ''}">D</span>`;
-         }
- 
+        // Get advantage/disadvantage setting for this skill
+        const adSetting = getSkillAdvantageSetting(skill.name);
+        let adIndicator = '';
+        if (adSetting.mode === 'advantage') {
+            const alwaysClass = adSetting.always ? ' always' : '';
+            adIndicator = `<span class="skill-ad-indicator text-sm advantage${alwaysClass}" title="Advantage${adSetting.always ? ' (Always)' : ''}">A</span>`;
+        } else if (adSetting.mode === 'disadvantage') {
+            const alwaysClass = adSetting.always ? ' always' : '';
+            adIndicator = `<span class="skill-ad-indicator text-sm disadvantage${alwaysClass}" title="Disadvantage${adSetting.always ? ' (Always)' : ''}">D</span>`;
+        }
+
 
         skillDiv.innerHTML = `
                     <span class="flex items-center">${skillDisplayName.replace(/\(([A-Z]{3})\)/g, '<span class="text-xs text-gray-500 dark:text-gray-400">($1)</span>')}${adIndicator}</span>
@@ -8125,8 +8263,8 @@ document.getElementById('characterForm').addEventListener('submit', function (e)
             selectedUniversal: []
         },
         // Equipment limit setting (default enabled)
-         equipmentLimitEnabled: document.getElementById('equipmentLimitEnabled').checked
-     };
+        equipmentLimitEnabled: document.getElementById('equipmentLimitEnabled').checked
+    };
 
     characters.push(character);
     saveCharacters();
@@ -9038,6 +9176,11 @@ function getEffectiveThresholdValues(character) {
     let thresholdLowerEffective = thresholdLowerBase;
     let thresholdUpperEffective = thresholdUpperBase;
 
+    // Apply Mage Armor temporary threshold bonuses 
+    if (character.tempThreshold) {
+        thresholdLowerDisplay += character.tempThreshold.lower || 0; thresholdUpperDisplay += character.tempThreshold.upper || 0;
+    }
+
     // Apply Unarmored Defense threshold bonuses if active (allow ceremonial Unarmored Defense armor)
     if (character.unarmoredDefenseActive && (!character.armorItem || character.armorItem.isUnarmoredDefense)) {
         if (character.class === 'Monk') {
@@ -9155,15 +9298,15 @@ document.getElementById('equipmentForm').addEventListener('submit', function (e)
     e.preventDefault();
 
     if (currentCharacter) {
-                 // Check equipment limit before adding
-         const limit = getEquipmentLimit(currentCharacter);
-         const currentCount = getEquipmentCount(currentCharacter);
- 
-         if (currentCount >= limit) {
-             showCustomDialog('Equipment Limit Reached',
-                 `You cannot add more items. Your equipment limit is ${limit} items based on your STR modifier.`);
-             return;
-         }
+        // Check equipment limit before adding
+        const limit = getEquipmentLimit(currentCharacter);
+        const currentCount = getEquipmentCount(currentCharacter);
+
+        if (currentCount >= limit) {
+            showCustomDialog('Equipment Limit Reached',
+                `You cannot add more items. Your equipment limit is ${limit} items based on your STR modifier.`);
+            return;
+        }
         const item = {
             name: document.getElementById('equipmentName').value,
             quantity: parseInt(document.getElementById('equipmentQuantity').value)
@@ -10302,10 +10445,10 @@ function populateCharacterEditForm() {
     document.getElementById('editCharClass').value = currentCharacter.class || '--';
 
     // Set equipment limit checkbox (default to true for backwards compatibility)
-     const editEquipmentLimitCheckbox = document.getElementById('editEquipmentLimitEnabled');
-     if (editEquipmentLimitCheckbox) {
-         editEquipmentLimitCheckbox.checked = currentCharacter.equipmentLimitEnabled !== false;
-     }
+    const editEquipmentLimitCheckbox = document.getElementById('editEquipmentLimitEnabled');
+    if (editEquipmentLimitCheckbox) {
+        editEquipmentLimitCheckbox.checked = currentCharacter.equipmentLimitEnabled !== false;
+    }
 
 
     // Populate ability scores with manual input fields
@@ -10939,34 +11082,34 @@ function handleCircleClick(clickedIndex) {
 
 // Dice rolling function for skills
 function rollSkillCheck(skillName, modifier) {
-     // Get advantage/disadvantage setting for this skill
-     const adSetting = getSkillAdvantageSetting(skillName);
- 
-     // Roll the dice
-     const roll1 = Math.floor(Math.random() * 20) + 1;
- 
-     // Check if we should automatically apply advantage/disadvantage
-     if (adSetting.always && adSetting.mode !== 'none') {
-         // Roll second die for advantage/disadvantage
-         const roll2 = Math.floor(Math.random() * 20) + 1;
- 
-         // Determine which roll to use based on mode
-         let finalRoll;
-         if (adSetting.mode === 'advantage') {
-             finalRoll = Math.max(roll1, roll2);
-         } else {
-             finalRoll = Math.min(roll1, roll2);
-         }
- 
-         const total = finalRoll + modifier;
- 
-         // Show the dice roll modal with both rolls
-         showDiceRollResultWithAD(skillName, roll1, roll2, finalRoll, modifier, total, adSetting.mode);
-     } else {
-         // Normal single roll
-         const total = roll1 + modifier;
-         showDiceRollResult(skillName, roll1, modifier, total);
-     }
+    // Get advantage/disadvantage setting for this skill
+    const adSetting = getSkillAdvantageSetting(skillName);
+
+    // Roll the dice
+    const roll1 = Math.floor(Math.random() * 20) + 1;
+
+    // Check if we should automatically apply advantage/disadvantage
+    if (adSetting.always && adSetting.mode !== 'none') {
+        // Roll second die for advantage/disadvantage
+        const roll2 = Math.floor(Math.random() * 20) + 1;
+
+        // Determine which roll to use based on mode
+        let finalRoll;
+        if (adSetting.mode === 'advantage') {
+            finalRoll = Math.max(roll1, roll2);
+        } else {
+            finalRoll = Math.min(roll1, roll2);
+        }
+
+        const total = finalRoll + modifier;
+
+        // Show the dice roll modal with both rolls
+        showDiceRollResultWithAD(skillName, roll1, roll2, finalRoll, modifier, total, adSetting.mode);
+    } else {
+        // Normal single roll
+        const total = roll1 + modifier;
+        showDiceRollResult(skillName, roll1, modifier, total);
+    }
 }
 
 function showDiceRollResult(skillName, roll, modifier, total) {
@@ -11005,36 +11148,36 @@ function showDiceRollResult(skillName, roll, modifier, total) {
 
     modal.classList.remove('hidden');
 }
-     // Show dice roll result with Advantage/Disadvantage (displays both rolls)
- function showDiceRollResultWithAD(skillName, roll1, roll2, finalRoll, modifier, total, mode) {
-     const modal = document.getElementById('diceRollModal');
- 
-     // Determine which roll was used/discarded
-     const usedRoll = finalRoll;
-     const discardedRoll = (roll1 === finalRoll) ? roll2 : roll1;
- 
-     // Format the mode label
-     const modeLabel = mode === 'advantage' ? 'Advantage' : 'Disadvantage';
-     const modeColor = mode === 'advantage' ? 'text-green-500' : 'text-red-500';
- 
-     // Update modal content
-     document.getElementById('rollSkillName').innerHTML = `${skillName} <span class="${modeColor} text-sm">(${modeLabel})</span>`;
-     document.getElementById('rollTotal').textContent = total;
- 
-     // Show both rolls with the used one highlighted
-     const roll1Style = (roll1 === finalRoll) ? 'font-bold text-primary' : 'text-gray-400 line-through';
-     const roll2Style = (roll2 === finalRoll) ? 'font-bold text-primary' : 'text-gray-400 line-through';
- 
-     document.getElementById('rollBreakdown').innerHTML = `
+// Show dice roll result with Advantage/Disadvantage (displays both rolls)
+function showDiceRollResultWithAD(skillName, roll1, roll2, finalRoll, modifier, total, mode) {
+    const modal = document.getElementById('diceRollModal');
+
+    // Determine which roll was used/discarded
+    const usedRoll = finalRoll;
+    const discardedRoll = (roll1 === finalRoll) ? roll2 : roll1;
+
+    // Format the mode label
+    const modeLabel = mode === 'advantage' ? 'Advantage' : 'Disadvantage';
+    const modeColor = mode === 'advantage' ? 'text-green-500' : 'text-red-500';
+
+    // Update modal content
+    document.getElementById('rollSkillName').innerHTML = `${skillName} <span class="${modeColor} text-sm">(${modeLabel})</span>`;
+    document.getElementById('rollTotal').textContent = total;
+
+    // Show both rolls with the used one highlighted
+    const roll1Style = (roll1 === finalRoll) ? 'font-bold text-primary' : 'text-gray-400 line-through';
+    const roll2Style = (roll2 === finalRoll) ? 'font-bold text-primary' : 'text-gray-400 line-through';
+
+    document.getElementById('rollBreakdown').innerHTML = `
          d20: <span class="${roll1Style}">${roll1}</span> | <span class="${roll2Style}">${roll2}</span>
          → <span class="font-bold">${finalRoll}</span> + modifier: ${modifier >= 0 ? '+' : ''}${modifier}
      `;
- 
-     // Store current roll data for "Roll Again"
-     modal.dataset.skillName = skillName;
-     modal.dataset.modifier = modifier;
- 
-     modal.classList.remove('hidden');
+
+    // Store current roll data for "Roll Again"
+    modal.dataset.skillName = skillName;
+    modal.dataset.modifier = modifier;
+
+    modal.classList.remove('hidden');
 }
 
 // Dice Roll Modal Event Listeners
@@ -11129,27 +11272,27 @@ function parseDamageString(damageString) {
 }
 
 // Roll a specific damage type with proficiency
- function rollDamageType(damageType, proficiency, weaponType = 'primary') {
-     // Calculate base dice
-     let totalDice = damageType.numDice * proficiency;
- 
-     // Add Dual-Wield extra dice for secondary weapon attacks
-     let dualWieldBonus = 0;
-     if (weaponType === 'secondary' && currentCharacter) {
-         dualWieldBonus = getDualWieldExtraDice(currentCharacter);
-         totalDice += dualWieldBonus;
-     }
- 
-     // Get Two-Handed damage bonus per die
-     const twoHandedBonus = weaponType === 'primary' && currentCharacter ? getTwoHandedDamageBonus(currentCharacter) : 0;
+function rollDamageType(damageType, proficiency, weaponType = 'primary') {
+    // Calculate base dice
+    let totalDice = damageType.numDice * proficiency;
+
+    // Add Dual-Wield extra dice for secondary weapon attacks
+    let dualWieldBonus = 0;
+    if (weaponType === 'secondary' && currentCharacter) {
+        dualWieldBonus = getDualWieldExtraDice(currentCharacter);
+        totalDice += dualWieldBonus;
+    }
+
+    // Get Two-Handed damage bonus per die
+    const twoHandedBonus = weaponType === 'primary' && currentCharacter ? getTwoHandedDamageBonus(currentCharacter) : 0;
 
     const rolls = [];
     let total = 0;
 
     for (let i = 0; i < totalDice; i++) {
         let roll = Math.floor(Math.random() * damageType.sides) + 1;
-         // Add Two-Handed +1 bonus per die
-         roll += twoHandedBonus;
+        // Add Two-Handed +1 bonus per die
+        roll += twoHandedBonus;
         rolls.push(roll);
         total += roll;
     }
@@ -11162,8 +11305,8 @@ function parseDamageString(damageString) {
         baseDice: damageType.numDice,
         rolls: rolls,
         total: total,
-         dualWieldBonus: dualWieldBonus,
-         twoHandedBonus: twoHandedBonus
+        dualWieldBonus: dualWieldBonus,
+        twoHandedBonus: twoHandedBonus
     };
 }
 
@@ -11339,7 +11482,7 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
         const primaryTotalsWithModifier = existingResults.primaryResults.map(r => r.total + existingResults.primaryAbilityModifier);
 
         // Check for Two-Handed bonus in primary results
-         const twoHandedBonusPrimary = existingResults.primaryResults.length > 0 && existingResults.primaryResults[0].twoHandedBonus ? existingResults.primaryResults[0].twoHandedBonus : 0;
+        const twoHandedBonusPrimary = existingResults.primaryResults.length > 0 && existingResults.primaryResults[0].twoHandedBonus ? existingResults.primaryResults[0].twoHandedBonus : 0;
 
         primaryDiv.innerHTML = `
             <h4 class="font-semibold text-lg mb-3 text-blue-600 dark:text-blue-400">
@@ -11370,7 +11513,7 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
         const secondaryTotalsWithModifier = rollResults.map(r => r.total + abilityModifier);
 
         // Check for Dual-Wield bonus
-         const dualWieldBonus = rollResults.length > 0 && rollResults[0].dualWieldBonus ? rollResults[0].dualWieldBonus : 0;
+        const dualWieldBonus = rollResults.length > 0 && rollResults[0].dualWieldBonus ? rollResults[0].dualWieldBonus : 0;
 
         secondaryDiv.innerHTML = `
             <h4 class="font-semibold text-lg mb-3 text-green-600 dark:text-green-400">
@@ -11383,8 +11526,8 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
                         <div class="font-semibold text-sm mb-2">
                             ${result.damageType}
                             ${result.dualWieldBonus > 0
-                                 ? `<span class="proficiency-indicator text-black dark:text-white">+${result.dualWieldBonus} Dual-Wield dice = ${result.totalDice} dice</span>`
-                                 : '<span class="proficiency-indicator">(No proficiency)</span>'}
+                ? `<span class="proficiency-indicator text-black dark:text-white">+${result.dualWieldBonus} Dual-Wield dice = ${result.totalDice} dice</span>`
+                : '<span class="proficiency-indicator">(No proficiency)</span>'}
                         </div>
                         <div class="damage-rolls-display text-lg mb-1">
                             [${result.rolls.join(', ')}] + ${abilityModifier} mod
@@ -11463,8 +11606,8 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
                     <div class="font-semibold text-sm mb-2">
                         ${result.damageType}
                         ${result.dualWieldBonus > 0
-                             ? `<span class="proficiency-indicator text-purple-600 dark:text-purple-400">⚔️ +${result.dualWieldBonus} Dual-Wield dice = ${result.totalDice} dice</span>`
-                             : '<span class="proficiency-indicator">(No proficiency bonus)</span>'}
+                        ? `<span class="proficiency-indicator text-purple-600 dark:text-purple-400">⚔️ +${result.dualWieldBonus} Dual-Wield dice = ${result.totalDice} dice</span>`
+                        : '<span class="proficiency-indicator">(No proficiency bonus)</span>'}
                     </div>
                     <div class="damage-rolls-display text-lg mb-1">
                         [${result.rolls.join(', ')}] + ${abilityModifier} mod
@@ -11541,8 +11684,8 @@ function rerollWeaponDamage() {
     const abilityModifier = parseInt(modal.dataset.abilityModifier);
 
     // Get fighting style bonuses for re-roll
-     const twoHandedBonus = weaponType === 'primary' && currentCharacter ? getTwoHandedDamageBonus(currentCharacter) : 0;
-     const dualWieldBonus = weaponType === 'secondary' && currentCharacter ? getDualWieldExtraDice(currentCharacter) : 0;
+    const twoHandedBonus = weaponType === 'primary' && currentCharacter ? getTwoHandedDamageBonus(currentCharacter) : 0;
+    const dualWieldBonus = weaponType === 'secondary' && currentCharacter ? getDualWieldExtraDice(currentCharacter) : 0;
 
     // Re-roll all damage types
     const newRollResults = [];
@@ -11555,8 +11698,8 @@ function rerollWeaponDamage() {
         for (let i = 0; i < data.totalDice; i++) {
             const sides = parseInt(data.diceType.substring(1));
             let roll = Math.floor(Math.random() * sides) + 1;
-             // Apply Two-Handed +1 bonus per die
-             roll += twoHandedBonus;
+            // Apply Two-Handed +1 bonus per die
+            roll += twoHandedBonus;
             rolls.push(roll);
             total += roll;
         }
@@ -12205,11 +12348,11 @@ document.getElementById('editCharacterForm').addEventListener('submit', function
     currentCharacter.race = document.getElementById('editCharRace').value;
     currentCharacter.class = document.getElementById('editCharClass').value;
 
-// Save equipment limit setting
-     const editEquipmentLimitCheckbox = document.getElementById('editEquipmentLimitEnabled');
-     if (editEquipmentLimitCheckbox) {
-         currentCharacter.equipmentLimitEnabled = editEquipmentLimitCheckbox.checked;
-     }
+    // Save equipment limit setting
+    const editEquipmentLimitCheckbox = document.getElementById('editEquipmentLimitEnabled');
+    if (editEquipmentLimitCheckbox) {
+        currentCharacter.equipmentLimitEnabled = editEquipmentLimitCheckbox.checked;
+    }
 
     // Update ability scores from direct input fields - remove all existing bonuses and apply new totals
     const strInput = parseInt(document.getElementById('editStrInput').value) || 0;
@@ -12668,10 +12811,16 @@ function applyMageArmorBonuses() {
         };
     }
 
-    // Calculate bonuses
+    // Calculate base bonuses
     const evasionBonus = Math.max(1, currentDex);
-    const lowerThresholdBonus = level;
-    const upperThresholdBonus = level * 2;
+    let lowerThresholdBonus = level;
+    let upperThresholdBonus = level * 2;
+
+    // Check if Awakened Mind is active - adds +10 Lower, +15 Upper to Mage Armor
+    if (hasAwakenedMindAbility() && currentCharacter.awakenedMindActive) {
+        lowerThresholdBonus += 10;
+        upperThresholdBonus += 15;
+    }
 
     // Apply evasion bonus to current evasion
     currentCharacter.evasion = (currentCharacter.evasion || 0) + evasionBonus;
@@ -12690,7 +12839,7 @@ function applyMageArmorBonuses() {
         thresholdLower: lowerThresholdBonus,
         thresholdUpper: upperThresholdBonus
     };
-    // Auto-equip ceremonial Mage Armor "armor" for display purposes  
+    // Auto-equip ceremonial Mage Armor "armor" for display purposes 
     if (!currentCharacter.armorItem) {
         currentCharacter.armorItem = createMageArmor(currentCharacter.class);
     }
@@ -12936,55 +13085,55 @@ function updateAllCoinDisplays() {
     });
 }
 
- // =====================================================
- // ADVANTAGE/DISADVANTAGE MODAL FUNCTIONALITY
- // =====================================================
- 
- // Temporary storage for modal state before saving
- let tempAdvantageSettings = {};
- 
- // Open the Advantage/Disadvantage modal
- function openAdvantageModal() {
-     if (!currentCharacter) {
-         showCustomDialog('No Character Selected', 'Please select a character first.');
-         return;
-     }
- 
-     const modal = document.getElementById('advantageModal');
-     modal.classList.remove('hidden');
- 
-     // Initialize temp settings from character's saved settings
-     tempAdvantageSettings = JSON.parse(JSON.stringify(currentCharacter.skillAdvantageSettings || {}));
- 
-     // Populate the skills list in the modal
-     populateAdvantageModalSkills();
- }
- 
- // Close the Advantage/Disadvantage modal
- function closeAdvantageModal() {
-     document.getElementById('advantageModal').classList.add('hidden');
-     tempAdvantageSettings = {};
- }
- 
- // Populate skills in the Advantage modal
- function populateAdvantageModalSkills() {
-     const container = document.getElementById('advantageSkillsList');
-     container.innerHTML = '';
- 
-     defaultSkills.forEach((skill, index) => {
-         const skillKey = skill.name.replace(/\s+/g, '_').replace(/[()]/g, '');
-         const settings = tempAdvantageSettings[skillKey] || { mode: 'none', always: false };
- 
-         const row = document.createElement('div');
-         row.className = "grid grid-cols-[1fr,2rem,2rem,2rem,2rem] gap-2 items-center px-2 py-1";
-         row.dataset.skillKey = skillKey;
- 
-         // Extract just the skill name without the ability in parentheses
-         const skillDisplayName = skill.name.replace(/\s*\([A-Z]{3}\)/g, '');
-         const abilityMatch = skill.name.match(/\(([A-Z]{3})\)/);
-         const abilityTag = abilityMatch ? `<span class="text-xs text-gray-500 dark:text-gray-400 ml-1">(${abilityMatch[1]})</span>` : '';
- 
-         row.innerHTML = ` 
+// =====================================================
+// ADVANTAGE/DISADVANTAGE MODAL FUNCTIONALITY
+// =====================================================
+
+// Temporary storage for modal state before saving
+let tempAdvantageSettings = {};
+
+// Open the Advantage/Disadvantage modal
+function openAdvantageModal() {
+    if (!currentCharacter) {
+        showCustomDialog('No Character Selected', 'Please select a character first.');
+        return;
+    }
+
+    const modal = document.getElementById('advantageModal');
+    modal.classList.remove('hidden');
+
+    // Initialize temp settings from character's saved settings
+    tempAdvantageSettings = JSON.parse(JSON.stringify(currentCharacter.skillAdvantageSettings || {}));
+
+    // Populate the skills list in the modal
+    populateAdvantageModalSkills();
+}
+
+// Close the Advantage/Disadvantage modal
+function closeAdvantageModal() {
+    document.getElementById('advantageModal').classList.add('hidden');
+    tempAdvantageSettings = {};
+}
+
+// Populate skills in the Advantage modal
+function populateAdvantageModalSkills() {
+    const container = document.getElementById('advantageSkillsList');
+    container.innerHTML = '';
+
+    defaultSkills.forEach((skill, index) => {
+        const skillKey = skill.name.replace(/\s+/g, '_').replace(/[()]/g, '');
+        const settings = tempAdvantageSettings[skillKey] || { mode: 'none', always: false };
+
+        const row = document.createElement('div');
+        row.className = "grid grid-cols-[1fr,2rem,2rem,2rem] gap-2 items-center px-2 py-1";
+        row.dataset.skillKey = skillKey;
+
+        // Extract just the skill name without the ability in parentheses
+        const skillDisplayName = skill.name.replace(/\s*\([A-Z]{3}\)/g, '');
+        const abilityMatch = skill.name.match(/\(([A-Z]{3})\)/);
+        const abilityTag = abilityMatch ? `<span class="text-xs text-gray-500 dark:text-gray-400 ml-1">(${abilityMatch[1]})</span>` : '';
+
+        row.innerHTML = ` 
          <span class="text-sm font-medium">${skillDisplayName}${abilityTag}</span>
              <div class="ad-radio-group advantage w-8 flex justify-center">
                  <input type="radio" name="ad_${skillKey}" value="advantage"
@@ -13001,583 +13150,556 @@ function updateAllCoinDisplays() {
                      ${settings.mode === 'none' ? 'checked' : ''}
                      data-skill="${skillKey}" data-type="mode">
              </div>
-             <div class="w-8 flex justify-center">
-                 <input type="checkbox" class="always-checkbox"
-                     ${settings.always ? 'checked' : ''}
-                     ${settings.mode === 'none' ? 'disabled' : ''}
-                     data-skill="${skillKey}" data-type="always">
-             </div>
+             
          `;
- 
-         container.appendChild(row);
-     });
- 
-     // Add event listeners for radio buttons and checkboxes
-     container.querySelectorAll('input[type="radio"]').forEach(radio => {
-         radio.addEventListener('change', handleAdvantageRadioChange);
-     });
- 
-     container.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-         checkbox.addEventListener('change', handleAlwaysCheckboxChange);
-     });
- }
- 
- // Handle radio button changes in the modal
- function handleAdvantageRadioChange(event) {
-     const skillKey = event.target.dataset.skill;
-     const value = event.target.value;
- 
-     if (!tempAdvantageSettings[skillKey]) {
-         tempAdvantageSettings[skillKey] = { mode: 'none', always: false };
-     }
- 
-     tempAdvantageSettings[skillKey].mode = value;
- 
-     // Find the Always checkbox for this skill
-     const alwaysCheckbox = document.querySelector(`.always-checkbox[data-skill="${skillKey}"]`);
-     if (alwaysCheckbox) {
-         if (value === 'none') {
-             alwaysCheckbox.disabled = true;
-             alwaysCheckbox.checked = false;
-             tempAdvantageSettings[skillKey].always = false;
-         } else {
-             alwaysCheckbox.disabled = false;
-         }
-     }
- }
- 
- // Handle Always checkbox changes
- function handleAlwaysCheckboxChange(event) {
-     const skillKey = event.target.dataset.skill;
-     const checked = event.target.checked;
- 
-     if (!tempAdvantageSettings[skillKey]) {
-         tempAdvantageSettings[skillKey] = { mode: 'none', always: false };
-     }
- 
-     tempAdvantageSettings[skillKey].always = checked;
- }
- 
- // Save advantage settings to character
- function saveAdvantageSettings() {
-     if (!currentCharacter) return;
- 
-     currentCharacter.skillAdvantageSettings = JSON.parse(JSON.stringify(tempAdvantageSettings));
-     saveCharacters();
- 
-     // Refresh the skills list to show A/D indicators
-     generateSkillsList(currentCharacter);
- 
-     closeAdvantageModal();
- }
- 
- // Reset all advantage settings
- function resetAdvantageSettings() {
-     tempAdvantageSettings = {};
- 
-     // Reset all radio buttons to 'none' and uncheck/disable all 'always' checkboxes
-     document.querySelectorAll('#advantageSkillsList input[type="radio"][value="none"]').forEach(radio => {
-         radio.checked = true;
-     });
- 
-     document.querySelectorAll('#advantageSkillsList .always-checkbox').forEach(checkbox => {
-         checkbox.checked = false;
-         checkbox.disabled = true;
-     });
- }
- 
- // Get advantage setting for a specific skill
- function getSkillAdvantageSetting(skillName) {
-     if (!currentCharacter || !currentCharacter.skillAdvantageSettings) {
-         return { mode: 'none', always: false };
-     }
- 
-     const skillKey = skillName.replace(/\s+/g, '_').replace(/[()]/g, '');
-     return currentCharacter.skillAdvantageSettings[skillKey] || { mode: 'none', always: false };
- }
- 
- // Initialize Advantage Modal Event Listeners (direct attachment - DOM already loaded when script runs)
- document.getElementById('openAdvantageModal').addEventListener('click', openAdvantageModal);
- document.getElementById('closeAdvantageModal').addEventListener('click', closeAdvantageModal);
- document.getElementById('saveAdvantageSettings').addEventListener('click', saveAdvantageSettings);
- document.getElementById('resetAdvantageSettings').addEventListener('click', resetAdvantageSettings);
- 
- // Close modal on outside click
- document.getElementById('advantageModal').addEventListener('click', function(e) {
-     if (e.target === this) {
-         closeAdvantageModal();
-     }
- });
 
-  // =====================================================
- // EQUIPMENT LIMIT FUNCTIONALITY
- // =====================================================
- 
- // Calculate equipment limit based on STR modifier
- function getEquipmentLimit(character) {
-     if (!character) return 10;
+        container.appendChild(row);
+    });
+
+    // Add event listeners for radio buttons and checkboxes
+    container.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', handleAdvantageRadioChange);
+    });
+
+}
+
+// Handle radio button changes in the modal
+function handleAdvantageRadioChange(event) {
+    const skillKey = event.target.dataset.skill;
+    const value = event.target.value;
+
+    if (!tempAdvantageSettings[skillKey]) {
+        tempAdvantageSettings[skillKey] = { mode: 'none', always: false };
+    }
+
+    tempAdvantageSettings[skillKey].mode = value;
+
+    // NEW LOGIC: Always is automatic 
+    if (value === 'none') { tempAdvantageSettings[skillKey].always = false; } else { tempAdvantageSettings[skillKey].always = true; }
+}
+
+
+
+// Save advantage settings to character
+function saveAdvantageSettings() {
+    if (!currentCharacter) return;
+
+    currentCharacter.skillAdvantageSettings = JSON.parse(JSON.stringify(tempAdvantageSettings));
+    saveCharacters();
+
+    // Refresh the skills list to show A/D indicators
+    generateSkillsList(currentCharacter);
+
+    closeAdvantageModal();
+}
+
+// Reset all advantage settings
+function resetAdvantageSettings() {
+    tempAdvantageSettings = {};
+
+    // Reset all radio buttons to 'none' and uncheck/disable all 'always' checkboxes
+    document.querySelectorAll('#advantageSkillsList input[type="radio"][value="none"]').forEach(radio => {
+        radio.checked = true;
+    });
+
+    document.querySelectorAll('#advantageSkillsList .always-checkbox').forEach(checkbox => {
+        checkbox.checked = false;
+        checkbox.disabled = true;
+    });
+}
+
+// Get advantage setting for a specific skill
+function getSkillAdvantageSetting(skillName) {
+    if (!currentCharacter || !currentCharacter.skillAdvantageSettings) {
+        return { mode: 'none', always: false };
+    }
+
+    const skillKey = skillName.replace(/\s+/g, '_').replace(/[()]/g, '');
+    return currentCharacter.skillAdvantageSettings[skillKey] || { mode: 'none', always: false };
+}
+
+// Initialize Advantage Modal Event Listeners (direct attachment - DOM already loaded when script runs)
+document.getElementById('openAdvantageModal').addEventListener('click', openAdvantageModal);
+document.getElementById('closeAdvantageModal').addEventListener('click', closeAdvantageModal);
+document.getElementById('saveAdvantageSettings').addEventListener('click', saveAdvantageSettings);
+document.getElementById('resetAdvantageSettings').addEventListener('click', resetAdvantageSettings);
+
+// Close modal on outside click
+document.getElementById('advantageModal').addEventListener('click', function (e) {
+    if (e.target === this) {
+        closeAdvantageModal();
+    }
+});
+
+// =====================================================
+// EQUIPMENT LIMIT FUNCTIONALITY
+// =====================================================
+
+// Calculate equipment limit based on STR modifier
+function getEquipmentLimit(character) {
+    if (!character) return 10;
 
     // Check if equipment limit is disabled (default to enabled for backwards compatibility)
-     if (character.equipmentLimitEnabled === false) {
-         return Infinity;
-     }
- 
-     // Get current STR modifier (includes all bonuses)
-     const raceAbilityBonuses = character.abilityScoreAllocations || { str: 0 };
-     const primaryWeaponAbilityBonuses = character.primaryWeaponAbilityBonuses || { str: 0 };
-     const secondaryWeaponAbilityBonuses = character.secondaryWeaponAbilityBonuses || { str: 0 };
-     const armorAbilityBonuses = character.armorAbilityBonuses || { str: 0 };
+    if (character.equipmentLimitEnabled === false) {
+        return Infinity;
+    }
+
+    // Get current STR modifier (includes all bonuses)
+    const raceAbilityBonuses = character.abilityScoreAllocations || { str: 0 };
+    const primaryWeaponAbilityBonuses = character.primaryWeaponAbilityBonuses || { str: 0 };
+    const secondaryWeaponAbilityBonuses = character.secondaryWeaponAbilityBonuses || { str: 0 };
+    const armorAbilityBonuses = character.armorAbilityBonuses || { str: 0 };
     const wildBeastAbilityBonuses = character.wildBeastAbilityBonuses || { str: 0 };
- 
-     const strMod = (character.str || 0) +
-         (raceAbilityBonuses.str || 0) +
-         (primaryWeaponAbilityBonuses.str || 0) +
-         (secondaryWeaponAbilityBonuses.str || 0) +
-         (armorAbilityBonuses.str || 0) +
-         (wildBeastAbilityBonuses.str || 0);
- 
-     // Base limit is 10, adjusted by STR mod with minimum of 8
-     const limit = Math.max(8, 10 + strMod);
- 
-     return limit;
- }
- 
- // Get current equipment count
- function getEquipmentCount(character) {
-     if (!character || !character.equipment) return 0;
-     return character.equipment.length;
- }
- 
- // Update the equipment limit display and Add button state
- function updateEquipmentLimitDisplay(character) {
-     const limitDisplay = document.getElementById('equipmentLimitDisplay');
-     const addButton = document.getElementById('addEquipment');
- 
-     if (!character) {
-         if (limitDisplay) limitDisplay.textContent = '(0/10)';
-         if (addButton) addButton.classList.remove('disabled');
-         return;
-     }
- 
-     const limit = getEquipmentLimit(character);
-     const count = getEquipmentCount(character);
- 
-     // Update display
-     if (limitDisplay) {
-         // Show "No Limit" if equipment limit is disabled
-         if (limit === Infinity) {
-             limitDisplay.textContent = `(${count}/∞)`;
-             limitDisplay.classList.remove('equipment-limit-warning');
-         } else {
-             limitDisplay.textContent = `(${count}/${limit})`;
- 
-             // Add warning style if at or over limit
-             if (limit !== Infinity && count >= limit) {
-                 limitDisplay.classList.add('equipment-limit-warning');
-             } else {
-                 limitDisplay.classList.remove('equipment-limit-warning');
-             }
-         }
-     }
- 
-     // Enable/disable Add button
-     if (addButton) {
-         if (count >= limit) {
-             addButton.classList.add('disabled');
-             addButton.title = `Equipment limit reached (${limit} items max based on STR modifier)`;
-         } else {
-             addButton.classList.remove('disabled');
-             addButton.title = '';
-         }
-     }
- }
- 
- // Check if character is over equipment limit and show drop modal if needed
- function checkEquipmentLimit(character) {
-     if (!character) return;
- 
-     const limit = getEquipmentLimit(character);
-     const count = getEquipmentCount(character);
- 
-     if (count > limit) {
-         const itemsToDrop = count - limit;
-         showDropEquipmentModal(character, itemsToDrop);
-     }
- }
- 
- // Show the drop equipment modal
- function showDropEquipmentModal(character, itemsToDrop) {
-     const modal = document.getElementById('dropEquipmentModal');
-     const list = document.getElementById('dropEquipmentList');
-     const message = document.getElementById('dropEquipmentMessage');
-     const countDisplay = document.getElementById('dropCountDisplay');
-     const confirmBtn = document.getElementById('confirmDropEquipment');
- 
-     // Update message
-     message.textContent = `Your STR modifier has decreased. You must drop ${itemsToDrop} item${itemsToDrop > 1 ? 's' : ''} to meet your new equipment limit of ${getEquipmentLimit(character)}.`;
- 
-     // Store required drop count
-     modal.dataset.requiredDrops = itemsToDrop;
- 
-     // Populate equipment list with checkboxes
-     list.innerHTML = '';
-     if (character.equipment && character.equipment.length > 0) {
-         character.equipment.forEach((item, index) => {
-             const itemDiv = document.createElement('label');
-             itemDiv.className = 'drop-equipment-item';
-             itemDiv.innerHTML = `
+
+    const strMod = (character.str || 0) +
+        (raceAbilityBonuses.str || 0) +
+        (primaryWeaponAbilityBonuses.str || 0) +
+        (secondaryWeaponAbilityBonuses.str || 0) +
+        (armorAbilityBonuses.str || 0) +
+        (wildBeastAbilityBonuses.str || 0);
+
+    // Base limit is 10, adjusted by STR mod with minimum of 8
+    const limit = Math.max(8, 10 + strMod);
+
+    return limit;
+}
+
+// Get current equipment count
+function getEquipmentCount(character) {
+    if (!character || !character.equipment) return 0;
+    return character.equipment.length;
+}
+
+// Update the equipment limit display and Add button state
+function updateEquipmentLimitDisplay(character) {
+    const limitDisplay = document.getElementById('equipmentLimitDisplay');
+    const addButton = document.getElementById('addEquipment');
+
+    if (!character) {
+        if (limitDisplay) limitDisplay.textContent = '(0/10)';
+        if (addButton) addButton.classList.remove('disabled');
+        return;
+    }
+
+    const limit = getEquipmentLimit(character);
+    const count = getEquipmentCount(character);
+
+    // Update display
+    if (limitDisplay) {
+        // Show "No Limit" if equipment limit is disabled
+        if (limit === Infinity) {
+            limitDisplay.textContent = `(${count}/∞)`;
+            limitDisplay.classList.remove('equipment-limit-warning');
+        } else {
+            limitDisplay.textContent = `(${count}/${limit})`;
+
+            // Add warning style if at or over limit
+            if (limit !== Infinity && count >= limit) {
+                limitDisplay.classList.add('equipment-limit-warning');
+            } else {
+                limitDisplay.classList.remove('equipment-limit-warning');
+            }
+        }
+    }
+
+    // Enable/disable Add button
+    if (addButton) {
+        if (count >= limit) {
+            addButton.classList.add('disabled');
+            addButton.title = `Equipment limit reached (${limit} items max based on STR modifier)`;
+        } else {
+            addButton.classList.remove('disabled');
+            addButton.title = '';
+        }
+    }
+}
+
+// Check if character is over equipment limit and show drop modal if needed
+function checkEquipmentLimit(character) {
+    if (!character) return;
+
+    const limit = getEquipmentLimit(character);
+    const count = getEquipmentCount(character);
+
+    if (count > limit) {
+        const itemsToDrop = count - limit;
+        showDropEquipmentModal(character, itemsToDrop);
+    }
+}
+
+// Show the drop equipment modal
+function showDropEquipmentModal(character, itemsToDrop) {
+    const modal = document.getElementById('dropEquipmentModal');
+    const list = document.getElementById('dropEquipmentList');
+    const message = document.getElementById('dropEquipmentMessage');
+    const countDisplay = document.getElementById('dropCountDisplay');
+    const confirmBtn = document.getElementById('confirmDropEquipment');
+
+    // Update message
+    message.textContent = `Your STR modifier has decreased. You must drop ${itemsToDrop} item${itemsToDrop > 1 ? 's' : ''} to meet your new equipment limit of ${getEquipmentLimit(character)}.`;
+
+    // Store required drop count
+    modal.dataset.requiredDrops = itemsToDrop;
+
+    // Populate equipment list with checkboxes
+    list.innerHTML = '';
+    if (character.equipment && character.equipment.length > 0) {
+        character.equipment.forEach((item, index) => {
+            const itemDiv = document.createElement('label');
+            itemDiv.className = 'drop-equipment-item';
+            itemDiv.innerHTML = `
                  <input type="checkbox" class="drop-equipment-checkbox" data-index="${index}">
                  <span class="flex-1">${item.name}</span>
                  <span class="text-sm text-gray-500 dark:text-gray-400">x${item.quantity}</span>
              `;
-             list.appendChild(itemDiv);
-         });
-     }
- 
-     // Update count display
-     updateDropCountDisplay();
- 
-     // Add event listeners to checkboxes
-     list.querySelectorAll('.drop-equipment-checkbox').forEach(checkbox => {
-         checkbox.addEventListener('change', function() {
-             // Toggle selected class on parent
-             this.closest('.drop-equipment-item').classList.toggle('selected', this.checked);
-             updateDropCountDisplay();
-         });
-     });
- 
-     modal.classList.remove('hidden');
- }
- 
- // Update the drop count display and confirm button state
- function updateDropCountDisplay() {
-     const modal = document.getElementById('dropEquipmentModal');
-     const countDisplay = document.getElementById('dropCountDisplay');
-     const confirmBtn = document.getElementById('confirmDropEquipment');
- 
-     const requiredDrops = parseInt(modal.dataset.requiredDrops) || 0;
-     const selectedCount = document.querySelectorAll('#dropEquipmentList .drop-equipment-checkbox:checked').length;
- 
-     countDisplay.textContent = `${selectedCount} / ${requiredDrops} required`;
- 
-     // Enable/disable confirm button
-     if (selectedCount >= requiredDrops) {
-         confirmBtn.disabled = false;
-         countDisplay.classList.remove('text-red-500');
-         countDisplay.classList.add('text-green-500');
-     } else {
-         confirmBtn.disabled = true;
-         countDisplay.classList.add('text-red-500');
-         countDisplay.classList.remove('text-green-500');
-     }
- }
- 
- // Confirm dropping selected equipment
- function confirmDropEquipment() {
-     if (!currentCharacter || !currentCharacter.equipment) return;
- 
-     const modal = document.getElementById('dropEquipmentModal');
-     const checkboxes = document.querySelectorAll('#dropEquipmentList .drop-equipment-checkbox:checked');
- 
-     // Get indices to remove (in reverse order to avoid index shifting issues)
-     const indicesToRemove = Array.from(checkboxes)
-         .map(cb => parseInt(cb.dataset.index))
-         .sort((a, b) => b - a); // Sort descending
- 
-     // Remove items
-     indicesToRemove.forEach(index => {
-         currentCharacter.equipment.splice(index, 1);
-     });
- 
-     // Update display
-     updateEquipmentDisplay(currentCharacter);
-     updateEquipmentLimitDisplay(currentCharacter);
-     saveCharacters();
- 
-     // Close modal
-     modal.classList.add('hidden');
- }
- 
- // Initialize Drop Equipment Modal Event Listeners
- document.getElementById('confirmDropEquipment').addEventListener('click', confirmDropEquipment);
- 
- // Close drop modal on outside click (but only if they've dropped enough items)
- document.getElementById('dropEquipmentModal').addEventListener('click', function(e) {
-     // Don't allow closing by clicking outside - they must drop items
-     // This modal is mandatory
- });
+            list.appendChild(itemDiv);
+        });
+    }
 
- // =====================================================
- // MIGHTY SUMMONER - MONSTER SUMMONING FUNCTIONALITY
- // =====================================================
- 
- // Monster Database with stats and weighted percentages
- const monsterDatabase = [
-     {
-         name: "Beetle Swarm",
-         hp: 2,
-         stress: 1,
-         evasion: 12,
-         mod: "+2",
-         damage: "4d4",
-         feature: "Reduce the target's Evasion -2. (Until end of Combat).",
-         percentBase: 20,
-         percentLevel6: 15
-     },
-     {
-         name: "Blink Dog",
-         hp: 2,
-         stress: 1,
-         evasion: 12,
-         mod: "+2",
-         damage: "1d6",
-         feature: "1 Stress: Teleport to anywhere within sight and 60ft range.",
-         percentBase: 20,
-         percentLevel6: 15
-     },
-     {
-         name: "Giant Centipede",
-         hp: 2,
-         stress: 1,
-         evasion: 10,
-         mod: "+1",
-         damage: "1d4",
-         feature: "1 Stress: Cause the target to roll a CON Save or be Poisoned.",
-         percentBase: 10,
-         percentLevel6: 10
-     },
-     {
-         name: "Giant Rat",
-         hp: 2,
-         stress: 1,
-         evasion: 10,
-         mod: "+1",
-         damage: "1d4",
-         feature: "Pack Tactics: When combining attacks, add +2 to the Attack Roll.",
-         percentBase: 15,
-         percentLevel6: 10
-     },
-     {
-         name: "Giant Snake",
-         hp: 3,
-         stress: 1,
-         evasion: 10,
-         mod: "+2",
-         damage: "1d6",
-         feature: "1 Stress: Cause the target to roll a CON Save or be Poisoned.",
-         percentBase: 10,
-         percentLevel6: 10
-     },
-     {
-         name: "Giant Spider",
-         hp: 3,
-         stress: 1,
-         evasion: 12,
-         mod: "+2",
-         damage: "1d6",
-         feature: "1 Stress: Cause the target to roll a DEX Save or be Restrained.",
-         percentBase: 5,
-         percentLevel6: 10
-     },
-     {
-         name: "Wolf",
-         hp: 3,
-         stress: 1,
-         evasion: 11,
-         mod: "+2",
-         damage: "1d6",
-         feature: "Pack Tactics: When combining attacks, add +2 to the Attack Roll.",
-         percentBase: 5,
-         percentLevel6: 10
-     },
-     {
-         name: "Bear",
-         hp: 4,
-         stress: 2,
-         evasion: 10,
-         mod: "+3",
-         damage: "2d6",
-         feature: "1 Stress: Can make 2 Attacks this turn.",
-         percentBase: 10,
-         percentLevel6: 10
-     },
-     {
-         name: "Displacer Beast",
-         hp: 4,
-         stress: 2,
-         evasion: 14,
-         mod: "+3",
-         damage: "2d6",
-         feature: "Attacks against this creature are at Disadvantage.",
-         percentBase: 2.5,
-         percentLevel6: 5
-     },
-     {
-         name: "Orog",
-         hp: 5,
-         stress: 2,
-         evasion: 12,
-         mod: "+4",
-         damage: "2d8",
-         feature: "1 Stress: Add an extra damage die to the next Attack.",
-         percentBase: 2.5,
-         percentLevel6: 5
-     }
- ];
- 
- // Check if character has Mighty Summoner ability selected
- function hasMightySummoner(character) {
-     if (!character || character.class !== 'Druid') return false;
-     if (!character.classAbilities || !character.classAbilities.selectedClass) return false;
- 
-     // Mighty Summoner is at index 3 in the Druid abilities array
-     const mightySummonerIndex = 3;
-     return character.classAbilities.selectedClass.includes(mightySummonerIndex);
- }
- 
- // Update Monsters section visibility based on Mighty Summoner selection
- function updateMonstersDisplay(character) {
-     const monstersSection = document.getElementById('monstersSheetSection');
-     if (!monstersSection) return;
- 
-     if (hasMightySummoner(character)) {
-         monstersSection.style.display = 'block';
-         renderSummonedMonsters(character);
-     } else {
-         monstersSection.style.display = 'none';
-     }
- }
- 
- // Get weighted random monster based on character level
- function getRandomMonster(characterLevel) {
-     const useLevel6Weights = characterLevel >= 6;
- 
-     // Calculate total percentage (should be 100)
-     let totalWeight = 0;
-     monsterDatabase.forEach(monster => {
-         totalWeight += useLevel6Weights ? monster.percentLevel6 : monster.percentBase;
-     });
- 
-     // Generate random number between 0 and totalWeight
-     let random = Math.random() * totalWeight;
- 
-     // Find the monster that corresponds to this random value
-     let cumulative = 0;
-     for (const monster of monsterDatabase) {
-         cumulative += useLevel6Weights ? monster.percentLevel6 : monster.percentBase;
-         if (random <= cumulative) {
-             return monster;
-         }
-     }
- 
-     // Fallback to last monster (shouldn't happen)
-     return monsterDatabase[monsterDatabase.length - 1];
- }
- 
- // Roll 1d4 (or 1d4+1 at level 5+) for quantity
- function rollMonsterQuantity(characterLevel) {
-     const d4Roll = Math.floor(Math.random() * 4) + 1;
-     const bonus = characterLevel >= 6 ? 1 : 0;
-     return d4Roll + bonus;
- }
- 
- // Summon monsters
- function summonMonsters() {
-     if (!currentCharacter) return;
-     if (!hasMightySummoner(currentCharacter)) return;
- 
-     const level = currentCharacter.level || 1;
-     const quantity = rollMonsterQuantity(level);
-     const monster = getRandomMonster(level);
- 
-     // Initialize summoned monsters array if needed
-     if (!currentCharacter.summonedMonsters) {
-         currentCharacter.summonedMonsters = [];
-     }
- 
-     // Create monster instances with unique IDs and resource tracking
-     const newMonsters = [];
-     for (let i = 0; i < quantity; i++) {
-         newMonsters.push({
-             id: Date.now() + i,
-             name: monster.name,
-             hp: monster.hp,
-             stress: monster.stress,
-             evasion: monster.evasion,
-             mod: monster.mod,
-             damage: monster.damage,
-             feature: monster.feature,
-             hpUsed: 0,
-             stressUsed: 0
-         });
-     }
- 
-     // Add to character's summoned monsters
-     currentCharacter.summonedMonsters = currentCharacter.summonedMonsters.concat(newMonsters);
- 
-     // Show result banner
-     const banner = document.getElementById('summonResultBanner');
-     const diceRoll = level >= 6 ? `1d4+1 = ${quantity}` : `1d4 = ${quantity}`;
-     banner.innerHTML = `<i class="fas fa-magic mr-1"></i> Summoned ${quantity}x <strong>${monster.name}</strong>! (${diceRoll})`;
-     banner.style.display = 'block';
- 
-     // Hide banner after 5 seconds
-     setTimeout(() => {
-         banner.style.display = 'none';
-     }, 5000);
- 
-     // Save and re-render
-     saveCharacters();
-     renderSummonedMonsters(currentCharacter);
- }
- 
- // Render all summoned monsters
- function renderSummonedMonsters(character) {
-     const container = document.getElementById('monstersContainer');
-     const clearBtn = document.getElementById('clearMonstersBtn');
- 
-     if (!container) return;
- 
-     // Clear container
-     container.innerHTML = '';
- 
-     if (!character.summonedMonsters || character.summonedMonsters.length === 0) {
-         container.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 text-sm py-4">No monsters summoned yet. Click "Summon Monsters" to call forth your allies!</div>';
-         if (clearBtn) clearBtn.style.display = 'none';
-         return;
-     }
- 
-     // Show clear button
-     if (clearBtn) clearBtn.style.display = 'block';
- 
-     // Render each monster
-     character.summonedMonsters.forEach((monster, index) => {
-         const card = createMonsterCard(monster, index);
-         container.appendChild(card);
-     });
- }
- 
- // Create a monster card element
- function createMonsterCard(monster, index) {
-     const card = document.createElement('div');
-     card.className = 'monster-card';
-     card.dataset.monsterId = monster.id;
- 
-     // Generate HP boxes
-     let hpBoxes = '';
-     for (let i = 1; i <= monster.hp; i++) {
-         const filled = i <= monster.hpUsed ? 'filled' : '';
-         hpBoxes += `<div class="monster-resource-box hp ${filled}" data-monster-id="${monster.id}" data-resource="hp" data-box="${i}">${i}</div>`;
-     }
- 
-     // Generate Stress boxes
-     let stressBoxes = '';
-     for (let i = 1; i <= monster.stress; i++) {
-         const filled = i <= monster.stressUsed ? 'filled' : '';
-         stressBoxes += `<div class="monster-resource-box stress ${filled}" data-monster-id="${monster.id}" data-resource="stress" data-box="${i}">${i}</div>`;
-     }
- 
-     card.innerHTML = `
+    // Update count display
+    updateDropCountDisplay();
+
+    // Add event listeners to checkboxes
+    list.querySelectorAll('.drop-equipment-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            // Toggle selected class on parent
+            this.closest('.drop-equipment-item').classList.toggle('selected', this.checked);
+            updateDropCountDisplay();
+        });
+    });
+
+    modal.classList.remove('hidden');
+}
+
+// Update the drop count display and confirm button state
+function updateDropCountDisplay() {
+    const modal = document.getElementById('dropEquipmentModal');
+    const countDisplay = document.getElementById('dropCountDisplay');
+    const confirmBtn = document.getElementById('confirmDropEquipment');
+
+    const requiredDrops = parseInt(modal.dataset.requiredDrops) || 0;
+    const selectedCount = document.querySelectorAll('#dropEquipmentList .drop-equipment-checkbox:checked').length;
+
+    countDisplay.textContent = `${selectedCount} / ${requiredDrops} required`;
+
+    // Enable/disable confirm button
+    if (selectedCount >= requiredDrops) {
+        confirmBtn.disabled = false;
+        countDisplay.classList.remove('text-red-500');
+        countDisplay.classList.add('text-green-500');
+    } else {
+        confirmBtn.disabled = true;
+        countDisplay.classList.add('text-red-500');
+        countDisplay.classList.remove('text-green-500');
+    }
+}
+
+// Confirm dropping selected equipment
+function confirmDropEquipment() {
+    if (!currentCharacter || !currentCharacter.equipment) return;
+
+    const modal = document.getElementById('dropEquipmentModal');
+    const checkboxes = document.querySelectorAll('#dropEquipmentList .drop-equipment-checkbox:checked');
+
+    // Get indices to remove (in reverse order to avoid index shifting issues)
+    const indicesToRemove = Array.from(checkboxes)
+        .map(cb => parseInt(cb.dataset.index))
+        .sort((a, b) => b - a); // Sort descending
+
+    // Remove items
+    indicesToRemove.forEach(index => {
+        currentCharacter.equipment.splice(index, 1);
+    });
+
+    // Update display
+    updateEquipmentDisplay(currentCharacter);
+    updateEquipmentLimitDisplay(currentCharacter);
+    saveCharacters();
+
+    // Close modal
+    modal.classList.add('hidden');
+}
+
+// Initialize Drop Equipment Modal Event Listeners
+document.getElementById('confirmDropEquipment').addEventListener('click', confirmDropEquipment);
+
+// Close drop modal on outside click (but only if they've dropped enough items)
+document.getElementById('dropEquipmentModal').addEventListener('click', function (e) {
+    // Don't allow closing by clicking outside - they must drop items
+    // This modal is mandatory
+});
+
+// =====================================================
+// MIGHTY SUMMONER - MONSTER SUMMONING FUNCTIONALITY
+// =====================================================
+
+// Monster Database with stats and weighted percentages
+const monsterDatabase = [
+    {
+        name: "Beetle Swarm",
+        hp: 2,
+        stress: 1,
+        evasion: 12,
+        mod: "+2",
+        damage: "4d4",
+        feature: "Reduce the target's Evasion -2. (Until end of Combat).",
+        percentBase: 20,
+        percentLevel6: 15
+    },
+    {
+        name: "Blink Dog",
+        hp: 2,
+        stress: 1,
+        evasion: 12,
+        mod: "+2",
+        damage: "1d6",
+        feature: "1 Stress: Teleport to anywhere within sight and 60ft range.",
+        percentBase: 20,
+        percentLevel6: 15
+    },
+    {
+        name: "Giant Centipede",
+        hp: 2,
+        stress: 1,
+        evasion: 10,
+        mod: "+1",
+        damage: "1d4",
+        feature: "1 Stress: Cause the target to roll a CON Save or be Poisoned.",
+        percentBase: 10,
+        percentLevel6: 10
+    },
+    {
+        name: "Giant Rat",
+        hp: 2,
+        stress: 1,
+        evasion: 10,
+        mod: "+1",
+        damage: "1d4",
+        feature: "Pack Tactics: When combining attacks, add +2 to the Attack Roll.",
+        percentBase: 15,
+        percentLevel6: 10
+    },
+    {
+        name: "Giant Snake",
+        hp: 3,
+        stress: 1,
+        evasion: 10,
+        mod: "+2",
+        damage: "1d6",
+        feature: "1 Stress: Cause the target to roll a CON Save or be Poisoned.",
+        percentBase: 10,
+        percentLevel6: 10
+    },
+    {
+        name: "Giant Spider",
+        hp: 3,
+        stress: 1,
+        evasion: 12,
+        mod: "+2",
+        damage: "1d6",
+        feature: "1 Stress: Cause the target to roll a DEX Save or be Restrained.",
+        percentBase: 5,
+        percentLevel6: 10
+    },
+    {
+        name: "Wolf",
+        hp: 3,
+        stress: 1,
+        evasion: 11,
+        mod: "+2",
+        damage: "1d6",
+        feature: "Pack Tactics: When combining attacks, add +2 to the Attack Roll.",
+        percentBase: 5,
+        percentLevel6: 10
+    },
+    {
+        name: "Bear",
+        hp: 4,
+        stress: 2,
+        evasion: 10,
+        mod: "+3",
+        damage: "2d6",
+        feature: "1 Stress: Can make 2 Attacks this turn.",
+        percentBase: 10,
+        percentLevel6: 10
+    },
+    {
+        name: "Displacer Beast",
+        hp: 4,
+        stress: 2,
+        evasion: 14,
+        mod: "+3",
+        damage: "2d6",
+        feature: "Attacks against this creature are at Disadvantage.",
+        percentBase: 2.5,
+        percentLevel6: 5
+    },
+    {
+        name: "Orog",
+        hp: 5,
+        stress: 2,
+        evasion: 12,
+        mod: "+4",
+        damage: "2d8",
+        feature: "1 Stress: Add an extra damage die to the next Attack.",
+        percentBase: 2.5,
+        percentLevel6: 5
+    }
+];
+
+// Check if character has Mighty Summoner ability selected
+function hasMightySummoner(character) {
+    if (!character || character.class !== 'Druid') return false;
+    if (!character.classAbilities || !character.classAbilities.selectedClass) return false;
+
+    // Mighty Summoner is at index 3 in the Druid abilities array
+    const mightySummonerIndex = 3;
+    return character.classAbilities.selectedClass.includes(mightySummonerIndex);
+}
+
+// Update Monsters section visibility based on Mighty Summoner selection
+function updateMonstersDisplay(character) {
+    const monstersSection = document.getElementById('monstersSheetSection');
+    if (!monstersSection) return;
+
+    if (hasMightySummoner(character)) {
+        monstersSection.style.display = 'block';
+        renderSummonedMonsters(character);
+    } else {
+        monstersSection.style.display = 'none';
+    }
+}
+
+// Get weighted random monster based on character level
+function getRandomMonster(characterLevel) {
+    const useLevel6Weights = characterLevel >= 6;
+
+    // Calculate total percentage (should be 100)
+    let totalWeight = 0;
+    monsterDatabase.forEach(monster => {
+        totalWeight += useLevel6Weights ? monster.percentLevel6 : monster.percentBase;
+    });
+
+    // Generate random number between 0 and totalWeight
+    let random = Math.random() * totalWeight;
+
+    // Find the monster that corresponds to this random value
+    let cumulative = 0;
+    for (const monster of monsterDatabase) {
+        cumulative += useLevel6Weights ? monster.percentLevel6 : monster.percentBase;
+        if (random <= cumulative) {
+            return monster;
+        }
+    }
+
+    // Fallback to last monster (shouldn't happen)
+    return monsterDatabase[monsterDatabase.length - 1];
+}
+
+// Roll 1d4 (or 1d4+1 at level 5+) for quantity
+function rollMonsterQuantity(characterLevel) {
+    const d4Roll = Math.floor(Math.random() * 4) + 1;
+    const bonus = characterLevel >= 6 ? 1 : 0;
+    return d4Roll + bonus;
+}
+
+// Summon monsters
+function summonMonsters() {
+    if (!currentCharacter) return;
+    if (!hasMightySummoner(currentCharacter)) return;
+
+    const level = currentCharacter.level || 1;
+    const quantity = rollMonsterQuantity(level);
+    const monster = getRandomMonster(level);
+
+    // Initialize summoned monsters array if needed
+    if (!currentCharacter.summonedMonsters) {
+        currentCharacter.summonedMonsters = [];
+    }
+
+    // Create monster instances with unique IDs and resource tracking
+    const newMonsters = [];
+    for (let i = 0; i < quantity; i++) {
+        newMonsters.push({
+            id: Date.now() + i,
+            name: monster.name,
+            hp: monster.hp,
+            stress: monster.stress,
+            evasion: monster.evasion,
+            mod: monster.mod,
+            damage: monster.damage,
+            feature: monster.feature,
+            hpUsed: 0,
+            stressUsed: 0
+        });
+    }
+
+    // Add to character's summoned monsters
+    currentCharacter.summonedMonsters = currentCharacter.summonedMonsters.concat(newMonsters);
+
+    // Show result banner
+    const banner = document.getElementById('summonResultBanner');
+    const diceRoll = level >= 6 ? `1d4+1 = ${quantity}` : `1d4 = ${quantity}`;
+    banner.innerHTML = `<i class="fas fa-magic mr-1"></i> Summoned ${quantity}x <strong>${monster.name}</strong>! (${diceRoll})`;
+    banner.style.display = 'block';
+
+    // Hide banner after 5 seconds
+    setTimeout(() => {
+        banner.style.display = 'none';
+    }, 5000);
+
+    // Save and re-render
+    saveCharacters();
+    renderSummonedMonsters(currentCharacter);
+}
+
+// Render all summoned monsters
+function renderSummonedMonsters(character) {
+    const container = document.getElementById('monstersContainer');
+    const clearBtn = document.getElementById('clearMonstersBtn');
+
+    if (!container) return;
+
+    // Clear container
+    container.innerHTML = '';
+
+    if (!character.summonedMonsters || character.summonedMonsters.length === 0) {
+        container.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 text-sm py-4">No monsters summoned yet. Click "Summon Monsters" to call forth your allies!</div>';
+        if (clearBtn) clearBtn.style.display = 'none';
+        return;
+    }
+
+    // Show clear button
+    if (clearBtn) clearBtn.style.display = 'block';
+
+    // Render each monster
+    character.summonedMonsters.forEach((monster, index) => {
+        const card = createMonsterCard(monster, index);
+        container.appendChild(card);
+    });
+}
+
+// Create a monster card element
+function createMonsterCard(monster, index) {
+    const card = document.createElement('div');
+    card.className = 'monster-card';
+    card.dataset.monsterId = monster.id;
+
+    // Generate HP boxes
+    let hpBoxes = '';
+    for (let i = 1; i <= monster.hp; i++) {
+        const filled = i <= monster.hpUsed ? 'filled' : '';
+        hpBoxes += `<div class="monster-resource-box hp ${filled}" data-monster-id="${monster.id}" data-resource="hp" data-box="${i}">${i}</div>`;
+    }
+
+    // Generate Stress boxes
+    let stressBoxes = '';
+    for (let i = 1; i <= monster.stress; i++) {
+        const filled = i <= monster.stressUsed ? 'filled' : '';
+        stressBoxes += `<div class="monster-resource-box stress ${filled}" data-monster-id="${monster.id}" data-resource="stress" data-box="${i}">${i}</div>`;
+    }
+
+    card.innerHTML = `
          <div class="monster-card-header">
              <span class="monster-name">${monster.name}</span>
              <button class="monster-dismiss" data-monster-id="${monster.id}" title="Dismiss monster">
@@ -13618,289 +13740,289 @@ function updateAllCoinDisplays() {
          </div>
          <div class="monster-feature">${monster.feature}</div>
      `;
- 
-     return card;
- }
- 
- // Handle monster resource box click
- function handleMonsterResourceClick(e) {
-     const box = e.target.closest('.monster-resource-box');
-     if (!box) return;
- 
-     const monsterId = parseInt(box.dataset.monsterId);
-     const resourceType = box.dataset.resource;
-     const boxNumber = parseInt(box.dataset.box);
- 
-     if (!currentCharacter || !currentCharacter.summonedMonsters) return;
- 
-     // Find the monster
-     const monster = currentCharacter.summonedMonsters.find(m => m.id === monsterId);
-     if (!monster) return;
- 
-     // Toggle resource usage
-     if (resourceType === 'hp') {
-         if (monster.hpUsed >= boxNumber) {
-             // Clicking a filled box - unfill from this point
-             monster.hpUsed = boxNumber - 1;
-         } else {
-             // Clicking an unfilled box - fill up to this point
-             monster.hpUsed = boxNumber;
-         }
-     } else if (resourceType === 'stress') {
-         if (monster.stressUsed >= boxNumber) {
-             monster.stressUsed = boxNumber - 1;
-         } else {
-             monster.stressUsed = boxNumber;
-         }
-     }
- 
-     saveCharacters();
-     renderSummonedMonsters(currentCharacter);
- }
- 
- // Handle monster dismiss click
- function handleMonsterDismiss(e) {
-     const dismissBtn = e.target.closest('.monster-dismiss');
-     if (!dismissBtn) return;
- 
-     const monsterId = parseInt(dismissBtn.dataset.monsterId);
- 
-     if (!currentCharacter || !currentCharacter.summonedMonsters) return;
- 
-     // Remove the monster
-     currentCharacter.summonedMonsters = currentCharacter.summonedMonsters.filter(m => m.id !== monsterId);
- 
-     saveCharacters();
-     renderSummonedMonsters(currentCharacter);
- }
- 
- // Clear all summoned monsters
- function clearAllMonsters() {
-     if (!currentCharacter) return;
- 
-     currentCharacter.summonedMonsters = [];
-     saveCharacters();
-     renderSummonedMonsters(currentCharacter);
- 
-     // Hide result banner
-     const banner = document.getElementById('summonResultBanner');
-     if (banner) banner.style.display = 'none';
- }
- 
- // Initialize Monsters Section Event Listeners
- document.getElementById('summonMonstersBtn').addEventListener('click', summonMonsters);
- document.getElementById('clearMonstersBtn').addEventListener('click', clearAllMonsters);
- 
- // Event delegation for monster resource boxes and dismiss buttons
- document.getElementById('monstersContainer').addEventListener('click', function(e) {
-     if (e.target.closest('.monster-resource-box')) {
-         handleMonsterResourceClick(e);
-     } else if (e.target.closest('.monster-dismiss')) {
-         handleMonsterDismiss(e);
-     }
- });
-  // Note: monstersToggle uses the global toggleSection system via event delegation at line ~6772 // The button ID 'monstersToggle' and content ID 'monstersContent' follow the naming convention
- 
- // =====================================================
- // SPIRIT PROJECTION - WARLOCK ABILITY FUNCTIONALITY
- // =====================================================
- 
- // Check if character has Spirit Projection ability selected
- function hasSpiritProjection(character) {
-     if (!character || character.class !== 'Warlock') return false;
-     if (!character.classAbilities || !character.classAbilities.selectedClass) return false;
- 
-     // Spirit Projection is at index 1 in the Warlock abilities array
-     const spiritProjectionIndex = 1;
-     return character.classAbilities.selectedClass.includes(spiritProjectionIndex);
- }
- 
- // Update Spirit Projection section visibility based on ability selection
- function updateSpiritProjectionDisplay(character) {
-     const projectionSection = document.getElementById('spiritProjectionSheetSection');
-     if (!projectionSection) return;
- 
-     if (hasSpiritProjection(character)) {
-         projectionSection.style.display = 'block';
-         renderSpiritProjection(character);
-     } else {
-         projectionSection.style.display = 'none';
-     }
- }
- 
- // Calculate Spirit Projection stats based on character level and stats
- function calculateProjectionStats(character) {
-     const level = character.level || 1;
-     const isHighLevel = level >= 6;
- 
-     // Calculate total HP from resources (the max boxes available)
-     let totalHp = 0;
-     if (character.resources && character.resources.hp) {
 
-              // Use max (base HP boxes) plus any temp HP
-         totalHp = (character.resources.hp.max || 0) + (character.resources.hp.temp || 0);
-     }
-     // Fallback to character.hp if resources not set
-     if (totalHp === 0) {
-         totalHp = character.hp || 0;
-     }
- 
-     // Calculate total Stress from resources for high level
-     let totalStress = 0;
-     if (character.resources && character.resources.stress) {
-              totalStress = character.resources.stress.max || 0;
-     }
-     // Fallback to character.stress if resources not set
-     if (totalStress === 0) {
-         totalStress = character.stress || 0;
-     }
- 
-     // Calculate INT modifier (including race bonuses, weapon bonuses, etc.)
-     const raceAbilityBonuses = character.abilityScoreAllocations || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-     const primaryWeaponAbilityBonuses = character.primaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-     const secondaryWeaponAbilityBonuses = character.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-     const armorAbilityBonuses = character.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
- 
-     const intMod = (character.int || 0) + raceAbilityBonuses.int + primaryWeaponAbilityBonuses.int + secondaryWeaponAbilityBonuses.int + armorAbilityBonuses.int;
- 
-     // Calculate threshold (half of warlock's total)
-     const thresholdLower = character.thresholdLower || 0;
-     const thresholdUpper = character.thresholdUpper || 0;
- 
-     // Calculate weapon proficiency for damage (level 6+)
-     const weaponProficiency = character.weaponProficiency || level;
-     const halfProficiency = Math.floor(weaponProficiency / 2);
- 
-     // Build stats object
-     const stats = {
-         name: 'Spirit Projection',
-         hp: Math.ceil(totalHp / 2),
-         evasion: 10,
-         mod: intMod,
-         thresholdLower: Math.ceil(thresholdLower / 2),
-         thresholdUpper: Math.ceil(thresholdUpper / 2),
-         feature: 'The projection can perform rudimentary actions, open doors, pull levers.',
-         isHighLevel: isHighLevel
-     };
- 
-     // Add high level bonuses (level 6+)
-     if (isHighLevel) {
-         stats.stress = Math.ceil(totalStress / 2);
-         stats.damage = `${halfProficiency > 0 ? halfProficiency : 1}x 3d6`;
-         stats.damageMultiplier = halfProficiency > 0 ? halfProficiency : 1;
-         stats.feature = 'The projection can perform rudimentary actions, open doors, pull levers. Can Attack once on your turn.';
-     }
- 
-     return stats;
- }
- 
- // Create Spirit Projection
- function createSpiritProjection() {
-     if (!currentCharacter) return;
-     if (!hasSpiritProjection(currentCharacter)) return;
- 
-     // Calculate stats based on current character
-     const stats = calculateProjectionStats(currentCharacter);
- 
-     // Create the projection object
-     currentCharacter.spiritProjection = {
-         active: true,
-         createdAt: Date.now(),
-         ...stats,
-         hpUsed: 0,
-         stressUsed: 0
-     };
- 
-     // Save and re-render
-     saveCharacters();
-     renderSpiritProjection(currentCharacter);
- }
- 
- // Dismiss Spirit Projection
- function dismissSpiritProjection() {
-     if (!currentCharacter) return;
- 
-     currentCharacter.spiritProjection = null;
-     saveCharacters();
-     renderSpiritProjection(currentCharacter);
- }
- 
- // Render Spirit Projection display
- function renderSpiritProjection(character) {
-     const container = document.getElementById('spiritProjectionContainer');
-     const createBtn = document.getElementById('createProjectionBtn');
-     const dismissBtn = document.getElementById('dismissProjectionBtn');
-     const buttonContainer = document.getElementById('projectionButtonContainer');
- 
-     if (!container) return;
- 
-     // Clear container
-     container.innerHTML = '';
- 
-     // Check if projection exists and is active
-     if (!character.spiritProjection || !character.spiritProjection.active) {
-         // Show create button, hide dismiss button
-         if (buttonContainer) buttonContainer.style.display = 'flex';
-         if (dismissBtn) dismissBtn.style.display = 'none';
-         container.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 text-sm py-2">Click "Projection" to create your spirit projection.</div>';
-         return;
-     }
- 
-     // Recalculate stats in case character stats have changed
-     const updatedStats = calculateProjectionStats(character);
-     // Update stored projection with new calculated values (but keep used resources)
-     character.spiritProjection.hp = updatedStats.hp;
-     character.spiritProjection.evasion = updatedStats.evasion;
-     character.spiritProjection.mod = updatedStats.mod;
-     character.spiritProjection.thresholdLower = updatedStats.thresholdLower;
-     character.spiritProjection.thresholdUpper = updatedStats.thresholdUpper;
-     character.spiritProjection.feature = updatedStats.feature;
-     character.spiritProjection.isHighLevel = updatedStats.isHighLevel;
-     if (updatedStats.isHighLevel) {
-         character.spiritProjection.stress = updatedStats.stress;
-         character.spiritProjection.damage = updatedStats.damage;
-         character.spiritProjection.damageMultiplier = updatedStats.damageMultiplier;
-     }
- 
-     const projection = character.spiritProjection;
- 
-     // Hide create button, show dismiss button
-     if (buttonContainer) buttonContainer.style.display = 'none';
-     if (dismissBtn) dismissBtn.style.display = 'block';
- 
-     // Generate HP boxes
-     let hpBoxes = '';
-     for (let i = 1; i <= projection.hp; i++) {
-         const filled = i <= projection.hpUsed ? 'filled' : '';
-         hpBoxes += `<div class="spirit-projection-resource-box hp ${filled}" data-projection-resource="hp" data-box="${i}">${i}</div>`;
-     }
- 
-     // Generate Stress boxes (only for level 6+)
-     let stressBoxes = '';
-     let stressSection = '';
-     if (projection.isHighLevel && projection.stress > 0) {
-         for (let i = 1; i <= projection.stress; i++) {
-             const filled = i <= projection.stressUsed ? 'filled' : '';
-             stressBoxes += `<div class="spirit-projection-resource-box stress ${filled}" data-projection-resource="stress" data-box="${i}">${i}</div>`;
-         }
-         stressSection = `
+    return card;
+}
+
+// Handle monster resource box click
+function handleMonsterResourceClick(e) {
+    const box = e.target.closest('.monster-resource-box');
+    if (!box) return;
+
+    const monsterId = parseInt(box.dataset.monsterId);
+    const resourceType = box.dataset.resource;
+    const boxNumber = parseInt(box.dataset.box);
+
+    if (!currentCharacter || !currentCharacter.summonedMonsters) return;
+
+    // Find the monster
+    const monster = currentCharacter.summonedMonsters.find(m => m.id === monsterId);
+    if (!monster) return;
+
+    // Toggle resource usage
+    if (resourceType === 'hp') {
+        if (monster.hpUsed >= boxNumber) {
+            // Clicking a filled box - unfill from this point
+            monster.hpUsed = boxNumber - 1;
+        } else {
+            // Clicking an unfilled box - fill up to this point
+            monster.hpUsed = boxNumber;
+        }
+    } else if (resourceType === 'stress') {
+        if (monster.stressUsed >= boxNumber) {
+            monster.stressUsed = boxNumber - 1;
+        } else {
+            monster.stressUsed = boxNumber;
+        }
+    }
+
+    saveCharacters();
+    renderSummonedMonsters(currentCharacter);
+}
+
+// Handle monster dismiss click
+function handleMonsterDismiss(e) {
+    const dismissBtn = e.target.closest('.monster-dismiss');
+    if (!dismissBtn) return;
+
+    const monsterId = parseInt(dismissBtn.dataset.monsterId);
+
+    if (!currentCharacter || !currentCharacter.summonedMonsters) return;
+
+    // Remove the monster
+    currentCharacter.summonedMonsters = currentCharacter.summonedMonsters.filter(m => m.id !== monsterId);
+
+    saveCharacters();
+    renderSummonedMonsters(currentCharacter);
+}
+
+// Clear all summoned monsters
+function clearAllMonsters() {
+    if (!currentCharacter) return;
+
+    currentCharacter.summonedMonsters = [];
+    saveCharacters();
+    renderSummonedMonsters(currentCharacter);
+
+    // Hide result banner
+    const banner = document.getElementById('summonResultBanner');
+    if (banner) banner.style.display = 'none';
+}
+
+// Initialize Monsters Section Event Listeners
+document.getElementById('summonMonstersBtn').addEventListener('click', summonMonsters);
+document.getElementById('clearMonstersBtn').addEventListener('click', clearAllMonsters);
+
+// Event delegation for monster resource boxes and dismiss buttons
+document.getElementById('monstersContainer').addEventListener('click', function (e) {
+    if (e.target.closest('.monster-resource-box')) {
+        handleMonsterResourceClick(e);
+    } else if (e.target.closest('.monster-dismiss')) {
+        handleMonsterDismiss(e);
+    }
+});
+// Note: monstersToggle uses the global toggleSection system via event delegation at line ~6772 // The button ID 'monstersToggle' and content ID 'monstersContent' follow the naming convention
+
+// =====================================================
+// SPIRIT PROJECTION - WARLOCK ABILITY FUNCTIONALITY
+// =====================================================
+
+// Check if character has Spirit Projection ability selected
+function hasSpiritProjection(character) {
+    if (!character || character.class !== 'Warlock') return false;
+    if (!character.classAbilities || !character.classAbilities.selectedClass) return false;
+
+    // Spirit Projection is at index 1 in the Warlock abilities array
+    const spiritProjectionIndex = 1;
+    return character.classAbilities.selectedClass.includes(spiritProjectionIndex);
+}
+
+// Update Spirit Projection section visibility based on ability selection
+function updateSpiritProjectionDisplay(character) {
+    const projectionSection = document.getElementById('spiritProjectionSheetSection');
+    if (!projectionSection) return;
+
+    if (hasSpiritProjection(character)) {
+        projectionSection.style.display = 'block';
+        renderSpiritProjection(character);
+    } else {
+        projectionSection.style.display = 'none';
+    }
+}
+
+// Calculate Spirit Projection stats based on character level and stats
+function calculateProjectionStats(character) {
+    const level = character.level || 1;
+    const isHighLevel = level >= 6;
+
+    // Calculate total HP from resources (the max boxes available)
+    let totalHp = 0;
+    if (character.resources && character.resources.hp) {
+
+        // Use max (base HP boxes) plus any temp HP
+        totalHp = (character.resources.hp.max || 0) + (character.resources.hp.temp || 0);
+    }
+    // Fallback to character.hp if resources not set
+    if (totalHp === 0) {
+        totalHp = character.hp || 0;
+    }
+
+    // Calculate total Stress from resources for high level
+    let totalStress = 0;
+    if (character.resources && character.resources.stress) {
+        totalStress = character.resources.stress.max || 0;
+    }
+    // Fallback to character.stress if resources not set
+    if (totalStress === 0) {
+        totalStress = character.stress || 0;
+    }
+
+    // Calculate INT modifier (including race bonuses, weapon bonuses, etc.)
+    const raceAbilityBonuses = character.abilityScoreAllocations || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+    const primaryWeaponAbilityBonuses = character.primaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+    const secondaryWeaponAbilityBonuses = character.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+    const armorAbilityBonuses = character.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+
+    const intMod = (character.int || 0) + raceAbilityBonuses.int + primaryWeaponAbilityBonuses.int + secondaryWeaponAbilityBonuses.int + armorAbilityBonuses.int;
+
+    // Calculate threshold (half of warlock's total)
+    const thresholdLower = character.thresholdLower || 0;
+    const thresholdUpper = character.thresholdUpper || 0;
+
+    // Calculate weapon proficiency for damage (level 6+)
+    const weaponProficiency = character.weaponProficiency || level;
+    const halfProficiency = Math.floor(weaponProficiency / 2);
+
+    // Build stats object
+    const stats = {
+        name: 'Spirit Projection',
+        hp: Math.ceil(totalHp / 2),
+        evasion: 10,
+        mod: intMod,
+        thresholdLower: Math.ceil(thresholdLower / 2),
+        thresholdUpper: Math.ceil(thresholdUpper / 2),
+        feature: 'The projection can perform rudimentary actions, open doors, pull levers.',
+        isHighLevel: isHighLevel
+    };
+
+    // Add high level bonuses (level 6+)
+    if (isHighLevel) {
+        stats.stress = Math.ceil(totalStress / 2);
+        stats.damage = `${halfProficiency > 0 ? halfProficiency : 1}x 3d6`;
+        stats.damageMultiplier = halfProficiency > 0 ? halfProficiency : 1;
+        stats.feature = 'The projection can perform rudimentary actions, open doors, pull levers. Can Attack once on your turn.';
+    }
+
+    return stats;
+}
+
+// Create Spirit Projection
+function createSpiritProjection() {
+    if (!currentCharacter) return;
+    if (!hasSpiritProjection(currentCharacter)) return;
+
+    // Calculate stats based on current character
+    const stats = calculateProjectionStats(currentCharacter);
+
+    // Create the projection object
+    currentCharacter.spiritProjection = {
+        active: true,
+        createdAt: Date.now(),
+        ...stats,
+        hpUsed: 0,
+        stressUsed: 0
+    };
+
+    // Save and re-render
+    saveCharacters();
+    renderSpiritProjection(currentCharacter);
+}
+
+// Dismiss Spirit Projection
+function dismissSpiritProjection() {
+    if (!currentCharacter) return;
+
+    currentCharacter.spiritProjection = null;
+    saveCharacters();
+    renderSpiritProjection(currentCharacter);
+}
+
+// Render Spirit Projection display
+function renderSpiritProjection(character) {
+    const container = document.getElementById('spiritProjectionContainer');
+    const createBtn = document.getElementById('createProjectionBtn');
+    const dismissBtn = document.getElementById('dismissProjectionBtn');
+    const buttonContainer = document.getElementById('projectionButtonContainer');
+
+    if (!container) return;
+
+    // Clear container
+    container.innerHTML = '';
+
+    // Check if projection exists and is active
+    if (!character.spiritProjection || !character.spiritProjection.active) {
+        // Show create button, hide dismiss button
+        if (buttonContainer) buttonContainer.style.display = 'flex';
+        if (dismissBtn) dismissBtn.style.display = 'none';
+        container.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 text-sm py-2">Click "Projection" to create your spirit projection.</div>';
+        return;
+    }
+
+    // Recalculate stats in case character stats have changed
+    const updatedStats = calculateProjectionStats(character);
+    // Update stored projection with new calculated values (but keep used resources)
+    character.spiritProjection.hp = updatedStats.hp;
+    character.spiritProjection.evasion = updatedStats.evasion;
+    character.spiritProjection.mod = updatedStats.mod;
+    character.spiritProjection.thresholdLower = updatedStats.thresholdLower;
+    character.spiritProjection.thresholdUpper = updatedStats.thresholdUpper;
+    character.spiritProjection.feature = updatedStats.feature;
+    character.spiritProjection.isHighLevel = updatedStats.isHighLevel;
+    if (updatedStats.isHighLevel) {
+        character.spiritProjection.stress = updatedStats.stress;
+        character.spiritProjection.damage = updatedStats.damage;
+        character.spiritProjection.damageMultiplier = updatedStats.damageMultiplier;
+    }
+
+    const projection = character.spiritProjection;
+
+    // Hide create button, show dismiss button
+    if (buttonContainer) buttonContainer.style.display = 'none';
+    if (dismissBtn) dismissBtn.style.display = 'block';
+
+    // Generate HP boxes
+    let hpBoxes = '';
+    for (let i = 1; i <= projection.hp; i++) {
+        const filled = i <= projection.hpUsed ? 'filled' : '';
+        hpBoxes += `<div class="spirit-projection-resource-box hp ${filled}" data-projection-resource="hp" data-box="${i}">${i}</div>`;
+    }
+
+    // Generate Stress boxes (only for level 6+)
+    let stressBoxes = '';
+    let stressSection = '';
+    if (projection.isHighLevel && projection.stress > 0) {
+        for (let i = 1; i <= projection.stress; i++) {
+            const filled = i <= projection.stressUsed ? 'filled' : '';
+            stressBoxes += `<div class="spirit-projection-resource-box stress ${filled}" data-projection-resource="stress" data-box="${i}">${i}</div>`;
+        }
+        stressSection = `
              <div class="spirit-projection-resource-group">
                  <div class="spirit-projection-resource-label">Stress</div>
                  <div class="spirit-projection-resource-boxes">${stressBoxes}</div>
              </div>
          `;
-     }
- 
-     // Generate damage section (only for level 6+)
-     let damageSection = '';
-     if (projection.isHighLevel) {
-         damageSection = `<div class="spirit-projection-damage"><i class="fas fa-sword mr-1"></i>Damage: ${projection.damage}</div>`;
-     }
- 
-     // Create the projection card
-     const card = document.createElement('div');
-     card.className = 'spirit-projection-card';
-     card.innerHTML = `
+    }
+
+    // Generate damage section (only for level 6+)
+    let damageSection = '';
+    if (projection.isHighLevel) {
+        damageSection = `<div class="spirit-projection-damage"><i class="fas fa-sword mr-1"></i>Damage: ${projection.damage}</div>`;
+    }
+
+    // Create the projection card
+    const card = document.createElement('div');
+    card.className = 'spirit-projection-card';
+    card.innerHTML = `
          <div class="spirit-projection-name">${projection.name}</div>
          <div class="spirit-projection-stats">
              <div>
@@ -13930,244 +14052,244 @@ function updateAllCoinDisplays() {
          </div>
          <div class="spirit-projection-feature">${projection.feature}</div>
      `;
- 
-     container.appendChild(card);
- }
- 
- // Handle Spirit Projection resource box click
- function handleProjectionResourceClick(e) {
-     const box = e.target.closest('.spirit-projection-resource-box');
-     if (!box) return;
- 
-     const resourceType = box.dataset.projectionResource;
-     const boxNumber = parseInt(box.dataset.box);
- 
-     if (!currentCharacter || !currentCharacter.spiritProjection) return;
- 
-     const projection = currentCharacter.spiritProjection;
- 
-     // Toggle resource usage
-     if (resourceType === 'hp') {
-         if (projection.hpUsed >= boxNumber) {
-             projection.hpUsed = boxNumber - 1;
-         } else {
-             projection.hpUsed = boxNumber;
-         }
-     } else if (resourceType === 'stress') {
-         if (projection.stressUsed >= boxNumber) {
-             projection.stressUsed = boxNumber - 1;
-         } else {
-             projection.stressUsed = boxNumber;
-         }
-     }
- 
-     saveCharacters();
-     renderSpiritProjection(currentCharacter);
- }
- 
- // Initialize Spirit Projection Event Listeners
- const createProjectionBtn = document.getElementById('createProjectionBtn');
- const dismissProjectionBtn = document.getElementById('dismissProjectionBtn');
- const spiritProjectionContainer = document.getElementById('spiritProjectionContainer');
- 
- if (createProjectionBtn) createProjectionBtn.addEventListener('click', createSpiritProjection);
- if (dismissProjectionBtn) dismissProjectionBtn.addEventListener('click', dismissSpiritProjection);
- 
- // Event delegation for projection resource boxes
- if (spiritProjectionContainer) {
-     spiritProjectionContainer.addEventListener('click', function(e) {
-         if (e.target.closest('.spirit-projection-resource-box')) {
-             handleProjectionResourceClick(e);
-         }
-     });
- }
- 
- // Note: spiritProjectionToggle uses the global toggleSection system via event delegation
- // The button ID 'spiritProjectionToggle' and content ID 'spiritProjectionContent' follow the naming con
+
+    container.appendChild(card);
+}
+
+// Handle Spirit Projection resource box click
+function handleProjectionResourceClick(e) {
+    const box = e.target.closest('.spirit-projection-resource-box');
+    if (!box) return;
+
+    const resourceType = box.dataset.projectionResource;
+    const boxNumber = parseInt(box.dataset.box);
+
+    if (!currentCharacter || !currentCharacter.spiritProjection) return;
+
+    const projection = currentCharacter.spiritProjection;
+
+    // Toggle resource usage
+    if (resourceType === 'hp') {
+        if (projection.hpUsed >= boxNumber) {
+            projection.hpUsed = boxNumber - 1;
+        } else {
+            projection.hpUsed = boxNumber;
+        }
+    } else if (resourceType === 'stress') {
+        if (projection.stressUsed >= boxNumber) {
+            projection.stressUsed = boxNumber - 1;
+        } else {
+            projection.stressUsed = boxNumber;
+        }
+    }
+
+    saveCharacters();
+    renderSpiritProjection(currentCharacter);
+}
+
+// Initialize Spirit Projection Event Listeners
+const createProjectionBtn = document.getElementById('createProjectionBtn');
+const dismissProjectionBtn = document.getElementById('dismissProjectionBtn');
+const spiritProjectionContainer = document.getElementById('spiritProjectionContainer');
+
+if (createProjectionBtn) createProjectionBtn.addEventListener('click', createSpiritProjection);
+if (dismissProjectionBtn) dismissProjectionBtn.addEventListener('click', dismissSpiritProjection);
+
+// Event delegation for projection resource boxes
+if (spiritProjectionContainer) {
+    spiritProjectionContainer.addEventListener('click', function (e) {
+        if (e.target.closest('.spirit-projection-resource-box')) {
+            handleProjectionResourceClick(e);
+        }
+    });
+}
+
+// Note: spiritProjectionToggle uses the global toggleSection system via event delegation
+// The button ID 'spiritProjectionToggle' and content ID 'spiritProjectionContent' follow the naming con
 // ==================== TIRELESS ABILITY (RANGER) ====================
- 
- /**
-  * Activate the Tireless ability for Rangers
-  * - Costs 1 Stress
-  * - Rolls 1d4 and recovers that many HP
-  */
- function activateTirelessAbility() {
-     if (!currentCharacter) return;
- 
-     // Ensure resources exist
-     if (!currentCharacter.resources) {
-         currentCharacter.resources = {
-             hp: { max: 0, used: [], temp: 0 },
-             stress: { max: 0, used: [], temp: 0 },
-             class: { max: 0, used: [], temp: 0 },
-             spell: { max: 0, used: [], temp: 0 }
-         };
-     }
- 
-     const stressResource = currentCharacter.resources.stress;
-     const hpResource = currentCharacter.resources.hp;
- 
-     // Check if there's an available Stress box to use (cost: 1 Stress)
-     const stressMax = stressResource.max + (stressResource.temp || 0);
-     const stressUsed = stressResource.used.length;
-     const stressAvailable = stressMax - stressUsed;
- 
-     const resultDisplay = document.getElementById('tirelessResultDisplay');
- 
-     if (stressAvailable < 1) {
-         // Not enough Stress available
-         if (resultDisplay) {
-             resultDisplay.innerHTML = '<div class="tireless-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Not enough Stress available! Need 1 Stress to activate.</div>';
-             setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
-         }
-         return;
-     }
- 
-     // Check if there are any used HP boxes to recover
-     const hpUsedCount = hpResource.used.length;
- 
-     if (hpUsedCount === 0) {
-         // No HP to recover
-         if (resultDisplay) {
-             resultDisplay.innerHTML = '<div class="tireless-result error"><i class="fas fa-heart mr-2"></i>HP is already full! No recovery needed.</div>';
-             setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
-         }
-         return;
-     }
- 
-     // Roll 1d4
-     const roll = Math.floor(Math.random() * 4) + 1;
- 
-     // Calculate how many HP can actually be recovered (can't recover more than what's used)
-     const actualRecovery = Math.min(roll, hpUsedCount);
- 
-     // Use 1 Stress (add the next index to used array)
-     const nextStressIndex = stressUsed; // The next unused index
-     stressResource.used.push(nextStressIndex);
- 
-     // Recover HP by removing from the used array (remove from the end/right side)
-     // Sort used array first to ensure we remove from highest index
-     hpResource.used.sort((a, b) => a - b);
- 
-     // Remove the last 'actualRecovery' items from the used array
-     for (let i = 0; i < actualRecovery; i++) {
-         if (hpResource.used.length > 0) {
-             hpResource.used.pop();
-         }
-     }
- 
-     // Save and update display
-     saveCharacters();
-     populateSheetResourceBoxes(currentCharacter);
-     updateCharacterDisplay();
- 
-     // Show result
-     if (resultDisplay) {
-         resultDisplay.innerHTML = `<div class="tireless-result"><i class="fas fa-dice-d20 mr-2"></i>Rolled <strong>${roll}</strong>! Recovered <strong>${actualRecovery}</strong> HP. (Cost: 1 Stress)</div>`;
-         setTimeout(() => { resultDisplay.innerHTML = ''; }, 5000);
-     }
- }
- 
- // Event delegation for Tireless button (since it's dynamically added to the ability display)
- document.addEventListener('click', function(e) {
-     if (e.target.closest('.tireless-btn')) {
-         e.preventDefault();
-         activateTirelessAbility();
-     }
- });
+
+/**
+ * Activate the Tireless ability for Rangers
+ * - Costs 1 Stress
+ * - Rolls 1d4 and recovers that many HP
+ */
+function activateTirelessAbility() {
+    if (!currentCharacter) return;
+
+    // Ensure resources exist
+    if (!currentCharacter.resources) {
+        currentCharacter.resources = {
+            hp: { max: 0, used: [], temp: 0 },
+            stress: { max: 0, used: [], temp: 0 },
+            class: { max: 0, used: [], temp: 0 },
+            spell: { max: 0, used: [], temp: 0 }
+        };
+    }
+
+    const stressResource = currentCharacter.resources.stress;
+    const hpResource = currentCharacter.resources.hp;
+
+    // Check if there's an available Stress box to use (cost: 1 Stress)
+    const stressMax = stressResource.max + (stressResource.temp || 0);
+    const stressUsed = stressResource.used.length;
+    const stressAvailable = stressMax - stressUsed;
+
+    const resultDisplay = document.getElementById('tirelessResultDisplay');
+
+    if (stressAvailable < 1) {
+        // Not enough Stress available
+        if (resultDisplay) {
+            resultDisplay.innerHTML = '<div class="tireless-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Not enough Stress available! Need 1 Stress to activate.</div>';
+            setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+        }
+        return;
+    }
+
+    // Check if there are any used HP boxes to recover
+    const hpUsedCount = hpResource.used.length;
+
+    if (hpUsedCount === 0) {
+        // No HP to recover
+        if (resultDisplay) {
+            resultDisplay.innerHTML = '<div class="tireless-result error"><i class="fas fa-heart mr-2"></i>HP is already full! No recovery needed.</div>';
+            setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+        }
+        return;
+    }
+
+    // Roll 1d4
+    const roll = Math.floor(Math.random() * 4) + 1;
+
+    // Calculate how many HP can actually be recovered (can't recover more than what's used)
+    const actualRecovery = Math.min(roll, hpUsedCount);
+
+    // Use 1 Stress (add the next index to used array)
+    const nextStressIndex = stressUsed; // The next unused index
+    stressResource.used.push(nextStressIndex);
+
+    // Recover HP by removing from the used array (remove from the end/right side)
+    // Sort used array first to ensure we remove from highest index
+    hpResource.used.sort((a, b) => a - b);
+
+    // Remove the last 'actualRecovery' items from the used array
+    for (let i = 0; i < actualRecovery; i++) {
+        if (hpResource.used.length > 0) {
+            hpResource.used.pop();
+        }
+    }
+
+    // Save and update display
+    saveCharacters();
+    populateSheetResourceBoxes(currentCharacter);
+    updateCharacterDisplay();
+
+    // Show result
+    if (resultDisplay) {
+        resultDisplay.innerHTML = `<div class="tireless-result"><i class="fas fa-dice-d20 mr-2"></i>Rolled <strong>${roll}</strong>! Recovered <strong>${actualRecovery}</strong> HP. (Cost: 1 Stress)</div>`;
+        setTimeout(() => { resultDisplay.innerHTML = ''; }, 5000);
+    }
+}
+
+// Event delegation for Tireless button (since it's dynamically added to the ability display)
+document.addEventListener('click', function (e) {
+    if (e.target.closest('.tireless-btn')) {
+        e.preventDefault();
+        activateTirelessAbility();
+    }
+});
 
 // ==================== ARCANE RECOVERY (WIZARD) ====================
- 
- /**
-  * Activate the Arcane Recovery ability for Wizards
-  * - Costs 1 Class resource
-  * - Recovers Spell points equal to half the total Spell max (rounded up)
-  */
- function activateArcaneRecoveryAbility() {
-     if (!currentCharacter) return;
- 
-     // Ensure resources exist
-     if (!currentCharacter.resources) {
-         currentCharacter.resources = {
-             hp: { max: 0, used: [], temp: 0 },
-             stress: { max: 0, used: [], temp: 0 },
-             class: { max: 0, used: [], temp: 0 },
-             spell: { max: 0, used: [], temp: 0 }
-         };
-     }
- 
-     const classResource = currentCharacter.resources.class;
-     const spellResource = currentCharacter.resources.spell;
- 
-     // Check if there's an available Class box to use (cost: 1 Class)
-     const classMax = classResource.max + (classResource.temp || 0);
-     const classUsed = classResource.used.length;
-     const classAvailable = classMax - classUsed;
- 
-     const resultDisplay = document.getElementById('arcaneRecoveryResultDisplay');
- 
-     if (classAvailable < 1) {
-         // Not enough Class available
-         if (resultDisplay) {
-             resultDisplay.innerHTML = '<div class="arcane-recovery-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Not enough Class available! Need 1 Class to activate.</div>';
-             setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
-         }
-         return;
-     }
- 
-     // Calculate recovery amount: half of total Spell max, rounded up
-     const spellMax = spellResource.max + (spellResource.temp || 0);
-     const recoveryAmount = Math.ceil(spellMax / 2);
- 
-     // Check if there are any used Spell boxes to recover
-     const spellUsedCount = spellResource.used.length;
- 
-     if (spellUsedCount === 0) {
-         // No Spell to recover
-         if (resultDisplay) {
-             resultDisplay.innerHTML = '<div class="arcane-recovery-result error"><i class="fas fa-hat-wizard mr-2"></i>Spell points are already full! No recovery needed.</div>';
-             setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
-         }
-         return;
-     }
- 
-     // Calculate how many Spell can actually be recovered (can't recover more than what's used)
-     const actualRecovery = Math.min(recoveryAmount, spellUsedCount);
- 
-     // Use 1 Class (add the next index to used array)
-     const nextClassIndex = classUsed; // The next unused index
-     classResource.used.push(nextClassIndex);
- 
-     // Recover Spell by removing from the used array (remove from the end/right side)
-     // Sort used array first to ensure we remove from highest index
-     spellResource.used.sort((a, b) => a - b);
- 
-     // Remove the last 'actualRecovery' items from the used array
-     for (let i = 0; i < actualRecovery; i++) {
-         if (spellResource.used.length > 0) {
-             spellResource.used.pop();
-         }
-     }
- 
-     // Save and update display
-     saveCharacters();
-     populateSheetResourceBoxes(currentCharacter);
-     updateCharacterDisplay();
- 
-     // Show result
-     if (resultDisplay) {
-         resultDisplay.innerHTML = `<div class="arcane-recovery-result"><i class="fas fa-magic mr-2"></i>Recovered <strong>${actualRecovery}</strong> Spell point${actualRecovery !== 1 ? 's' : ''}! (Max: ${recoveryAmount}, Cost: 1 Class)</div>`;
-         setTimeout(() => { resultDisplay.innerHTML = ''; }, 5000);
-     }
- }
- 
- // Event delegation for Arcane Recovery button (since it's dynamically added to the ability display)
- document.addEventListener('click', function(e) {
-     if (e.target.closest('.arcane-recovery-btn')) {
-         e.preventDefault();
-         activateArcaneRecoveryAbility();
-     }
- });
+
+/**
+ * Activate the Arcane Recovery ability for Wizards
+ * - Costs 1 Class resource
+ * - Recovers Spell points equal to half the total Spell max (rounded up)
+ */
+function activateArcaneRecoveryAbility() {
+    if (!currentCharacter) return;
+
+    // Ensure resources exist
+    if (!currentCharacter.resources) {
+        currentCharacter.resources = {
+            hp: { max: 0, used: [], temp: 0 },
+            stress: { max: 0, used: [], temp: 0 },
+            class: { max: 0, used: [], temp: 0 },
+            spell: { max: 0, used: [], temp: 0 }
+        };
+    }
+
+    const classResource = currentCharacter.resources.class;
+    const spellResource = currentCharacter.resources.spell;
+
+    // Check if there's an available Class box to use (cost: 1 Class)
+    const classMax = classResource.max + (classResource.temp || 0);
+    const classUsed = classResource.used.length;
+    const classAvailable = classMax - classUsed;
+
+    const resultDisplay = document.getElementById('arcaneRecoveryResultDisplay');
+
+    if (classAvailable < 1) {
+        // Not enough Class available
+        if (resultDisplay) {
+            resultDisplay.innerHTML = '<div class="arcane-recovery-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Not enough Class available! Need 1 Class to activate.</div>';
+            setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+        }
+        return;
+    }
+
+    // Calculate recovery amount: half of total Spell max, rounded up
+    const spellMax = spellResource.max + (spellResource.temp || 0);
+    const recoveryAmount = Math.ceil(spellMax / 2);
+
+    // Check if there are any used Spell boxes to recover
+    const spellUsedCount = spellResource.used.length;
+
+    if (spellUsedCount === 0) {
+        // No Spell to recover
+        if (resultDisplay) {
+            resultDisplay.innerHTML = '<div class="arcane-recovery-result error"><i class="fas fa-hat-wizard mr-2"></i>Spell points are already full! No recovery needed.</div>';
+            setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+        }
+        return;
+    }
+
+    // Calculate how many Spell can actually be recovered (can't recover more than what's used)
+    const actualRecovery = Math.min(recoveryAmount, spellUsedCount);
+
+    // Use 1 Class (add the next index to used array)
+    const nextClassIndex = classUsed; // The next unused index
+    classResource.used.push(nextClassIndex);
+
+    // Recover Spell by removing from the used array (remove from the end/right side)
+    // Sort used array first to ensure we remove from highest index
+    spellResource.used.sort((a, b) => a - b);
+
+    // Remove the last 'actualRecovery' items from the used array
+    for (let i = 0; i < actualRecovery; i++) {
+        if (spellResource.used.length > 0) {
+            spellResource.used.pop();
+        }
+    }
+
+    // Save and update display
+    saveCharacters();
+    populateSheetResourceBoxes(currentCharacter);
+    updateCharacterDisplay();
+
+    // Show result
+    if (resultDisplay) {
+        resultDisplay.innerHTML = `<div class="arcane-recovery-result"><i class="fas fa-magic mr-2"></i>Recovered <strong>${actualRecovery}</strong> Spell point${actualRecovery !== 1 ? 's' : ''}! (Max: ${recoveryAmount}, Cost: 1 Class)</div>`;
+        setTimeout(() => { resultDisplay.innerHTML = ''; }, 5000);
+    }
+}
+
+// Event delegation for Arcane Recovery button (since it's dynamically added to the ability display)
+document.addEventListener('click', function (e) {
+    if (e.target.closest('.arcane-recovery-btn')) {
+        e.preventDefault();
+        activateArcaneRecoveryAbility();
+    }
+});
 
 // ==================== SIGNATURE SPELL (WIZARD) ====================
 
@@ -14481,7 +14603,7 @@ function removeAllSignatureSpellBonuses(showDialog = true) {
 }
 
 // Event delegation for Signature Spell dropdowns
-document.addEventListener('change', function(e) {
+document.addEventListener('change', function (e) {
     if (e.target && e.target.id && e.target.id.startsWith('signatureSpellSelect')) {
         const slotNumber = parseInt(e.target.id.replace('signatureSpellSelect', ''));
         const selectedSpell = e.target.value;
@@ -14552,278 +14674,385 @@ function hasSignatureSpellAbility() {
         currentCharacter.classAbilities.selectedClass.includes(signatureSpellIndex);
 }
 
- // ==================== WIZARD ARMOR PENALTY ====================
- 
- /**
-  * Check if a Wizard is wearing restricted armor (not "Nothing Selected", "None", or "Mage Armor")
-  * @param {Object} character - The character object
-  * @returns {boolean} True if the Wizard has armor penalty
-  */
- function hasWizardArmorPenalty(character) {
-     if (!character || character.class !== 'Wizard') return false;
-     if (!character.armorItem) return false;
- 
-     const armorName = character.armorItem.name.toLowerCase();
- 
-     // No penalty for these armor types
-     if (armorName === 'nothing selected' ||
-         armorName === 'no armor' ||
-         armorName === '' ||
-         armorName.includes('mage armor')) {
-         return false;
-     }
- 
-     // Wizard is wearing actual armor - penalty applies
-     return true;
- }
- 
- /**
-  * Get the Wizard armor penalty description for tooltips/warnings
-  * @param {Object} character - The character object
-  * @returns {string} Description of penalties or empty string
-  */
- function getWizardArmorPenaltyDescription(character) {
-     if (!hasWizardArmorPenalty(character)) return '';
- 
-     return 'ARMOR PENALTY: Attack rolls with Disadvantage, DC Save -5, Spell costs +1';
- }
+// ==================== AWAKENED MIND (WIZARD) ====================
 
- /**
-  * Modify spell cost text to increase costs by 1 for Wizard armor penalty
-  * @param {string} costText - The original cost text (e.g., "1 Spell / 1 Stress")
-  * @returns {string} Modified cost text with +1 to each number
-  */
- function increaseSpellCosts(costText) {
-     // Match patterns like "1 Spell", "2 Stress", etc. and increase the number by 1
-     return costText.replace(/(\d+)\s*(Spell|Stress)/gi, (match, num, type) => {
-         return `${parseInt(num) + 1} ${type}`;
-     });
- }
- 
- /**
-  * Modify spell name HTML to show increased costs for Wizard armor penalty
-  * @param {string} spellName - The original spell name with cost HTML
-  * @param {boolean} hasArmorPenalty - Whether the wizard has armor penalty
-  * @returns {string} Modified spell name HTML
-  */
- function applyWizardArmorPenaltyToSpellName(spellName, hasArmorPenalty) {
-     if (!hasArmorPenalty) return spellName;
- 
-     // Find the cost portion within <i class='text-sm text-orange-500'>...</i>
-     return spellName.replace(
-         /(<i[^>]*class=['"][^'"]*text-orange-500[^'"]*['"][^>]*>)([^<]+)(<\/i>)/gi,
-         (match, openTag, costText, closeTag) => {
-             const increasedCost = increaseSpellCosts(costText);
-             // Change color to red to indicate penalty
-             return `<i class='text-sm text-red-500 font-bold'>${increasedCost}</i> <span class='text-xs text-red-400'>(+1 Armor)</span>`;
-         }
-     );
- }
- /**
-  * Update the visibility of the Wizard armor penalty warning banner
-  * @param {Object} character - The character object
-  */
- function updateWizardArmorPenaltyWarning(character) {
-     const warningBanner = document.getElementById('wizardArmorPenaltyWarning');
-     if (!warningBanner) return;
- 
-     if (hasWizardArmorPenalty(character)) {
-         warningBanner.classList.remove('hidden');
-     } else {
-         warningBanner.classList.add('hidden');
-     }
- }
- 
+/**
+ * Check if Wizard has Awakened Mind ability selected
+ * @returns {boolean} True if Awakened Mind ability is selected
+ */
+function hasAwakenedMindAbility() {
+    if (!currentCharacter || currentCharacter.class !== 'Wizard') return false;
+    if (!currentCharacter.classAbilities) return false;
+
+    const wizardAbilities = classAbilities['Wizard'] || [];
+    const awakenedMindIndex = wizardAbilities.findIndex(ability =>
+        ability.name.toLowerCase().includes('awakened mind')
+    );
+
+    return awakenedMindIndex !== -1 &&
+        currentCharacter.classAbilities.selectedClass.includes(awakenedMindIndex);
+}
+
+/**
+ * Handle the Awakened Mind ability being toggled on/off
+ * @param {boolean} isEnabled - Whether the ability is being enabled or disabled
+ */
+function handleAwakenedMindAbility(isEnabled) {
+    if (!currentCharacter || currentCharacter.class !== 'Wizard') return;
+    // Store Mage Armor state before changes
+    const wasMageArmorActive = currentCharacter.mageArmorActive;
+
+    // If Mage Armor is active, remove its bonuses first (will be reapplied with new threshold)
+    if (wasMageArmorActive) {
+        removeMageArmorBonuses();
+    }
+
+    // Apply or remove Awakened Mind bonuses
+    if (isEnabled) {
+        applyAwakenedMindBonuses();
+    } else {
+        removeAwakenedMindBonuses();
+    }
+
+    // Reapply Mage Armor bonuses if it was active (now with updated Awakened Mind state)
+    if (wasMageArmorActive) {
+        currentCharacter.mageArmorActive = true; // Ensure flag is still set
+        applyMageArmorBonuses();
+    }
+
+    saveCharacters();
+    populateCharacterSheet(currentCharacter);
+}
+
+/**
+ * Apply Awakened Mind bonuses: +1 INT, +1 Armor Slot
+ */
+function applyAwakenedMindBonuses() {
+    if (!currentCharacter) return;
+
+    // Initialize ability bonuses object (used by populateCharacterSheet for stat display)
+    if (!currentCharacter.awakenedMindAbilityBonuses) {
+        currentCharacter.awakenedMindAbilityBonuses = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+    }
+
+
+    // Apply +1 INT bonus
+    currentCharacter.awakenedMindAbilityBonuses.int = 1;
+
+    // Apply +1 Armor (to the base armor value)
+    currentCharacter.armor = (currentCharacter.armor || 0) + 1;
+
+    // Apply +1 Armor Slot
+    if (!currentCharacter.armorSlots) {
+        currentCharacter.armorSlots = { total: 0, filled: [], permanent: 0, temporary: 0 };
+    }
+    currentCharacter.armorSlots.total += 1;
+    currentCharacter.armorSlots.permanent += 1;
+
+    // Mark Awakened Mind as active
+    currentCharacter.awakenedMindActive = true;
+}
+
+/**
+ * Remove Awakened Mind bonuses
+ */
+function removeAwakenedMindBonuses() {
+    if (!currentCharacter) return;
+
+    // Remove INT bonus
+    if (currentCharacter.awakenedMindAbilityBonuses) {
+        currentCharacter.awakenedMindAbilityBonuses = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+    }
+
+    // Only remove armor/slot bonuses if they were applied (character was active)
+    if (currentCharacter.awakenedMindActive) {
+        // Remove Armor bonus
+        currentCharacter.armor = Math.max(0, (currentCharacter.armor || 0) - 1);
+
+        // Remove Armor Slot bonus
+        if (currentCharacter.armorSlots) {
+            currentCharacter.armorSlots.total = Math.max(0, currentCharacter.armorSlots.total - 1);
+            currentCharacter.armorSlots.permanent = Math.max(0, currentCharacter.armorSlots.permanent - 1);
+            currentCharacter.armorSlots.filled = currentCharacter.armorSlots.filled.filter(index => index < currentCharacter.armorSlots.total);
+        }
+    }
+
+    // Mark Awakened Mind as inactive
+    currentCharacter.awakenedMindActive = false;
+}
+
+// ==================== WIZARD ARMOR PENALTY ====================
+
+/**
+ * Check if a Wizard is wearing restricted armor (not "Nothing Selected", "None", or "Mage Armor")
+ * @param {Object} character - The character object
+ * @returns {boolean} True if the Wizard has armor penalty
+ */
+function hasWizardArmorPenalty(character) {
+    if (!character || character.class !== 'Wizard') return false;
+    if (!character.armorItem) return false;
+
+    const armorName = character.armorItem.name.toLowerCase();
+
+    // No penalty for these armor types
+    if (armorName === 'nothing selected' ||
+        armorName === 'no armor' ||
+        armorName === '' ||
+        armorName.includes('mage armor')) {
+        return false;
+    }
+
+    // Wizard is wearing actual armor - penalty applies
+    return true;
+}
+
+/**
+ * Get the Wizard armor penalty description for tooltips/warnings
+ * @param {Object} character - The character object
+ * @returns {string} Description of penalties or empty string
+ */
+function getWizardArmorPenaltyDescription(character) {
+    if (!hasWizardArmorPenalty(character)) return '';
+
+    return 'ARMOR PENALTY: Attack rolls with Disadvantage, DC Save -5, Spell costs +1';
+}
+
+/**
+ * Modify spell cost text to increase costs by 1 for Wizard armor penalty
+ * @param {string} costText - The original cost text (e.g., "1 Spell / 1 Stress")
+ * @returns {string} Modified cost text with +1 to each number
+ */
+function increaseSpellCosts(costText) {
+    // Match patterns like "1 Spell", "2 Stress", etc. and increase the number by 1
+    return costText.replace(/(\d+)\s*(Spell|Stress)/gi, (match, num, type) => {
+        return `${parseInt(num) + 1} ${type}`;
+    });
+}
+
+/**
+ * Modify spell name HTML to show increased costs for Wizard armor penalty
+ * @param {string} spellName - The original spell name with cost HTML
+ * @param {boolean} hasArmorPenalty - Whether the wizard has armor penalty
+ * @returns {string} Modified spell name HTML
+ */
+function applyWizardArmorPenaltyToSpellName(spellName, hasArmorPenalty) {
+    if (!hasArmorPenalty) return spellName;
+
+    // Find the cost portion within <i class='text-sm text-orange-500'>...</i>
+    return spellName.replace(
+        /(<i[^>]*class=['"][^'"]*text-orange-500[^'"]*['"][^>]*>)([^<]+)(<\/i>)/gi,
+        (match, openTag, costText, closeTag) => {
+            const increasedCost = increaseSpellCosts(costText);
+            // Change color to red to indicate penalty
+            return `<i class='text-sm text-red-500 font-bold'>${increasedCost}</i> <span class='text-xs text-red-400'>(+1 Armor)</span>`;
+        }
+    );
+}
+/**
+ * Update the visibility of the Wizard armor penalty warning banner
+ * @param {Object} character - The character object
+ */
+function updateWizardArmorPenaltyWarning(character) {
+    const warningBanner = document.getElementById('wizardArmorPenaltyWarning');
+    if (!warningBanner) return;
+
+    if (hasWizardArmorPenalty(character)) {
+        warningBanner.classList.remove('hidden');
+    } else {
+        warningBanner.classList.add('hidden');
+    }
+}
+
 
 
 // ==================== FIGHTING STYLE (FIGHTER) ====================
- 
- /**
-  * Get the current Fighting Style selection for a Fighter
-  * @param {Object} character - The character object
-  * @returns {string} The selected fighting style or '--' if none
-  */
- function getFightingStyle(character) {
-     if (!character || character.class !== 'Fighter') return '--';
- 
-     // Check if Fighting Style ability is selected and get the saved value
-     if (character.classAbilities && character.classAbilities.abilitySelectValues) {
-         // Find the Fighting Style select value (it's saved with a key pattern)
-         for (const key in character.classAbilities.abilitySelectValues) {
-             const value = character.classAbilities.abilitySelectValues[key];
-             if (value && (value.includes('Archer') || value.includes('Defender') ||
-                 value.includes('Dual-Wield') || value.includes('Two-Handed'))) {
-                 return value;
-             }
-         }
-     }
-     return '--';
- }
- 
- /**
-  * Check if the primary weapon is a ranged weapon (Bow, Crossbow, Sling)
-  * @param {Object} character - The character object
-  * @returns {boolean} True if the weapon is ranged
-  */
- function isRangedWeapon(character) {
-     if (!character || !character.primaryWeapon) return false;
- 
-     const weaponName = character.primaryWeapon.name.toLowerCase();
-     return weaponName.includes('bow') ||
-            weaponName.includes('crossbow') ||
-            weaponName.includes('sling');
- }
- 
- /**
-  * Check if the primary weapon is a two-handed weapon
-  * @param {Object} character - The character object
-  * @returns {boolean} True if the weapon is two-handed
-  */
- function isTwoHandedWeapon(character) {
-     if (!character || !character.primaryWeapon) return false;
- 
-     const weapon = character.primaryWeapon;
-     // Check for two-handed in weapon name or properties
-     const weaponName = weapon.name.toLowerCase();
-     return weaponName.includes('two-handed') ||
-            weaponName.includes('2-handed') ||
-            weaponName.includes('greatsword') ||
-            weaponName.includes('battleaxe') ||
-            weaponName.includes('maul') ||
-            weaponName.includes('halberd') ||
-            weaponName.includes('pike') ||
-            weaponName.includes('glaive') ||
-            weaponName.includes('lance') ||
-            (weapon.hands && weapon.hands === 2);
- }
- 
- /**
-  * Get the Archer fighting style attack bonus
-  * @param {Object} character - The character object
-  * @returns {number} The attack bonus (0, +1, or +2)
-  */
- function getArcherAttackBonus(character) {
-     const style = getFightingStyle(character);
-     if (!style.includes('Archer')) return 0;
-     if (!isRangedWeapon(character)) return 0;
- 
-     const level = character.level || 1;
-     return level >= 6 ? 2 : 1;
- }
- 
- /**
-  * Get the Defender fighting style evasion bonus
-  * @param {Object} character - The character object
-  * @returns {number} The evasion bonus (0, +1, or +2)
-  */
- function getDefenderEvasionBonus(character) {
-     const style = getFightingStyle(character);
-     if (!style.includes('Defender')) return 0;
- 
-     const level = character.level || 1;
-     return level >= 6 ? 2 : 1;
- }
- 
- /**
-  * Get the Dual-Wield extra damage dice count
-  * @param {Object} character - The character object
-  * @returns {number} The number of extra dice (0-4)
-  */
- function getDualWieldExtraDice(character) {
-     const style = getFightingStyle(character);
-     if (!style.includes('Dual-Wield')) return 0;
- 
-     const level = character.level || 1;
- 
-     if (level >= 8) return 4;
-     if (level >= 5) return 3;
-     if (level >= 2) return 2;
-     return 1; // Level 1
- }
- 
- /**
-  * Check if Two-Handed fighting style is active
-  * @param {Object} character - The character object
-  * @returns {boolean} True if Two-Handed style is active with a two-handed weapon
-  */
- function hasTwoHandedStyle(character) {
-     const style = getFightingStyle(character);
-     return style.includes('Two-Handed') && isTwoHandedWeapon(character);
- }
- 
- /**
-  * Get the Two-Handed damage bonus per die
-  * Applies +1 to each damage die rolled when Two-Handed style is selected
-  * @param {Object} character - The character object
-  * @returns {number} The bonus per die (0 or 1)
-  */
- function getTwoHandedDamageBonus(character) {
-     // Just check if Two-Handed fighting style is selected
-     // The +1 per die applies on EVERY damage roll when this style is active
-     const style = getFightingStyle(character);
-     return style.includes('Two-Handed') ? 1 : 0;
- }
- 
- /**
-  * Check if a roll is a critical hit (considering Two-Handed style)
-  * @param {Object} character - The character object
-  * @param {number} d20Roll - The d20 roll result
-  * @returns {boolean} True if it's a critical hit
-  */
- function isCriticalHit(character, d20Roll) {
-     if (d20Roll === 20) return true;
-     if (d20Roll === 19 && hasTwoHandedStyle(character)) return true;
-     return false;
- }
- 
- // Event listener for Fighting Style select changes (using event delegation)
- document.addEventListener('change', function(e) {
-     if (e.target.id === 'charStyle') {
-         // Save the selection through the existing system
-         saveClassAbilitiesSelection();
- 
-         // Update evasion display if Defender is selected/changed
-         if (currentCharacter) {
-             updateEvasionWithFightingStyle();
-             saveCharacters();
-         }
-     }
- });
- 
- /**
-  * Update evasion display with Fighting Style bonus
-  */
- function updateEvasionWithFightingStyle() {
-     if (!currentCharacter) return;
- 
-     const defenderBonus = getDefenderEvasionBonus(currentCharacter);
- 
-     // Store the fighting style evasion bonus separately
-     if (!currentCharacter.evasionData) {
-         currentCharacter.evasionData = {
-             base: currentCharacter.evasion || 0,
-             temporary: 0,
-             unarmoredDefense: 0,
-             mageArmor: 0,
-             fightingStyle: 0
-         };
-     }
- 
-     currentCharacter.evasionData.fightingStyle = defenderBonus;
- 
-     // Recalculate total evasion
-     const totalEvasion = (currentCharacter.evasionData.base || 0) +
-                          (currentCharacter.evasionData.temporary || 0) +
-                          (currentCharacter.evasionData.unarmoredDefense || 0) +
-                          (currentCharacter.evasionData.mageArmor || 0) +
-                          (currentCharacter.evasionData.fightingStyle || 0) +
-                          getArmorEvasionValue(currentCharacter);
- 
-     currentCharacter.evasion = totalEvasion;
- 
-     // Update display
-     const evasionDisplay = document.getElementById('displayEvasion');
-     if (evasionDisplay) {
-         evasionDisplay.textContent = totalEvasion;
-     }
- }
+
+/**
+ * Get the current Fighting Style selection for a Fighter
+ * @param {Object} character - The character object
+ * @returns {string} The selected fighting style or '--' if none
+ */
+function getFightingStyle(character) {
+    if (!character || character.class !== 'Fighter') return '--';
+
+    // Check if Fighting Style ability is selected and get the saved value
+    if (character.classAbilities && character.classAbilities.abilitySelectValues) {
+        // Find the Fighting Style select value (it's saved with a key pattern)
+        for (const key in character.classAbilities.abilitySelectValues) {
+            const value = character.classAbilities.abilitySelectValues[key];
+            if (value && (value.includes('Archer') || value.includes('Defender') ||
+                value.includes('Dual-Wield') || value.includes('Two-Handed'))) {
+                return value;
+            }
+        }
+    }
+    return '--';
+}
+
+/**
+ * Check if the primary weapon is a ranged weapon (Bow, Crossbow, Sling)
+ * @param {Object} character - The character object
+ * @returns {boolean} True if the weapon is ranged
+ */
+function isRangedWeapon(character) {
+    if (!character || !character.primaryWeapon) return false;
+
+    const weaponName = character.primaryWeapon.name.toLowerCase();
+    return weaponName.includes('bow') ||
+        weaponName.includes('crossbow') ||
+        weaponName.includes('sling');
+}
+
+/**
+ * Check if the primary weapon is a two-handed weapon
+ * @param {Object} character - The character object
+ * @returns {boolean} True if the weapon is two-handed
+ */
+function isTwoHandedWeapon(character) {
+    if (!character || !character.primaryWeapon) return false;
+
+    const weapon = character.primaryWeapon;
+    // Check for two-handed in weapon name or properties
+    const weaponName = weapon.name.toLowerCase();
+    return weaponName.includes('two-handed') ||
+        weaponName.includes('2-handed') ||
+        weaponName.includes('greatsword') ||
+        weaponName.includes('battleaxe') ||
+        weaponName.includes('maul') ||
+        weaponName.includes('halberd') ||
+        weaponName.includes('pike') ||
+        weaponName.includes('glaive') ||
+        weaponName.includes('lance') ||
+        (weapon.hands && weapon.hands === 2);
+}
+
+/**
+ * Get the Archer fighting style attack bonus
+ * @param {Object} character - The character object
+ * @returns {number} The attack bonus (0, +1, or +2)
+ */
+function getArcherAttackBonus(character) {
+    const style = getFightingStyle(character);
+    if (!style.includes('Archer')) return 0;
+    if (!isRangedWeapon(character)) return 0;
+
+    const level = character.level || 1;
+    return level >= 6 ? 2 : 1;
+}
+
+/**
+ * Get the Defender fighting style evasion bonus
+ * @param {Object} character - The character object
+ * @returns {number} The evasion bonus (0, +1, or +2)
+ */
+function getDefenderEvasionBonus(character) {
+    const style = getFightingStyle(character);
+    if (!style.includes('Defender')) return 0;
+
+    const level = character.level || 1;
+    return level >= 6 ? 2 : 1;
+}
+
+/**
+ * Get the Dual-Wield extra damage dice count
+ * @param {Object} character - The character object
+ * @returns {number} The number of extra dice (0-4)
+ */
+function getDualWieldExtraDice(character) {
+    const style = getFightingStyle(character);
+    if (!style.includes('Dual-Wield')) return 0;
+
+    const level = character.level || 1;
+
+    if (level >= 8) return 4;
+    if (level >= 5) return 3;
+    if (level >= 2) return 2;
+    return 1; // Level 1
+}
+
+/**
+ * Check if Two-Handed fighting style is active
+ * @param {Object} character - The character object
+ * @returns {boolean} True if Two-Handed style is active with a two-handed weapon
+ */
+function hasTwoHandedStyle(character) {
+    const style = getFightingStyle(character);
+    return style.includes('Two-Handed') && isTwoHandedWeapon(character);
+}
+
+/**
+ * Get the Two-Handed damage bonus per die
+ * Applies +1 to each damage die rolled when Two-Handed style is selected
+ * @param {Object} character - The character object
+ * @returns {number} The bonus per die (0 or 1)
+ */
+function getTwoHandedDamageBonus(character) {
+    // Just check if Two-Handed fighting style is selected
+    // The +1 per die applies on EVERY damage roll when this style is active
+    const style = getFightingStyle(character);
+    return style.includes('Two-Handed') ? 1 : 0;
+}
+
+/**
+ * Check if a roll is a critical hit (considering Two-Handed style)
+ * @param {Object} character - The character object
+ * @param {number} d20Roll - The d20 roll result
+ * @returns {boolean} True if it's a critical hit
+ */
+function isCriticalHit(character, d20Roll) {
+    if (d20Roll === 20) return true;
+    if (d20Roll === 19 && hasTwoHandedStyle(character)) return true;
+    return false;
+}
+
+// Event listener for Fighting Style select changes (using event delegation)
+document.addEventListener('change', function (e) {
+    if (e.target.id === 'charStyle') {
+        // Save the selection through the existing system
+        saveClassAbilitiesSelection();
+
+        // Update evasion display if Defender is selected/changed
+        if (currentCharacter) {
+            updateEvasionWithFightingStyle();
+            saveCharacters();
+        }
+    }
+});
+
+/**
+ * Update evasion display with Fighting Style bonus
+ */
+function updateEvasionWithFightingStyle() {
+    if (!currentCharacter) return;
+
+    const defenderBonus = getDefenderEvasionBonus(currentCharacter);
+
+    // Store the fighting style evasion bonus separately
+    if (!currentCharacter.evasionData) {
+        currentCharacter.evasionData = {
+            base: currentCharacter.evasion || 0,
+            temporary: 0,
+            unarmoredDefense: 0,
+            mageArmor: 0,
+            fightingStyle: 0
+        };
+    }
+
+    currentCharacter.evasionData.fightingStyle = defenderBonus;
+
+    // Recalculate total evasion
+    const totalEvasion = (currentCharacter.evasionData.base || 0) +
+        (currentCharacter.evasionData.temporary || 0) +
+        (currentCharacter.evasionData.unarmoredDefense || 0) +
+        (currentCharacter.evasionData.mageArmor || 0) +
+        (currentCharacter.evasionData.fightingStyle || 0) +
+        getArmorEvasionValue(currentCharacter);
+
+    currentCharacter.evasion = totalEvasion;
+
+    // Update display
+    const evasionDisplay = document.getElementById('displayEvasion');
+    if (evasionDisplay) {
+        evasionDisplay.textContent = totalEvasion;
+    }
+}
