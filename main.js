@@ -715,8 +715,11 @@ const classAbilities = {
         {
             name: 'Second Wind <i class="skill1">1 Stress</i>', description:
                 `<ul>
+                <li><b>Once</b> unitl a <b>Long Rest</b>.</li>
         <li>- Roll 1d4 and recover that many Hit Points and half as much to Class.</li>
-    </ul>` },
+    </ul>
+         <button class="second-wind-btn" id="secondWindActivateBtn"><i class="fas fa-dice-d20"></i><span>Activate Second Wind</span></button>
+         <div id="secondWindResultDisplay"></div>` },
         {
             name: 'Armor Master <i class="skill2">1 Class</i>', description:
                 `<ul>  
@@ -735,22 +738,24 @@ const classAbilities = {
         {
             name: 'Know Thy Enemy <i class="skill2">1 Class</i>', description:
                 `<ul>
-        <li>- Spend some time examining an opponent and judge 2 of the following:</li><hr class = "m-2">
-        <li><i>Roll 2*1d6</i></li>
+        <li>- Spend some time examining a target and judge 2 of the following:</li><hr class = "m-2">
+        <li><i>Roll 1d6 (twice)</i></li>
             <li>1. Strength score</li>
             <li>2. Dexterity score</li>
             <li>3. Constitution score</li>
             <li>4. Evasion</li>
             <li>5. Current Hit Points</li>
             <li>6. Current Stress Points</li><hr class = "m-2">
-        <li>The Fighter also gains <b>Advantage</b> on their next Attack.</li>
+        <li>The Fighter also gains <b>Advantage</b> on their next Attack against the target.</li>
     </ul>` },
         {
             name: 'Relentless <i class="skill2">1 Class</i>', description:
                 `<ul>
-        <li>- If you have no Stress available.</li>
+        <li>- When you have <b>NO </b> Stress available.</li>
         <li>- Roll 1d4 and return that much Stress.</li>
-    </ul>` },
+    </ul>
+         <button class="relentless-btn" id="relentlessActivateBtn"><i class="fas fa-dice-d20"></i><span>Activate Relentless</span></button>
+         <div id="relentlessResultDisplay"></div>` },
         {
             name: 'Battle Master <i class="skill1">1 Stress</i>', description:
                 `<ul>
@@ -779,10 +784,10 @@ const classAbilities = {
             name: 'Fighting Style', description:
                 `<ul>
         <li><i class="skill3">Select 1</i></li>
-        <li>- <b>Archer:</b> Add +1 to Ranged Attacks.</li>
-        <li>- <b>Defender:</b> Add +1 to Evasion.</li>
-        <li>- <b>Dual-Wield:</b> Can use an Off-Hand Weapon and gain it\'s other bonuses.</li>
-        <li>- <b>Two-Handed:</b> With 2-Handed weapons your Critical hit is a 19 or 20.</li>
+        <li>- <b>Archer:</b> Level 1-5 +1, Level 6-10 +2 to Ranged Attacks.</li>
+        <li>- <b>Defender:</b> Level 1-5 +1, Level 6-10 +2 to Evasion.</li>
+        <li>- <b>Dual-Wield:</b> Can use an Off-Hand Weapon and gain it's other bonuses.</li>
+        <li>- <b>Two-Handed:</b> Your Critical Hit is a 19 or 20 and gain +1 to each Damage die.</li>
         <select id="charStyle" class="w-full mt-4 px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent">
             <option>--</option>
             <option>Archer +1 Ranged</option>
@@ -841,7 +846,7 @@ const classAbilities = {
             name: 'Deflect Missiles <i class="skill2">1 Class</i>', description:
                 `<ul>
         <li>- If a missile attack is directed at you.</li>
-        <li>- Roll a DEX Save:</li>
+        <li>- Roll a DEX Save</li>
         <li>- On a Fail reduce the damage by 1 Hit.</li>
         <li>- On a Success reduce the damage by 2 Hits.</li>
     </ul>` },
@@ -1410,19 +1415,19 @@ const classAbilities = {
     </ul>` },
         {
             name: 'Awakened Mind', description:
-    `<ul>
+                `<ul>
          <li>- Add +1 to INT.</li>
          <li>- Add +1 Armor (Slot).</li>
          <li>- When Mage Armor is active: +10 Lower Threshold, +15 Upper Threshold.</li>
     </ul>` },
         {
             name: 'Tides of Battle <i class="skill2">2 Class</i>', description:
-    `<ul>
+                `<ul>
         <li>- You can place yourself at the top or bottom of the Initiative order.</li>
     </ul>` },
         {
             name: 'Knowledge is Power <i class="skill2">1 Class</i>', description:
-    `<ul>
+                `<ul>
         <li>- Gain <b>Advantage</b> on Arcane Checks.</li>
         <li>- Add +1 Damage die to next damage roll.</li>
     </ul>` },
@@ -2084,44 +2089,52 @@ function handleAbilityCheckboxChange(checkbox) {
     }
 
     // Special handling for Spell Sequencer ability (Wizard)
-     if (currentCharacter && currentCharacter.class === 'Wizard') {
-         const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
-         if (ability && ability.name.toLowerCase().includes('spell sequencer')) {
-             handleSpellSequencerAbility(checkbox.checked);
-         }
-     }
+    if (currentCharacter && currentCharacter.class === 'Wizard') {
+        const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+        if (ability && ability.name.toLowerCase().includes('spell sequencer')) {
+            handleSpellSequencerAbility(checkbox.checked);
+        }
+    }
 
-     // Special handling for Expertise ability (Universal)
-     if (currentCharacter && type === 'universal') {
-         const ability = universalAbilities[index];
-         if (ability && ability.name.toLowerCase().includes('expertise')) {
-             handleExpertiseAbility(checkbox.checked);
-         }
-     }
+    // Special handling for Expertise ability (Universal)
+    if (currentCharacter && type === 'universal') {
+        const ability = universalAbilities[index];
+        if (ability && ability.name.toLowerCase().includes('expertise')) {
+            handleExpertiseAbility(checkbox.checked);
+        }
+    }
 
-     // Special handling for Jack of All Trades ability (Bard)
-     if (currentCharacter && currentCharacter.class === 'Bard') {
-         const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
-         if (ability && ability.name.toLowerCase().includes('jack of all trades')) {
-             handleJackOfAllTradesAbility(checkbox.checked);
-         }
-     }
+    // Special handling for Jack of All Trades ability (Bard)
+    if (currentCharacter && currentCharacter.class === 'Bard') {
+        const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+        if (ability && ability.name.toLowerCase().includes('jack of all trades')) {
+            handleJackOfAllTradesAbility(checkbox.checked);
+        }
+    }
 
-     // Special handling for Wild Beast ability (Druid)
-     if (currentCharacter && currentCharacter.class === 'Druid') {
-         const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
-         if (ability && ability.name.toLowerCase().includes('wild beast')) {
-             handleWildBeastAbility(checkbox.checked);
-         }
-     }
- 
-     // Special handling for Ranger Companion ability (Ranger)
-     if (currentCharacter && currentCharacter.class === 'Ranger') {
-         const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
-         if (ability && ability.name.toLowerCase().includes('ranger companion')) {
-             handleRangerCompanionAbility(checkbox.checked);
-         }
-     }
+    // Special handling for Wild Beast ability (Druid)
+    if (currentCharacter && currentCharacter.class === 'Druid') {
+        const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+        if (ability && ability.name.toLowerCase().includes('wild beast')) {
+            handleWildBeastAbility(checkbox.checked);
+        }
+    }
+
+    // Special handling for Ranger Companion ability (Ranger)
+    if (currentCharacter && currentCharacter.class === 'Ranger') {
+        const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+        if (ability && ability.name.toLowerCase().includes('ranger companion')) {
+            handleRangerCompanionAbility(checkbox.checked);
+        }
+    }
+
+    // Special handling for Tokens of the Departed ability (Warlock)
+    if (currentCharacter && currentCharacter.class === 'Warlock') {
+        const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+        if (ability && ability.name.toLowerCase().includes('tokens of the departed')) {
+            handleTokensOfDepartedAbility(checkbox.checked);
+        }
+    }
 
     // Save selections
     saveClassAbilitiesSelection();
@@ -2140,7 +2153,6 @@ function handleAbilityCheckboxChange(checkbox) {
     }
 }
 
-// ADD THESE 3 FUNCTIONS RIGHT AFTER your existing handleAbilityCheckboxChange function:
 
 // Calculate maximum abilities allowed based on character level
 function getMaxAbilities(level) {
@@ -2629,15 +2641,17 @@ function restoreClassAbilitiesSelection() {
         }
     });
     // Initialize Spell Sequencer if ability is selected
-     initSpellSequencerIfNeeded();
-     // Initialize Expertise if ability is selected
-     initExpertiseIfNeeded();
-     // Initialize Jack of All Trades if ability is selected
-     initJackOfAllTradesIfNeeded();
- // Initialize Wild Beast if ability is selected
-     initWildBeastIfNeeded();
-     // Initialize Ranger Companion if ability is selected
-     initRangerCompanionIfNeeded();
+    initSpellSequencerIfNeeded();
+    // Initialize Expertise if ability is selected
+    initExpertiseIfNeeded();
+    // Initialize Jack of All Trades if ability is selected
+    initJackOfAllTradesIfNeeded();
+    // Initialize Wild Beast if ability is selected
+    initWildBeastIfNeeded();
+    // Initialize Ranger Companion if ability is selected
+    initRangerCompanionIfNeeded();
+    // Initialize Tokens of the Departed if ability is selected
+    initTokensOfDepartedIfNeeded();
 }
 
 // =================================================
@@ -3237,9 +3251,9 @@ function updateSpellCastingDisplay(character) {
         // Update known spell groups display
         updateKnownSpellsDisplay();
         // Update Spell Sequencer button if ability is selected
-         if (hasSpellSequencer) {
-             updateSpellSequencerButton();
-         }
+        if (hasSpellSequencer) {
+            updateSpellSequencerButton();
+        }
     } else {
         spellCastingSection.style.display = 'none';
     }
@@ -4192,7 +4206,7 @@ function updateWildBeastDisplay() {
     const checkbox = document.getElementById('wildBeastToggle');
 
     // Show section only for Druid with Wild Beast ability enabled
-     if (currentCharacter.class === 'Druid' && currentCharacter.wildBeastEnabled) {
+    if (currentCharacter.class === 'Druid' && currentCharacter.wildBeastEnabled) {
         section.style.display = 'block';
         checkbox.checked = currentCharacter.wildBeastActive || false;
     } else {
@@ -4753,8 +4767,11 @@ function executeLongRest() {
     // Recalculate current evasion based on active mode
     updateCharacterEvasion();
 
+    // Reset Relentless (re-enable the button)
+    resetRelentlessOnLongRest();
+
     // Reset Spell Sequencer (re-enable the button)
-     resetSpellSequencerOnLongRest()
+    resetSpellSequencerOnLongRest()
 
     // Save and refresh
     saveCharacters();
@@ -6597,10 +6614,10 @@ function toggleSheetProficiency(ability) {
         // Move this INSIDE the callback so it runs AFTER proficiency is changed
         generateSkillsList(currentCharacter);
         // Update Expertise dropdown if the ability is active (reflects new proficiency state)
-         if (hasExpertiseAbility() && currentCharacter.expertiseActive) {
-             populateExpertiseDropdown();
-             updateExpertiseResultText();
-         }
+        if (hasExpertiseAbility() && currentCharacter.expertiseActive) {
+            populateExpertiseDropdown();
+            updateExpertiseResultText();
+        }
     });
 }
 
@@ -7253,6 +7270,9 @@ function populateCharacterSheet(character) {
     // Update Spirit Projection display (Warlock)
     updateSpiritProjectionDisplay(character);
 
+    // Update Tokens of the Departed display (Warlock)
+    updateTokensOfDepartedDisplay();
+
     // Equipment
     updateEquipmentDisplay(character);
 
@@ -7306,8 +7326,8 @@ function generateSkillsList(character) {
         console.log(`Jack of all Trades active for ${character.name} (Level ${level}): +${jackOfAllTradesBonus} bonus`);
     }
 
-// Calculate Expertise bonus if active
-     const expertiseBonus = hasExpertiseAbility() && character.expertiseActive ? 1 : 0;
+    // Calculate Expertise bonus if active
+    const expertiseBonus = hasExpertiseAbility() && character.expertiseActive ? 1 : 0;
 
     defaultSkills.forEach(skill => {
         const baseModifier = character[skill.ability] || 0;
@@ -7337,12 +7357,12 @@ function generateSkillsList(character) {
             }
         }
         // Add Expertise bonus (+1) if character has Expertise AND is proficient in this skill's ability
-         let skillExpertiseBonus = 0;
-         if (expertiseBonus > 0 && character.proficiencies && character.proficiencies[skill.ability]) {
-             skillExpertiseBonus = expertiseBonus;
-         }
- 
-         const totalModifier = baseModifier + raceBonus + primaryWeaponBonus + secondaryWeaponBonus + armorBonus + wildBeastBonus + proficiencyBonus + jackOfAllTradesBonus + skillExpertiseBonus;
+        let skillExpertiseBonus = 0;
+        if (expertiseBonus > 0 && character.proficiencies && character.proficiencies[skill.ability]) {
+            skillExpertiseBonus = expertiseBonus;
+        }
+
+        const totalModifier = baseModifier + raceBonus + primaryWeaponBonus + secondaryWeaponBonus + armorBonus + wildBeastBonus + proficiencyBonus + jackOfAllTradesBonus + skillExpertiseBonus;
 
         /*const totalModifier = baseModifier + raceBonus + primaryWeaponBonus + secondaryWeaponBonus + armorBonus + wildBeastBonus + jackOfAllTradesBonus;*/
 
@@ -7357,10 +7377,10 @@ function generateSkillsList(character) {
             skillDisplayName += ` <span class="text-xs text-orange-500 dark:text-orange-400">(+${jackOfAllTradesBonus} JoAT)</span>`;
         }
 
-         // Add visual indicator for Expertise bonus
-         if (skillExpertiseBonus > 0) {
-             skillDisplayName += ` <span class="text-xs text-blue-500 dark:text-blue-400">(+${skillExpertiseBonus} Exp)</span>`;
-         }
+        // Add visual indicator for Expertise bonus
+        if (skillExpertiseBonus > 0) {
+            skillDisplayName += ` <span class="text-xs text-blue-500 dark:text-blue-400">(+${skillExpertiseBonus} Exp)</span>`;
+        }
 
         // Get advantage/disadvantage setting for this skill
         const adSetting = getSkillAdvantageSetting(skill.name);
@@ -8813,12 +8833,12 @@ function generateHealthPotionCircles(character) {
 
     for (let i = 0; i < 4; i++) {
         const circle = document.createElement('div');
-        circle.className = 'w-5 h-5 rounded-full border-2 border-red-400 cursor-pointer transition-all hover:border-red-600';
+        circle.className = 'w-5 h-5 rounded-full border-2 border-red-400 dark:border-white cursor-pointer transition-all hover:border-red-600';
         circle.dataset.index = i;
 
         // Set filled state
         if (character.healthPotions[i]) {
-            circle.classList.add('bg-red-500');
+            circle.classList.add('bg-red-400');
         } else {
             circle.classList.add('bg-transparent');
         }
@@ -14288,6 +14308,272 @@ document.addEventListener('click', function (e) {
     }
 });
 
+// ==================== SECOND WIND (FIGHTER) ====================
+
+/**
+ * Activate the Second Wind ability for Fighters
+ * - Costs 1 Stress
+ * - Rolls 1d4 and recovers that many HP and half as much Class (rounded up)
+ */
+function activateSecondWindAbility() {
+    if (!currentCharacter) return;
+
+    // Ensure resources exist
+    if (!currentCharacter.resources) {
+        currentCharacter.resources = {
+            hp: { max: 0, used: [], temp: 0 },
+            stress: { max: 0, used: [], temp: 0 },
+            class: { max: 0, used: [], temp: 0 },
+            spell: { max: 0, used: [], temp: 0 }
+        };
+    }
+
+    const stressResource = currentCharacter.resources.stress;
+    const hpResource = currentCharacter.resources.hp;
+    const classResource = currentCharacter.resources.class;
+
+    // Check if there's an available Stress box to use (cost: 1 Stress)
+    const stressMax = stressResource.max + (stressResource.temp || 0);
+    const stressUsed = stressResource.used.length;
+    const stressAvailable = stressMax - stressUsed;
+
+    const resultDisplay = document.getElementById('secondWindResultDisplay');
+
+    if (stressAvailable < 1) {
+        // Not enough Stress available
+        if (resultDisplay) {
+            resultDisplay.innerHTML = '<div class="second-wind-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Not enough Stress available! Need 1 Stress to activate.</div>';
+            setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+        }
+        return;
+    }
+
+    // Check if there are any used HP or Class boxes to recover
+    const hpUsedCount = hpResource.used.length;
+    const classUsedCount = classResource.used.length;
+
+    if (hpUsedCount === 0 && classUsedCount === 0) {
+        // Nothing to recover
+        if (resultDisplay) {
+            resultDisplay.innerHTML = '<div class="second-wind-result error"><i class="fas fa-heart mr-2"></i>HP and Class are already full! No recovery needed.</div>';
+            setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+        }
+        return;
+    }
+
+    // Roll 1d4
+    const roll = Math.floor(Math.random() * 4) + 1;
+
+    // Calculate HP recovery (can't recover more than what's used)
+    const hpRecovery = Math.min(roll, hpUsedCount);
+
+    // Calculate Class recovery (half of roll, rounded up, can't recover more than what's used)
+    const classRollAmount = Math.ceil(roll / 2);
+    const classRecovery = Math.min(classRollAmount, classUsedCount);
+
+    // Use 1 Stress (add the next index to used array)
+    const nextStressIndex = stressUsed;
+    stressResource.used.push(nextStressIndex);
+
+    // Recover HP by removing from the used array
+    hpResource.used.sort((a, b) => a - b);
+    for (let i = 0; i < hpRecovery; i++) {
+        if (hpResource.used.length > 0) {
+            hpResource.used.pop();
+        }
+    }
+
+    // Recover Class by removing from the used array
+    classResource.used.sort((a, b) => a - b);
+    for (let i = 0; i < classRecovery; i++) {
+        if (classResource.used.length > 0) {
+            classResource.used.pop();
+        }
+    }
+
+    // Save and update display
+    saveCharacters();
+    populateSheetResourceBoxes(currentCharacter);
+    updateCharacterDisplay();
+
+    // Show result
+    if (resultDisplay) {
+        resultDisplay.innerHTML = `<div class="second-wind-result"><i class="fas fa-dice-d20 mr-2"></i>Rolled <strong>${roll}</strong>! Recovered <strong>${hpRecovery}</strong> HP and <strong>${classRecovery}</strong> Class. (Cost: 1 Stress)</div>`;
+        setTimeout(() => { resultDisplay.innerHTML = ''; }, 5000);
+    }
+}
+
+// Event delegation for Second Wind button
+document.addEventListener('click', function (e) {
+    if (e.target.closest('.second-wind-btn')) {
+        e.preventDefault();
+        activateSecondWindAbility();
+    }
+});
+
+// ==================== RELENTLESS (FIGHTER) ====================
+
+/**
+ * Check if Relentless ability is available (no Stress remaining)
+ */
+function isRelentlessAvailable() {
+    if (!currentCharacter || !currentCharacter.resources) return false;
+
+    const stressResource = currentCharacter.resources.stress;
+    const stressMax = stressResource.max + (stressResource.temp || 0);
+    const stressUsed = stressResource.used.length;
+    const stressAvailable = stressMax - stressUsed;
+
+    // Relentless is only available when NO stress is available (all boxes used)
+    return stressAvailable === 0 && !currentCharacter.relentlessUsed;
+}
+
+/**
+ * Update Relentless button state based on availability
+ */
+function updateRelentlessButtonState() {
+    const btn = document.getElementById('relentlessActivateBtn');
+    if (!btn) return;
+
+    const isAvailable = isRelentlessAvailable();
+
+    if (isAvailable) {
+        btn.disabled = false;
+        btn.classList.remove('disabled');
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+    } else {
+        btn.disabled = true;
+        btn.classList.add('disabled');
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+    }
+
+    // Update button text based on state
+    const spanElement = btn.querySelector('span');
+    if (spanElement) {
+        if (currentCharacter?.relentlessUsed) {
+            spanElement.textContent = 'Used (Long Rest to restore)';
+        } else if (!isAvailable) {
+            spanElement.textContent = 'Requires No Stress';
+        } else {
+            spanElement.textContent = 'Activate Relentless';
+        }
+    }
+}
+
+/**
+ * Activate the Relentless ability for Fighters
+ * - Only available when character has NO Stress remaining
+ * - Costs 1 Class
+ * - Rolls 1d4 and recovers that much Stress
+ * - Disabled until Long Rest
+ */
+function activateRelentlessAbility() {
+    if (!currentCharacter) return;
+
+    // Ensure resources exist
+    if (!currentCharacter.resources) {
+        currentCharacter.resources = {
+            hp: { max: 0, used: [], temp: 0 },
+            stress: { max: 0, used: [], temp: 0 },
+            class: { max: 0, used: [], temp: 0 },
+            spell: { max: 0, used: [], temp: 0 }
+        };
+    }
+
+    const stressResource = currentCharacter.resources.stress;
+    const classResource = currentCharacter.resources.class;
+
+    const resultDisplay = document.getElementById('relentlessResultDisplay');
+
+    // Check if already used
+    if (currentCharacter.relentlessUsed) {
+        if (resultDisplay) {
+            resultDisplay.innerHTML = '<div class="relentless-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Relentless already used! Take a Long Rest to use again.</div>';
+            setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+        }
+        return;
+    }
+
+    // Check if there's Stress available (Relentless requires NO stress available)
+    const stressMax = stressResource.max + (stressResource.temp || 0);
+    const stressUsed = stressResource.used.length;
+    const stressAvailable = stressMax - stressUsed;
+
+    if (stressAvailable > 0) {
+        if (resultDisplay) {
+            resultDisplay.innerHTML = '<div class="relentless-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Relentless can only be used when you have NO Stress available!</div>';
+            setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+        }
+        return;
+    }
+
+    // Check if there's Class available to use (cost: 1 Class)
+    const classMax = classResource.max + (classResource.temp || 0);
+    const classUsed = classResource.used.length;
+    const classAvailable = classMax - classUsed;
+
+    if (classAvailable < 1) {
+        if (resultDisplay) {
+            resultDisplay.innerHTML = '<div class="relentless-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Not enough Class available! Need 1 Class to activate.</div>';
+            setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+        }
+        return;
+    }
+
+    // Roll 1d4
+    const roll = Math.floor(Math.random() * 4) + 1;
+
+    // Calculate how much Stress can be recovered (can only recover up to used amount)
+    const actualRecovery = Math.min(roll, stressUsed);
+
+    // Use 1 Class (add the next index to used array)
+    const nextClassIndex = classUsed;
+    classResource.used.push(nextClassIndex);
+
+    // Recover Stress by removing from the used array
+    stressResource.used.sort((a, b) => a - b);
+    for (let i = 0; i < actualRecovery; i++) {
+        if (stressResource.used.length > 0) {
+            stressResource.used.pop();
+        }
+    }
+
+    // Mark Relentless as used until Long Rest
+    currentCharacter.relentlessUsed = true;
+
+    // Save and update display
+    saveCharacters();
+    populateSheetResourceBoxes(currentCharacter);
+    updateCharacterDisplay();
+    updateRelentlessButtonState();
+
+    // Show result
+    if (resultDisplay) {
+        resultDisplay.innerHTML = `<div class="relentless-result"><i class="fas fa-dice-d20 mr-2"></i>Rolled <strong>${roll}</strong>! Recovered <strong>${actualRecovery}</strong> Stress. (Cost: 1 Class)</div>`;
+        setTimeout(() => { resultDisplay.innerHTML = ''; }, 5000);
+    }
+}
+
+/**
+ * Reset Relentless on Long Rest
+ */
+function resetRelentlessOnLongRest() {
+    if (!currentCharacter) return;
+
+    currentCharacter.relentlessUsed = false;
+    updateRelentlessButtonState();
+}
+
+// Event delegation for Relentless button
+document.addEventListener('click', function (e) {
+    if (e.target.closest('.relentless-btn')) {
+        e.preventDefault();
+        activateRelentlessAbility();
+    }
+});
+
 // ==================== ARCANE RECOVERY (WIZARD) ====================
 
 /**
@@ -14874,12 +15160,14 @@ function removeAwakenedMindBonuses() {
 // ==================== WIZARD ARMOR PENALTY ====================
 
 /**
- * Check if a Wizard is wearing restricted armor (not "Nothing Selected", "None", or "Mage Armor")
+ * Check if a Wizard or Sorcerer is wearing restricted armor (not "Nothing Selected", "None", or "Mage Armor")
  * @param {Object} character - The character object
- * @returns {boolean} True if the Wizard has armor penalty
+ * @returns {boolean} True if the Wizard/Sorcerer has armor penalty
  */
 function hasWizardArmorPenalty(character) {
-    if (!character || character.class !== 'Wizard') return false;
+    if (!character) return false;
+    // Apply to both Wizard and Sorcerer classes
+    if (character.class !== 'Wizard' && character.class !== 'Sorcerer') return false;
     if (!character.armorItem) return false;
 
     const armorName = character.armorItem.name.toLowerCase();
@@ -14892,12 +15180,12 @@ function hasWizardArmorPenalty(character) {
         return false;
     }
 
-    // Wizard is wearing actual armor - penalty applies
+    // Wizard/Sorcerer is wearing actual armor - penalty applies
     return true;
 }
 
 /**
- * Get the Wizard armor penalty description for tooltips/warnings
+ * Get the Wizard/Sorcerer armor penalty description for tooltips/warnings
  * @param {Object} character - The character object
  * @returns {string} Description of penalties or empty string
  */
@@ -14908,7 +15196,7 @@ function getWizardArmorPenaltyDescription(character) {
 }
 
 /**
- * Modify spell cost text to increase costs by 1 for Wizard armor penalty
+ * Modify spell cost text to increase costs by 1 for Wizard/Sorcerer armor penalty
  * @param {string} costText - The original cost text (e.g., "1 Spell / 1 Stress")
  * @returns {string} Modified cost text with +1 to each number
  */
@@ -14920,9 +15208,9 @@ function increaseSpellCosts(costText) {
 }
 
 /**
- * Modify spell name HTML to show increased costs for Wizard armor penalty
+ * Modify spell name HTML to show increased costs for Wizard/Sorcerer armor penalty
  * @param {string} spellName - The original spell name with cost HTML
- * @param {boolean} hasArmorPenalty - Whether the wizard has armor penalty
+ * @param {boolean} hasArmorPenalty - Whether the wizard/sorcerer has armor penalty
  * @returns {string} Modified spell name HTML
  */
 function applyWizardArmorPenaltyToSpellName(spellName, hasArmorPenalty) {
@@ -14939,7 +15227,7 @@ function applyWizardArmorPenaltyToSpellName(spellName, hasArmorPenalty) {
     );
 }
 /**
- * Update the visibility of the Wizard armor penalty warning banner
+ * Update the visibility of the Wizard/Sorcerer armor penalty warning banner
  * @param {Object} character - The character object
  */
 function updateWizardArmorPenaltyWarning(character) {
@@ -15148,840 +15436,839 @@ function updateEvasionWithFightingStyle() {
 }
 
 // ==================== SPELL SEQUENCER (WIZARD) ====================
- 
- // Flexible spell list for Spell Sequencer - easily modifiable
- const spellSequencerSpellList = [
-     { name: 'Bolt', spellCost: 1, stressCost: 1 },
-     { name: 'Command', spellCost: 1, stressCost: 2 },
-     { name: 'Comprehend Languages', spellCost: 1, stressCost: 0 },
-     { name: 'Disguise Self', spellCost: 1, stressCost: 1 },
-     { name: 'Entangle', spellCost: 1, stressCost: 2 },
-     { name: 'Feather Fall', spellCost: 1, stressCost: 0 },
-     { name: 'Find Familiar', spellCost: 1, stressCost: 0 },
-     { name: 'Haste', spellCost: 2, stressCost: 2 },
-     { name: 'Light', spellCost: 1, stressCost: 0 },
-     { name: 'Mage Armor', spellCost: 1, stressCost: 1 },
-     { name: 'Magic Missile', spellCost: 1, stressCost: 1 },
-     { name: 'Misty Step', spellCost: 2, stressCost: 1 },
-     { name: 'Retreat', spellCost: 1, stressCost: 1 },
-     { name: 'Shatter', spellCost: 2, stressCost: 2 },
-     { name: 'Shield', spellCost: 2, stressCost: 1 },
-     { name: 'Slow', spellCost: 3, stressCost: 3 },
-     { name: 'Spider Climb', spellCost: 2, stressCost: 1 },
-     { name: 'Tongues', spellCost: 1, stressCost: 0 },
-     { name: 'True Strike', spellCost: 1, stressCost: 0 },
-     { name: 'Wall of Fire', spellCost: 3, stressCost: 2 },
- ];
- 
- /**
-  * Check if Spell Sequencer ability is selected
-  */
- function hasSpellSequencerAbility() {
-     if (!currentCharacter || currentCharacter.class !== 'Wizard') return false;
-     if (!currentCharacter.classAbilities) return false;
- 
-     const wizardAbilities = classAbilities['Wizard'] || [];
-     const spellSequencerIndex = wizardAbilities.findIndex(ability =>
-         ability.name.toLowerCase().includes('spell sequencer')
-     );
- 
-     return spellSequencerIndex !== -1 &&
-         currentCharacter.classAbilities.selectedClass.includes(spellSequencerIndex);
- }
- 
- /**
-  * Handle enabling/disabling Spell Sequencer ability
-  */
- function handleSpellSequencerAbility(isEnabled) {
-     if (!currentCharacter || currentCharacter.class !== 'Wizard') return;
- 
-     if (isEnabled) {
-         // Initialize spell sequencer data
-         if (!currentCharacter.spellSequencer) {
-             currentCharacter.spellSequencer = {
-                 spell1: '',
-                 spell2: '',
-                 isUsed: false
-             };
-         }
-         // Populate dropdowns after a short delay to ensure DOM is ready
-         setTimeout(() => {
-             populateSpellSequencerDropdowns();
-             updateSpellSequencerButton();
-         }, 100);
-     } else {
-         // Remove spell sequencer data and button
-         currentCharacter.spellSequencer = null;
-         removeSpellSequencerButton();
-     }
- 
-     saveCharacters();
- }
 
-  /**
-  * Check if a spell is known by the character
-  * Searches through knownSpellGroups, necromancerBonusSpells, and signatureSpells
-  */
- function isSpellKnown(spellName) {
-     if (!currentCharacter) return false;
- 
-     const normalizedName = spellName.toLowerCase().trim();
- 
-     // Check regular known spell groups
-     if (currentCharacter.knownSpellGroups) {
-         for (const group of currentCharacter.knownSpellGroups) {
-             if (group.spells) {
-                 for (const spell of group.spells) {
-                     // Extract base spell name (without cost info like "1 Spell / 1 Stress")
-                     const baseSpellName = spell.name.split('<')[0].trim().toLowerCase();
-                     if (baseSpellName.includes(normalizedName) || normalizedName.includes(baseSpellName)) {
-                         return true;
-                     }
-                 }
-             }
-         }
-     }
- 
-     // Check necromancer bonus spells
-     if (currentCharacter.necromancerBonusSpells) {
-         for (const group of currentCharacter.necromancerBonusSpells) {
-             if (group.spells) {
-                 for (const spell of group.spells) {
-                     const baseSpellName = spell.name.split('<')[0].trim().toLowerCase();
-                     if (baseSpellName.includes(normalizedName) || normalizedName.includes(baseSpellName)) {
-                         return true;
-                     }
-                 }
-             }
-         }
-     }
- 
-     // Check signature spells
-     if (currentCharacter.signatureSpells) {
-         for (const group of currentCharacter.signatureSpells) {
-             if (group.spells) {
-                 for (const spell of group.spells) {
-                     const baseSpellName = spell.name.split('<')[0].trim().toLowerCase();
-                     if (baseSpellName.includes(normalizedName) || normalizedName.includes(baseSpellName)) {
-                         return true;
-                     }
-                 }
-             }
-         }
-     }
- 
-     return false;
- }
- 
- /**
-  * Populate Spell Sequencer dropdown menus
-  */
- function populateSpellSequencerDropdowns() {
-     const select1 = document.getElementById('spellSequencerSelect1');
-     const select2 = document.getElementById('spellSequencerSelect2');
- 
-     if (!select1 || !select2) return;
- 
-     // Clear existing options
-     select1.innerHTML = '<option value="">-- Select Spell 1 --</option>';
-     select2.innerHTML = '<option value="">-- Select Spell 2 --</option>';
- 
-     // Populate with spell list - disable options for unknown spells
-     spellSequencerSpellList.forEach(spell => {
-         const costText = formatSpellCost(spell.spellCost, spell.stressCost);
-         const isKnown = isSpellKnown(spell.name);
-         const option1 = document.createElement('option');
-         option1.value = spell.name;
-         option1.textContent = isKnown ? `${spell.name} (${costText})` : `${spell.name} - Not Known`;
-         option1.disabled = !isKnown;
-         if (!isKnown) {
-             option1.style.color = '#999';
-         }
-         select1.appendChild(option1);
- 
-         const option2 = document.createElement('option');
-         option2.value = spell.name;
-         option2.textContent = isKnown ? `${spell.name} (${costText})` : `${spell.name} - Not Known`;
-         option2.disabled = !isKnown;
-         if (!isKnown) {
-             option2.style.color = '#999';
-         }
-         select2.appendChild(option2);
-     });
- 
-     // Restore saved selections (only if the spell is still known)
-     if (currentCharacter?.spellSequencer) {
-         const spell1 = currentCharacter.spellSequencer.spell1;
-         const spell2 = currentCharacter.spellSequencer.spell2;
- 
-         if (spell1 && isSpellKnown(spell1)) {
-             select1.value = spell1;
-         } else {
-             currentCharacter.spellSequencer.spell1 = '';
-         }
- 
-         if (spell2 && isSpellKnown(spell2)) {
-             select2.value = spell2;
-         } else {
-             currentCharacter.spellSequencer.spell2 = '';
-         }
-     }
-     // Add event listeners (remove old ones first to prevent duplicates)
-     select1.removeEventListener('change', handleSpellSequencerSelection);
-     select2.removeEventListener('change', handleSpellSequencerSelection);
-     select1.addEventListener('change', handleSpellSequencerSelection);
-     select2.addEventListener('change', handleSpellSequencerSelection);
- }
- 
- /**
-  * Format spell cost for display
-  */
- function formatSpellCost(spellCost, stressCost) {
-     const parts = [];
-     if (spellCost > 0) parts.push(`${spellCost} Spell`);
-     if (stressCost > 0) parts.push(`${stressCost} Stress`);
-     return parts.length > 0 ? parts.join(' / ') : 'Free';
- }
- 
- /**
-  * Handle spell selection change
-  */
- function handleSpellSequencerSelection() {
-     const select1 = document.getElementById('spellSequencerSelect1');
-     const select2 = document.getElementById('spellSequencerSelect2');
- 
-     if (!currentCharacter || !select1 || !select2) return;
- 
-     // Initialize if needed
-     if (!currentCharacter.spellSequencer) {
-         currentCharacter.spellSequencer = { spell1: '', spell2: '', isUsed: false };
-     }
- 
-     // Save selections
-     currentCharacter.spellSequencer.spell1 = select1.value;
-     currentCharacter.spellSequencer.spell2 = select2.value;
- 
-     // Update button
-     updateSpellSequencerButton();
- 
-     // Update result text
-     updateSpellSequencerResultText();
- 
-     saveCharacters();
- }
- 
- /**
-  * Update the result text showing selected combination
-  */
- function updateSpellSequencerResultText() {
-     const resultDiv = document.getElementById('spellSequencerResult');
-     if (!resultDiv || !currentCharacter?.spellSequencer) return;
- 
-     const { spell1, spell2 } = currentCharacter.spellSequencer;
- 
-     if (spell1 && spell2) {
-         const spell1Data = spellSequencerSpellList.find(s => s.name === spell1);
-         const spell2Data = spellSequencerSpellList.find(s => s.name === spell2);
- 
-         if (spell1Data && spell2Data) {
-             const totalSpellCost = spell1Data.spellCost + spell2Data.spellCost;
-             const totalStressCost = spell1Data.stressCost + spell2Data.stressCost;
-             const totalCostText = formatSpellCost(totalSpellCost, totalStressCost);
- 
-             resultDiv.innerHTML = `<span class="text-green-600 dark:text-green-400">✓ Combined: ${spell1} + ${spell2} (Total: ${totalCostText})</span>`;
-         }
-     } else if (spell1 || spell2) {
-         resultDiv.innerHTML = `<span class="text-yellow-600 dark:text-yellow-400">⚠ Select both spells to create sequence</span>`;
-     } else {
-         resultDiv.innerHTML = '';
-     }
- }
- 
- /**
-  * Create or update the Spell Sequencer button in Spell-Casting section
-  */
- function updateSpellSequencerButton() {
-     if (!currentCharacter?.spellSequencer) return;
- 
-     const { spell1, spell2, isUsed } = currentCharacter.spellSequencer;
- 
-     // Remove existing button first
-     removeSpellSequencerButton();
- 
-     // Only create button if both spells are selected
-     if (!spell1 || !spell2) return;
- 
-     // Find the Spell-Casting content section
-     const spellCastingContent = document.getElementById('spellCastingContent');
-     if (!spellCastingContent) return;
- 
-     // Find the Known Spells section to insert before it
-     const knownSpellsSection = spellCastingContent.querySelector('#knownSpellsList')?.parentElement;
-     if (!knownSpellsSection) return;
- 
-     // Calculate total cost
-     const spell1Data = spellSequencerSpellList.find(s => s.name === spell1);
-     const spell2Data = spellSequencerSpellList.find(s => s.name === spell2);
- 
-     if (!spell1Data || !spell2Data) return;
- 
-     const totalSpellCost = spell1Data.spellCost + spell2Data.spellCost;
-     const totalStressCost = spell1Data.stressCost + spell2Data.stressCost;
-     const totalCostText = formatSpellCost(totalSpellCost, totalStressCost);
- 
-     // Create button container
-     const buttonContainer = document.createElement('div');
-     buttonContainer.id = 'spellSequencerButtonContainer';
-     buttonContainer.className = 'mb-4';
- 
-     // Create the button
-     const button = document.createElement('button');
-     button.id = 'spellSequencerActivateBtn';
-     button.className = `w-full py-1 px-1 rounded-lg font-semibold transition-all duration-200 ${
-         isUsed
-             ? 'bg-gray-400 dark:bg-gray-600 text-gray-600 dark:text-gray-400 cursor-not-allowed'
-             : 'bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl'
-     }`;
-     button.disabled = isUsed;
-     button.innerHTML = `
+// Flexible spell list for Spell Sequencer - easily modifiable
+const spellSequencerSpellList = [
+    { name: 'Bolt', spellCost: 1, stressCost: 1 },
+    { name: 'Command', spellCost: 1, stressCost: 2 },
+    { name: 'Comprehend Languages', spellCost: 1, stressCost: 0 },
+    { name: 'Disguise Self', spellCost: 1, stressCost: 1 },
+    { name: 'Entangle', spellCost: 1, stressCost: 2 },
+    { name: 'Feather Fall', spellCost: 1, stressCost: 0 },
+    { name: 'Find Familiar', spellCost: 1, stressCost: 0 },
+    { name: 'Haste', spellCost: 2, stressCost: 2 },
+    { name: 'Light', spellCost: 1, stressCost: 0 },
+    { name: 'Mage Armor', spellCost: 1, stressCost: 1 },
+    { name: 'Magic Missile', spellCost: 1, stressCost: 1 },
+    { name: 'Misty Step', spellCost: 2, stressCost: 1 },
+    { name: 'Retreat', spellCost: 1, stressCost: 1 },
+    { name: 'Shatter', spellCost: 2, stressCost: 2 },
+    { name: 'Shield', spellCost: 2, stressCost: 1 },
+    { name: 'Slow', spellCost: 3, stressCost: 3 },
+    { name: 'Spider Climb', spellCost: 2, stressCost: 1 },
+    { name: 'Tongues', spellCost: 1, stressCost: 0 },
+    { name: 'True Strike', spellCost: 1, stressCost: 0 },
+    { name: 'Wall of Fire', spellCost: 3, stressCost: 2 },
+];
+
+/**
+ * Check if Spell Sequencer ability is selected
+ */
+function hasSpellSequencerAbility() {
+    if (!currentCharacter || currentCharacter.class !== 'Wizard') return false;
+    if (!currentCharacter.classAbilities) return false;
+
+    const wizardAbilities = classAbilities['Wizard'] || [];
+    const spellSequencerIndex = wizardAbilities.findIndex(ability =>
+        ability.name.toLowerCase().includes('spell sequencer')
+    );
+
+    return spellSequencerIndex !== -1 &&
+        currentCharacter.classAbilities.selectedClass.includes(spellSequencerIndex);
+}
+
+/**
+ * Handle enabling/disabling Spell Sequencer ability
+ */
+function handleSpellSequencerAbility(isEnabled) {
+    if (!currentCharacter || currentCharacter.class !== 'Wizard') return;
+
+    if (isEnabled) {
+        // Initialize spell sequencer data
+        if (!currentCharacter.spellSequencer) {
+            currentCharacter.spellSequencer = {
+                spell1: '',
+                spell2: '',
+                isUsed: false
+            };
+        }
+        // Populate dropdowns after a short delay to ensure DOM is ready
+        setTimeout(() => {
+            populateSpellSequencerDropdowns();
+            updateSpellSequencerButton();
+        }, 100);
+    } else {
+        // Remove spell sequencer data and button
+        currentCharacter.spellSequencer = null;
+        removeSpellSequencerButton();
+    }
+
+    saveCharacters();
+}
+
+/**
+* Check if a spell is known by the character
+* Searches through knownSpellGroups, necromancerBonusSpells, and signatureSpells
+*/
+function isSpellKnown(spellName) {
+    if (!currentCharacter) return false;
+
+    const normalizedName = spellName.toLowerCase().trim();
+
+    // Check regular known spell groups
+    if (currentCharacter.knownSpellGroups) {
+        for (const group of currentCharacter.knownSpellGroups) {
+            if (group.spells) {
+                for (const spell of group.spells) {
+                    // Extract base spell name (without cost info like "1 Spell / 1 Stress")
+                    const baseSpellName = spell.name.split('<')[0].trim().toLowerCase();
+                    if (baseSpellName.includes(normalizedName) || normalizedName.includes(baseSpellName)) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+    // Check necromancer bonus spells
+    if (currentCharacter.necromancerBonusSpells) {
+        for (const group of currentCharacter.necromancerBonusSpells) {
+            if (group.spells) {
+                for (const spell of group.spells) {
+                    const baseSpellName = spell.name.split('<')[0].trim().toLowerCase();
+                    if (baseSpellName.includes(normalizedName) || normalizedName.includes(baseSpellName)) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+    // Check signature spells
+    if (currentCharacter.signatureSpells) {
+        for (const group of currentCharacter.signatureSpells) {
+            if (group.spells) {
+                for (const spell of group.spells) {
+                    const baseSpellName = spell.name.split('<')[0].trim().toLowerCase();
+                    if (baseSpellName.includes(normalizedName) || normalizedName.includes(baseSpellName)) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Populate Spell Sequencer dropdown menus
+ */
+function populateSpellSequencerDropdowns() {
+    const select1 = document.getElementById('spellSequencerSelect1');
+    const select2 = document.getElementById('spellSequencerSelect2');
+
+    if (!select1 || !select2) return;
+
+    // Clear existing options
+    select1.innerHTML = '<option value="">-- Select Spell 1 --</option>';
+    select2.innerHTML = '<option value="">-- Select Spell 2 --</option>';
+
+    // Populate with spell list - disable options for unknown spells
+    spellSequencerSpellList.forEach(spell => {
+        const costText = formatSpellCost(spell.spellCost, spell.stressCost);
+        const isKnown = isSpellKnown(spell.name);
+        const option1 = document.createElement('option');
+        option1.value = spell.name;
+        option1.textContent = isKnown ? `${spell.name} (${costText})` : `${spell.name} - Not Known`;
+        option1.disabled = !isKnown;
+        if (!isKnown) {
+            option1.style.color = '#999';
+        }
+        select1.appendChild(option1);
+
+        const option2 = document.createElement('option');
+        option2.value = spell.name;
+        option2.textContent = isKnown ? `${spell.name} (${costText})` : `${spell.name} - Not Known`;
+        option2.disabled = !isKnown;
+        if (!isKnown) {
+            option2.style.color = '#999';
+        }
+        select2.appendChild(option2);
+    });
+
+    // Restore saved selections (only if the spell is still known)
+    if (currentCharacter?.spellSequencer) {
+        const spell1 = currentCharacter.spellSequencer.spell1;
+        const spell2 = currentCharacter.spellSequencer.spell2;
+
+        if (spell1 && isSpellKnown(spell1)) {
+            select1.value = spell1;
+        } else {
+            currentCharacter.spellSequencer.spell1 = '';
+        }
+
+        if (spell2 && isSpellKnown(spell2)) {
+            select2.value = spell2;
+        } else {
+            currentCharacter.spellSequencer.spell2 = '';
+        }
+    }
+    // Add event listeners (remove old ones first to prevent duplicates)
+    select1.removeEventListener('change', handleSpellSequencerSelection);
+    select2.removeEventListener('change', handleSpellSequencerSelection);
+    select1.addEventListener('change', handleSpellSequencerSelection);
+    select2.addEventListener('change', handleSpellSequencerSelection);
+}
+
+/**
+ * Format spell cost for display
+ */
+function formatSpellCost(spellCost, stressCost) {
+    const parts = [];
+    if (spellCost > 0) parts.push(`${spellCost} Spell`);
+    if (stressCost > 0) parts.push(`${stressCost} Stress`);
+    return parts.length > 0 ? parts.join(' / ') : 'Free';
+}
+
+/**
+ * Handle spell selection change
+ */
+function handleSpellSequencerSelection() {
+    const select1 = document.getElementById('spellSequencerSelect1');
+    const select2 = document.getElementById('spellSequencerSelect2');
+
+    if (!currentCharacter || !select1 || !select2) return;
+
+    // Initialize if needed
+    if (!currentCharacter.spellSequencer) {
+        currentCharacter.spellSequencer = { spell1: '', spell2: '', isUsed: false };
+    }
+
+    // Save selections
+    currentCharacter.spellSequencer.spell1 = select1.value;
+    currentCharacter.spellSequencer.spell2 = select2.value;
+
+    // Update button
+    updateSpellSequencerButton();
+
+    // Update result text
+    updateSpellSequencerResultText();
+
+    saveCharacters();
+}
+
+/**
+ * Update the result text showing selected combination
+ */
+function updateSpellSequencerResultText() {
+    const resultDiv = document.getElementById('spellSequencerResult');
+    if (!resultDiv || !currentCharacter?.spellSequencer) return;
+
+    const { spell1, spell2 } = currentCharacter.spellSequencer;
+
+    if (spell1 && spell2) {
+        const spell1Data = spellSequencerSpellList.find(s => s.name === spell1);
+        const spell2Data = spellSequencerSpellList.find(s => s.name === spell2);
+
+        if (spell1Data && spell2Data) {
+            const totalSpellCost = spell1Data.spellCost + spell2Data.spellCost;
+            const totalStressCost = spell1Data.stressCost + spell2Data.stressCost;
+            const totalCostText = formatSpellCost(totalSpellCost, totalStressCost);
+
+            resultDiv.innerHTML = `<span class="text-green-600 dark:text-green-400">✓ Combined: ${spell1} + ${spell2} (Total: ${totalCostText})</span>`;
+        }
+    } else if (spell1 || spell2) {
+        resultDiv.innerHTML = `<span class="text-yellow-600 dark:text-yellow-400">⚠ Select both spells to create sequence</span>`;
+    } else {
+        resultDiv.innerHTML = '';
+    }
+}
+
+/**
+ * Create or update the Spell Sequencer button in Spell-Casting section
+ */
+function updateSpellSequencerButton() {
+    if (!currentCharacter?.spellSequencer) return;
+
+    const { spell1, spell2, isUsed } = currentCharacter.spellSequencer;
+
+    // Remove existing button first
+    removeSpellSequencerButton();
+
+    // Only create button if both spells are selected
+    if (!spell1 || !spell2) return;
+
+    // Find the Spell-Casting content section
+    const spellCastingContent = document.getElementById('spellCastingContent');
+    if (!spellCastingContent) return;
+
+    // Find the Known Spells section to insert before it
+    const knownSpellsSection = spellCastingContent.querySelector('#knownSpellsList')?.parentElement;
+    if (!knownSpellsSection) return;
+
+    // Calculate total cost
+    const spell1Data = spellSequencerSpellList.find(s => s.name === spell1);
+    const spell2Data = spellSequencerSpellList.find(s => s.name === spell2);
+
+    if (!spell1Data || !spell2Data) return;
+
+    const totalSpellCost = spell1Data.spellCost + spell2Data.spellCost;
+    const totalStressCost = spell1Data.stressCost + spell2Data.stressCost;
+    const totalCostText = formatSpellCost(totalSpellCost, totalStressCost);
+
+    // Create button container
+    const buttonContainer = document.createElement('div');
+    buttonContainer.id = 'spellSequencerButtonContainer';
+    buttonContainer.className = 'mb-4';
+
+    // Create the button
+    const button = document.createElement('button');
+    button.id = 'spellSequencerActivateBtn';
+    button.className = `w-full py-1 px-1 rounded-lg font-semibold transition-all duration-200 ${isUsed
+            ? 'bg-gray-400 dark:bg-gray-600 text-gray-600 dark:text-gray-400 cursor-not-allowed'
+            : 'bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl'
+        }`;
+    button.disabled = isUsed;
+    button.innerHTML = `
          <div class="flex flex-col items-center">
              <span class="text-sm opacity-80"></span>
              <span class="text-sm">${spell1} + ${spell2}</span>
              <span class="text-xs opacity-70">${isUsed ? 'Used (Long Rest to restore)' : `Cost: ${totalCostText}`}</span>
          </div>
      `;
- 
-     if (!isUsed) {
-         button.addEventListener('click', activateSpellSequencer);
-     }
- 
-     buttonContainer.appendChild(button);
- 
-     // Insert before Known Spells section
-     knownSpellsSection.parentElement.insertBefore(buttonContainer, knownSpellsSection);
- }
- 
- /**
-  * Remove the Spell Sequencer button from Spell-Casting section
-  */
- function removeSpellSequencerButton() {
-     const existingContainer = document.getElementById('spellSequencerButtonContainer');
-     if (existingContainer) {
-         existingContainer.remove();
-     }
- }
- 
- /**
-  * Activate Spell Sequencer - deduct resources and disable button
-  */
- function activateSpellSequencer() {
-     if (!currentCharacter?.spellSequencer) return;
- 
-     const { spell1, spell2, isUsed } = currentCharacter.spellSequencer;
- 
-     if (isUsed || !spell1 || !spell2) return;
- 
-     // Get spell costs
-     const spell1Data = spellSequencerSpellList.find(s => s.name === spell1);
-     const spell2Data = spellSequencerSpellList.find(s => s.name === spell2);
- 
-     if (!spell1Data || !spell2Data) return;
- 
-     const totalSpellCost = spell1Data.spellCost + spell2Data.spellCost;
-     const totalStressCost = spell1Data.stressCost + spell2Data.stressCost;
- 
-     // Check if character has enough resources
-     const spellResource = currentCharacter.resources?.spell || { max: 0, used: [], temp: 0 };
-     const stressResource = currentCharacter.resources?.stress || { max: 0, used: [], temp: 0 };
- 
-     const availableSpell = (spellResource.max + (spellResource.temp || 0)) - spellResource.used.length;
-     const availableStress = (stressResource.max + (stressResource.temp || 0)) - stressResource.used.length;
- 
-     if (availableSpell < totalSpellCost || availableStress < totalStressCost) {
-         showCustomDialog('Insufficient Resources',
-             `You need ${totalSpellCost} Spell and ${totalStressCost} Stress to activate this sequence.\n` +
-             `Available: ${availableSpell} Spell, ${availableStress} Stress.`
-         );
-         return;
-     }
- 
-     // Deduct resources
-     deductSpellSequencerResources('spell', totalSpellCost);
-     deductSpellSequencerResources('stress', totalStressCost);
- 
-     // Mark as used
-     currentCharacter.spellSequencer.isUsed = true;
- 
-     // Update button state
-     updateSpellSequencerButton();
- 
-     // Refresh resource display
-     populateCharacterSheet(currentCharacter);
- 
-     // Save
-     saveCharacters();
- 
-     // Show confirmation
-     showCustomDialog('Spell Sequencer Activated',
-         `${spell1} + ${spell2} has been activated!\n` +
-         `Resources spent: ${formatSpellCost(totalSpellCost, totalStressCost)}`
-     );
- }
- 
- /**
-  * Deduct resources for Spell Sequencer
-  */
- function deductSpellSequencerResources(resourceType, amount) {
-     if (!currentCharacter?.resources?.[resourceType]) return;
- 
-     const resource = currentCharacter.resources[resourceType];
-     const totalBoxes = resource.max + (resource.temp || 0);
- 
-     // Add used boxes starting from the first unused one
-     for (let i = 0; i < amount && resource.used.length < totalBoxes; i++) {
-         // Find the first unused index
-         for (let j = 0; j < totalBoxes; j++) {
-             if (!resource.used.includes(j)) {
-                 resource.used.push(j);
-                 break;
-             }
-         }
-     }
- 
-     // Sort used array
-     resource.used.sort((a, b) => a - b);
- }
- 
- /**
-  * Reset Spell Sequencer on Long Rest
-  */
- function resetSpellSequencerOnLongRest() {
-     if (!currentCharacter?.spellSequencer) return;
- 
-     // Re-enable the spell sequencer
-     currentCharacter.spellSequencer.isUsed = false;
- 
-     // Update button if visible
-     updateSpellSequencerButton();
- }
- 
- /**
-  * Initialize Spell Sequencer dropdowns when abilities panel is opened
-  */
- function initSpellSequencerIfNeeded() {
-     if (!hasSpellSequencerAbility()) return;
- 
-     // Ensure dropdowns are populated
-     setTimeout(() => {
-         populateSpellSequencerDropdowns();
-         updateSpellSequencerResultText();
-         updateSpellSequencerButton();
-     }, 100);
- }
 
- // ==================== EXPERTISE (UNIVERSAL) ====================
- 
- // All ability scores for Expertise
- const expertiseAbilityScores = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
- 
- /**
-  * Check if Expertise ability is selected
-  */
- function hasExpertiseAbility() {
-     if (!currentCharacter || !currentCharacter.classAbilities) return false;
- 
-     const expertiseIndex = universalAbilities.findIndex(ability =>
-         ability.name.toLowerCase().includes('expertise')
-     );
- 
-     return expertiseIndex !== -1 &&
-         currentCharacter.classAbilities.selectedUniversal.includes(expertiseIndex);
- }
- 
- /**
-  * Handle enabling/disabling Expertise ability
-  */
- function handleExpertiseAbility(isEnabled) {
-     if (!currentCharacter) return;
- 
-     if (isEnabled) {
-         // Initialize expertise data
-         if (!currentCharacter.expertise) {
-             currentCharacter.expertise = {
-                 selectedAbility: ''
-             };
-         }
-         currentCharacter.expertiseActive = true;
- 
-         // Populate dropdown after a short delay to ensure DOM is ready
-         setTimeout(() => {
-             populateExpertiseDropdown();
-             updateExpertiseResultText();
-             generateSkillsList(currentCharacter);
-         }, 100);
-     } else {
-         // Remove expertise proficiency if one was granted
-         if (currentCharacter.expertise?.selectedAbility) {
-             const selectedAbility = currentCharacter.expertise.selectedAbility;
-             // Only remove proficiency if it was granted by Expertise
-             if (currentCharacter.expertiseGrantedProficiency === selectedAbility) {
-                 if (currentCharacter.proficiencies) {
-                     currentCharacter.proficiencies[selectedAbility] = false;
-                 }
-                 currentCharacter.expertiseGrantedProficiency = null;
-             }
-         }
- 
-         // Remove expertise data
-         currentCharacter.expertise = null;
-         currentCharacter.expertiseActive = false;
- 
-         // Refresh UI
-         updateSheetProficiencyCircles(currentCharacter);
-         generateSkillsList(currentCharacter);
-     }
- 
-     saveCharacters();
- }
- 
- /**
-  * Get list of ability scores the character is NOT proficient in
-  */
- function getNonProficientAbilities() {
-     if (!currentCharacter) return expertiseAbilityScores;
- 
-     const proficiencies = currentCharacter.proficiencies || {};
-     return expertiseAbilityScores.filter(ability => !proficiencies[ability]);
- }
- 
- /**
-  * Get list of ability scores the character IS proficient in
-  */
- function getProficientAbilities() {
-     if (!currentCharacter) return [];
- 
-     const proficiencies = currentCharacter.proficiencies || {};
-     return expertiseAbilityScores.filter(ability => proficiencies[ability]);
- }
- 
- /**
-  * Populate Expertise dropdown menu with non-proficient abilities
-  */
- function populateExpertiseDropdown() {
-     const select = document.getElementById('expertiseAbilitySelect');
-     if (!select) return;
- 
-     const nonProficient = getNonProficientAbilities();
- 
-     // Clear existing options
-     select.innerHTML = '<option value="">-- Select Ability --</option>';
- 
-     if (nonProficient.length === 0) {
-         // All abilities are proficient
-         const option = document.createElement('option');
-         option.value = '';
-         option.textContent = 'Proficient with All';
-         option.disabled = true;
-         select.innerHTML = '';
-         select.appendChild(option);
-         select.disabled = true;
-     } else {
-         // Populate with non-proficient abilities
-         nonProficient.forEach(ability => {
-             const option = document.createElement('option');
-             option.value = ability;
-             option.textContent = ability.toUpperCase();
-             select.appendChild(option);
-         });
-         select.disabled = false;
-     }
- 
-     // Restore saved selection if still valid
-     if (currentCharacter?.expertise?.selectedAbility) {
-         const savedAbility = currentCharacter.expertise.selectedAbility;
-         // Only restore if the ability is still in the dropdown (not already proficient from another source)
-         if (nonProficient.includes(savedAbility) || currentCharacter.expertiseGrantedProficiency === savedAbility) {
-             select.value = savedAbility;
-         }
-     }
- 
-     // Add event listener (remove old one first to prevent duplicates)
-     select.removeEventListener('change', handleExpertiseSelection);
-     select.addEventListener('change', handleExpertiseSelection);
- }
- 
- /**
-  * Handle ability selection change in Expertise dropdown
-  */
- function handleExpertiseSelection(event) {
-     const selectedAbility = event.target.value;
- 
-     if (!currentCharacter) return;
- 
-     // Initialize if needed
-     if (!currentCharacter.expertise) {
-         currentCharacter.expertise = { selectedAbility: '' };
-     }
- 
-     // Remove previous expertise-granted proficiency if any
-     if (currentCharacter.expertiseGrantedProficiency) {
-         const prevAbility = currentCharacter.expertiseGrantedProficiency;
-         if (currentCharacter.proficiencies) {
-             currentCharacter.proficiencies[prevAbility] = false;
-         }
-         currentCharacter.expertiseGrantedProficiency = null;
-     }
- 
-     // Save new selection
-     currentCharacter.expertise.selectedAbility = selectedAbility;
- 
-     // Grant proficiency if ability selected
-     if (selectedAbility) {
-         if (!currentCharacter.proficiencies) {
-             currentCharacter.proficiencies = { str: false, dex: false, con: false, int: false, wis: false, cha: false };
-         }
-         currentCharacter.proficiencies[selectedAbility] = true;
-         currentCharacter.expertiseGrantedProficiency = selectedAbility;
- 
-         // Update proficiency circles in UI
-         updateSheetProficiencyCircles(currentCharacter);
-     }
- 
-     // Update result text
-     updateExpertiseResultText();
- 
-     // Refresh skills list to show new Expertise bonuses
-     generateSkillsList(currentCharacter);
- 
-     saveCharacters();
- }
- 
- /**
-  * Update the result text showing Expertise status
-  */
- function updateExpertiseResultText() {
-     const resultDiv = document.getElementById('expertiseResult');
-     if (!resultDiv || !currentCharacter) return;
- 
-     const proficientAbilities = getProficientAbilities();
-     const selectedAbility = currentCharacter.expertise?.selectedAbility;
- 
-     let resultHTML = '';
- 
-     // Show selected ability
-     if (selectedAbility) {
-         resultHTML += `<span class="text-green-600 dark:text-green-400">✓ Granted proficiency in ${selectedAbility.toUpperCase()}</span><br>`;
-     }
- 
-     // Show which skills get the +1 bonus
-     if (proficientAbilities.length > 0) {
-         const bonusSkills = defaultSkills.filter(skill => proficientAbilities.includes(skill.ability));
-         if (bonusSkills.length > 0) {
-             resultHTML += `<span class="text-blue-600 dark:text-blue-400">+1 bonus to: ${bonusSkills.map(s => s.name.split(' ')[0]).join(', ')}</span>`;
-         }
-     } else {
-         resultHTML += `<span class="text-gray-500 dark:text-gray-400">No proficiencies yet - no skill bonuses active</span>`;
-     }
- 
-     resultDiv.innerHTML = resultHTML;
- }
- 
- /**
-  * Initialize Expertise dropdown when abilities panel is opened
-  */
- function initExpertiseIfNeeded() {
-     if (!hasExpertiseAbility()) return;
- 
-     // Mark as active
-     if (currentCharacter) {
-         currentCharacter.expertiseActive = true;
-     }
- 
-     // Ensure dropdown is populated
-     setTimeout(() => {
-         populateExpertiseDropdown();
-         updateExpertiseResultText();
-     }, 100);
- }
+    if (!isUsed) {
+        button.addEventListener('click', activateSpellSequencer);
+    }
 
- // ==================== JACK OF ALL TRADES (BARD) ====================
- 
- /**
-  * Check if Jack of All Trades ability is selected
-  */
- function hasJackOfAllTradesAbility() {
-     if (!currentCharacter || currentCharacter.class !== 'Bard') return false;
-     if (!currentCharacter.classAbilities) return false;
- 
-     const bardAbilities = classAbilities['Bard'] || [];
-     const jackIndex = bardAbilities.findIndex(ability =>
-         ability.name.toLowerCase().includes('jack of all trades')
-     );
- 
-     return jackIndex !== -1 &&
-         currentCharacter.classAbilities.selectedClass.includes(jackIndex);
- }
- 
- /**
-  * Handle enabling/disabling Jack of All Trades ability from Abilities Modal
-  */
- function handleJackOfAllTradesAbility(isEnabled) {
-     if (!currentCharacter || currentCharacter.class !== 'Bard') return;
- 
-     // Set the active state
-     currentCharacter.jackOfAllTradesActive = isEnabled;
- 
-     // Update the character sheet display
-     updateJackOfAllTradesDisplay();
- 
-     // Refresh skills list to show/hide bonuses
-     generateSkillsList(currentCharacter);
- 
-     saveCharacters();
- 
-     // Show feedback to user
-     if (isEnabled) {
-         showCustomDialog('Jack of All Trades Activated',
-             'Jack of All Trades is now active! All skill checks gain a bonus based on your level.');
-     }
- }
- 
- /**
-  * Initialize Jack of All Trades if ability is selected (for restoring state)
-  */
- function initJackOfAllTradesIfNeeded() {
-     if (!hasJackOfAllTradesAbility()) return;
- 
-     // Ensure the active state matches the ability selection
-     if (currentCharacter && !currentCharacter.jackOfAllTradesActive) {
-         currentCharacter.jackOfAllTradesActive = true;
-         updateJackOfAllTradesDisplay();
-         generateSkillsList(currentCharacter);
-     }
- }
+    buttonContainer.appendChild(button);
 
- // ==================== WILD BEAST (DRUID) ====================
- 
- /**
-  * Check if Wild Beast ability is selected
-  */
- function hasWildBeastAbility() {
-     if (!currentCharacter || currentCharacter.class !== 'Druid') return false;
-     if (!currentCharacter.classAbilities) return false;
- 
-     const druidAbilities = classAbilities['Druid'] || [];
-     const wildBeastIndex = druidAbilities.findIndex(ability =>
-         ability.name.toLowerCase().includes('wild beast')
-     );
- 
-     return wildBeastIndex !== -1 &&
-         currentCharacter.classAbilities.selectedClass.includes(wildBeastIndex);
- }
- 
- /**
-  * Handle enabling/disabling Wild Beast ability from Abilities Modal
-  */
- function handleWildBeastAbility(isEnabled) {
-     if (!currentCharacter || currentCharacter.class !== 'Druid') return;
- 
-     // Set the ability enabled state (not the active transformation state)
-     currentCharacter.wildBeastEnabled = isEnabled;
- 
-     // If disabling and currently transformed, remove transformation
-     if (!isEnabled && currentCharacter.wildBeastActive) {
-         currentCharacter.wildBeastActive = false;
-         removeWildBeast();
-     }
- 
-     // Update the character sheet display
-     updateWildBeastDisplay();
- 
-     saveCharacters();
- 
-     // Show feedback to user
-     if (isEnabled) {
-         showCustomDialog('Wild Beast Unlocked',
-             'Wild Beast is now available! Use the toggle on your character sheet to transform.');
-     }
- }
- 
- /**
-  * Initialize Wild Beast if ability is selected (for restoring state)
-  */
- function initWildBeastIfNeeded() {
-     if (!hasWildBeastAbility()) return;
- 
-     // Mark as enabled if ability is selected
-     if (currentCharacter) {
-         currentCharacter.wildBeastEnabled = true;
-         updateWildBeastDisplay();
-     }
- }
- 
- // ==================== RANGER COMPANION (RANGER) ====================
- 
- /**
-  * Check if Ranger Companion ability is selected
-  */
- function hasRangerCompanionAbility() {
-     if (!currentCharacter || currentCharacter.class !== 'Ranger') return false;
-     if (!currentCharacter.classAbilities) return false;
- 
-     const rangerAbilities = classAbilities['Ranger'] || [];
-     const companionIndex = rangerAbilities.findIndex(ability =>
-         ability.name.toLowerCase().includes('ranger companion')
-     );
- 
-     return companionIndex !== -1 &&
-         currentCharacter.classAbilities.selectedClass.includes(companionIndex);
- }
- 
- /**
-  * Handle enabling/disabling Ranger Companion ability from Abilities Modal
-  */
- function handleRangerCompanionAbility(isEnabled) {
-     if (!currentCharacter || currentCharacter.class !== 'Ranger') return;
- 
-     if (isEnabled) {
-         // If no companion exists, create a default one
-         if (!currentCharacter.companion) {
-             currentCharacter.companion = {
-                 name: 'Companion',
-                 type: 'Bear',
-                 hpUsed: [],
-                 stressUsed: []
-             };
-         }
- 
-         // Show companion configuration modal
-         showCompanionConfigModal();
-     } else {
-         // Remove companion when ability is unchecked
-         if (currentCharacter.companion) {
-             // Confirm before removing
-             showCompanionRemoveConfirmDialog();
-         }
-     }
- 
-     // Update the character sheet display
-     updateCompanionDisplay(currentCharacter);
- 
-     saveCharacters();
- }
- 
- /**
-  * Show modal to configure companion name and type
-  */
- function showCompanionConfigModal() {
-     const modal = document.createElement('div');
-     modal.id = 'companionConfigModal';
-     modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
- 
-     const companionTypeOptions = Object.keys(companionTypes).map(type =>
-         `<option value="${type}" ${currentCharacter.companion?.type === type ? 'selected' : ''}>${type}</option>`
-     ).join('');
- 
-     modal.innerHTML = `
+    // Insert before Known Spells section
+    knownSpellsSection.parentElement.insertBefore(buttonContainer, knownSpellsSection);
+}
+
+/**
+ * Remove the Spell Sequencer button from Spell-Casting section
+ */
+function removeSpellSequencerButton() {
+    const existingContainer = document.getElementById('spellSequencerButtonContainer');
+    if (existingContainer) {
+        existingContainer.remove();
+    }
+}
+
+/**
+ * Activate Spell Sequencer - deduct resources and disable button
+ */
+function activateSpellSequencer() {
+    if (!currentCharacter?.spellSequencer) return;
+
+    const { spell1, spell2, isUsed } = currentCharacter.spellSequencer;
+
+    if (isUsed || !spell1 || !spell2) return;
+
+    // Get spell costs
+    const spell1Data = spellSequencerSpellList.find(s => s.name === spell1);
+    const spell2Data = spellSequencerSpellList.find(s => s.name === spell2);
+
+    if (!spell1Data || !spell2Data) return;
+
+    const totalSpellCost = spell1Data.spellCost + spell2Data.spellCost;
+    const totalStressCost = spell1Data.stressCost + spell2Data.stressCost;
+
+    // Check if character has enough resources
+    const spellResource = currentCharacter.resources?.spell || { max: 0, used: [], temp: 0 };
+    const stressResource = currentCharacter.resources?.stress || { max: 0, used: [], temp: 0 };
+
+    const availableSpell = (spellResource.max + (spellResource.temp || 0)) - spellResource.used.length;
+    const availableStress = (stressResource.max + (stressResource.temp || 0)) - stressResource.used.length;
+
+    if (availableSpell < totalSpellCost || availableStress < totalStressCost) {
+        showCustomDialog('Insufficient Resources',
+            `You need ${totalSpellCost} Spell and ${totalStressCost} Stress to activate this sequence.\n` +
+            `Available: ${availableSpell} Spell, ${availableStress} Stress.`
+        );
+        return;
+    }
+
+    // Deduct resources
+    deductSpellSequencerResources('spell', totalSpellCost);
+    deductSpellSequencerResources('stress', totalStressCost);
+
+    // Mark as used
+    currentCharacter.spellSequencer.isUsed = true;
+
+    // Update button state
+    updateSpellSequencerButton();
+
+    // Refresh resource display
+    populateCharacterSheet(currentCharacter);
+
+    // Save
+    saveCharacters();
+
+    // Show confirmation
+    showCustomDialog('Spell Sequencer Activated',
+        `${spell1} + ${spell2} has been activated!\n` +
+        `Resources spent: ${formatSpellCost(totalSpellCost, totalStressCost)}`
+    );
+}
+
+/**
+ * Deduct resources for Spell Sequencer
+ */
+function deductSpellSequencerResources(resourceType, amount) {
+    if (!currentCharacter?.resources?.[resourceType]) return;
+
+    const resource = currentCharacter.resources[resourceType];
+    const totalBoxes = resource.max + (resource.temp || 0);
+
+    // Add used boxes starting from the first unused one
+    for (let i = 0; i < amount && resource.used.length < totalBoxes; i++) {
+        // Find the first unused index
+        for (let j = 0; j < totalBoxes; j++) {
+            if (!resource.used.includes(j)) {
+                resource.used.push(j);
+                break;
+            }
+        }
+    }
+
+    // Sort used array
+    resource.used.sort((a, b) => a - b);
+}
+
+/**
+ * Reset Spell Sequencer on Long Rest
+ */
+function resetSpellSequencerOnLongRest() {
+    if (!currentCharacter?.spellSequencer) return;
+
+    // Re-enable the spell sequencer
+    currentCharacter.spellSequencer.isUsed = false;
+
+    // Update button if visible
+    updateSpellSequencerButton();
+}
+
+/**
+ * Initialize Spell Sequencer dropdowns when abilities panel is opened
+ */
+function initSpellSequencerIfNeeded() {
+    if (!hasSpellSequencerAbility()) return;
+
+    // Ensure dropdowns are populated
+    setTimeout(() => {
+        populateSpellSequencerDropdowns();
+        updateSpellSequencerResultText();
+        updateSpellSequencerButton();
+    }, 100);
+}
+
+// ==================== EXPERTISE (UNIVERSAL) ====================
+
+// All ability scores for Expertise
+const expertiseAbilityScores = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+
+/**
+ * Check if Expertise ability is selected
+ */
+function hasExpertiseAbility() {
+    if (!currentCharacter || !currentCharacter.classAbilities) return false;
+
+    const expertiseIndex = universalAbilities.findIndex(ability =>
+        ability.name.toLowerCase().includes('expertise')
+    );
+
+    return expertiseIndex !== -1 &&
+        currentCharacter.classAbilities.selectedUniversal.includes(expertiseIndex);
+}
+
+/**
+ * Handle enabling/disabling Expertise ability
+ */
+function handleExpertiseAbility(isEnabled) {
+    if (!currentCharacter) return;
+
+    if (isEnabled) {
+        // Initialize expertise data
+        if (!currentCharacter.expertise) {
+            currentCharacter.expertise = {
+                selectedAbility: ''
+            };
+        }
+        currentCharacter.expertiseActive = true;
+
+        // Populate dropdown after a short delay to ensure DOM is ready
+        setTimeout(() => {
+            populateExpertiseDropdown();
+            updateExpertiseResultText();
+            generateSkillsList(currentCharacter);
+        }, 100);
+    } else {
+        // Remove expertise proficiency if one was granted
+        if (currentCharacter.expertise?.selectedAbility) {
+            const selectedAbility = currentCharacter.expertise.selectedAbility;
+            // Only remove proficiency if it was granted by Expertise
+            if (currentCharacter.expertiseGrantedProficiency === selectedAbility) {
+                if (currentCharacter.proficiencies) {
+                    currentCharacter.proficiencies[selectedAbility] = false;
+                }
+                currentCharacter.expertiseGrantedProficiency = null;
+            }
+        }
+
+        // Remove expertise data
+        currentCharacter.expertise = null;
+        currentCharacter.expertiseActive = false;
+
+        // Refresh UI
+        updateSheetProficiencyCircles(currentCharacter);
+        generateSkillsList(currentCharacter);
+    }
+
+    saveCharacters();
+}
+
+/**
+ * Get list of ability scores the character is NOT proficient in
+ */
+function getNonProficientAbilities() {
+    if (!currentCharacter) return expertiseAbilityScores;
+
+    const proficiencies = currentCharacter.proficiencies || {};
+    return expertiseAbilityScores.filter(ability => !proficiencies[ability]);
+}
+
+/**
+ * Get list of ability scores the character IS proficient in
+ */
+function getProficientAbilities() {
+    if (!currentCharacter) return [];
+
+    const proficiencies = currentCharacter.proficiencies || {};
+    return expertiseAbilityScores.filter(ability => proficiencies[ability]);
+}
+
+/**
+ * Populate Expertise dropdown menu with non-proficient abilities
+ */
+function populateExpertiseDropdown() {
+    const select = document.getElementById('expertiseAbilitySelect');
+    if (!select) return;
+
+    const nonProficient = getNonProficientAbilities();
+
+    // Clear existing options
+    select.innerHTML = '<option value="">-- Select Ability --</option>';
+
+    if (nonProficient.length === 0) {
+        // All abilities are proficient
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'Proficient with All';
+        option.disabled = true;
+        select.innerHTML = '';
+        select.appendChild(option);
+        select.disabled = true;
+    } else {
+        // Populate with non-proficient abilities
+        nonProficient.forEach(ability => {
+            const option = document.createElement('option');
+            option.value = ability;
+            option.textContent = ability.toUpperCase();
+            select.appendChild(option);
+        });
+        select.disabled = false;
+    }
+
+    // Restore saved selection if still valid
+    if (currentCharacter?.expertise?.selectedAbility) {
+        const savedAbility = currentCharacter.expertise.selectedAbility;
+        // Only restore if the ability is still in the dropdown (not already proficient from another source)
+        if (nonProficient.includes(savedAbility) || currentCharacter.expertiseGrantedProficiency === savedAbility) {
+            select.value = savedAbility;
+        }
+    }
+
+    // Add event listener (remove old one first to prevent duplicates)
+    select.removeEventListener('change', handleExpertiseSelection);
+    select.addEventListener('change', handleExpertiseSelection);
+}
+
+/**
+ * Handle ability selection change in Expertise dropdown
+ */
+function handleExpertiseSelection(event) {
+    const selectedAbility = event.target.value;
+
+    if (!currentCharacter) return;
+
+    // Initialize if needed
+    if (!currentCharacter.expertise) {
+        currentCharacter.expertise = { selectedAbility: '' };
+    }
+
+    // Remove previous expertise-granted proficiency if any
+    if (currentCharacter.expertiseGrantedProficiency) {
+        const prevAbility = currentCharacter.expertiseGrantedProficiency;
+        if (currentCharacter.proficiencies) {
+            currentCharacter.proficiencies[prevAbility] = false;
+        }
+        currentCharacter.expertiseGrantedProficiency = null;
+    }
+
+    // Save new selection
+    currentCharacter.expertise.selectedAbility = selectedAbility;
+
+    // Grant proficiency if ability selected
+    if (selectedAbility) {
+        if (!currentCharacter.proficiencies) {
+            currentCharacter.proficiencies = { str: false, dex: false, con: false, int: false, wis: false, cha: false };
+        }
+        currentCharacter.proficiencies[selectedAbility] = true;
+        currentCharacter.expertiseGrantedProficiency = selectedAbility;
+
+        // Update proficiency circles in UI
+        updateSheetProficiencyCircles(currentCharacter);
+    }
+
+    // Update result text
+    updateExpertiseResultText();
+
+    // Refresh skills list to show new Expertise bonuses
+    generateSkillsList(currentCharacter);
+
+    saveCharacters();
+}
+
+/**
+ * Update the result text showing Expertise status
+ */
+function updateExpertiseResultText() {
+    const resultDiv = document.getElementById('expertiseResult');
+    if (!resultDiv || !currentCharacter) return;
+
+    const proficientAbilities = getProficientAbilities();
+    const selectedAbility = currentCharacter.expertise?.selectedAbility;
+
+    let resultHTML = '';
+
+    // Show selected ability
+    if (selectedAbility) {
+        resultHTML += `<span class="text-green-600 dark:text-green-400">✓ Granted proficiency in ${selectedAbility.toUpperCase()}</span><br>`;
+    }
+
+    // Show which skills get the +1 bonus
+    if (proficientAbilities.length > 0) {
+        const bonusSkills = defaultSkills.filter(skill => proficientAbilities.includes(skill.ability));
+        if (bonusSkills.length > 0) {
+            resultHTML += `<span class="text-blue-600 dark:text-blue-400">+1 bonus to: ${bonusSkills.map(s => s.name.split(' ')[0]).join(', ')}</span>`;
+        }
+    } else {
+        resultHTML += `<span class="text-gray-500 dark:text-gray-400">No proficiencies yet - no skill bonuses active</span>`;
+    }
+
+    resultDiv.innerHTML = resultHTML;
+}
+
+/**
+ * Initialize Expertise dropdown when abilities panel is opened
+ */
+function initExpertiseIfNeeded() {
+    if (!hasExpertiseAbility()) return;
+
+    // Mark as active
+    if (currentCharacter) {
+        currentCharacter.expertiseActive = true;
+    }
+
+    // Ensure dropdown is populated
+    setTimeout(() => {
+        populateExpertiseDropdown();
+        updateExpertiseResultText();
+    }, 100);
+}
+
+// ==================== JACK OF ALL TRADES (BARD) ====================
+
+/**
+ * Check if Jack of All Trades ability is selected
+ */
+function hasJackOfAllTradesAbility() {
+    if (!currentCharacter || currentCharacter.class !== 'Bard') return false;
+    if (!currentCharacter.classAbilities) return false;
+
+    const bardAbilities = classAbilities['Bard'] || [];
+    const jackIndex = bardAbilities.findIndex(ability =>
+        ability.name.toLowerCase().includes('jack of all trades')
+    );
+
+    return jackIndex !== -1 &&
+        currentCharacter.classAbilities.selectedClass.includes(jackIndex);
+}
+
+/**
+ * Handle enabling/disabling Jack of All Trades ability from Abilities Modal
+ */
+function handleJackOfAllTradesAbility(isEnabled) {
+    if (!currentCharacter || currentCharacter.class !== 'Bard') return;
+
+    // Set the active state
+    currentCharacter.jackOfAllTradesActive = isEnabled;
+
+    // Update the character sheet display
+    updateJackOfAllTradesDisplay();
+
+    // Refresh skills list to show/hide bonuses
+    generateSkillsList(currentCharacter);
+
+    saveCharacters();
+
+    // Show feedback to user
+    if (isEnabled) {
+        showCustomDialog('Jack of All Trades Activated',
+            'Jack of All Trades is now active! All skill checks gain a bonus based on your level.');
+    }
+}
+
+/**
+ * Initialize Jack of All Trades if ability is selected (for restoring state)
+ */
+function initJackOfAllTradesIfNeeded() {
+    if (!hasJackOfAllTradesAbility()) return;
+
+    // Ensure the active state matches the ability selection
+    if (currentCharacter && !currentCharacter.jackOfAllTradesActive) {
+        currentCharacter.jackOfAllTradesActive = true;
+        updateJackOfAllTradesDisplay();
+        generateSkillsList(currentCharacter);
+    }
+}
+
+// ==================== WILD BEAST (DRUID) ====================
+
+/**
+ * Check if Wild Beast ability is selected
+ */
+function hasWildBeastAbility() {
+    if (!currentCharacter || currentCharacter.class !== 'Druid') return false;
+    if (!currentCharacter.classAbilities) return false;
+
+    const druidAbilities = classAbilities['Druid'] || [];
+    const wildBeastIndex = druidAbilities.findIndex(ability =>
+        ability.name.toLowerCase().includes('wild beast')
+    );
+
+    return wildBeastIndex !== -1 &&
+        currentCharacter.classAbilities.selectedClass.includes(wildBeastIndex);
+}
+
+/**
+ * Handle enabling/disabling Wild Beast ability from Abilities Modal
+ */
+function handleWildBeastAbility(isEnabled) {
+    if (!currentCharacter || currentCharacter.class !== 'Druid') return;
+
+    // Set the ability enabled state (not the active transformation state)
+    currentCharacter.wildBeastEnabled = isEnabled;
+
+    // If disabling and currently transformed, remove transformation
+    if (!isEnabled && currentCharacter.wildBeastActive) {
+        currentCharacter.wildBeastActive = false;
+        removeWildBeast();
+    }
+
+    // Update the character sheet display
+    updateWildBeastDisplay();
+
+    saveCharacters();
+
+    // Show feedback to user
+    if (isEnabled) {
+        showCustomDialog('Wild Beast Unlocked',
+            'Wild Beast is now available! Use the toggle on your character sheet to transform.');
+    }
+}
+
+/**
+ * Initialize Wild Beast if ability is selected (for restoring state)
+ */
+function initWildBeastIfNeeded() {
+    if (!hasWildBeastAbility()) return;
+
+    // Mark as enabled if ability is selected
+    if (currentCharacter) {
+        currentCharacter.wildBeastEnabled = true;
+        updateWildBeastDisplay();
+    }
+}
+
+// ==================== RANGER COMPANION (RANGER) ====================
+
+/**
+ * Check if Ranger Companion ability is selected
+ */
+function hasRangerCompanionAbility() {
+    if (!currentCharacter || currentCharacter.class !== 'Ranger') return false;
+    if (!currentCharacter.classAbilities) return false;
+
+    const rangerAbilities = classAbilities['Ranger'] || [];
+    const companionIndex = rangerAbilities.findIndex(ability =>
+        ability.name.toLowerCase().includes('ranger companion')
+    );
+
+    return companionIndex !== -1 &&
+        currentCharacter.classAbilities.selectedClass.includes(companionIndex);
+}
+
+/**
+ * Handle enabling/disabling Ranger Companion ability from Abilities Modal
+ */
+function handleRangerCompanionAbility(isEnabled) {
+    if (!currentCharacter || currentCharacter.class !== 'Ranger') return;
+
+    if (isEnabled) {
+        // If no companion exists, create a default one
+        if (!currentCharacter.companion) {
+            currentCharacter.companion = {
+                name: 'Companion',
+                type: 'Bear',
+                hpUsed: [],
+                stressUsed: []
+            };
+        }
+
+        // Show companion configuration modal
+        showCompanionConfigModal();
+    } else {
+        // Remove companion when ability is unchecked
+        if (currentCharacter.companion) {
+            // Confirm before removing
+            showCompanionRemoveConfirmDialog();
+        }
+    }
+
+    // Update the character sheet display
+    updateCompanionDisplay(currentCharacter);
+
+    saveCharacters();
+}
+
+/**
+ * Show modal to configure companion name and type
+ */
+function showCompanionConfigModal() {
+    const modal = document.createElement('div');
+    modal.id = 'companionConfigModal';
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+
+    const companionTypeOptions = Object.keys(companionTypes).map(type =>
+        `<option value="${type}" ${currentCharacter.companion?.type === type ? 'selected' : ''}>${type}</option>`
+    ).join('');
+
+    modal.innerHTML = `
          <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
              <h3 class="text-lg font-semibold mb-4 text-green-600 dark:text-green-400">
                  <i class="fas fa-paw mr-2"></i>Configure Ranger Companion
@@ -16008,66 +16295,66 @@ function updateEvasionWithFightingStyle() {
              </div>
          </div>
      `;
- 
-     document.body.appendChild(modal);
- 
-     modal.querySelector('.confirm-config').addEventListener('click', () => {
-         const name = document.getElementById('companionConfigName').value.trim() || 'Companion';
-         const type = document.getElementById('companionConfigType').value || 'Bear';
- 
-         currentCharacter.companion = {
-             name: name,
-             type: type,
-             hpUsed: currentCharacter.companion?.hpUsed || [],
-             stressUsed: currentCharacter.companion?.stressUsed || []
-         };
- 
-         updateCompanionDisplay(currentCharacter);
-         saveCharacters();
-         modal.remove();
- 
-         showCustomDialog('Companion Added',
-             `${name} the ${type} is now your loyal companion!`);
-     });
- 
-     modal.querySelector('.cancel-config').addEventListener('click', () => {
-         // If canceling and no companion existed, uncheck the ability
-         if (!currentCharacter.companion || !currentCharacter.companion.name) {
-             // Find and uncheck the Ranger Companion ability checkbox
-             const rangerAbilities = classAbilities['Ranger'] || [];
-             const companionIndex = rangerAbilities.findIndex(ability =>
-                 ability.name.toLowerCase().includes('ranger companion')
-             );
-             if (companionIndex !== -1) {
-                 const checkbox = document.querySelector(`.class-ability-checkbox[data-index="${companionIndex}"]`);
-                 if (checkbox) {
-                     checkbox.checked = false;
-                     removeAbilityFromDisplay('class', companionIndex);
-                     saveClassAbilitiesSelection();
-                 }
-             }
-             currentCharacter.companion = null;
-         }
-         modal.remove();
-     });
- 
-     // Close on outside click
-     modal.addEventListener('click', (e) => {
-         if (e.target === modal) {
-             modal.querySelector('.cancel-config').click();
-         }
-     });
- }
- 
- /**
-  * Show confirmation dialog before removing companion
-  */
- function showCompanionRemoveConfirmDialog() {
-     const companionName = currentCharacter.companion?.name || 'Companion';
- 
-     const modal = document.createElement('div');
-     modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-     modal.innerHTML = `
+
+    document.body.appendChild(modal);
+
+    modal.querySelector('.confirm-config').addEventListener('click', () => {
+        const name = document.getElementById('companionConfigName').value.trim() || 'Companion';
+        const type = document.getElementById('companionConfigType').value || 'Bear';
+
+        currentCharacter.companion = {
+            name: name,
+            type: type,
+            hpUsed: currentCharacter.companion?.hpUsed || [],
+            stressUsed: currentCharacter.companion?.stressUsed || []
+        };
+
+        updateCompanionDisplay(currentCharacter);
+        saveCharacters();
+        modal.remove();
+
+        showCustomDialog('Companion Added',
+            `${name} the ${type} is now your loyal companion!`);
+    });
+
+    modal.querySelector('.cancel-config').addEventListener('click', () => {
+        // If canceling and no companion existed, uncheck the ability
+        if (!currentCharacter.companion || !currentCharacter.companion.name) {
+            // Find and uncheck the Ranger Companion ability checkbox
+            const rangerAbilities = classAbilities['Ranger'] || [];
+            const companionIndex = rangerAbilities.findIndex(ability =>
+                ability.name.toLowerCase().includes('ranger companion')
+            );
+            if (companionIndex !== -1) {
+                const checkbox = document.querySelector(`.class-ability-checkbox[data-index="${companionIndex}"]`);
+                if (checkbox) {
+                    checkbox.checked = false;
+                    removeAbilityFromDisplay('class', companionIndex);
+                    saveClassAbilitiesSelection();
+                }
+            }
+            currentCharacter.companion = null;
+        }
+        modal.remove();
+    });
+
+    // Close on outside click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.querySelector('.cancel-config').click();
+        }
+    });
+}
+
+/**
+ * Show confirmation dialog before removing companion
+ */
+function showCompanionRemoveConfirmDialog() {
+    const companionName = currentCharacter.companion?.name || 'Companion';
+
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+    modal.innerHTML = `
          <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
              <h3 class="text-lg font-semibold mb-4 text-red-600 dark:text-red-400">
                  <i class="fas fa-exclamation-triangle mr-2"></i>Remove Companion?
@@ -16081,58 +16368,206 @@ function updateEvasionWithFightingStyle() {
              </div>
          </div>
      `;
- 
-     document.body.appendChild(modal);
- 
-     modal.querySelector('.confirm-remove').addEventListener('click', () => {
-         currentCharacter.companion = null;
-         updateCompanionDisplay(currentCharacter);
-         saveCharacters();
-         modal.remove();
- 
-         showCustomDialog('Companion Removed',
-             `${companionName} has been removed from your party.`);
-     });
- 
-     modal.querySelector('.cancel-remove').addEventListener('click', () => {
-         // Re-check the ability checkbox since user wants to keep companion
-         const rangerAbilities = classAbilities['Ranger'] || [];
-         const companionIndex = rangerAbilities.findIndex(ability =>
-             ability.name.toLowerCase().includes('ranger companion')
-         );
-         if (companionIndex !== -1) {
-             const checkbox = document.querySelector(`.class-ability-checkbox[data-index="${companionIndex}"]`);
-             if (checkbox && !checkbox.checked) {
-                 checkbox.checked = true;
-                 addAbilityToDisplay('class', companionIndex);
-                 saveClassAbilitiesSelection();
-             }
-         }
-         modal.remove();
-     });
- 
-     // Close on outside click (keep companion)
-     modal.addEventListener('click', (e) => {
-         if (e.target === modal) {
-             modal.querySelector('.cancel-remove').click();
-         }
-     });
- }
- 
- /**
-  * Initialize Ranger Companion if ability is selected (for restoring state)
-  */
- function initRangerCompanionIfNeeded() {
-     if (!hasRangerCompanionAbility()) return;
- 
-     // If ability is selected but no companion exists, create default
-     if (currentCharacter && !currentCharacter.companion) {
-         currentCharacter.companion = {
-             name: 'Companion',
-             type: 'Bear',
-             hpUsed: [],
-             stressUsed: []
-         };
-         updateCompanionDisplay(currentCharacter);
-     }
- }
+
+    document.body.appendChild(modal);
+
+    modal.querySelector('.confirm-remove').addEventListener('click', () => {
+        currentCharacter.companion = null;
+        updateCompanionDisplay(currentCharacter);
+        saveCharacters();
+        modal.remove();
+
+        showCustomDialog('Companion Removed',
+            `${companionName} has been removed from your party.`);
+    });
+
+    modal.querySelector('.cancel-remove').addEventListener('click', () => {
+        // Re-check the ability checkbox since user wants to keep companion
+        const rangerAbilities = classAbilities['Ranger'] || [];
+        const companionIndex = rangerAbilities.findIndex(ability =>
+            ability.name.toLowerCase().includes('ranger companion')
+        );
+        if (companionIndex !== -1) {
+            const checkbox = document.querySelector(`.class-ability-checkbox[data-index="${companionIndex}"]`);
+            if (checkbox && !checkbox.checked) {
+                checkbox.checked = true;
+                addAbilityToDisplay('class', companionIndex);
+                saveClassAbilitiesSelection();
+            }
+        }
+        modal.remove();
+    });
+
+    // Close on outside click (keep companion)
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.querySelector('.cancel-remove').click();
+        }
+    });
+}
+
+/**
+ * Initialize Ranger Companion if ability is selected (for restoring state)
+ */
+function initRangerCompanionIfNeeded() {
+    if (!hasRangerCompanionAbility()) return;
+
+    // If ability is selected but no companion exists, create default
+    if (currentCharacter && !currentCharacter.companion) {
+        currentCharacter.companion = {
+            name: 'Companion',
+            type: 'Bear',
+            hpUsed: [],
+            stressUsed: []
+        };
+        updateCompanionDisplay(currentCharacter);
+    }
+}
+
+// =================================================
+// TOKENS OF THE DEPARTED ABILITY SYSTEM (Warlock)
+// =================================================
+
+/**
+ * Check if character has the Tokens of the Departed ability selected
+ */
+function hasTokensOfDepartedAbility() {
+    if (!currentCharacter || currentCharacter.class !== 'Warlock') return false;
+    if (!currentCharacter.classAbilities || !currentCharacter.classAbilities.selectedClass) return false;
+
+    const warlockAbilities = classAbilities['Warlock'] || [];
+    return currentCharacter.classAbilities.selectedClass.some(index => {
+        const ability = warlockAbilities[index];
+        return ability && ability.name.toLowerCase().includes('tokens of the departed');
+    });
+}
+
+/**
+ * Handle Tokens of the Departed ability toggle
+ */
+function handleTokensOfDepartedAbility(isEnabled) {
+    if (!currentCharacter || currentCharacter.class !== 'Warlock') return;
+
+    currentCharacter.tokensOfDepartedEnabled = isEnabled;
+
+    if (isEnabled) {
+        // Initialize tokens array if not exists
+        if (!currentCharacter.tokensOfDeparted) {
+            const maxTokens = calculateMaxTokens(currentCharacter.level || 1);
+            currentCharacter.tokensOfDeparted = new Array(maxTokens).fill(false);
+        }
+        updateTokensOfDepartedDisplay();
+    } else {
+        // Hide the section
+        const section = document.getElementById('tokensOfDepartedSection');
+        if (section) {
+            section.classList.add('hidden');
+        }
+    }
+
+    saveCharacters(currentCharacter);
+}
+
+/**
+ * Calculate max tokens based on level (1 per 2 levels, starting at level 1)
+ * Level 1-2: 1 token, Level 3-4: 2 tokens, Level 5-6: 3 tokens, etc.
+ */
+function calculateMaxTokens(level) {
+    return Math.ceil(level / 2);
+}
+
+/**
+ * Update the Tokens of the Departed display
+ */
+function updateTokensOfDepartedDisplay() {
+
+    const section = document.getElementById('tokensOfDepartedSection');
+    const circlesContainer = document.getElementById('tokensOfDepartedCircles');
+
+    if (!section || !circlesContainer) return;
+    // Hide section if not Warlock or ability not enabled
+    if (!currentCharacter || currentCharacter.class !== 'Warlock' || !currentCharacter.tokensOfDepartedEnabled) {
+        section.classList.add('hidden');
+        return;
+    }
+
+    // Show the section
+    section.classList.remove('hidden');
+
+    // Calculate max tokens for current level
+    const maxTokens = calculateMaxTokens(currentCharacter.level || 1);
+
+    // Ensure tokens array exists and is the right size
+    if (!currentCharacter.tokensOfDeparted || currentCharacter.tokensOfDeparted.length !== maxTokens) {
+        const oldTokens = currentCharacter.tokensOfDeparted || [];
+        currentCharacter.tokensOfDeparted = new Array(maxTokens).fill(false);
+        // Preserve old token states
+        for (let i = 0; i < Math.min(oldTokens.length, maxTokens); i++) {
+            currentCharacter.tokensOfDeparted[i] = oldTokens[i];
+        }
+    }
+
+    // Generate circles HTML
+    let circlesHTML = '';
+    for (let i = 0; i < maxTokens; i++) {
+        const isFilled = currentCharacter.tokensOfDeparted[i];
+        circlesHTML += `
+              <button class="token-departed-circle w-5 h-5 rounded-full border-2 transition-all duration-200
+                ${isFilled ? 'bg-purple-600 border-purple-700 dark:bg-purple-400 dark:border-white' 
+                    : 'bg-white border-purple-400 hover:border-purple-600 dark:bg-purple-900 dark:border-white dark:hover:border-purple-300'}"
+                data-token-index="${i}"
+                title="Token ${i + 1}">
+            </button>
+         `;
+    }
+
+    circlesContainer.innerHTML = circlesHTML;
+
+    // Add click handlers
+    circlesContainer.querySelectorAll('.token-departed-circle').forEach(circle => {
+        circle.addEventListener('click', handleTokenCircleClick);
+    });
+}
+
+/**
+ * Handle token circle click - fill/unfill in sequence left to right
+ */
+function handleTokenCircleClick(event) {
+    if (!currentCharacter || !currentCharacter.tokensOfDeparted) return;
+
+    const tokens = currentCharacter.tokensOfDeparted;
+    const clickedIndex = Number(event.currentTarget.dataset.tokenIndex);
+
+    const firstUnfilled = tokens.indexOf(false);     // leftmost empty
+    const lastFilled = tokens.lastIndexOf(true);     // rightmost filled
+
+    if (tokens[clickedIndex]) {
+        // CLICKED A FILLED CIRCLE → UNFILL FROM THE RIGHT
+        if (lastFilled !== -1) {
+            tokens[lastFilled] = false;
+        }
+    } else {
+        // CLICKED AN EMPTY CIRCLE → FILL FROM THE LEFT
+        if (firstUnfilled !== -1) {
+            tokens[firstUnfilled] = true;
+        }
+    }
+
+    saveCharacters(currentCharacter);
+    updateTokensOfDepartedDisplay();
+}
+
+
+
+/**
+ * Initialize Tokens of the Departed if ability is selected (for restoring state)
+ */
+function initTokensOfDepartedIfNeeded() {
+    if (!hasTokensOfDepartedAbility()) return;
+
+    // Enable and update display
+    if (currentCharacter) {
+        currentCharacter.tokensOfDepartedEnabled = true;
+        updateTokensOfDepartedDisplay();
+    }
+}
