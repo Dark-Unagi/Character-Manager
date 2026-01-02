@@ -4900,21 +4900,140 @@ function showLevelUpModal() {
     // Check ability score caps and disable options if needed
     updateLevelUpAbilityOptions();
 
-    // Set the character name and threshold bonus text
-    thresholdBonusText.textContent = `${currentCharacter.name} gains +1/+1 Threshold`;
-
-    // Check if character is a main spell-caster class
-    const mainCasterClasses = ['Cleric', 'Druid', 'Sorcerer', 'Wizard'];
-    const isMainCaster = mainCasterClasses.includes(currentCharacter.class);
-
-    if (isMainCaster) {
-        spellBonusText.textContent = `${currentCharacter.name} gains +1 Spell (Caster Class)`;
-        spellBonusText.style.display = 'block';
+     // Build the level up bonuses display
+     const levelUpBonuses = generateLevelUpBonusesList();
+ 
+     // Set the threshold bonus text (main header) with bonuses list inline
+     thresholdBonusText.innerHTML = `
+         <div class="font-semibold mb-2">${currentCharacter.name} Level Up Bonuses:</div>
+         <div class="text-xs space-y-0.5" id="levelUpBonusesList">
+             ${levelUpBonuses}
+         </div>
+     `;
+ 
+     // Hide the old spell bonus text (now included in bonuses list)
+     spellBonusText.style.display = 'none';
+ 
+     modal.classList.remove('hidden');
+ }
+ 
+ /**
+  * Generate the list of level up bonuses based on character class and abilities
+  * @returns {string} HTML string of level up bonuses
+  */
+ function generateLevelUpBonusesList() {
+     if (!currentCharacter) return '';
+ 
+     const nextLevel = (currentCharacter.level || 1) + 1;
+     const bonuses = [];
+ // Use colors that contrast well with green background (green-800/green-200 text context)
+     // 1. Threshold increase (All classes)
+     bonuses.push(`<div class="flex items-center"><span class="text-green-700 dark:text-green-300 mr-1 font-bold">•</span><span class="text-green-800 dark:text-green-200">+1 / +1 Threshold</span></div>`);
+ 
+     // 2. Weapon Proficiency (+1, Max 6)
+     const currentProficiency = currentCharacter.weaponProficiency || 1;
+     if (currentProficiency < 6) {
+         bonuses.push(`<div class="flex items-center"><span class="text-green-700 dark:text-green-300 mr-1 font-bold">•</span><span class="text-green-800 dark:text-green-200">+1 Weapon Proficiency (${currentProficiency} → ${currentProficiency + 1})</span></div>`);
     } else {
-        spellBonusText.style.display = 'none';
-    }
-
-    modal.classList.remove('hidden');
+         bonuses.push(`<div class="flex items-center"><span class="text-green-600 dark:text-green-400 mr-1">•</span><span class="text-green-600 dark:text-green-400 opacity-60">Weapon Proficiency (Max 6)</span></div>`);
+     }
+ 
+     // 3. Spell Point increase (Wizards and Clerics only)
+     if (currentCharacter.class === 'Wizard' || currentCharacter.class === 'Cleric') {
+          bonuses.push(`<div class="flex items-center"><span class="text-purple-700 dark:text-purple-300 mr-1 font-bold">•</span><span class="text-purple-800 dark:text-purple-200">+1 Spell Point (Caster Class)</span></div>`);
+     }
+ 
+     // 4. Spell Slot (if character has Spell Casting ability selected)
+     if (hasSpellCastingAbility()) {
+          bonuses.push(`<div class="flex items-center"><span class="text-purple-700 dark:text-purple-300 mr-1 font-bold">•</span><span class="text-purple-800 dark:text-purple-200">+1 Spell Slot</span></div>`);
+     }
+ 
+     // 5. Ability Selection (All characters)
+     bonuses.push(`<div class="flex items-center"><span class="text-blue-700 dark:text-blue-300 mr-1 font-bold">•</span><span class="text-blue-800 dark:text-blue-200">Select 1 New Ability</span></div>`);
+ 
+     // 6. Barbarian extra Threshold (if has Unarmored Defense ability)
+     if (currentCharacter.class === 'Barbarian' && hasUnarmoredDefenseAbility()) {
+          bonuses.push(`<div class="flex items-center"><span class="text-red-600 dark:text-red-400 mr-1 font-bold">•</span><span class="text-red-700 dark:text-red-300">+3 / +3 Threshold (Unarmored Defense)</span></div>`);
+     }
+ 
+     // 7. Monk extra Threshold (if has Unarmored Defense ability)
+     if (currentCharacter.class === 'Monk' && hasUnarmoredDefenseAbility()) {
+         bonuses.push(`<div class="flex items-center"><span class="text-amber-600 dark:text-amber-400 mr-1 font-bold">•</span><span class="text-amber-700 dark:text-amber-300">+2 / +2 Threshold (Unarmored Defense)</span></div>`);
+     }
+ 
+     // 8. Bard Jack of All Trades bonus (at specific levels)
+     if (currentCharacter.class === 'Bard' && hasJackOfAllTradesAbility()) {
+         const joatBonus = getJackOfAllTradesLevelUpBonus(nextLevel);
+         if (joatBonus) {
+             bonuses.push(`<div class="flex items-center"><span class="text-orange-600 dark:text-orange-400 mr-1 font-bold">•</span><span class="text-orange-700 dark:text-orange-300">${joatBonus}</span></div>`);
+         }
+     }
+ 
+     // 9. Druid Wild Beast level up (at specific levels)
+     if (currentCharacter.class === 'Druid' && hasWildBeastAbility()) {
+         const wildBeastUpgrade = getWildBeastLevelUpInfo(nextLevel);
+         if (wildBeastUpgrade) {
+             bonuses.push(`<div class="flex items-center"><span class="text-teal-600 dark:text-teal-400 mr-1 font-bold">•</span><span class="text-teal-700 dark:text-teal-300">${wildBeastUpgrade}</span></div>`);
+         }
+     }
+ 
+     return bonuses.join('');
+ }
+ 
+ /**
+  * Get Jack of All Trades bonus info for level up display
+  * @param {number} nextLevel - The level the character is leveling up to
+  * @returns {string|null} Bonus text or null if no change at this level
+  */
+ function getJackOfAllTradesLevelUpBonus(nextLevel) {
+     // JoAT bonus increases at levels 5 and 8
+     if (nextLevel === 5) {
+         return 'Jack of All Trades: +1 → +2';
+     } else if (nextLevel === 8) {
+         return 'Jack of All Trades: +2 → +3';
+     }
+     return null;
+ }
+ 
+ /**
+  * Get Wild Beast upgrade info for level up display
+  * @param {number} nextLevel - The level the character is leveling up to
+  * @returns {string|null} Upgrade text or null if no upgrade at this level
+  */
+ function getWildBeastLevelUpInfo(nextLevel) {
+     // Wild Beast upgrades at specific levels
+     // Level 1-2: Wild Beast 1
+     // Level 3-4: Wild Beast 2
+     // Level 5-6: Wild Beast 3
+     // Level 7-8: Wild Beast 4
+     // Level 9-10: Wild Beast 5
+ 
+     if (nextLevel === 3) {
+         return 'Wild Beast 1 → Wild Beast 2';
+     } else if (nextLevel === 5) {
+         return 'Wild Beast 2 → Wild Beast 3';
+     } else if (nextLevel === 7) {
+         return 'Wild Beast 3 → Wild Beast 4';
+     } else if (nextLevel === 9) {
+         return 'Wild Beast 4 → Wild Beast 5';
+     }
+     return null;
+ }
+ 
+ /**
+  * Check if Bard has Jack of All Trades ability selected
+  * @returns {boolean}
+  */
+ function hasJackOfAllTradesAbility() {
+     if (!currentCharacter || currentCharacter.class !== 'Bard') return false;
+     if (!currentCharacter.classAbilities || !currentCharacter.classAbilities.selectedClass) return false;
+ 
+     const bardAbilities = classAbilities['Bard'] || [];
+     const joatIndex = bardAbilities.findIndex(ability =>
+         ability.name.toLowerCase().includes('jack of all trades')
+     );
+ 
+     return joatIndex !== -1 && currentCharacter.classAbilities.selectedClass.includes(joatIndex);
 }
 
 function updateLevelUpAbilityOptions() {
@@ -5119,9 +5238,9 @@ function applyLevelUp() {
     // Close modal
     document.getElementById('levelUpModal').classList.add('hidden');
 
-    /*
+    
     // Show success message
-    showCustomDialog('Level Up Complete!', `${currentCharacter.name} is now level ${currentCharacter.level}!`);*/
+    showCustomDialog('Level Up Complete!', `${currentCharacter.name} is now level ${currentCharacter.level}!`);
 }
 
 // Weapon and armor system functions
