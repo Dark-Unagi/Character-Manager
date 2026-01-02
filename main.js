@@ -355,7 +355,7 @@ const classAbilities = {
         {
             name: 'Unarmored Defense <i class="skill3">Special</i>', description:
                 `<ul>
-            <li>- Add +2 and your initial <b>DEX</b> to Evasion.</li> 
+            <li>- Add your current <b>DEX</b> Mod to Evasion (min +1, max +3).</li> 
             <li>- Add <b>DEX</b> to Lower Threshold and <b>DEX & CON</b> Mod to Upper Threshold.</li>
             <li>- Add +3|+3 per level to Threshold.</li>
     </ul>` },
@@ -374,7 +374,7 @@ const classAbilities = {
                 `<ul>      
             <li>- If you drop to 0HP, you can instead drop to 1HP.</li>
             <li>- Can only use this ability once/combat (Until next Long Rest). </li>
-            <li>- But <u>before</u> you lose your last HP.</li>  
+            <li>- But <u>before</u> you lose your last <b>HP</b>.</li>  
     </ul>` },
         {
             name: 'Fanatical Focus <i class="skill2">1 Class</i>', description:
@@ -392,7 +392,7 @@ const classAbilities = {
         {
             name: 'Cleaver <i class="skill1">1 Stress</i>', description:
                 `<ul>
-            <li>- If you do more Hits than the Enemy\'s remaining HP, you can send any remaining Hits to another Creature that is close to the original target.</li>
+            <li>- If you do more Hits than the Enemy's remaining <b>HP</b>, you can send any remaining Hits to another Creature that is close to the original target.</li>
     </ul>` }
     ],
 
@@ -500,7 +500,7 @@ const classAbilities = {
     </label></li>
     <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
         <input type="radio" name="performersBoon" value="spell" class="boon-radio">
-        <span>Add +1 Spell Point</span>
+        <span>Add +1 <b>Spell</b> Point</span>
     </label></li>
 </ul>` }
         ,
@@ -624,7 +624,7 @@ const classAbilities = {
             <li><b>Option 1:</b> <i class="skill2">1 Class</i></li>
             <li>- Recover 1 Hit Point or 1 Stress Point or a Poison/Disease.</li>
             <li><b>Option 2:</b> <i class="skill2">2 Class</i></li>
-            <li>- You can roll an attack (this is not your attack action) and on a success, you touch an enemy, roll 1d4 and remove that amount of HP from the target and then touch an ally and they recover the result in HP.</li>
+            <li>- You can roll an attack (this is not your attack action) and on a success, you touch an enemy, roll 1d4 and remove that amount of <b>HP</b> from the target and then touch an ally and they recover the result in <b>HP</b>.</li>
         </ul>` },
         {
             name: 'Spirit Totem <i class="skill1">Stress</i>', description:
@@ -636,7 +636,7 @@ const classAbilities = {
                 <li>- Select 1 ally, they can combine attack with you once this combat.</li>
             <li>- Attacks against you are with <b>Disadvantage</b>.</li>
             <li>- <b>Unicorn:</b> <i class="skill1">1 Stress</i></li>
-                <li>- Heal spells add 1 extra HP to all affected.</li><li>- Advantage on checks to detect creatures.</li>
+                <li>- Heal spells add 1 extra <b>HP</b> to all affected.</li><li>- Advantage on checks to detect creatures.</li>
         </ul>` },
         {
             name: 'Nature\'s Boon', description: `
@@ -793,7 +793,7 @@ const classAbilities = {
             <option>Archer +1 Ranged</option>
             <option>Defender +1 Evasion</option>
             <option>Dual-Wield: Use Off-Hand</option>
-            <option>Two-Handed Crits 19-20</option>
+            <option>Two-Handed (+Crits 19-20, +1 Damage Die)</option>
         </select>
     </ul>` }
     ],
@@ -802,7 +802,7 @@ const classAbilities = {
         {
             name: 'Unarmored Defense', description:
                 `<ul>
-        <li>- Add your initial DEX to Evasion (min +2).</li>
+        <li>- Add your current <b>DEX</b> Mod to Evasion (min +1, max +3).</li>
         <li>- Add your current DEX to your (Lower & Upper) Threshold.</li>
         <li>- Add +2|+2 per level to Threshold.</li>
     </ul>` },
@@ -1150,10 +1150,10 @@ const classAbilities = {
             <li>- The damage will reoccur at the start of the creature\'s turn unless it succeeds a CON Save.</li><hr class="m-2">
         <li>- <b>Tier 3</b> <i>(Level 8-9)</i></li>
             <li>- Use 3 Stress Points to create poison.</li>
-            <li>- Use 2 Class Points to roll 1d4 on an Attack and add that number to reduce a creatures HP by the result.</li><hr class="m-2">
+            <li>- Use 2 Class Points to roll 1d4 on an Attack and add that number to reduce a creatures <b>HP</b> by the result.</li><hr class="m-2">
         <li>- <b>Tier 4</b> <i>(Level 10)</i></li>
             <li>- Use 4 Stress Points to create poison.</li>
-            <li>- Use 3 Class Points to roll 1d4 on an Attack and add that number to reduce a creatures HP by the result.</li>
+            <li>- Use 3 Class Points to roll 1d4 on an Attack and add that number to reduce a creatures <b>HP</b> by the result.</li>
             <li>- The damage repeats at the start of the creature's turn until it succeeds a <b>CON</b> Save.</li><hr class="m-2">
         <li>- <b class="skill3">Creating poison Tier 2 and up will require time to produce decided by the DM.</b></li>
     </ul>` },
@@ -1186,7 +1186,7 @@ const classAbilities = {
         {
             name: 'Font of Magic <i class="skill1">1 Stress</i>', description:
                 `<ul>
-        <li>- Can use one Stress and replace it for a Spell Slot or vice versa.</li>
+        <li>- Can use one Stress and replace it for a <b>Spell</b> Slot or vice versa.</li>
     </ul>` },
         {
             name: 'Meta-Magic <i class="skill1">1 Stress</i> <i>(All meta-magic must be decided before the spell is cast.)</i>', description:
@@ -1221,7 +1221,7 @@ const classAbilities = {
         {
             name: 'Tides of Chaos <i class="skill2">1 Class</i>', description:
                 `<ul>
-        <li>- You can roll your next Spell Attack with Advantage.</li> 
+        <li>- You can roll your next <b>Spell</b> Attack with Advantage.</li> 
         <li>- Regardless of the result, your next spell must be with Disadvantage or the Save with Advantage.</li>
         <li>- There is no limit of time on this ability and will only reset after a spell is cast.</li>
         <li>- When reaching Level 10 you can choose to eliminate this with another Stress Point.</li>
@@ -1229,13 +1229,13 @@ const classAbilities = {
         {
             name: 'Divine Soul <i class="skill2">1 Class</i>', description:
                 `<ul>
-        <li>- Temporarily gain +1 Hit Point, +1 Spell Point.</li>
+        <li>- Temporarily gain +1 Hit Point, +1 <b>Spell</b> Point.</li>
         <li>- Remove after a Long Rest.</li>
     </ul>` },
         {
             name: 'Unearthly Recovery <i class="skill2">2 Class</i>', description:
                 `<ul>
-        <li>- You and only you recover +2 HP and +2 Stress and +2 Spell.</li>
+        <li>- You and only you recover +2 HP and +2 Stress and +2 <b>Spell</b>.</li>
     </ul>` },
         {
             name: 'Telepathic Speech', description:
@@ -1264,7 +1264,7 @@ const classAbilities = {
                 `<ul>
         <li>- Create a physical projection of yourself.</li>
         <li>- The projection cannot be targeted and enhanced with any ability.</li>
-        <li>- It has half your HP and no Stress, Class or Spell points.</li>
+        <li>- It has half your HP and no Stress, Class or <b>Spell</b> points.</li>
         <li><b>Level 1-5</b></li>
             <li>- It can do rudimentary actions, open doors, pull levers.</li>
             <li>- It cannot be more than 1 Distance from you.</li>
@@ -1357,7 +1357,7 @@ const classAbilities = {
     </label></li>
     <li><label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 p-2 rounded">
         <input type="radio" name="pactBoon" value="spell" class="boon-radio">
-        <span>Add +1 Spell Point</span>
+        <span>Add +1 <b>Spell</b> Point</span>
     </label></li>
 </ul>` },
         {
@@ -1373,7 +1373,7 @@ const classAbilities = {
         {
             name: 'Arcane Recovery <i class="skill2">1 Class</i>', description:
                 `<ul>
-    <li>- Recover Spell Points equal to half your SP total rounded up.</li>
+    <li>- Recover <b>Spell</b> Points equal to half your SP total rounded up.</li>
     </ul>
     <button class="arcane-recovery-btn" id="arcaneRecoveryActivateBtn"><i class="fas fa-magic"></i><span>Activate Arcane Recovery</span></button>
     <div id="arcaneRecoveryResultDisplay"></div>` },
@@ -1384,7 +1384,7 @@ const classAbilities = {
         <li>- <b>Lv 1-5:</b> 1 spell | <b>Lv 6-9:</b> 2 spells | <b>Lv 10:</b> 3 spells</li>
         <li>- These spells become Bonus Spells (don\'t count against spell limit).</li>
         <li>- If a spell uses Stress, that cost is removed.</li>
-        <li>- If no Stress cost, the Spell cost is reduced by 1.</li>
+        <li>- If no Stress cost, the <b>Spell</b> cost is reduced by 1.</li>
     </ul>
         <div class="signature-spell-dropdowns mt-3"><div id="signatureSpellSlot1" class="signature-spell-slot mb-2"><label class="text-xs text-gray-500 dark:text-gray-400 mb-1 block">Lv 1+: Signature Spell 1</label>
             <select id="signatureSpellSelect1" class="signature-spell-select w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-purple-500 focus:border-transparent"><option value="">-- Select Signature Spell --</option></select></div>
@@ -1452,8 +1452,8 @@ const classAbilities = {
         <li>A wizard has all spells available to them. However they can only select the number of spells equal to their Level + Casting Modifier.</li>
         <li>- They do not need to memorize spells. Though they can not change their selection.</li>
         <li>- The Spell Save DC is 8 + Casting Modifier.</li>
-        <li>- A Wizard can use Class Points as substitute for Spell Points, but not vice versa.</li>
-        <li>- A Wizard will gain +1 Spell Point each time they level up. </li>
+        <li>- A Wizard can use <b>Class Points</b> as substitute for <b>Spell Points</b>, but not vice versa.</li>
+        <li>- A Wizard will gain +1 <b>Spell</b> Point each time they level up. </li>
     </ul>` }
     ]
 };
@@ -1468,10 +1468,10 @@ const universalAbilities = [
     {
         name: 'Crimson Rite <i class="skill3">Special</i>', description:
             `<ul> 
-    <li>- Use your HP to enhance yourself. <i>(Select 1 from below.)</i></li>
-    <li>- Add a bonus "to Hit" equal to the HP you used.</li>
-    <li>- Add extra damage dice equal to the HP you used.</li>
-    <li>- Gain Advantage to Divine Rolls (Req. <b>2HP</b>)</li>
+    <li>- Use your <b>HP</b> to enhance yourself. <i>(Select 1 from below.)</i></li>
+    <li>- Add a bonus to <b>Attack</b> equal to the <b>HP</b> you used.</li>
+    <li>- Add extra <b>Damage</b> dice equal to the <b>HP</b> you used.</li>
+    <li>- Gain <b>Advantage</b> to Divine Rolls (Req. <b>2HP</b>)</li>
 </ul>` },
     {
         name: 'Expertise', description:
@@ -1509,7 +1509,7 @@ const universalAbilities = [
         name: 'Off-Hand Weapon', description:
             `<ul>
     <li>- Gain the use of fighting with your off-hand and the features of the off-hand weapon.</li>
-    <li>- Add the damage dice to your total damage on any successful Attack roll.</li>
+    <li>- Add the damage dice to your total damage on any successful <b>Attack</b> roll.</li>
 </ul>` },
     {
         name: 'Retaliation <i class="skill1">1 Stress</i>', description:
@@ -1520,17 +1520,17 @@ const universalAbilities = [
     {
         name: 'Tactician <i class="skill3">Special</i>', description:
             `<ul>
-    <li>- When an ally Attacks, and you choose to join in a combined Attack.</li>
+    <li>- When an ally Attacks, and you choose to join in a combined <b>Attack</b>k.</li>
     <li>- The <b>Stress</b> you use is reduced by...</li>
     <li><b>Level 1-5:</b> -1 Stress.</li>
     <li><b>Level 6-10:</b> -2 Stress.</li>
-    <li><i>Note: A combined Attack without Tactician requires 4 Stress.</i></li>
+    <li><i>Note: A combined <b>Attack</b> without Tactician requires <b>4 Stress</b>.</i></li>
 </ul>` },
     {
         name: 'Valiant Aid <i class="skill2">1 Class</i>', description:
             `<ul>
     <li>- You can give an ally in close range <b>Advantage</b> on their next roll.</li>
-    <li>- Alternatively, if the target has <b>Disadvantage</b> they now make a straight normal roll.</li>
+    <li>- If the target has <b>Disadvantage</b> they now make a straight normal roll.</li>
 </ul>` }
 ];
 
@@ -2140,6 +2140,15 @@ function handleAbilityCheckboxChange(checkbox) {
     saveClassAbilitiesSelection();
     // Update checkbox states after any change
     updateAbilityCheckboxStates();
+
+    // Special handling for Unarmored Defense ability (Barbarian/Monk)
+    if (currentCharacter && (currentCharacter.class === 'Barbarian' || currentCharacter.class === 'Monk')) {
+        const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+        if (ability && ability.name.toLowerCase().includes('unarmored defense')) {
+            handleUnarmoredDefenseAbilityToggle(checkbox.checked);
+        }
+    }
+
 
     // ADD THIS LINE: Update DC Save display when abilities change
     if (currentCharacter) {
@@ -4686,16 +4695,32 @@ function executeShortRest() {
         }
     });
 
+    // Companion Short Rest recovery
+    restoreCompanionResource(currentCharacter, 'hp', 2);
+    restoreCompanionResource(currentCharacter, 'stress', 2);
+
+    // Refresh companion UI
+    updateCompanionDisplay(currentCharacter);
+    updateCompanionEffectsDisplay(currentCharacter);
+
+
+    // 🔥 Companion reset for Short Rest
+    resetCompanionShortRest(currentCharacter);
+    updateCompanionDisplay(currentCharacter);
+    updateCompanionEffectsDisplay(currentCharacter);
+
     // Save and refresh
     saveCharacters();
     populateCharacterSheet(currentCharacter);
-    updateCharacterDisplay(); // Update character cards
+    updateCharacterDisplay();
 
     // Close modal
     document.getElementById('restModal').classList.add('hidden');
 
-    showCustomDialog('Short Rest Complete', `${currentCharacter.name} has rested and restored ${pointsToRestore} points for the selected resources.`);
+    showCustomDialog('Short Rest Complete',
+        `${currentCharacter.name} has rested and restored ${pointsToRestore} points for the selected resources.`);
 }
+
 
 function executeLongRest() {
     if (!currentCharacter || restSelectedResources.length === 0) {
@@ -4712,77 +4737,85 @@ function executeLongRest() {
         }
     });
 
-    // ALWAYS REMOVE ALL TEMPORARY BONUSES DURING LONG REST (regardless of selection)
-
-    // Remove ALL temporary resource points from ALL resources and clean up used boxes
+    // Remove ALL temporary bonuses
     if (currentCharacter.resources) {
         ['hp', 'stress', 'class', 'spell'].forEach(resourceType => {
             if (currentCharacter.resources[resourceType]) {
                 const resource = currentCharacter.resources[resourceType];
-                // Remove temporary points
                 resource.temp = 0;
-                // Clean up any used boxes that are now beyond the permanent maximum
                 resource.used = resource.used.filter(index => index < resource.max);
             }
         });
     }
 
-    // Remove temporary armor slots
     if (currentCharacter.armorSlots) {
         currentCharacter.armorSlots.temporary = 0;
         currentCharacter.armorSlots.total = currentCharacter.armorSlots.permanent;
-        // Remove filled states that are now beyond the total
-        currentCharacter.armorSlots.filled = currentCharacter.armorSlots.filled.filter(index => index < currentCharacter.armorSlots.total);
+        currentCharacter.armorSlots.filled =
+            currentCharacter.armorSlots.filled.filter(index => index < currentCharacter.armorSlots.total);
     }
 
-    // Remove all temporary threshold values
     if (currentCharacter.tempThreshold) {
         currentCharacter.tempThreshold = { lower: 0, upper: 0 };
     }
 
-    // Remove all temporary evasion values (for both normal and unarmored defense modes)
     if (currentCharacter.normalEvasionData) {
         currentCharacter.normalEvasionData.temporary = 0;
     }
     if (currentCharacter.unarmoredDefenseEvasionData) {
         currentCharacter.unarmoredDefenseEvasionData.temporary = 0;
     }
-    // Also handle legacy evasionData structure
     if (currentCharacter.evasionData) {
         currentCharacter.evasionData.temporary = 0;
     }
 
-    // Disable Mage Armor during long rest
     if (currentCharacter.mageArmorActive) {
         removeMageArmorBonuses();
         currentCharacter.mageArmorActive = false;
 
-        // Update the checkbox in the UI
         const mageArmorCheckbox = document.getElementById('mageArmorToggle');
         if (mageArmorCheckbox) {
             mageArmorCheckbox.checked = false;
         }
     }
 
-    // Recalculate current evasion based on active mode
     updateCharacterEvasion();
 
-    // Reset Relentless (re-enable the button)
     resetRelentlessOnLongRest();
+    resetSpellSequencerOnLongRest();
 
-    // Reset Spell Sequencer (re-enable the button)
-    resetSpellSequencerOnLongRest()
+    // Companion Long Rest recovery
+    const fullRestore = Math.random() < 0.5 ? 'hp' : 'stress';
+    const partialRestore = fullRestore === 'hp' ? 'stress' : 'hp';
+
+    // Fully restore one resource
+    restoreAllCompanionResource(currentCharacter, fullRestore);
+
+    // Roll 1d4 for the other
+    const d4 = Math.floor(Math.random() * 4) + 1;
+    restoreCompanionResource(currentCharacter, partialRestore, d4);
+
+    // Refresh companion UI
+    updateCompanionDisplay(currentCharacter);
+    updateCompanionEffectsDisplay(currentCharacter);
+
+    // 🔥 Companion reset for Long Rest
+    resetCompanionLongRest(currentCharacter);
+    updateCompanionDisplay(currentCharacter);
+    updateCompanionEffectsDisplay(currentCharacter);
 
     // Save and refresh
     saveCharacters();
     populateCharacterSheet(currentCharacter);
-    updateCharacterDisplay(); // Update character cards
+    updateCharacterDisplay();
 
     // Close modal
     document.getElementById('restModal').classList.add('hidden');
 
-    showCustomDialog('Long Rest Complete', `${currentCharacter.name} has taken a long rest and fully restored the selected resources. All temporary bonuses have been removed.`);
+    showCustomDialog('Long Rest Complete',
+        `${currentCharacter.name} has taken a long rest and fully restored the selected resources. All temporary bonuses have been removed.`);
 }
+
 
 function restoreResourceBoxes(resourceType, pointsToRestore) {
     if (!currentCharacter.resources || !currentCharacter.resources[resourceType]) return;
@@ -5285,7 +5318,20 @@ function applyWeaponBonuses(bonuses, weaponType) {
 
         // Update the actual character stat
         if (stat === 'evasion') {
-            currentCharacter[stat] = (currentCharacter[stat] || 0) + bonus;
+            // Track weapon evasion separately in evasionData
+             if (!currentCharacter.evasionData) {
+                 currentCharacter.evasionData = {
+                     base: currentCharacter.evasion || 0,
+                     temporary: 0,
+                     unarmoredDefense: 0,
+                     mageArmor: 0,
+                     fightingStyle: 0,
+                     weapons: 0
+                 };
+             }
+             currentCharacter.evasionData.weapons = (currentCharacter.evasionData.weapons || 0) + bonus;
+             // Update the main evasion value
+             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) + bonus;
             // AUTOMATICALLY ADD ARMOR SLOTS when armor increases
@@ -5317,6 +5363,9 @@ function applyWeaponBonuses(bonuses, weaponType) {
             currentCharacter[abilityBonusProperty][stat] = bonus;
         }
     });
+
+     // Recalculate Unarmored Defense evasion if DEX changed (for Barbarian/Monk)
+     recalculateUnarmoredDefenseEvasion();
 
     // Refresh the character sheet display
     populateCharacterSheet(currentCharacter);
@@ -5351,7 +5400,9 @@ function applyArmorBonuses(bonuses) {
 
         // Update the actual character stat
         if (stat === 'evasion') {
-            currentCharacter[stat] = (currentCharacter[stat] || 0) + bonus;
+            // Armor evasion is handled by getArmorEvasionValue() in getCurrentEvasion()
+             // Just update the main evasion value to reflect the new total
+             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) + bonus;
             // AUTOMATICALLY ADD ARMOR SLOTS when armor increases
@@ -5397,7 +5448,12 @@ function removeWeaponBonuses(bonuses, weaponType) {
 
         // Remove the actual bonus from character stat
         if (stat === 'evasion') {
-            currentCharacter[stat] = (currentCharacter[stat] || 0) - bonus;
+            // Remove weapon evasion from evasionData
+             if (currentCharacter.evasionData) {
+                 currentCharacter.evasionData.weapons = (currentCharacter.evasionData.weapons || 0) - bonus;
+             }
+             // Update the main evasion value
+             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) - bonus;
             // AUTOMATICALLY REMOVE ARMOR SLOTS when armor decreases
@@ -5435,6 +5491,9 @@ function removeWeaponBonuses(bonuses, weaponType) {
         currentCharacter[abilityBonusProperty] = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     }
 
+        // Recalculate Unarmored Defense evasion if DEX changed (for Barbarian/Monk)
+    recalculateUnarmoredDefenseEvasion();
+
     // Refresh the character sheet display
     populateCharacterSheet(currentCharacter);
 }
@@ -5448,7 +5507,10 @@ function removeArmorBonuses(bonuses) {
 
         // Remove the actual bonus from character stat
         if (stat === 'evasion') {
-            currentCharacter[stat] = (currentCharacter[stat] || 0) - bonus;
+            // Armor evasion is handled by getArmorEvasionValue() in getCurrentEvasion()
+             // The evasion will be recalculated by the caller AFTER armorItem is deleted
+             // Don't update evasion here - it would still include the armor bonus
+             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) - bonus;
             // AUTOMATICALLY REMOVE ARMOR SLOTS when armor decreases
@@ -5486,11 +5548,12 @@ function removeArmorBonuses(bonuses) {
         currentCharacter.armorAbilityBonuses = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     }
 
-    // Re-enable Unarmored Defense if character was using it before
-    if ((currentCharacter.class === 'Barbarian' || currentCharacter.class === 'Monk')) {
-        // Auto-enable Unarmored Defense when armor is removed
-        currentCharacter.unarmoredDefenseActive = true;
-        applyUnarmoredDefenseBonuses();
+    // DO NOT auto-enable Unarmored Defense when armor is removed
+     // The player must manually check the UD toggle if they want UD active
+     // Just update the checkbox state to reflect current status
+     const udCheckbox = document.getElementById('unarmoredDefenseToggle');
+     if (udCheckbox) {
+         udCheckbox.checked = currentCharacter.unarmoredDefenseActive || false;
     }
 
     // Refresh the character sheet display (this will update Unarmored Defense display)
@@ -5666,16 +5729,22 @@ function removeWeapon() {
         // Check if this is Unarmored Defense armor
         const isUnarmoredDefenseArmor = currentCharacter.armorItem.isUnarmoredDefense;
 
-        // Remove armor bonuses
+        // Remove armor bonuses (except evasion which is recalculated after armorItem is deleted)
         removeArmorBonuses(currentCharacter.armorItem.bonuses);
 
         // Remove armor from character
         delete currentCharacter.armorItem;
 
+        // Recalculate evasion now that armorItem is deleted
+         currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+
         // If it was Unarmored Defense armor, also uncheck the checkbox and update status
         if (isUnarmoredDefenseArmor) {
-            currentCharacter.unarmoredDefenseActive = false;
-            currentCharacter.evasion = currentCharacter.normalEvasion;
+            // Recalculate evasion without UD bonus
+             if (currentCharacter.evasionData) {
+                 currentCharacter.evasionData.unarmoredDefense = 0;
+             }
+             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
 
             // Update the checkbox in the UI
             const checkbox = document.getElementById('unarmoredDefenseToggle');
@@ -7157,8 +7226,8 @@ function populateCharacterSheet(character) {
             thresholdLowerDisplay += currentDex;
             thresholdUpperDisplay += currentDex;
         } else if (character.class === 'Barbarian') {
-            const currentDex = getCurrentDexModifier(character);
-            const currentCon = getCurrentConModifier(character);
+            const currentDex = Math.max(0, getCurrentDexModifier(character));
+            const currentCon = Math.max(0, getCurrentConModifier(character));
             thresholdLowerDisplay += currentDex;
             thresholdUpperDisplay += currentDex + currentCon;
         }
@@ -7279,6 +7348,8 @@ function populateCharacterSheet(character) {
     // Update Coins
     updateAllCoinDisplays();
 
+    updateCompanionDisplay(currentCharacter);          // if not already there
+    updateCompanionEffectsDisplay(currentCharacter);   // this is the key piece
 
 
     // Update DC Save display
@@ -8078,28 +8149,63 @@ function updateCompanionDisplay(character) {
                     </div>
                     
                     <!-- Row 4: Stats -->
-                    <div class="flex justify-between items-center text-xs">
-                        <div class="flex flex-col items-center">
-                            <div class="text-xs font-medium mb-1">Evasion</div>
-                            <div class="text-sm font-medium">${companionData.evasion}</div>
-                        </div>
-                        
-                        <div class="flex flex-col items-center">
-                            <div class="text-xs font-medium mb-1">Mod</div>
-                            <div class="text-sm font-medium">+${companionData.mod}</div>
-                        </div>
-                        
-                        <div class="flex flex-col items-center">
-                            <div class="text-xs font-medium mb-1">Damage</div>
-                            <div class="text-sm font-medium">${companionData.damage}</div>
-                        </div>
-                        
-                        <div class="flex flex-col items-center">
-                            <div class="text-xs font-medium mb-1">Threshold</div>
-                            <div class="text-sm font-medium">${companionData.thresholdLower} / ${companionData.thresholdUpper}</div>
-                        </div>
-                    </div>
+<div class="flex justify-between items-center text-xs">
+
+    <div class="flex flex-col items-center">
+        <div class="text-xs font-medium mb-1">Evasion</div>
+        <div class="text-sm font-medium">${companionData.evasion}</div>
+    </div>
+
+    <div class="flex flex-col items-center">
+        <div class="text-xs font-medium mb-1">Mod</div>
+        <div class="text-sm font-medium">+${companionData.mod}</div>
+    </div>
+
+    <div class="flex flex-col items-center">
+        <button class="threshold-damage-button mt-2" id="companionDamageButton"
+            title="Roll Companion Damage">
+            <div class="threshold-label">DAMAGE</div>
+            <div class="threshold-hp">Roll ${companionData.damage}</div>
+        </button>
+    </div>
+
+    <div class="flex flex-col items-center">
+        <div class="text-xs font-medium mb-1">Threshold</div>
+        <div class="text-sm font-medium">${companionData.thresholdLower} / ${companionData.thresholdUpper}</div>
+    </div>
+
+</div>
+
+        <!-- Row 5: Companion Abilities -->
+<div class="grid grid-cols-2 gap-2 mt-4 text-xs">
+
+    <button id="companionEyeGougeBtn"
+        class="px-2 py-1 bg-transparent border border-red-500 text-white rounded hover:bg-red-600">
+        Eye Gouge<br><span class="text-[10px]">(1 Stress)</span>
+    </button>
+
+    <button id="companionRendBtn"
+        class="px-2 py-1 bg-transparent border border-yellow-500 text-white rounded hover:bg-yellow-600">
+        Rend<br><span class="text-[10px]">(1 Stress)</span>
+    </button>
+
+    <button id="companionDefenderBtn"
+        class="px-2 py-1 bg-transparent border border-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed">
+        Defender<br><span class="text-[10px]">(1 Stress)</span>
+    </button>
+
+    <button id="companionSentinelBtn"
+        class="px-2 py-1 bg-transparent border border-purple-500 text-white rounded hover:bg-purple-600 disabled:opacity-40 disabled:cursor-not-allowed">
+        Sentinel<br><span class="text-[10px]">(2 Stress)</span>
+    </button>
+
+</div>
+
                 `;
+        const defenderBtn = document.getElementById('companionDefenderBtn'); if (defenderBtn) defenderBtn.disabled = character.defenderActive === true;
+        const sentinelBtn = document.getElementById('companionSentinelBtn');
+        if (sentinelBtn) sentinelBtn.disabled = character.sentinelActive === true;
+
 
         // Now populate the HP and Stress boxes in their new containers
         const hpContainer = document.getElementById('companionHpBoxes');
@@ -8135,7 +8241,267 @@ function updateCompanionDisplay(character) {
     } else {
         companionSection.style.display = 'none';
     }
+    // Attach damage roll handler
+    const dmgBtn = document.getElementById('companionDamageButton');
+    if (dmgBtn) {
+        dmgBtn.addEventListener('click', () => rollCompanionDamage(character));
+    }
+
+    // Attach ability button handlers
+    document.getElementById('companionDefenderBtn')?.addEventListener('click', () => useCompanionDefender(character));
+    document.getElementById('companionEyeGougeBtn')?.addEventListener('click', () => useCompanionEyeGouge(character));
+    document.getElementById('companionRendBtn')?.addEventListener('click', () => useCompanionRend(character));
+    document.getElementById('companionSentinelBtn')?.addEventListener('click', () => useCompanionSentinel(character));
+
 }
+
+function useCompanionDefender(character) {
+    if (!character || !character.companion) return;
+    if (!spendCompanionStress(character, 1)) return;
+
+    character.defenderActive = true;
+
+    let appliedTempBonus = false;
+
+    // Prefer your structured evasion system if it exists
+    if (character.normalEvasionData) {
+        character.normalEvasionData.temporary = (character.normalEvasionData.temporary || 0) + 1;
+        appliedTempBonus = true;
+    }
+
+    if (character.unarmoredDefenseEvasionData) {
+        // If you want Defender to apply when unarmored is active too,
+        // you can also bump this. If that double-counts, comment this out.
+        character.unarmoredDefenseEvasionData.temporary =
+            (character.unarmoredDefenseEvasionData.temporary || 0) + 1;
+        appliedTempBonus = true;
+    }
+
+    if (character.evasionData) {
+        character.evasionData.temporary = (character.evasionData.temporary || 0) + 1;
+        appliedTempBonus = true;
+    }
+
+    // Fallback: if none of the evasionData structures exist, bump evasion directly
+    if (!appliedTempBonus && typeof character.evasion === 'number') {
+        character.evasion = character.evasion + 1;
+    }
+
+    // Recalculate if your system uses this
+    if (typeof updateCharacterEvasion === 'function') {
+        updateCharacterEvasion();
+    }
+
+    saveCharacters();
+    updateCharacterDisplay();
+    updateCompanionDisplay(character);
+    updateCompanionEffectsDisplay(character);
+
+    // Disable until next Short Rest 
+    const btn = document.getElementById('companionDefenderBtn'); if (btn) btn.disabled = true;
+
+    showCustomDialog(
+        "Defender Activated",
+        "Your companion protects you! +1 Evasion until your next Short Rest."
+    );
+}
+
+
+function useCompanionEyeGouge(character) {
+    if (!spendCompanionStress(character, 1)) return;
+
+    saveCharacters();
+    updateCharacterDisplay();
+    updateCompanionDisplay(character)
+
+    showCustomDialog("Eye Gouge Used", "Your companion blinds the target until the start of your next turn.");
+}
+function useCompanionRend(character) {
+    if (!spendCompanionStress(character, 1)) return;
+
+    character.rendActive = true;
+
+    saveCharacters();
+    updateCharacterDisplay();
+    updateCompanionDisplay(character)
+
+    showCustomDialog("Rend Activated", "Your companion will roll +1 extra damage die on its next attack.");
+}
+function useCompanionSentinel(character) {
+    if (!spendCompanionStress(character, 2)) return;
+
+    character.sentinelActive = true;
+
+    saveCharacters();
+    updateCharacterDisplay();
+    updateCompanionDisplay(character)
+    updateCompanionEffectsDisplay(character);
+
+    // Disable until next Long Rest 
+    const btn = document.getElementById('companionSentinelBtn'); if (btn) btn.disabled = true;
+
+    showCustomDialog("Sentinel Activated", "You gain Advantage on Initiative until your next Long Rest.");
+}
+function updateSentinelDisplay() {
+    const sentinelBanner = document.getElementById('sentinelBanner');
+
+    if (!sentinelBanner) return;
+
+    if (currentCharacter.sentinelActive) {
+        sentinelBanner.style.display = 'block';
+        sentinelBanner.textContent = "Sentinel Active: Advantage on Initiative";
+    } else {
+        sentinelBanner.style.display = 'none';
+    }
+}
+function updateCompanionEffectsDisplay(character = currentCharacter) {
+    const section = document.getElementById('companionEffectsSheetSection');
+    const desc = document.getElementById('companionEffectsDescription');
+
+    if (!section || !desc) return;
+
+    // Always reset first
+    section.style.display = "none";
+    desc.innerHTML = "";
+
+    // Guard: require a valid Ranger with a companion
+    if (!character || character.class !== 'Ranger' || !character.companion) {
+        return;
+    }
+
+    let effects = [];
+
+    if (character.defenderActive) {
+        effects.push("Defender: +1 Evasion (until next Short Rest)");
+    }
+
+    if (character.rendActive) {
+        effects.push("Rend: Next attack deals +1 damage die");
+    }
+
+    if (character.sentinelActive) {
+        effects.push("Sentinel: Advantage on Initiative (until next Long Rest)");
+    }
+
+    if (effects.length === 0) {
+        return; // stays hidden from the reset above
+    }
+
+    section.style.display = "block";
+    desc.innerHTML = effects.join("<br>");
+}
+
+function spendCompanionStress(character, amount) {
+    const used = character.companion.stressUsed || [];
+    const max = getScaledCompanionStats(character.companion.type, character.level).stress;
+
+    if (used.length + amount > max) {
+        showCustomDialog("Not Enough Stress", "Your companion does not have enough Stress to use this ability.");
+        return false;
+    }
+
+    for (let i = 0; i < amount; i++) {
+        used.push(used.length); // mark next box as used
+    }
+
+    character.companion.stressUsed = used;
+
+    return true;
+}
+function rollCompanionDamage(character) {
+    const data = getScaledCompanionStats(character.companion.type, character.level);
+    const die = data.damage.replace('d', '');
+
+    let diceCount = 1;
+
+    if (character.rendActive) {
+        diceCount += 1;
+        character.rendActive = false; // consume the buff
+    }
+
+    let rolls = [];
+    for (let i = 0; i < diceCount; i++) {
+        rolls.push(Math.floor(Math.random() * die) + 1);
+    }
+
+    const total = rolls.reduce((a, b) => a + b, 0);
+
+    saveCharacters();
+    updateCharacterDisplay();
+
+    showCustomDialog("Companion Damage Roll", `Rolled ${diceCount}d${die}: ${rolls.join(' + ')} = ${total}`);
+}
+function resetCompanionShortRest(character) {
+    if (!character) return;
+
+    character.defenderActive = false;
+    character.rendActive = false;
+
+    // Clear temporary evasion bonuses safely
+    if (character.normalEvasionData) {
+        character.normalEvasionData.temporary = 0;
+    }
+    if (character.unarmoredDefenseEvasionData) {
+        character.unarmoredDefenseEvasionData.temporary = 0;
+    }
+    if (character.evasionData) {
+        character.evasionData.temporary = 0;
+    }
+
+    if (typeof updateCharacterEvasion === 'function') {
+        updateCharacterEvasion();
+    }
+
+    saveCharacters();
+    updateCharacterDisplay();
+    updateCompanionDisplay(character);
+    updateCompanionEffectsDisplay(character);
+
+    // Re-enable Defender button 
+    const btn = document.getElementById('companionDefenderBtn'); if (btn) btn.disabled = false;
+}
+
+
+
+function resetCompanionLongRest(character) {
+    character.defenderActive = false;
+    character.rendActive = false;
+    character.sentinelActive = false;
+    character.evasion = character.normalEvasion;
+
+    updateCompanionEffectsDisplay(character);
+    saveCharacters();
+    updateCharacterDisplay();
+    updateCompanionEffectsDisplay(character);
+
+    // Re-enable Sentinel button
+    const btn = document.getElementById('companionSentinelBtn'); if (btn) btn.disabled = false;
+
+}
+function restoreCompanionResource(character, resource, amount) {
+    if (!character?.companion) return;
+
+    const type = resource === 'hp' ? 'hpUsed' : 'stressUsed';
+    const used = character.companion[type] || [];
+
+    // Remove last N used boxes
+    for (let i = 0; i < amount; i++) {
+        used.pop();
+    }
+
+    character.companion[type] = used;
+}
+function restoreAllCompanionResource(character, resource) {
+    if (!character?.companion) return;
+
+    const stats = getScaledCompanionStats(character.companion.type, character.level);
+    const max = resource === 'hp' ? stats.hp : stats.stress;
+
+    const type = resource === 'hp' ? 'hpUsed' : 'stressUsed';
+    character.companion[type] = []; // all restored
+}
+
+
 
 // Enhanced showCustomDialog to support callbacks
 function showCustomDialog(title, message, onConfirm = null) {
@@ -8249,14 +8615,17 @@ document.getElementById('characterForm').addEventListener('submit', function (e)
     const characterClass = document.getElementById('charClass').value;
     const normalEvasion = parseInt(document.getElementById('evasion').value);
 
-    // Calculate Unarmored Defense evasion for Barbarian and Monk
+    // Calculate Unarmored Defense evasion for Barbarian and Monk on Creation.
     let unarmoredDefenseEvasion = normalEvasion;
     let hasUnarmoredDefense = false;
 
     if (characterClass === 'Barbarian' || characterClass === 'Monk') {
         hasUnarmoredDefense = true;
+        // Calculate initial DEX mod for Unarmored Defense evasion bonus (min +1, max +3)
         const initialDexMod = selectedModifiers.dex + (abilityScoreAllocations.dex || 0);
-        unarmoredDefenseEvasion = normalEvasion + initialDexMod;
+       // Clamp between 1 and 4 
+       const evasionBonus = Math.min(4, Math.max(1, initialDexMod));
+         unarmoredDefenseEvasion = normalEvasion + evasionBonus;
     }
 
     // Handle familiar data for Wizard and Warlock
@@ -8308,7 +8677,7 @@ document.getElementById('characterForm').addEventListener('submit', function (e)
         abilityScoreAllocations: { ...abilityScoreAllocations },
         // Store initial modifiers for Unarmored Defense (including racial bonuses)
         initialModifiers: {
-            dex: selectedModifiers.dex + (abilityScoreAllocations.dex || 2),
+            dex: (selectedModifiers.dex + (abilityScoreAllocations.dex || 0)) + 1,
             con: selectedModifiers.con + (abilityScoreAllocations.con || 0)
         },
         hpMax: parseInt(document.getElementById('hpMax').value),
@@ -9111,7 +9480,8 @@ function getCurrentEvasion(character) {
             temporary: 0,
             unarmoredDefense: 0,
             mageArmor: 0,
-            fightingStyle: 0
+            fightingStyle: 0,
+            weapons: 0
         };
     }
 
@@ -9122,7 +9492,9 @@ function getCurrentEvasion(character) {
     const fightingStyleEvasion = character.evasionData.fightingStyle || getDefenderEvasionBonus(character);
     const armorEvasion = getArmorEvasionValue(character);
 
-    return baseEvasion + tempEvasion + unarmoredDefenseEvasion + mageArmorEvasion + fightingStyleEvasion + armorEvasion;
+    const weaponEvasion = character.evasionData.weapons || 0;
+ 
+     return baseEvasion + tempEvasion + unarmoredDefenseEvasion + mageArmorEvasion + fightingStyleEvasion + armorEvasion + weaponEvasion;
 }
 
 function calculateTotalEvasion(character) {
@@ -9252,31 +9624,6 @@ function adjustBaseEvasion(amount) {
 
     document.getElementById('evasionModal').classList.add('hidden');
 }
-
-/*function resetTempEvasion() {
-    if (!currentCharacter) return;
-    
-    // Initialize evasion data if missing
-    if (!currentCharacter.evasionData) {
-        currentCharacter.evasionData = {
-            base: currentCharacter.evasion || 0,
-            temporary: 0,
-            unarmoredDefense: 0,
-            mageArmor: 0
-        };
-    }
-    
-    // Reset temporary evasion only
-    currentCharacter.evasionData.temporary = 0;
-    
-    // Update the character's main evasion value
-    currentCharacter.evasion = getCurrentEvasion(currentCharacter);
-    
-    saveCharacters();
-    populateCharacterSheet(currentCharacter);
-    
-    document.getElementById('evasionModal').classList.add('hidden');
-}*/
 
 // Helper function to calculate effective threshold values (including Unarmored Defense)
 function getEffectiveThresholdValues(character) {
@@ -11381,31 +11728,32 @@ function parseDamageString(damageString) {
     return parsedTypes;
 }
 
-// Roll a specific damage type with proficiency
 function rollDamageType(damageType, proficiency, weaponType = 'primary') {
-    // Calculate base dice
     let totalDice = damageType.numDice * proficiency;
 
-    // Add Dual-Wield extra dice for secondary weapon attacks
+    // Dual-Wield bonus dice
     let dualWieldBonus = 0;
     if (weaponType === 'secondary' && currentCharacter) {
         dualWieldBonus = getDualWieldExtraDice(currentCharacter);
         totalDice += dualWieldBonus;
     }
 
-    // Get Two-Handed damage bonus per die
-    const twoHandedBonus = weaponType === 'primary' && currentCharacter ? getTwoHandedDamageBonus(currentCharacter) : 0;
+    // Two-Handed bonus per die (but applied separately, not baked into rolls)
+    const perDieBonus = (weaponType === 'primary' && currentCharacter)
+        ? getTwoHandedDamageBonus(currentCharacter)
+        : 0;
 
     const rolls = [];
     let total = 0;
 
     for (let i = 0; i < totalDice; i++) {
-        let roll = Math.floor(Math.random() * damageType.sides) + 1;
-        // Add Two-Handed +1 bonus per die
-        roll += twoHandedBonus;
+        const roll = Math.floor(Math.random() * damageType.sides) + 1;
         rolls.push(roll);
         total += roll;
     }
+
+    // Total Two-Handed bonus (separate from dice)
+    const twoHandedTotalBonus = perDieBonus * totalDice;
 
     return {
         damageType: damageType.originalText,
@@ -11414,11 +11762,13 @@ function rollDamageType(damageType, proficiency, weaponType = 'primary') {
         proficiency: proficiency,
         baseDice: damageType.numDice,
         rolls: rolls,
-        total: total,
+        total: total,                     // raw total
         dualWieldBonus: dualWieldBonus,
-        twoHandedBonus: twoHandedBonus
+        twoHandedBonus: perDieBonus,      // per die
+        twoHandedTotalBonus: twoHandedTotalBonus // total bonus
     };
 }
+
 
 // Get weapon ability modifier
 function getWeaponAbilityModifier(weapon) {
@@ -11639,9 +11989,7 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
                 ? `<span class="proficiency-indicator text-black dark:text-white">+${result.dualWieldBonus} Dual-Wield dice = ${result.totalDice} dice</span>`
                 : '<span class="proficiency-indicator">(No proficiency)</span>'}
                         </div>
-                        <div class="damage-rolls-display text-lg mb-1">
-                            [${result.rolls.join(', ')}] + ${abilityModifier} mod
-                        </div>
+                        <div class="damage-rolls-display text-lg mb-1"> [${result.rolls.join(', ')}] ${result.twoHandedBonus > 0 ? ` + ${result.twoHandedTotalBonus} Two‑Handed` : ''} + ${abilityModifier} mod </div>
                         <div class="text-sm text-gray-600 dark:text-gray-400">
                             <strong>${result.damageType}: ${secondaryTotalsWithModifier[index]}</strong>
                         </div>
@@ -11655,8 +12003,16 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
         resultsContainer.appendChild(combinedDiv);
 
         // Show combined totals side by side WITH modifiers included
-        const primaryTotals = existingResults.primaryResults.map((r, i) => `${r.damageType}: ${r.total + existingResults.primaryAbilityModifier}`);
-        const secondaryTotals = rollResults.map((r, i) => `${r.damageType}: ${r.total + abilityModifier}`);
+        const primaryTotals = existingResults.primaryResults.map(r => {
+            const final = r.total + (r.twoHandedTotalBonus || 0) + existingResults.primaryAbilityModifier;
+            return `${r.damageType}: ${final}`;
+        });
+
+        const secondaryTotals = rollResults.map(r => {
+            const final = r.total + (r.twoHandedTotalBonus || 0) + abilityModifier;
+            return `${r.damageType}: ${final}`;
+        });
+
 
         totalDisplay.innerHTML = `
             <div class="grid grid-cols-2 gap-4 text-center">
@@ -11692,7 +12048,8 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
     } else {
         // Single weapon results - keep damage types separate but ADD ability modifier
         rollResults.forEach((result, index) => {
-            const finalDamage = result.total + abilityModifier;
+            const finalDamage = result.total + result.twoHandedTotalBonus + abilityModifier;
+
             const resultDiv = document.createElement('div');
             resultDiv.className = 'damage-type-result';
 
@@ -11704,10 +12061,8 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
                         <span class="proficiency-indicator">= ${result.totalDice} dice total</span>
                         ${result.twoHandedBonus > 0 ? '<span class="text-orange-500 dark:text-orange-400 ml-1">🗡️ Two-Handed (+1 per die)</span>' : ''}
                     </div>
-                    <div class="damage-rolls-display text-lg mb-1">
-                        [${result.rolls.join(', ')}] + ${abilityModifier} mod
-                    </div>
-                    <div class="text-sm text-gray-600 dark:text-gray-400">
+                    <div class="damage-rolls-display text-sm mb-1"> [${result.rolls.join(', ')}] ${result.twoHandedBonus > 0 ? ` + ${result.twoHandedTotalBonus} Two‑Handed` : ''} + ${abilityModifier} mod </div>
+                    <div class="text-lg text-gray-600 dark:text-gray-400">
                         <strong>${result.damageType}: ${finalDamage}</strong>
                     </div>
                 `;
@@ -11719,9 +12074,7 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
                         ? `<span class="proficiency-indicator text-purple-600 dark:text-purple-400">⚔️ +${result.dualWieldBonus} Dual-Wield dice = ${result.totalDice} dice</span>`
                         : '<span class="proficiency-indicator">(No proficiency bonus)</span>'}
                     </div>
-                    <div class="damage-rolls-display text-lg mb-1">
-                        [${result.rolls.join(', ')}] + ${abilityModifier} mod
-                    </div>
+                    <div class="damage-rolls-display text-lg mb-1"> [${result.rolls.join(', ')}] ${result.twoHandedBonus > 0 ? ` + ${result.twoHandedTotalBonus} Two‑Handed` : ''} + ${abilityModifier} mod </div>
                     <div class="text-sm text-gray-600 dark:text-gray-400">
                         <strong>${result.damageType}: ${finalDamage}</strong>
                     </div>
@@ -11731,19 +12084,25 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
             resultsContainer.appendChild(resultDiv);
         });
 
-        // Show separate totals WITH ability modifier included
+        // Show separate totals WITH ability modifier AND Two-Handed bonus included
         if (rollResults.length > 1) {
-            const separateTotals = rollResults.map(r => `${r.damageType}: ${r.total + abilityModifier}`);
+            const separateTotals = rollResults.map(r => {
+                const final = r.total + (r.twoHandedTotalBonus || 0) + abilityModifier;
+                return `${r.damageType}: ${final}`;
+            });
+
             totalDisplay.innerHTML = `
-                <div class="text-center">
-                    <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Final Damage Totals</div>
-                    <div class="text-2xl font-bold">${separateTotals.join(' + ')}</div>
-                </div>
-            `;
+        <div class="text-center">
+            <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Final Damage Totals</div>
+            <div class="text-2xl font-bold">${separateTotals.join(' + ')}</div>
+        </div>
+    `;
         } else {
-            const finalTotal = rollResults[0].total + abilityModifier;
+            const r = rollResults[0];
+            const finalTotal = r.total + (r.twoHandedTotalBonus || 0) + abilityModifier;
             totalDisplay.textContent = finalTotal;
         }
+
 
         // Show ability modifier with which ability was used
         const weapon = weaponType === 'primary' ? currentCharacter.primaryWeapon : currentCharacter.secondaryWeapon;
@@ -11785,53 +12144,87 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
     modal.classList.remove('hidden');
 }
 
-// Re-roll weapon damage
 function rerollWeaponDamage() {
     const modal = document.getElementById('weaponDamageModal');
+
     const weaponName = modal.dataset.weaponName;
     const weaponType = modal.dataset.weaponType || 'primary';
-    const rollData = JSON.parse(modal.dataset.rollData);
+
+    const rollData = JSON.parse(modal.dataset.rollData || '[]');            // secondary or last rolled
+    const existingResults = JSON.parse(modal.dataset.existingResults || 'null'); // primary results or null
+
     const abilityModifier = parseInt(modal.dataset.abilityModifier);
 
-    // Get fighting style bonuses for re-roll
-    const twoHandedBonus = weaponType === 'primary' && currentCharacter ? getTwoHandedDamageBonus(currentCharacter) : 0;
-    const dualWieldBonus = weaponType === 'secondary' && currentCharacter ? getDualWieldExtraDice(currentCharacter) : 0;
+    const rerollSet = (dataSet) => {
+        return dataSet.map(data => {
+            const rolls = [];
+            let total = 0;
 
-    // Re-roll all damage types
-    const newRollResults = [];
+            for (let i = 0; i < data.totalDice; i++) {
+                const sides = parseInt(data.diceType.substring(1));
+                const roll = Math.floor(Math.random() * sides) + 1;
+                rolls.push(roll);
+                total += roll;
+            }
 
-    rollData.forEach(data => {
-        const rolls = [];
-        let total = 0;
+            const perDieBonus = data.twoHandedBonus || 0;
+            const twoHandedTotalBonus = perDieBonus * data.totalDice;
 
-        // Use stored totalDice (which already includes Dual-Wield bonus from original roll)
-        for (let i = 0; i < data.totalDice; i++) {
-            const sides = parseInt(data.diceType.substring(1));
-            let roll = Math.floor(Math.random() * sides) + 1;
-            // Apply Two-Handed +1 bonus per die
-            roll += twoHandedBonus;
-            rolls.push(roll);
-            total += roll;
-        }
+            return {
+                ...data,
+                rolls,
+                total,
+                twoHandedBonus: perDieBonus,
+                twoHandedTotalBonus
+            };
+        });
+    };
 
-        const result = {
-            damageType: data.damageType,
-            diceType: data.diceType,
-            totalDice: data.totalDice,
-            proficiency: data.proficiency,
-            baseDice: data.baseDice,
-            rolls: rolls,
-            total: total,
-            dualWieldBonus: data.dualWieldBonus || 0,
-            twoHandedBonus: twoHandedBonus
-        };
+    // CASE 1: Combined view (primary + secondary)
+    if (existingResults) {
+        const newPrimary = rerollSet(existingResults.primaryResults);
+        const newSecondary = rerollSet(rollData);
 
-        newRollResults.push(result);
-    });
+        // Save back into modal
+        modal.dataset.existingResults = JSON.stringify({
+            primaryWeaponName: existingResults.primaryWeaponName,
+            primaryResults: newPrimary,
+            primaryAbilityModifier: existingResults.primaryAbilityModifier
+        });
 
-    // Update the modal with new results
-    showWeaponDamageResults(weaponName, newRollResults, abilityModifier, weaponType);
+        modal.dataset.rollData = JSON.stringify(newSecondary);
+
+        // Re-render combined view
+        showWeaponDamageResults(
+            weaponName,
+            newSecondary,
+            abilityModifier,
+            weaponType,
+            {
+                primaryWeaponName: existingResults.primaryWeaponName,
+                primaryResults: newPrimary,
+                primaryAbilityModifier: existingResults.primaryAbilityModifier
+            }
+        );
+
+        return;
+    }
+
+    // CASE 2: Single weapon view
+    const newRollResults = rerollSet(rollData);
+
+    modal.dataset.rollData = JSON.stringify(newRollResults);
+
+    showWeaponDamageResults(
+        weaponName,
+        newRollResults,
+        abilityModifier,
+        weaponType,
+        null
+    );
 }
+
+
 
 // Roll secondary weapon and add to existing primary results
 function rollSecondaryWeaponDamage() {
@@ -12596,6 +12989,9 @@ document.getElementById('editCharacterForm').addEventListener('submit', function
         currentCharacter.jackOfAllTradesActive = false;
     }
 
+     // Recalculate Unarmored Defense evasion if DEX changed (for Barbarian/Monk)
+     recalculateUnarmoredDefenseEvasion();
+
     // Save changes
     saveCharacters();
     updateCharacterDisplay();
@@ -12630,7 +13026,14 @@ function getCurrentDexModifier(character) {
     const secondaryWeaponAbilityBonuses = character.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const armorAbilityBonuses = character.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
 
-    return (character.dex || 0) + raceAbilityBonuses.dex + primaryWeaponAbilityBonuses.dex + secondaryWeaponAbilityBonuses.dex + armorAbilityBonuses.dex;
+    const totalDex =
+        (character.dex || 0) +
+               raceAbilityBonuses.dex +
+         primaryWeaponAbilityBonuses.dex +
+         secondaryWeaponAbilityBonuses.dex +
+         armorAbilityBonuses.dex;
+
+     return totalDex
 }
 
 function getCurrentConModifier(character) {
@@ -12639,12 +13042,63 @@ function getCurrentConModifier(character) {
     const secondaryWeaponAbilityBonuses = character.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const armorAbilityBonuses = character.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
 
-    return (character.con || 0) + raceAbilityBonuses.con + primaryWeaponAbilityBonuses.con + secondaryWeaponAbilityBonuses.con + armorAbilityBonuses.con;
+    const totalCon =
+        (character.con || 0) +
+        raceAbilityBonuses.con +
+        primaryWeaponAbilityBonuses.con +
+        secondaryWeaponAbilityBonuses.con +
+        armorAbilityBonuses.con;
+
+    return totalCon
 }
+
 
 function getInitialDexModifier(character) {
     return character.initialModifiers?.dex || 0;
 }
+
+ /**
+  * Calculate the Unarmored Defense Evasion bonus based on current DEX modifier.
+  */
+function getUnarmoredDefenseEvasionBonus(character) {
+    const currentDexMod = getCurrentDexModifier(character);
+    //Update here to update Evasion bonus fo UD
+    return Math.min(4, Math.max(1, currentDexMod));
+}
+
+ 
+ /**
+  * Recalculate and update Unarmored Defense evasion bonus when DEX changes.
+  * This should be called when: editing DEX, equipping/unequipping weapons or armor.
+  */
+ function recalculateUnarmoredDefenseEvasion() {
+     if (!currentCharacter) return;
+ 
+     // Only apply for Barbarian and Monk with active Unarmored Defense
+     if (currentCharacter.class !== 'Barbarian' && currentCharacter.class !== 'Monk') return;
+     if (!currentCharacter.unarmoredDefenseActive) return;
+ 
+     // Check if wearing non-ceremonial armor (shouldn't have Unarmored Defense active)
+     if (currentCharacter.armorItem && !currentCharacter.armorItem.isUnarmoredDefense) return;
+ 
+     // Initialize evasion data if missing
+     if (!currentCharacter.evasionData) {
+         currentCharacter.evasionData = {
+             base: currentCharacter.evasion || 0,
+             temporary: 0,
+             unarmoredDefense: 0,
+             mageArmor: 0
+         };
+     }
+ 
+     // Calculate new Unarmored Defense evasion bonus
+     const newBonus = getUnarmoredDefenseEvasionBonus(currentCharacter);
+     currentCharacter.evasionData.unarmoredDefense = newBonus;
+ 
+     // Update character's main evasion value
+     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+ }
+
 
 function handleUnarmoredDefenseToggle(isChecked) {
     if (!currentCharacter) return;
@@ -12724,9 +13178,9 @@ function applyUnarmoredDefenseBonuses() {
         };
     }
 
-    // Add initial DEX modifier to evasion data
-    const initialDexMod = getInitialDexModifier(currentCharacter);
-    currentCharacter.evasionData.unarmoredDefense = initialDexMod;
+            // Calculate Unarmored Defense evasion bonus based on current DEX (min +1, max +3)
+     const evasionBonus = getUnarmoredDefenseEvasionBonus(currentCharacter);
+     currentCharacter.evasionData.unarmoredDefense = evasionBonus;
 
     // Update character's main evasion value
     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
@@ -12868,15 +13322,18 @@ function updateUnarmoredDefenseDisplay() {
     const checkbox = document.getElementById('unarmoredDefenseToggle');
     const description = document.getElementById('unarmoredDefenseDescription');
 
-    // Show section only for Barbarian and Monk
-    if (currentCharacter.class === 'Barbarian' || currentCharacter.class === 'Monk') {
+    // Show section only for Barbarian and Monk AND only if Unarmored Defense ability is selected
+    const isValidClass = currentCharacter.class === 'Barbarian' || currentCharacter.class === 'Monk';
+    const hasAbilitySelected = hasUnarmoredDefenseAbility();
+
+    if (isValidClass && hasAbilitySelected) {
         section.style.display = 'block';
 
         // Set description based on class
         if (currentCharacter.class === 'Monk') {
-            description.textContent = 'Add initial DEX modifier to Evasion and current DEX modifier to Thresholds';
+            description.textContent = 'Add DEX modifier to Evasion and current DEX modifier to Thresholds, +2/+2 per Level.';
         } else if (currentCharacter.class === 'Barbarian') {
-            description.textContent = 'Add initial DEX modifier to Evasion, current DEX to Lower Threshold, DEX+CON to Upper Threshold';
+            description.textContent = 'Add DEX to Evasion, DEX to Lower Threshold, DEX+CON to Upper Threshold, +3/+3 per Level.';
         }
 
         // Always keep checkbox enabled - just reflect current state
@@ -12884,6 +13341,10 @@ function updateUnarmoredDefenseDisplay() {
         checkbox.checked = currentCharacter.unarmoredDefenseActive || false;
     } else {
         section.style.display = 'none';
+        // If ability is deselected, also deactivate unarmored defense
+        if (!hasAbilitySelected && currentCharacter.unarmoredDefenseActive) {
+            handleUnarmoredDefenseToggle(false);
+        }
     }
 }
 
@@ -15050,6 +15511,45 @@ function hasSignatureSpellAbility() {
         currentCharacter.classAbilities.selectedClass.includes(signatureSpellIndex);
 }
 
+// ==================== UNARMORED DEFENSE (BARBARIAN/MONK) ====================
+
+/**
+ * Check if Barbarian or Monk has Unarmored Defense ability selected
+ * @returns {boolean} True if Unarmored Defense ability is selected
+ */
+function hasUnarmoredDefenseAbility() {
+    if (!currentCharacter) return false;
+    if (currentCharacter.class !== 'Barbarian' && currentCharacter.class !== 'Monk') return false;
+    if (!currentCharacter.classAbilities || !currentCharacter.classAbilities.selectedClass) return false;
+
+    const characterClassAbilities = classAbilities[currentCharacter.class] || [];
+    const unarmoredDefenseIndex = characterClassAbilities.findIndex(ability =>
+        ability.name.toLowerCase().includes('unarmored defense')
+    );
+
+    return unarmoredDefenseIndex !== -1 &&
+        currentCharacter.classAbilities.selectedClass.includes(unarmoredDefenseIndex);
+}
+
+/**
+ * Handle the Unarmored Defense ability being toggled on/off
+ * This updates the visibility of the unarmoredDefenseSection
+ * @param {boolean} isEnabled - Whether the ability is being enabled or disabled
+ */
+function handleUnarmoredDefenseAbilityToggle(isEnabled) {
+    if (!currentCharacter) return;
+
+    // Update the display based on ability selection
+    updateUnarmoredDefenseDisplay();
+
+    // If ability is being disabled, also deactivate the toggle if it was active
+    if (!isEnabled && currentCharacter.unarmoredDefenseActive) {
+        handleUnarmoredDefenseToggle(true);
+    }
+
+    saveCharacters();
+}
+
 // ==================== AWAKENED MIND (WIZARD) ====================
 
 /**
@@ -15290,19 +15790,60 @@ function isTwoHandedWeapon(character) {
     if (!character || !character.primaryWeapon) return false;
 
     const weapon = character.primaryWeapon;
-    // Check for two-handed in weapon name or properties
-    const weaponName = weapon.name.toLowerCase();
-    return weaponName.includes('two-handed') ||
-        weaponName.includes('2-handed') ||
-        weaponName.includes('greatsword') ||
-        weaponName.includes('battleaxe') ||
-        weaponName.includes('maul') ||
-        weaponName.includes('halberd') ||
-        weaponName.includes('pike') ||
-        weaponName.includes('glaive') ||
-        weaponName.includes('lance') ||
-        (weapon.hands && weapon.hands === 2);
+
+    // Normalize helper: lowercase + remove non-letters/numbers
+    const normalize = str =>
+        str.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    // 1. Check weapon name (existing behavior, but normalized)
+    const name = normalize(weapon.name);
+
+    const twoHandedNameKeywords = [
+        'twohanded',
+        '2handed',
+        'greatsword',
+        'greataxe',
+        'battleaxe',
+        'maul',
+        'halberd',
+        'pike',
+        'glaive',
+        'lance',
+        'quarterstaff',
+        'longbow',
+        'spear'
+    ];
+
+    if (twoHandedNameKeywords.some(k => name.includes(k))) {
+        return true;
+    }
+
+    // 2. Check weapon.hands property if present
+    if (weapon.hands && weapon.hands === 2) {
+        return true;
+    }
+
+    // 3. SAFETY CHECK: Look inside the feature text
+    // Handles: "2H", "1H/2H", "1H-2H", "two handed", etc.
+    if (weapon.feature) {
+        const feature = normalize(weapon.feature);
+
+        const twoHandedFeatureKeywords = [
+            '2h',
+            '1h2h',
+            'twohanded',
+            'twohand',
+            'twoh'
+        ];
+
+        if (twoHandedFeatureKeywords.some(k => feature.includes(k))) {
+            return true;
+        }
+    }
+
+    return false;
 }
+
 
 /**
  * Get the Archer fighting style attack bonus
@@ -15726,8 +16267,8 @@ function updateSpellSequencerButton() {
     const button = document.createElement('button');
     button.id = 'spellSequencerActivateBtn';
     button.className = `w-full py-1 px-1 rounded-lg font-semibold transition-all duration-200 ${isUsed
-            ? 'bg-gray-400 dark:bg-gray-600 text-gray-600 dark:text-gray-400 cursor-not-allowed'
-            : 'bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl'
+        ? 'bg-gray-400 dark:bg-gray-600 text-gray-600 dark:text-gray-400 cursor-not-allowed'
+        : 'bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl'
         }`;
     button.disabled = isUsed;
     button.innerHTML = `
@@ -16513,10 +17054,10 @@ function updateTokensOfDepartedDisplay() {
         const isFilled = currentCharacter.tokensOfDeparted[i];
         circlesHTML += `
               <button class="token-departed-circle w-5 h-5 rounded-full border-2 transition-all duration-200
-                ${isFilled ? 'bg-purple-600 border-purple-700 dark:bg-purple-400 dark:border-white' 
-                    : 'bg-white border-purple-400 hover:border-purple-600 dark:bg-purple-900 dark:border-white dark:hover:border-purple-300'}"
+                ${isFilled ? 'bg-purple-600 border-purple-700 dark:bg-purple-400 dark:border-white'
+                : 'bg-white border-purple-400 hover:border-purple-600 dark:bg-purple-900 dark:border-white dark:hover:border-purple-300'}"
                 data-token-index="${i}"
-                title="Token ${i + 1}">
+                title="Token ${i}">
             </button>
          `;
     }
