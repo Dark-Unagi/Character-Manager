@@ -3156,27 +3156,7 @@ function updateDCSaveDisplay(character) {
         dcSaveElement.className = getDCSaveStyleClass(character.class);
     }
 }
-/*
-// Optional: Function to get different styling based on class
-function getDCSaveStyleClass(characterClass) {
-    const baseClasses = 'ms-24 h-8 px-4 py-1 font-semibold mb-3 text-white text-sm text-center font-medium rounded-lg';
-    
-    switch(characterClass) {
-        case 'Bard':
-        case 'Paladin':
-        case 'Sorcerer':
-            return `${baseClasses} border-2 border-solid border-pink-900`; // Charisma classes
-        case 'Cleric':
-        case 'Druid':
-        case 'Ranger':
-            return `${baseClasses} border-2 border-solid border-yellow-900`; // Wisdom classes
-        case 'Warlock':
-        case 'Wizard':
-            return `${baseClasses} border-2 border-solid border-purple-900`; // Intelligence classes
-        default:
-            return `${baseClasses} bg-gray-500`; // Default
-    }
-}*/
+
 function getDCSaveStyleClass(characterClass) {
     const baseClasses = 'ms-2 sm:ms-12 md:ms-24 min-h-[2.5rem] px-3 py-2 sm:px-4 sm:py-2 font-semibold mb-3 text-black dark:text-white text-base sm:text-sm text-center rounded-lg whitespace-nowrap max-w-full';
 
@@ -3268,6 +3248,8 @@ function updateSpellCastingDisplay(character) {
     }
 }
 
+
+
 function updateSpellAttackBonus(character) {
     const spellAttackElement = document.getElementById('spellAttackBonus');
     if (!spellAttackElement) return;
@@ -3314,7 +3296,99 @@ function getMaxSpells(character) {
     return 0;
 }
 
+// ====== LANGUAGES SECTION ======
 
+// Open languages modal
+document.getElementById('addLanguage').addEventListener('click', function() {
+    if (!currentCharacter) {
+        showCustomDialog('No Character', 'Please select a character first.');
+        return;
+    }
+    
+    // Reset checkboxes to match current character languages
+    const currentLanguages = currentCharacter.languages || [];
+    document.querySelectorAll('.language-checkbox').forEach(checkbox => {
+        checkbox.checked = currentLanguages.includes(checkbox.value);
+    });
+    
+    document.getElementById('languagesModal').classList.remove('hidden');
+});
+
+// Close languages modal
+document.getElementById('closeLanguagesModal').addEventListener('click', function() {
+    document.getElementById('languagesModal').classList.add('hidden');
+});
+
+document.getElementById('cancelLanguages').addEventListener('click', function() {
+    document.getElementById('languagesModal').classList.add('hidden');
+});
+
+// Close modal when clicking outside
+document.getElementById('languagesModal').addEventListener('click', function(e) {
+    if (e.target.id === 'languagesModal') {
+        document.getElementById('languagesModal').classList.add('hidden');
+    }
+});
+
+// Save languages
+document.getElementById('confirmLanguages').addEventListener('click', function() {
+    if (!currentCharacter) return;
+    
+    // Collect selected languages
+    const selectedLanguages = [];
+    document.querySelectorAll('.language-checkbox:checked').forEach(checkbox => {
+        selectedLanguages.push(checkbox.value);
+    });
+    
+    // Save to character
+    currentCharacter.languages = selectedLanguages;
+    
+    // Update display
+    updateLanguagesDisplay();
+    
+    // Save character
+    saveCharacters();
+    
+    // Close modal
+    document.getElementById('languagesModal').classList.add('hidden');
+});
+
+// Update the languages display
+function updateLanguagesDisplay() {
+    const languagesList = document.getElementById('languagesList');
+    const noLanguagesText = document.getElementById('noLanguagesText');
+    const languages = currentCharacter?.languages || [];
+    
+    // Clear current display (except the "no languages" text)
+    languagesList.querySelectorAll('.language-tag').forEach(tag => tag.remove());
+    
+    if (languages.length === 0) {
+        noLanguagesText.classList.remove('hidden');
+    } else {
+        noLanguagesText.classList.add('hidden');
+        
+        languages.forEach(language => {
+            const tag = document.createElement('span');
+            tag.className = 'language-tag inline-flex items-center px-2 py-1 bg-blue-100 dark:bg-transparent text-blue-800 dark:text-white text-sm rounded';
+            tag.innerHTML = `
+                ${language}
+                <button class="ml-1 text-blue-600 dark:text-blue-300 hover:text-red-500 dark:hover:text-red-400" onclick="removeLanguage('${language}')">
+                    <i class="fas fa-times text-xs"></i>
+                </button>
+            `;
+            languagesList.appendChild(tag);
+        });
+    }
+}
+
+// Remove a language
+function removeLanguage(language) {
+    if (!currentCharacter) return;
+    
+    currentCharacter.languages = (currentCharacter.languages || []).filter(l => l !== language);
+    updateLanguagesDisplay();
+    saveCharacters();
+}
 
 // Combined armor database getter
 function getArmorDatabase(tier = 1) {
@@ -3365,6 +3439,31 @@ function createCustomWeaponEnhanced() {
         if (value !== 0) {
             bonuses.armor = value;
             features.push(`${value > 0 ? '+' : ''}${value} Armor`);
+        }
+    }
+
+    // Attack Bonuses (Attack Bonus, Damage Dice, Damage Bonus)
+    if (document.getElementById('attackBonusesCheck').checked) {
+        const attackBonusValue = parseInt(document.getElementById('attackBonusValue').value) || 0;
+        const damageDiceValue = parseInt(document.getElementById('damageDiceBonusValue').value) || 0;
+        const damageBonusValue = parseInt(document.getElementById('damageBonusValue').value) || 0;
+
+        const attackBonusList = [];
+        if (attackBonusValue !== 0) {
+            bonuses.attackBonus = attackBonusValue;
+            attackBonusList.push(`Attack ${attackBonusValue > 0 ? '+' : ''}${attackBonusValue}`);
+        }
+        if (damageDiceValue !== 0) {
+            bonuses.damageDice = damageDiceValue;
+            attackBonusList.push(`+${damageDiceValue} Damage Dice`);
+        }
+        if (damageBonusValue !== 0) {
+            bonuses.damageBonus = damageBonusValue;
+            attackBonusList.push(`Damage ${damageBonusValue > 0 ? '+' : ''}${damageBonusValue}`);
+        }
+
+        if (attackBonusList.length > 0) {
+            features.push(attackBonusList.join(', '));
         }
     }
 
@@ -3532,6 +3631,26 @@ function createCustomArmor() {
 
         if (abilityBonuses.length > 0) {
             features.push(abilityBonuses.join(', '));
+        }
+    }
+
+    // Attack Bonuses (for magical armor that enhances attacks)
+    if (document.getElementById('armorAttackBonusesCheck').checked) {
+        const attackBonusValue = parseInt(document.getElementById('armorAttackBonusValue').value) || 0;
+        const damageDiceBonusValue = parseInt(document.getElementById('armorDamageDiceBonusValue').value) || 0;
+        const damageBonusValue = parseInt(document.getElementById('armorDamageBonusValue').value) || 0;
+
+        if (attackBonusValue !== 0) {
+            bonuses.attackBonus = attackBonusValue;
+            features.push(`${attackBonusValue > 0 ? '+' : ''}${attackBonusValue} Attack`);
+        }
+        if (damageDiceBonusValue > 0) {
+            bonuses.damageDice = damageDiceBonusValue;
+            features.push(`+${damageDiceBonusValue}d6 Damage`);
+        }
+        if (damageBonusValue !== 0) {
+            bonuses.damageBonus = damageBonusValue;
+            features.push(`${damageBonusValue > 0 ? '+' : ''}${damageBonusValue} Damage`);
         }
     }
 
@@ -3809,6 +3928,17 @@ function clearCustomArmorModal() {
 
     // Hide ability score inputs section
     document.getElementById('armorAbilityScoreBonusInputs').classList.add('hidden');
+
+    // Clear all attack bonus inputs (if they exist)
+    const armorAttackBonusValue = document.getElementById('armorAttackBonusValue');
+    const armorDamageDiceBonusValue = document.getElementById('armorDamageDiceBonusValue');
+    const armorDamageBonusValue = document.getElementById('armorDamageBonusValue');
+    const armorAttackBonusInputs = document.getElementById('armorAttackBonusInputs');
+
+    if (armorAttackBonusValue) armorAttackBonusValue.value = '';
+    if (armorDamageDiceBonusValue) armorDamageDiceBonusValue.value = '';
+    if (armorDamageBonusValue) armorDamageBonusValue.value = '';
+    if (armorAttackBonusInputs) armorAttackBonusInputs.classList.add('hidden');
 }
 
 // ====== EVENT LISTENERS ======
@@ -3922,6 +4052,18 @@ document.addEventListener('change', function (e) {
             textArea.disabled = !checkbox.checked;
             if (!checkbox.checked) {
                 textArea.value = '';
+            }
+        } else if (checkbox.id === 'armorAttackBonusesCheck') {
+            // Handle Attack Bonuses checkbox
+            const inputsContainer = document.getElementById('armorAttackBonusInputs');
+            if (checkbox.checked) {
+                inputsContainer.classList.remove('hidden');
+            } else {
+                inputsContainer.classList.add('hidden');
+                // Clear values when unchecked
+                document.getElementById('armorAttackBonusValue').value = '';
+                document.getElementById('armorDamageDiceBonusValue').value = '';
+                document.getElementById('armorDamageBonusValue').value = '';
             }
         } else {
             // Regular bonuses with single input field
@@ -4900,140 +5042,140 @@ function showLevelUpModal() {
     // Check ability score caps and disable options if needed
     updateLevelUpAbilityOptions();
 
-     // Build the level up bonuses display
-     const levelUpBonuses = generateLevelUpBonusesList();
- 
-     // Set the threshold bonus text (main header) with bonuses list inline
-     thresholdBonusText.innerHTML = `
+    // Build the level up bonuses display
+    const levelUpBonuses = generateLevelUpBonusesList();
+
+    // Set the threshold bonus text (main header) with bonuses list inline
+    thresholdBonusText.innerHTML = `
          <div class="font-semibold mb-2">${currentCharacter.name} Level Up Bonuses:</div>
          <div class="text-xs space-y-0.5" id="levelUpBonusesList">
              ${levelUpBonuses}
          </div>
      `;
- 
-     // Hide the old spell bonus text (now included in bonuses list)
-     spellBonusText.style.display = 'none';
- 
-     modal.classList.remove('hidden');
- }
- 
- /**
-  * Generate the list of level up bonuses based on character class and abilities
-  * @returns {string} HTML string of level up bonuses
-  */
- function generateLevelUpBonusesList() {
-     if (!currentCharacter) return '';
- 
-     const nextLevel = (currentCharacter.level || 1) + 1;
-     const bonuses = [];
- // Use colors that contrast well with green background (green-800/green-200 text context)
-     // 1. Threshold increase (All classes)
-     bonuses.push(`<div class="flex items-center"><span class="text-green-700 dark:text-green-300 mr-1 font-bold">•</span><span class="text-green-800 dark:text-green-200">+1 / +1 Threshold</span></div>`);
- 
-     // 2. Weapon Proficiency (+1, Max 6)
-     const currentProficiency = currentCharacter.weaponProficiency || 1;
-     if (currentProficiency < 6) {
-         bonuses.push(`<div class="flex items-center"><span class="text-green-700 dark:text-green-300 mr-1 font-bold">•</span><span class="text-green-800 dark:text-green-200">+1 Weapon Proficiency (${currentProficiency} → ${currentProficiency + 1})</span></div>`);
+
+    // Hide the old spell bonus text (now included in bonuses list)
+    spellBonusText.style.display = 'none';
+
+    modal.classList.remove('hidden');
+}
+
+/**
+ * Generate the list of level up bonuses based on character class and abilities
+ * @returns {string} HTML string of level up bonuses
+ */
+function generateLevelUpBonusesList() {
+    if (!currentCharacter) return '';
+
+    const nextLevel = (currentCharacter.level || 1) + 1;
+    const bonuses = [];
+    // Use colors that contrast well with green background (green-800/green-200 text context)
+    // 1. Threshold increase (All classes)
+    bonuses.push(`<div class="flex items-center"><span class="text-green-700 dark:text-green-300 mr-1 font-bold">•</span><span class="text-green-800 dark:text-green-200">+1 / +1 Threshold</span></div>`);
+
+    // 2. Weapon Proficiency (+1, Max 6)
+    const currentProficiency = currentCharacter.weaponProficiency || 1;
+    if (currentProficiency < 6) {
+        bonuses.push(`<div class="flex items-center"><span class="text-green-700 dark:text-green-300 mr-1 font-bold">•</span><span class="text-green-800 dark:text-green-200">+1 Weapon Proficiency (${currentProficiency} → ${currentProficiency + 1})</span></div>`);
     } else {
-         bonuses.push(`<div class="flex items-center"><span class="text-green-600 dark:text-green-400 mr-1">•</span><span class="text-green-600 dark:text-green-400 opacity-60">Weapon Proficiency (Max 6)</span></div>`);
-     }
- 
-     // 3. Spell Point increase (Wizards and Clerics only)
-     if (currentCharacter.class === 'Wizard' || currentCharacter.class === 'Cleric') {
-          bonuses.push(`<div class="flex items-center"><span class="text-purple-700 dark:text-purple-300 mr-1 font-bold">•</span><span class="text-purple-800 dark:text-purple-200">+1 Spell Point (Caster Class)</span></div>`);
-     }
- 
-     // 4. Spell Slot (if character has Spell Casting ability selected)
-     if (hasSpellCastingAbility()) {
-          bonuses.push(`<div class="flex items-center"><span class="text-purple-700 dark:text-purple-300 mr-1 font-bold">•</span><span class="text-purple-800 dark:text-purple-200">+1 Spell Slot</span></div>`);
-     }
- 
-     // 5. Ability Selection (All characters)
-     bonuses.push(`<div class="flex items-center"><span class="text-blue-700 dark:text-blue-300 mr-1 font-bold">•</span><span class="text-blue-800 dark:text-blue-200">Select 1 New Ability</span></div>`);
- 
-     // 6. Barbarian extra Threshold (if has Unarmored Defense ability)
-     if (currentCharacter.class === 'Barbarian' && hasUnarmoredDefenseAbility()) {
-          bonuses.push(`<div class="flex items-center"><span class="text-red-600 dark:text-red-400 mr-1 font-bold">•</span><span class="text-red-700 dark:text-red-300">+3 / +3 Threshold (Unarmored Defense)</span></div>`);
-     }
- 
-     // 7. Monk extra Threshold (if has Unarmored Defense ability)
-     if (currentCharacter.class === 'Monk' && hasUnarmoredDefenseAbility()) {
-         bonuses.push(`<div class="flex items-center"><span class="text-amber-600 dark:text-amber-400 mr-1 font-bold">•</span><span class="text-amber-700 dark:text-amber-300">+2 / +2 Threshold (Unarmored Defense)</span></div>`);
-     }
- 
-     // 8. Bard Jack of All Trades bonus (at specific levels)
-     if (currentCharacter.class === 'Bard' && hasJackOfAllTradesAbility()) {
-         const joatBonus = getJackOfAllTradesLevelUpBonus(nextLevel);
-         if (joatBonus) {
-             bonuses.push(`<div class="flex items-center"><span class="text-orange-600 dark:text-orange-400 mr-1 font-bold">•</span><span class="text-orange-700 dark:text-orange-300">${joatBonus}</span></div>`);
-         }
-     }
- 
-     // 9. Druid Wild Beast level up (at specific levels)
-     if (currentCharacter.class === 'Druid' && hasWildBeastAbility()) {
-         const wildBeastUpgrade = getWildBeastLevelUpInfo(nextLevel);
-         if (wildBeastUpgrade) {
-             bonuses.push(`<div class="flex items-center"><span class="text-teal-600 dark:text-teal-400 mr-1 font-bold">•</span><span class="text-teal-700 dark:text-teal-300">${wildBeastUpgrade}</span></div>`);
-         }
-     }
- 
-     return bonuses.join('');
- }
- 
- /**
-  * Get Jack of All Trades bonus info for level up display
-  * @param {number} nextLevel - The level the character is leveling up to
-  * @returns {string|null} Bonus text or null if no change at this level
-  */
- function getJackOfAllTradesLevelUpBonus(nextLevel) {
-     // JoAT bonus increases at levels 5 and 8
-     if (nextLevel === 5) {
-         return 'Jack of All Trades: +1 → +2';
-     } else if (nextLevel === 8) {
-         return 'Jack of All Trades: +2 → +3';
-     }
-     return null;
- }
- 
- /**
-  * Get Wild Beast upgrade info for level up display
-  * @param {number} nextLevel - The level the character is leveling up to
-  * @returns {string|null} Upgrade text or null if no upgrade at this level
-  */
- function getWildBeastLevelUpInfo(nextLevel) {
-     // Wild Beast upgrades at specific levels
-     // Level 1-2: Wild Beast 1
-     // Level 3-4: Wild Beast 2
-     // Level 5-6: Wild Beast 3
-     // Level 7-8: Wild Beast 4
-     // Level 9-10: Wild Beast 5
- 
-     if (nextLevel === 3) {
-         return 'Wild Beast 1 → Wild Beast 2';
-     } else if (nextLevel === 5) {
-         return 'Wild Beast 2 → Wild Beast 3';
-     } else if (nextLevel === 7) {
-         return 'Wild Beast 3 → Wild Beast 4';
-     } else if (nextLevel === 9) {
-         return 'Wild Beast 4 → Wild Beast 5';
-     }
-     return null;
- }
- 
- /**
-  * Check if Bard has Jack of All Trades ability selected
-  * @returns {boolean}
-  */
- function hasJackOfAllTradesAbility() {
-     if (!currentCharacter || currentCharacter.class !== 'Bard') return false;
-     if (!currentCharacter.classAbilities || !currentCharacter.classAbilities.selectedClass) return false;
- 
-     const bardAbilities = classAbilities['Bard'] || [];
-     const joatIndex = bardAbilities.findIndex(ability =>
-         ability.name.toLowerCase().includes('jack of all trades')
-     );
- 
-     return joatIndex !== -1 && currentCharacter.classAbilities.selectedClass.includes(joatIndex);
+        bonuses.push(`<div class="flex items-center"><span class="text-green-600 dark:text-green-400 mr-1">•</span><span class="text-green-600 dark:text-green-400 opacity-60">Weapon Proficiency (Max 6)</span></div>`);
+    }
+
+    // 3. Spell Point increase (Wizards and Clerics only)
+    if (currentCharacter.class === 'Wizard' || currentCharacter.class === 'Cleric') {
+        bonuses.push(`<div class="flex items-center"><span class="text-purple-700 dark:text-purple-300 mr-1 font-bold">•</span><span class="text-purple-800 dark:text-purple-200">+1 Spell Point (Caster Class)</span></div>`);
+    }
+
+    // 4. Spell Slot (if character has Spell Casting ability selected)
+    if (hasSpellCastingAbility()) {
+        bonuses.push(`<div class="flex items-center"><span class="text-purple-700 dark:text-purple-300 mr-1 font-bold">•</span><span class="text-purple-800 dark:text-purple-200">+1 Spell Slot</span></div>`);
+    }
+
+    // 5. Ability Selection (All characters)
+    bonuses.push(`<div class="flex items-center"><span class="text-blue-700 dark:text-blue-300 mr-1 font-bold">•</span><span class="text-blue-800 dark:text-blue-200">Select 1 New Ability</span></div>`);
+
+    // 6. Barbarian extra Threshold (if has Unarmored Defense ability)
+    if (currentCharacter.class === 'Barbarian' && hasUnarmoredDefenseAbility()) {
+        bonuses.push(`<div class="flex items-center"><span class="text-red-600 dark:text-red-400 mr-1 font-bold">•</span><span class="text-red-700 dark:text-red-300">+3 / +3 Threshold (Unarmored Defense)</span></div>`);
+    }
+
+    // 7. Monk extra Threshold (if has Unarmored Defense ability)
+    if (currentCharacter.class === 'Monk' && hasUnarmoredDefenseAbility()) {
+        bonuses.push(`<div class="flex items-center"><span class="text-amber-600 dark:text-amber-400 mr-1 font-bold">•</span><span class="text-amber-700 dark:text-amber-300">+2 / +2 Threshold (Unarmored Defense)</span></div>`);
+    }
+
+    // 8. Bard Jack of All Trades bonus (at specific levels)
+    if (currentCharacter.class === 'Bard' && hasJackOfAllTradesAbility()) {
+        const joatBonus = getJackOfAllTradesLevelUpBonus(nextLevel);
+        if (joatBonus) {
+            bonuses.push(`<div class="flex items-center"><span class="text-orange-600 dark:text-orange-400 mr-1 font-bold">•</span><span class="text-orange-700 dark:text-orange-300">${joatBonus}</span></div>`);
+        }
+    }
+
+    // 9. Druid Wild Beast level up (at specific levels)
+    if (currentCharacter.class === 'Druid' && hasWildBeastAbility()) {
+        const wildBeastUpgrade = getWildBeastLevelUpInfo(nextLevel);
+        if (wildBeastUpgrade) {
+            bonuses.push(`<div class="flex items-center"><span class="text-teal-600 dark:text-teal-400 mr-1 font-bold">•</span><span class="text-teal-700 dark:text-teal-300">${wildBeastUpgrade}</span></div>`);
+        }
+    }
+
+    return bonuses.join('');
+}
+
+/**
+ * Get Jack of All Trades bonus info for level up display
+ * @param {number} nextLevel - The level the character is leveling up to
+ * @returns {string|null} Bonus text or null if no change at this level
+ */
+function getJackOfAllTradesLevelUpBonus(nextLevel) {
+    // JoAT bonus increases at levels 5 and 8
+    if (nextLevel === 5) {
+        return 'Jack of All Trades: +1 → +2';
+    } else if (nextLevel === 8) {
+        return 'Jack of All Trades: +2 → +3';
+    }
+    return null;
+}
+
+/**
+ * Get Wild Beast upgrade info for level up display
+ * @param {number} nextLevel - The level the character is leveling up to
+ * @returns {string|null} Upgrade text or null if no upgrade at this level
+ */
+function getWildBeastLevelUpInfo(nextLevel) {
+    // Wild Beast upgrades at specific levels
+    // Level 1-2: Wild Beast 1
+    // Level 3-4: Wild Beast 2
+    // Level 5-6: Wild Beast 3
+    // Level 7-8: Wild Beast 4
+    // Level 9-10: Wild Beast 5
+
+    if (nextLevel === 3) {
+        return 'Wild Beast 1 → Wild Beast 2';
+    } else if (nextLevel === 5) {
+        return 'Wild Beast 2 → Wild Beast 3';
+    } else if (nextLevel === 7) {
+        return 'Wild Beast 3 → Wild Beast 4';
+    } else if (nextLevel === 9) {
+        return 'Wild Beast 4 → Wild Beast 5';
+    }
+    return null;
+}
+
+/**
+ * Check if Bard has Jack of All Trades ability selected
+ * @returns {boolean}
+ */
+function hasJackOfAllTradesAbility() {
+    if (!currentCharacter || currentCharacter.class !== 'Bard') return false;
+    if (!currentCharacter.classAbilities || !currentCharacter.classAbilities.selectedClass) return false;
+
+    const bardAbilities = classAbilities['Bard'] || [];
+    const joatIndex = bardAbilities.findIndex(ability =>
+        ability.name.toLowerCase().includes('jack of all trades')
+    );
+
+    return joatIndex !== -1 && currentCharacter.classAbilities.selectedClass.includes(joatIndex);
 }
 
 function updateLevelUpAbilityOptions() {
@@ -5238,7 +5380,7 @@ function applyLevelUp() {
     // Close modal
     document.getElementById('levelUpModal').classList.add('hidden');
 
-    
+
     // Show success message
     showCustomDialog('Level Up Complete!', `${currentCharacter.name} is now level ${currentCharacter.level}!`);
 }
@@ -5438,19 +5580,19 @@ function applyWeaponBonuses(bonuses, weaponType) {
         // Update the actual character stat
         if (stat === 'evasion') {
             // Track weapon evasion separately in evasionData
-             if (!currentCharacter.evasionData) {
-                 currentCharacter.evasionData = {
-                     base: currentCharacter.evasion || 0,
-                     temporary: 0,
-                     unarmoredDefense: 0,
-                     mageArmor: 0,
-                     fightingStyle: 0,
-                     weapons: 0
-                 };
-             }
-             currentCharacter.evasionData.weapons = (currentCharacter.evasionData.weapons || 0) + bonus;
-             // Update the main evasion value
-             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+            if (!currentCharacter.evasionData) {
+                currentCharacter.evasionData = {
+                    base: currentCharacter.evasion || 0,
+                    temporary: 0,
+                    unarmoredDefense: 0,
+                    mageArmor: 0,
+                    fightingStyle: 0,
+                    weapons: 0
+                };
+            }
+            currentCharacter.evasionData.weapons = (currentCharacter.evasionData.weapons || 0) + bonus;
+            // Update the main evasion value
+            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) + bonus;
             // AUTOMATICALLY ADD ARMOR SLOTS when armor increases
@@ -5483,8 +5625,8 @@ function applyWeaponBonuses(bonuses, weaponType) {
         }
     });
 
-     // Recalculate Unarmored Defense evasion if DEX changed (for Barbarian/Monk)
-     recalculateUnarmoredDefenseEvasion();
+    // Recalculate Unarmored Defense evasion if DEX changed (for Barbarian/Monk)
+    recalculateUnarmoredDefenseEvasion();
 
     // Refresh the character sheet display
     populateCharacterSheet(currentCharacter);
@@ -5520,8 +5662,8 @@ function applyArmorBonuses(bonuses) {
         // Update the actual character stat
         if (stat === 'evasion') {
             // Armor evasion is handled by getArmorEvasionValue() in getCurrentEvasion()
-             // Just update the main evasion value to reflect the new total
-             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+            // Just update the main evasion value to reflect the new total
+            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) + bonus;
             // AUTOMATICALLY ADD ARMOR SLOTS when armor increases
@@ -5568,11 +5710,11 @@ function removeWeaponBonuses(bonuses, weaponType) {
         // Remove the actual bonus from character stat
         if (stat === 'evasion') {
             // Remove weapon evasion from evasionData
-             if (currentCharacter.evasionData) {
-                 currentCharacter.evasionData.weapons = (currentCharacter.evasionData.weapons || 0) - bonus;
-             }
-             // Update the main evasion value
-             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+            if (currentCharacter.evasionData) {
+                currentCharacter.evasionData.weapons = (currentCharacter.evasionData.weapons || 0) - bonus;
+            }
+            // Update the main evasion value
+            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) - bonus;
             // AUTOMATICALLY REMOVE ARMOR SLOTS when armor decreases
@@ -5610,7 +5752,7 @@ function removeWeaponBonuses(bonuses, weaponType) {
         currentCharacter[abilityBonusProperty] = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     }
 
-        // Recalculate Unarmored Defense evasion if DEX changed (for Barbarian/Monk)
+    // Recalculate Unarmored Defense evasion if DEX changed (for Barbarian/Monk)
     recalculateUnarmoredDefenseEvasion();
 
     // Refresh the character sheet display
@@ -5627,9 +5769,9 @@ function removeArmorBonuses(bonuses) {
         // Remove the actual bonus from character stat
         if (stat === 'evasion') {
             // Armor evasion is handled by getArmorEvasionValue() in getCurrentEvasion()
-             // The evasion will be recalculated by the caller AFTER armorItem is deleted
-             // Don't update evasion here - it would still include the armor bonus
-             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+            // The evasion will be recalculated by the caller AFTER armorItem is deleted
+            // Don't update evasion here - it would still include the armor bonus
+            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) - bonus;
             // AUTOMATICALLY REMOVE ARMOR SLOTS when armor decreases
@@ -5668,11 +5810,11 @@ function removeArmorBonuses(bonuses) {
     }
 
     // DO NOT auto-enable Unarmored Defense when armor is removed
-     // The player must manually check the UD toggle if they want UD active
-     // Just update the checkbox state to reflect current status
-     const udCheckbox = document.getElementById('unarmoredDefenseToggle');
-     if (udCheckbox) {
-         udCheckbox.checked = currentCharacter.unarmoredDefenseActive || false;
+    // The player must manually check the UD toggle if they want UD active
+    // Just update the checkbox state to reflect current status
+    const udCheckbox = document.getElementById('unarmoredDefenseToggle');
+    if (udCheckbox) {
+        udCheckbox.checked = currentCharacter.unarmoredDefenseActive || false;
     }
 
     // Refresh the character sheet display (this will update Unarmored Defense display)
@@ -5855,15 +5997,15 @@ function removeWeapon() {
         delete currentCharacter.armorItem;
 
         // Recalculate evasion now that armorItem is deleted
-         currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+        currentCharacter.evasion = getCurrentEvasion(currentCharacter);
 
         // If it was Unarmored Defense armor, also uncheck the checkbox and update status
         if (isUnarmoredDefenseArmor) {
             // Recalculate evasion without UD bonus
-             if (currentCharacter.evasionData) {
-                 currentCharacter.evasionData.unarmoredDefense = 0;
-             }
-             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+            if (currentCharacter.evasionData) {
+                currentCharacter.evasionData.unarmoredDefense = 0;
+            }
+            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
 
             // Update the checkbox in the UI
             const checkbox = document.getElementById('unarmoredDefenseToggle');
@@ -6201,7 +6343,7 @@ function createRandomCharacter() {
     const thresholdUpperValue = classInfo.thresholdUpper + randomRaceBonusValues.thresholdUpper;
     const evasionValue = randomRaceBonusValues.evasion;
 
-    // Create the character object
+    // Create RANDOM character object
     const character = {
         id: Date.now().toString(),
         name: name,
@@ -6333,6 +6475,7 @@ function updateRaceOptions(selectedRace) {
     raceBonusValues.evasion = race.evasion;
     updateFieldsWithRaceBonuses();
     updateAbilityScoreResults();
+    
 }
 
 function hideRaceOptions() {
@@ -7482,6 +7625,8 @@ function populateCharacterSheet(character) {
 
     // Notes
     document.getElementById('characterNotes').value = character.notes || '';
+    // Languages
+    updateLanguagesDisplay();
     // ADD THIS LINE:
     // Make weapon damage clickable after everything is populated
     setTimeout(() => {
@@ -8742,9 +8887,9 @@ document.getElementById('characterForm').addEventListener('submit', function (e)
         hasUnarmoredDefense = true;
         // Calculate initial DEX mod for Unarmored Defense evasion bonus (min +1, max +3)
         const initialDexMod = selectedModifiers.dex + (abilityScoreAllocations.dex || 0);
-       // Clamp between 1 and 4 
-       const evasionBonus = Math.min(4, Math.max(1, initialDexMod));
-         unarmoredDefenseEvasion = normalEvasion + evasionBonus;
+        // Clamp between 1 and 4 
+        const evasionBonus = Math.min(4, Math.max(1, initialDexMod));
+        unarmoredDefenseEvasion = normalEvasion + evasionBonus;
     }
 
     // Handle familiar data for Wizard and Warlock
@@ -8776,7 +8921,7 @@ document.getElementById('characterForm').addEventListener('submit', function (e)
     if (characterClass === 'Bard' && document.getElementById('hasJackOfAllTrades').checked) {
         jackOfAllTradesActive = true;
     }
-
+// The CHARACTER object
     const character = {
         id: Date.now().toString(),
         name: document.getElementById('charName').value,
@@ -8860,6 +9005,7 @@ document.getElementById('characterForm').addEventListener('submit', function (e)
             selectedClass: [],
             selectedUniversal: []
         },
+        languages: [],
         // Equipment limit setting (default enabled)
         equipmentLimitEnabled: document.getElementById('equipmentLimitEnabled').checked
     };
@@ -9023,6 +9169,17 @@ function clearCustomWeaponModal() {
 
     // Hide ability score inputs section
     document.getElementById('abilityScoreBonusInputs').classList.add('hidden');
+
+    // Clear all attack bonus inputs (if they exist)
+    const attackBonusValue = document.getElementById('attackBonusValue');
+    const damageDiceBonusValue = document.getElementById('damageDiceBonusValue');
+    const damageBonusValue = document.getElementById('damageBonusValue');
+    const attackBonusInputs = document.getElementById('attackBonusInputs');
+
+    if (attackBonusValue) attackBonusValue.value = '';
+    if (damageDiceBonusValue) damageDiceBonusValue.value = '';
+    if (damageBonusValue) damageBonusValue.value = '';
+    if (attackBonusInputs) attackBonusInputs.classList.add('hidden');
 }
 
 // =================================================
@@ -9053,6 +9210,7 @@ document.addEventListener('change', function (e) {
     if (e.target.classList.contains('bonus-checkbox')) {
         const checkbox = e.target;
         const isAbilityScoresBonus = checkbox.id === 'abilityScoresBonus';
+        const isAttackBonusesCheck = checkbox.id === 'attackBonusesCheck';
         const isNotesBonus = checkbox.id === 'notesBonus';
 
         if (isAbilityScoresBonus) {
@@ -9066,6 +9224,21 @@ document.addEventListener('change', function (e) {
                     input.disabled = true;
                     input.value = '';
                 });
+            }
+        } else if (isAttackBonusesCheck) {
+            // Handle Attack Bonuses checkbox - show/hide the attack bonus inputs
+            const inputsContainer = document.getElementById('attackBonusInputs');
+            if (inputsContainer) {
+                if (checkbox.checked) {
+                    inputsContainer.classList.remove('hidden');
+                    inputsContainer.querySelectorAll('input').forEach(input => input.disabled = false);
+                } else {
+                    inputsContainer.classList.add('hidden');
+                    inputsContainer.querySelectorAll('input').forEach(input => {
+                        input.disabled = true;
+                        input.value = '';
+                    });
+                }
             }
         } else if (isNotesBonus) {
             const textArea = document.getElementById('notesBonusValue');
@@ -9612,8 +9785,8 @@ function getCurrentEvasion(character) {
     const armorEvasion = getArmorEvasionValue(character);
 
     const weaponEvasion = character.evasionData.weapons || 0;
- 
-     return baseEvasion + tempEvasion + unarmoredDefenseEvasion + mageArmorEvasion + fightingStyleEvasion + armorEvasion + weaponEvasion;
+
+    return baseEvasion + tempEvasion + unarmoredDefenseEvasion + mageArmorEvasion + fightingStyleEvasion + armorEvasion + weaponEvasion;
 }
 
 function calculateTotalEvasion(character) {
@@ -11696,28 +11869,6 @@ function showDiceRollResult(skillName, roll, modifier, total) {
     document.getElementById('rollTotal').textContent = total;
     document.getElementById('rollBreakdown').textContent = `d20: ${roll} + modifier: ${modifier >= 0 ? '+' : ''}${modifier}`;
 
-    /* // Update result badge based on roll
-     const badge = document.getElementById('rollResultBadge');
-     const resultText = document.getElementById('rollResultText');
-     
-    if (roll === 20) {
-         badge.className = 'inline-block px-4 py-2 rounded-lg bg-gold-500 text-white';
-         badge.style.backgroundColor = '#FFD700';
-         resultText.textContent = 'Critical Success!';
-     } else if (roll === 1) {
-         badge.className = 'inline-block px-4 py-2 rounded-lg bg-red-500 text-white';
-         resultText.textContent = 'Critical Failure!';
-     } else if (total >= 15) {
-         badge.className = 'inline-block px-4 py-2 rounded-lg bg-green-500 text-white';
-         resultText.textContent = 'Great Success!';
-     } else if (total >= 10) {
-         badge.className = 'inline-block px-4 py-2 rounded-lg bg-blue-500 text-white';
-         resultText.textContent = 'Success!';
-     } else {
-         badge.className = 'inline-block px-4 py-2 rounded-lg bg-gray-500 text-white';
-         resultText.textContent = 'Failure';
-     }*/
-
     // Store current roll data for "Roll Again"
     modal.dataset.skillName = skillName;
     modal.dataset.modifier = modifier;
@@ -11847,7 +11998,7 @@ function parseDamageString(damageString) {
     return parsedTypes;
 }
 
-function rollDamageType(damageType, proficiency, weaponType = 'primary') {
+function rollDamageType(damageType, proficiency, weaponType = 'primary', weaponBonuses = null) {
     let totalDice = damageType.numDice * proficiency;
 
     // Dual-Wield bonus dice
@@ -11856,11 +12007,36 @@ function rollDamageType(damageType, proficiency, weaponType = 'primary') {
         dualWieldBonus = getDualWieldExtraDice(currentCharacter);
         totalDice += dualWieldBonus;
     }
+    // Weapon's Damage Dice bonus (adds extra dice)
+    let weaponDamageDiceBonus = 0;
+    if (weaponBonuses && weaponBonuses.damageDice) {
+        weaponDamageDiceBonus = weaponBonuses.damageDice;
+        totalDice += weaponDamageDiceBonus;
+    }
 
     // Two-Handed bonus per die (but applied separately, not baked into rolls)
     const perDieBonus = (weaponType === 'primary' && currentCharacter)
         ? getTwoHandedDamageBonus(currentCharacter)
         : 0;
+
+    // Weapon's Damage Bonus (added to total after rolling)
+    let weaponDamageBonus = 0;
+    if (weaponBonuses && weaponBonuses.damageBonus) {
+        weaponDamageBonus = weaponBonuses.damageBonus;
+    }
+
+    // Armor's Damage Dice bonus (adds extra d6 dice)
+    let armorDamageDiceBonus = 0;
+    if (currentCharacter && currentCharacter.armorItem && currentCharacter.armorItem.bonuses && currentCharacter.armorItem.bonuses.damageDice) {
+        armorDamageDiceBonus = currentCharacter.armorItem.bonuses.damageDice;
+        totalDice += armorDamageDiceBonus;
+    }
+
+    // Armor's Damage Bonus (added to total after rolling)
+    let armorDamageBonus = 0;
+    if (currentCharacter && currentCharacter.armorItem && currentCharacter.armorItem.bonuses && currentCharacter.armorItem.bonuses.damageBonus) {
+        armorDamageBonus = currentCharacter.armorItem.bonuses.damageBonus;
+    }
 
     const rolls = [];
     let total = 0;
@@ -11884,7 +12060,11 @@ function rollDamageType(damageType, proficiency, weaponType = 'primary') {
         total: total,                     // raw total
         dualWieldBonus: dualWieldBonus,
         twoHandedBonus: perDieBonus,      // per die
-        twoHandedTotalBonus: twoHandedTotalBonus // total bonus
+        twoHandedTotalBonus: twoHandedTotalBonus, // total bonus
+        weaponDamageDiceBonus: weaponDamageDiceBonus, // extra dice from weapon
+        weaponDamageBonus: weaponDamageBonus, // flat damage bonus from weapon
+        armorDamageDiceBonus: armorDamageDiceBonus, // extra dice from armor
+        armorDamageBonus: armorDamageBonus // flat damage bonus from armor
     };
 }
 
@@ -11926,6 +12106,81 @@ function getWeaponAbilityModifier(weapon) {
     return highestModifier === -999 ? 0 : highestModifier;
 }
 
+/**
+ * Check if the character is proficient with a weapon based on ability score proficiency.
+ * Returns true if the character has proficiency in ANY of the weapon's trait abilities.
+ * @param {Object} weapon - The weapon object with a trait property (e.g., "STR", "DEX", "STR/DEX")
+ * @returns {boolean} - True if proficient with the weapon, false otherwise
+ */
+function isWeaponProficient(weapon) {
+    if (!currentCharacter || !weapon || !weapon.trait) return false;
+    
+    const proficiencies = currentCharacter.proficiencies || {};
+    
+    // Parse all traits (e.g., "STR", "DEX", "STR/DEX")
+    const traits = weapon.trait.split('/').map(t => t.trim().toLowerCase());
+    
+    // Check if character is proficient in ANY of the weapon's traits
+    return traits.some(trait => proficiencies[trait] === true);
+}
+
+/**
+ * Get the weapon ability modifier, but ONLY from proficient abilities.
+ * If character is not proficient in any of the weapon's traits, returns 0.
+ * If proficient in multiple traits, returns the highest modifier among proficient abilities.
+ * @param {Object} weapon - The weapon object
+ * @returns {number} - The ability modifier (0 if not proficient)
+ */
+function getWeaponAbilityModifierWithProficiency(weapon) {
+    if (!currentCharacter || !weapon.trait) return 0;
+    
+    const proficiencies = currentCharacter.proficiencies || {};
+    
+    // Parse all traits (e.g., "STR", "DEX", "STR/DEX")
+    const traits = weapon.trait.split('/').map(t => t.trim().toLowerCase());
+    
+    const abilityMap = {
+        'str': 'str',
+        'dex': 'dex',
+        'con': 'con',
+        'int': 'int',
+        'wis': 'wis',
+        'cha': 'cha'
+    };
+    
+    let highestModifier = -999;
+    let usedAbility = '';
+    let isProficientWithAny = false;
+    
+    // Check each trait - only consider proficient abilities
+    traits.forEach(trait => {
+        const ability = abilityMap[trait];
+        if (ability && proficiencies[ability] === true) {
+            isProficientWithAny = true;
+            if (currentCharacter.currentAbilityScores) {
+                const modifier = currentCharacter.currentAbilityScores[ability] || 0;
+                if (modifier > highestModifier) {
+                    highestModifier = modifier;
+                    usedAbility = trait.toUpperCase();
+                }
+            }
+        }
+    });
+    
+    // If not proficient with any trait, return 0 (no modifier bonus)
+    if (!isProficientWithAny) {
+        weapon._usedAbilityForDamage = weapon.trait + ' (Not Proficient)';
+        weapon._isNotProficient = true;
+        return 0;
+    }
+    
+    // Store which ability was used for display purposes
+    weapon._usedAbilityForDamage = usedAbility;
+    weapon._isNotProficient = false;
+    
+    return highestModifier === -999 ? 0 : highestModifier;
+}
+
 // Main weapon damage rolling function
 function rollWeaponDamage(weaponType = 'primary') {
     if (!currentCharacter) return;
@@ -11933,21 +12188,41 @@ function rollWeaponDamage(weaponType = 'primary') {
     const weapon = weaponType === 'primary' ? currentCharacter.primaryWeapon : currentCharacter.secondaryWeapon;
     if (!weapon) return;
 
-    // Get proficiency - only for primary weapons
-    const weaponProficiency = weaponType === 'primary' ? (currentCharacter.weaponProficiency || 1) : 1;
+    // Check if character is proficient with this weapon's ability score
+    const isProficient = isWeaponProficient(weapon);
+    
+    // Get proficiency dice count:
+    // - If proficient AND primary weapon: use weapon proficiency circles
+    // - If proficient AND secondary weapon: use 1 (secondary never gets proficiency dice)
+    // - If NOT proficient: always 1 die regardless of weapon slot
+    let weaponProficiency;
+    if (isProficient) {
+        weaponProficiency = weaponType === 'primary' ? (currentCharacter.weaponProficiency || 1) : 1;
+    } else {
+        weaponProficiency = 1; // Not proficient = only 1 die
+    }
 
     // Parse damage string (e.g., "d8", "2d6", "d8/d12")
     const damageTypes = parseDamageString(weapon.damage);
 
-    // Get weapon ability modifier
-    const abilityModifier = getWeaponAbilityModifier(weapon);
+    // Get weapon ability modifier (only if proficient)
+    const abilityModifier = isProficient 
+        ? getWeaponAbilityModifierWithProficiency(weapon) 
+        : 0;
+    
+    // Mark weapon proficiency status for display
+    weapon._isNotProficient = !isProficient;
+
+    // Get weapon bonuses (for damage dice and damage bonus)
+    const weaponBonuses = weapon.bonuses || null;
 
     // Roll dice for each damage type
     const rollResults = [];
 
-
     damageTypes.forEach(damageType => {
-        const result = rollDamageType(damageType, weaponProficiency, weaponType);
+        const result = rollDamageType(damageType, weaponProficiency, weaponType, weaponBonuses);
+        // Add proficiency status to result for display
+        result.isNotProficient = !isProficient;
         rollResults.push(result);
     });
 
@@ -12031,7 +12306,14 @@ function showWeaponSelectionModal() {
     });
 }
 
-// Show weapon damage results in modal
+// ===============================================================
+//  REFACTORED showWeaponDamageResults()
+//  - Modular bonus logic
+//  - Unified display rules
+//  - No duplicated HTML blocks
+//  - Armor bonuses fully supported
+// ===============================================================
+
 function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weaponType = 'primary', existingResults = null) {
     const modal = document.getElementById('weaponDamageModal');
     const title = document.getElementById('weaponDamageTitle');
@@ -12040,98 +12322,174 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
     const modifierDisplay = document.getElementById('weaponModifierDisplay');
     const secondaryBtn = document.getElementById('rollSecondaryWeapon');
 
-    // Set title
-    if (existingResults) {
-        title.textContent = `Primary + Secondary Weapon Damage`;
-    } else {
-        const weaponTypeText = weaponType === 'primary' ? 'Primary' : 'Secondary';
-        title.textContent = `${weaponName} (${weaponTypeText}) Damage Roll`;
+    // ---------------------------------------------------------------
+    //  Helper: Compute final damage for a single damage type
+    // ---------------------------------------------------------------
+    function computeFinalDamage(r, abilityMod) {
+        return (
+            r.total +
+            (r.twoHandedTotalBonus || 0) +
+            abilityMod +
+            (r.weaponDamageBonus || 0) +
+            (r.armorDamageBonus || 0)
+        );
     }
 
-    // Clear and populate results
+
+    // ---------------------------------------------------------------
+    //  Helper: Format dice bonus labels (Two‑Handed, Weapon, Armor, Dual‑Wield)
+    // ---------------------------------------------------------------
+    function formatDiceBonuses(r) {
+        const parts = [];
+
+        if (r.twoHandedBonus > 0)
+            parts.push(`<span class="text-orange-500 dark:text-orange-400 ml-1">+${r.twoHandedBonus} Two‑Handed dice</span>`);
+
+        if (r.weaponDamageDiceBonus > 0)
+            parts.push(`<span class="text-cyan-500 dark:text-cyan-400 ml-1">+${r.weaponDamageDiceBonus} Weapon dice</span>`);
+
+        if (r.armorDamageDiceBonus > 0)
+            parts.push(`<span class="text-orange-500 dark:text-orange-400 ml-1">+${r.armorDamageDiceBonus} Armor dice</span>`);
+
+        if (r.dualWieldBonus > 0)
+            parts.push(`<span class="text-purple-500 dark:text-purple-400 ml-1">+${r.dualWieldBonus} Dual‑Wield dice</span>`);
+
+        return parts.join('');
+    }
+
+    // ---------------------------------------------------------------
+    //  Helper: Format flat bonus text (+weapon, +armor, +mod)
+    // ---------------------------------------------------------------
+    function formatFlatBonuses(r, abilityMod) {
+        const parts = [];
+
+        if (r.weaponDamageBonus)
+            parts.push(`+${r.weaponDamageBonus} weapon`);
+
+        if (r.armorDamageBonus)
+            parts.push(`+${r.armorDamageBonus} armor`);
+
+        parts.push(`${abilityMod >= 0 ? '+' : ''}${abilityMod} mod`);
+
+        return parts.join(' ');
+    }
+
+    // ---------------------------------------------------------------
+    //  Helper: Render a block of damage results (Primary or Secondary)
+    // ---------------------------------------------------------------
+    function renderDamageBlock({ titleText, colorClass, results, abilityMod, isPrimary }) {
+        return `
+            <h4 class="font-semibold text-lg mb-3 ${colorClass}">
+                ${titleText}
+            </h4>
+
+            <div class="grid grid-cols-1 gap-3">
+                ${results.map(r => {
+            const finalDamage = computeFinalDamage(r, abilityMod);
+
+            return `
+                        <div class="damage-type-result">
+                            <div class="font-semibold text-sm mb-2">
+                                ${isPrimary
+                    ? `${r.damageType} × ${r.proficiency} (Proficiency)`
+                    : `${r.damageType}`
+                }
+                                <span class="proficiency-indicator">= ${r.totalDice} dice</span>
+                                ${formatDiceBonuses(r)}
+                            </div>
+
+                            <div class="damage-rolls-display text-lg mb-1">
+                                [${r.rolls.join(', ')}]
+                                ${(r.twoHandedBonus || 0) > 0 ? ` + ${(r.twoHandedTotalBonus || 0)} Two‑Handed` : ''}
+                                ${r.weaponDamageBonus ? ` + ${r.weaponDamageBonus} weapon` : ''}
+                                ${r.armorDamageBonus ? ` + ${r.armorDamageBonus} armor` : ''}
+                                + ${abilityMod} mod
+                            </div>
+
+
+                            <div class="text-sm text-gray-600 dark:text-gray-400">
+                                <strong>${r.damageType}: ${finalDamage}</strong>
+                            </div>
+                        </div>
+                    `;
+        }).join('')}
+            </div>
+        `;
+    }
+
+    // ---------------------------------------------------------------
+    //  SET TITLE
+    // ---------------------------------------------------------------
+    if (existingResults) {
+        // Check proficiency for both weapons
+const primaryWeapon = currentCharacter.primaryWeapon;
+const secondaryWeapon = currentCharacter.secondaryWeapon;
+
+const primaryNotProf = primaryWeapon && primaryWeapon._isNotProficient;
+const secondaryNotProf = secondaryWeapon && secondaryWeapon._isNotProficient;
+
+if (primaryNotProf || secondaryNotProf) {
+    title.innerHTML = `
+        Primary + Secondary Weapon Damage<br>
+        <span class="text-red-500 text-xl font-bold">
+            (Not Proficient) – No Modifier & Damage Die Reduced.
+        </span>
+    `;
+} else {
+    title.textContent = `Primary + Secondary Weapon Damage`;
+}
+
+    } else {
+        const weaponTypeText = weaponType === 'primary' ? 'Primary' : 'Secondary';
+        
+        // Check if weapon is not proficient
+        const weapon = weaponType === 'primary' ? currentCharacter.primaryWeapon : currentCharacter.secondaryWeapon;
+        const isNotProficient = weapon && weapon._isNotProficient;
+        
+        if (isNotProficient) {
+            title.innerHTML = `${weaponName} (${weaponTypeText}) Damage Roll<br><span class="text-red-500 text-xl font-bold">(Not Proficient) - No Modifier & Damage Die Reduced.</span>`;
+        } else {
+            title.textContent = `${weaponName} (${weaponTypeText}) Damage Roll`;
+        }
+    }
+
     resultsContainer.innerHTML = '';
 
-    // Handle combined results (primary + secondary)
+    // ===============================================================
+    //  COMBINED VIEW (Primary + Secondary)
+    // ===============================================================
     if (existingResults) {
         const combinedDiv = document.createElement('div');
         combinedDiv.className = 'space-y-4';
 
-        // Primary weapon results
-        const primaryDiv = document.createElement('div');
-        const primaryTotalsWithModifier = existingResults.primaryResults.map(r => r.total + existingResults.primaryAbilityModifier);
+        // Primary block
+        combinedDiv.innerHTML += renderDamageBlock({
+            titleText: `${existingResults.primaryWeaponName} (Primary)`,
+            colorClass: 'text-blue-600 dark:text-blue-400',
+            results: existingResults.primaryResults,
+            abilityMod: existingResults.primaryAbilityModifier,
+            isPrimary: true
+        });
 
-        // Check for Two-Handed bonus in primary results
-        const twoHandedBonusPrimary = existingResults.primaryResults.length > 0 && existingResults.primaryResults[0].twoHandedBonus ? existingResults.primaryResults[0].twoHandedBonus : 0;
+        // Secondary block
+        combinedDiv.innerHTML += renderDamageBlock({
+            titleText: `${weaponName} (Secondary)`,
+            colorClass: 'text-green-600 dark:text-green-400',
+            results: rollResults,
+            abilityMod: abilityModifier,
+            isPrimary: false
+        });
 
-        primaryDiv.innerHTML = `
-            <h4 class="font-semibold text-lg mb-3 text-blue-600 dark:text-blue-400">
-                ${existingResults.primaryWeaponName} (Primary)
-                ${twoHandedBonusPrimary > 0 ? '<span class="text-sm text-orange-500 dark:text-orange-400 ml-2">🗡️ Two-Handed (+1/die)</span>' : ''}
-            </h4>
-            <div class="grid grid-cols-1 gap-3">
-                ${existingResults.primaryResults.map((result, index) => `
-                    <div class="damage-type-result">
-                        <div class="font-semibold text-sm mb-2">
-                            ${result.damageType} × ${result.proficiency} (Proficiency)
-                            <span class="proficiency-indicator">= ${result.totalDice} dice</span>
-                            ${result.twoHandedBonus > 0 ? '<span class="text-orange-500 dark:text-orange-400 ml-1">(+1 per die)</span>' : ''}
-                        </div>
-                        <div class="damage-rolls-display text-lg mb-1">
-                            [${result.rolls.join(', ')}] + ${existingResults.primaryAbilityModifier} mod
-                        </div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">
-                            <strong>${result.damageType}: ${primaryTotalsWithModifier[index]}</strong>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-
-        // Secondary weapon results
-        const secondaryDiv = document.createElement('div');
-        const secondaryTotalsWithModifier = rollResults.map(r => r.total + abilityModifier);
-
-        // Check for Dual-Wield bonus
-        const dualWieldBonus = rollResults.length > 0 && rollResults[0].dualWieldBonus ? rollResults[0].dualWieldBonus : 0;
-
-        secondaryDiv.innerHTML = `
-            <h4 class="font-semibold text-lg mb-3 text-green-600 dark:text-green-400">
-                ${weaponName} (Secondary)
-                ${dualWieldBonus > 0 ? '<span class="text-sm text-purple-500 dark:text-purple-400 ml-2">⚔️ Dual-Wield</span>' : ''}
-            </h4>
-            <div class="grid grid-cols-1 gap-3">
-                ${rollResults.map((result, index) => `
-                    <div class="damage-type-result">
-                        <div class="font-semibold text-sm mb-2">
-                            ${result.damageType}
-                            ${result.dualWieldBonus > 0
-                ? `<span class="proficiency-indicator text-black dark:text-white">+${result.dualWieldBonus} Dual-Wield dice = ${result.totalDice} dice</span>`
-                : '<span class="proficiency-indicator">(No proficiency)</span>'}
-                        </div>
-                        <div class="damage-rolls-display text-lg mb-1"> [${result.rolls.join(', ')}] ${result.twoHandedBonus > 0 ? ` + ${result.twoHandedTotalBonus} Two‑Handed` : ''} + ${abilityModifier} mod </div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">
-                            <strong>${result.damageType}: ${secondaryTotalsWithModifier[index]}</strong>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-
-        combinedDiv.appendChild(primaryDiv);
-        combinedDiv.appendChild(secondaryDiv);
         resultsContainer.appendChild(combinedDiv);
 
-        // Show combined totals side by side WITH modifiers included
-        const primaryTotals = existingResults.primaryResults.map(r => {
-            const final = r.total + (r.twoHandedTotalBonus || 0) + existingResults.primaryAbilityModifier;
-            return `${r.damageType}: ${final}`;
-        });
+        // Totals
+        const primaryTotals = existingResults.primaryResults.map(r =>
+            `${r.damageType}: ${computeFinalDamage(r, existingResults.primaryAbilityModifier)}`
+        );
 
-        const secondaryTotals = rollResults.map(r => {
-            const final = r.total + (r.twoHandedTotalBonus || 0) + abilityModifier;
-            return `${r.damageType}: ${final}`;
-        });
-
+        const secondaryTotals = rollResults.map(r =>
+            `${r.damageType}: ${computeFinalDamage(r, abilityModifier)}`
+        );
 
         totalDisplay.innerHTML = `
             <div class="grid grid-cols-2 gap-4 text-center">
@@ -12146,92 +12504,62 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
             </div>
         `;
 
-        // Show both ability modifiers with which ability was used
+        // Ability modifiers
         const primaryWeapon = currentCharacter.primaryWeapon;
         const secondaryWeapon = currentCharacter.secondaryWeapon;
 
         modifierDisplay.innerHTML = `
             <div class="grid grid-cols-2 gap-4 text-center text-sm">
                 <div>
-                    <strong>Primary (${primaryWeapon._usedAbilityForDamage || primaryWeapon.trait}):</strong> ${existingResults.primaryAbilityModifier >= 0 ? '+' : ''}${existingResults.primaryAbilityModifier}
+                    <strong>Primary (${primaryWeapon._usedAbilityForDamage || primaryWeapon.trait}):</strong>
+                    ${existingResults.primaryAbilityModifier >= 0 ? '+' : ''}${existingResults.primaryAbilityModifier}
                 </div>
                 <div>
-                    <strong>Secondary (${secondaryWeapon._usedAbilityForDamage || secondaryWeapon.trait}):</strong> ${abilityModifier >= 0 ? '+' : ''}${abilityModifier}
+                    <strong>Secondary (${secondaryWeapon._usedAbilityForDamage || secondaryWeapon.trait}):</strong>
+                    ${abilityModifier >= 0 ? '+' : ''}${abilityModifier}
                 </div>
             </div>
         `;
 
-        // Hide secondary button since both are now shown
         secondaryBtn.classList.add('hidden');
 
     } else {
-        // Single weapon results - keep damage types separate but ADD ability modifier
-        rollResults.forEach((result, index) => {
-            const finalDamage = result.total + result.twoHandedTotalBonus + abilityModifier;
-
-            const resultDiv = document.createElement('div');
-            resultDiv.className = 'damage-type-result';
-
-            // Different display for primary vs secondary weapons
-            if (weaponType === 'primary') {
-                resultDiv.innerHTML = `
-                    <div class="font-semibold text-sm mb-2">
-                        ${result.damageType} × ${result.proficiency} (Proficiency)
-                        <span class="proficiency-indicator">= ${result.totalDice} dice total</span>
-                        ${result.twoHandedBonus > 0 ? '<span class="text-orange-500 dark:text-orange-400 ml-1">🗡️ Two-Handed (+1 per die)</span>' : ''}
-                    </div>
-                    <div class="damage-rolls-display text-sm mb-1"> [${result.rolls.join(', ')}] ${result.twoHandedBonus > 0 ? ` + ${result.twoHandedTotalBonus} Two‑Handed` : ''} + ${abilityModifier} mod </div>
-                    <div class="text-lg text-gray-600 dark:text-gray-400">
-                        <strong>${result.damageType}: ${finalDamage}</strong>
-                    </div>
-                `;
-            } else {
-                resultDiv.innerHTML = `
-                    <div class="font-semibold text-sm mb-2">
-                        ${result.damageType}
-                        ${result.dualWieldBonus > 0
-                        ? `<span class="proficiency-indicator text-purple-600 dark:text-purple-400">⚔️ +${result.dualWieldBonus} Dual-Wield dice = ${result.totalDice} dice</span>`
-                        : '<span class="proficiency-indicator">(No proficiency bonus)</span>'}
-                    </div>
-                    <div class="damage-rolls-display text-lg mb-1"> [${result.rolls.join(', ')}] ${result.twoHandedBonus > 0 ? ` + ${result.twoHandedTotalBonus} Two‑Handed` : ''} + ${abilityModifier} mod </div>
-                    <div class="text-sm text-gray-600 dark:text-gray-400">
-                        <strong>${result.damageType}: ${finalDamage}</strong>
-                    </div>
-                `;
-            }
-
-            resultsContainer.appendChild(resultDiv);
+        // ===============================================================
+        //  SINGLE WEAPON VIEW
+        // ===============================================================
+        resultsContainer.innerHTML = renderDamageBlock({
+            titleText: `${weaponName} (${weaponType === 'primary' ? 'Primary' : 'Secondary'})`,
+            colorClass: weaponType === 'primary'
+                ? 'text-blue-600 dark:text-blue-400'
+                : 'text-green-600 dark:text-green-400',
+            results: rollResults,
+            abilityMod: abilityModifier,
+            isPrimary: weaponType === 'primary'
         });
 
-        // Show separate totals WITH ability modifier AND Two-Handed bonus included
-        if (rollResults.length > 1) {
-            const separateTotals = rollResults.map(r => {
-                const final = r.total + (r.twoHandedTotalBonus || 0) + abilityModifier;
-                return `${r.damageType}: ${final}`;
-            });
+        // Totals
+        const totals = rollResults.map(r =>
+            `${r.damageType}: ${computeFinalDamage(r, abilityModifier)}`
+        );
 
-            totalDisplay.innerHTML = `
-        <div class="text-center">
-            <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Final Damage Totals</div>
-            <div class="text-2xl font-bold">${separateTotals.join(' + ')}</div>
-        </div>
-    `;
-        } else {
-            const r = rollResults[0];
-            const finalTotal = r.total + (r.twoHandedTotalBonus || 0) + abilityModifier;
-            totalDisplay.textContent = finalTotal;
-        }
-
-
-        // Show ability modifier with which ability was used
-        const weapon = weaponType === 'primary' ? currentCharacter.primaryWeapon : currentCharacter.secondaryWeapon;
-        const usedAbility = weapon._usedAbilityForDamage || weapon.trait;
-
-        modifierDisplay.innerHTML = `
-            <strong>Ability Modifier (${usedAbility}):</strong> ${abilityModifier >= 0 ? '+' : ''}${abilityModifier}
+        totalDisplay.innerHTML = `
+            <div class="text-center">
+                <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Final Damage Totals</div>
+                <div class="text-2xl font-bold">${totals.join(' + ')}</div>
+            </div>
         `;
 
-        // Show/hide secondary button based on availability
+        // Ability modifier
+        const weapon = weaponType === 'primary'
+            ? currentCharacter.primaryWeapon
+            : currentCharacter.secondaryWeapon;
+
+        modifierDisplay.innerHTML = `
+            <strong>Ability Modifier (${weapon._usedAbilityForDamage || weapon.trait}):</strong>
+            ${abilityModifier >= 0 ? '+' : ''}${abilityModifier}
+        `;
+
+        // Secondary button
         if (weaponType === 'primary' && currentCharacter.secondaryWeapon) {
             secondaryBtn.classList.remove('hidden');
         } else {
@@ -12239,25 +12567,37 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
         }
     }
 
-    // Store data for re-rolling and secondary rolling
+    // ---------------------------------------------------------------
+    //  Store roll data for rerolls
+    // ---------------------------------------------------------------
     modal.dataset.weaponName = weaponName;
     modal.dataset.weaponType = weaponType;
-    modal.dataset.rollData = JSON.stringify(rollResults.map(r => ({
-        damageType: r.damageType,
-        diceType: r.diceType,
-        totalDice: r.totalDice,
-        proficiency: r.proficiency,
-        baseDice: r.baseDice,
-        rolls: r.rolls,
-        total: r.total,
-        dualWieldBonus: r.dualWieldBonus || 0,
-        twoHandedBonus: r.twoHandedBonus || 0
-    })));
+    modal.dataset.rollData = JSON.stringify(
+        rollResults.map(r => ({
+            damageType: r.damageType,
+            diceType: r.diceType,
+            totalDice: r.totalDice,
+            proficiency: r.proficiency,
+            baseDice: r.baseDice,
+            rolls: r.rolls,
+            total: r.total,
+            dualWieldBonus: r.dualWieldBonus || 0,
+            twoHandedBonus: r.twoHandedBonus || 0,
+            twoHandedTotalBonus: r.twoHandedTotalBonus || 0,
+            weaponDamageDiceBonus: r.weaponDamageDiceBonus || 0,
+            weaponDamageBonus: r.weaponDamageBonus || 0,
+            armorDamageDiceBonus: r.armorDamageDiceBonus || 0,
+            armorDamageBonus: r.armorDamageBonus || 0,
+            isNotProficient: r.isNotProficient || false
+        }))
+    );
+
     modal.dataset.abilityModifier = abilityModifier;
 
-    // Store existing results if this is a combined view
     if (existingResults) {
         modal.dataset.existingResults = JSON.stringify(existingResults);
+    } else {
+        delete modal.dataset.existingResults;
     }
 
     modal.classList.remove('hidden');
@@ -12357,13 +12697,28 @@ function rollSecondaryWeaponDamage() {
     // Roll secondary weapon
     const secondaryWeapon = currentCharacter.secondaryWeapon;
     const secondaryDamageTypes = parseDamageString(secondaryWeapon.damage);
-    const secondaryAbilityModifier = getWeaponAbilityModifier(secondaryWeapon);
+    
+    // Check if character is proficient with secondary weapon's ability score
+    const isSecondaryProficient = isWeaponProficient(secondaryWeapon);
+    
+    // Get modifier only if proficient
+    const secondaryAbilityModifier = isSecondaryProficient 
+        ? getWeaponAbilityModifierWithProficiency(secondaryWeapon) 
+        : 0;
+    
+    // Mark proficiency status for display
+    secondaryWeapon._isNotProficient = !isSecondaryProficient;
 
-    // Roll dice for secondary weapon (no proficiency, but Dual-Wield adds extra dice)
+    // Get secondary weapon bonuses (for damage dice and damage bonus)
+    const secondaryWeaponBonuses = secondaryWeapon.bonuses || null;
+
+    // Roll dice for secondary weapon (1 die base, Dual-Wield may add extra)
+    // Note: Secondary weapons never get weapon proficiency dice, only 1 base die
     const secondaryRollResults = [];
 
     secondaryDamageTypes.forEach(damageType => {
-        const result = rollDamageType(damageType, 1, 'secondary'); // Pass 'secondary' for Dual-Wield bonus
+        const result = rollDamageType(damageType, 1, 'secondary', secondaryWeaponBonuses);
+        result.isNotProficient = !isSecondaryProficient;
         secondaryRollResults.push(result);
     });
 
@@ -12783,6 +13138,8 @@ function rollAttackRoll(attackOption) {
     let abilityModifier = 0;
     let abilityUsed = '';
     let fightingStyleBonus = 0;
+    let weaponAttackBonus = 0; // New: Attack Bonus from weapon bonuses
+    let armorAttackBonus = 0;  // Attack Bonus from armor bonuses
     let hasDisadvantage = false;
     let secondRoll = null;
     let usedRoll = firstRoll;
@@ -12797,16 +13154,37 @@ function rollAttackRoll(attackOption) {
     }
 
     if (attackOption.type === 'weapon') {
-        abilityModifier = getWeaponAbilityModifier(attackOption.weapon);
-        abilityUsed = attackOption.weapon._usedAbilityForDamage || attackOption.weapon.trait;
+        // Check if character is proficient with this weapon's ability score
+        const isProficient = isWeaponProficient(attackOption.weapon);
+        
+        if (isProficient) {
+            // Proficient: Get modifier from proficient abilities only
+            abilityModifier = getWeaponAbilityModifierWithProficiency(attackOption.weapon);
+            abilityUsed = attackOption.weapon._usedAbilityForDamage || attackOption.weapon.trait;
+        } else {
+            // Not proficient: No modifier bonus
+            abilityModifier = 0;
+            abilityUsed = attackOption.weapon.trait + ' (Not Proficient)';
+            attackOption.weapon._isNotProficient = true;
+        }
+        
         fightingStyleBonus = getArcherAttackBonus(currentCharacter);
+        // Get weapon's Attack Bonus from bonuses (if any)
+        if (attackOption.weapon.bonuses && attackOption.weapon.bonuses.attackBonus) {
+            weaponAttackBonus = attackOption.weapon.bonuses.attackBonus;
+        }
+
+        // Get armor's Attack Bonus from bonuses (if any)
+        if (currentCharacter.armorItem && currentCharacter.armorItem.bonuses && currentCharacter.armorItem.bonuses.attackBonus) {
+            armorAttackBonus = currentCharacter.armorItem.bonuses.attackBonus;
+        }
     } else if (attackOption.type === 'spell') {
         const spellAbility = attackOption.ability;
         abilityModifier = currentCharacter.currentAbilityScores[spellAbility] || 0;
         abilityUsed = spellAbility.toUpperCase();
     }
 
-    const totalAttack = usedRoll + abilityModifier + fightingStyleBonus;
+    const totalAttack = usedRoll + abilityModifier + fightingStyleBonus + weaponAttackBonus + armorAttackBonus;
 
     // Note the extra firstRoll argument
     showAttackRollResults(
@@ -12818,7 +13196,9 @@ function rollAttackRoll(attackOption) {
         fightingStyleBonus,
         hasDisadvantage,
         firstRoll,
-        secondRoll
+        secondRoll,
+        weaponAttackBonus,
+        armorAttackBonus
     );
 }
 
@@ -12832,7 +13212,9 @@ function showAttackRollResults(
     fightingStyleBonus = 0,
     hasDisadvantage = false,
     firstRoll = null,
-    secondRoll = null
+    secondRoll = null,
+    weaponAttackBonus = 0,
+    armorAttackBonus = 0
 ) {
     const modal = document.getElementById('attackRollModal');
     const title = document.getElementById('attackRollTitle');
@@ -12846,7 +13228,15 @@ function showAttackRollResults(
     if (hasDisadvantage) {
         titleText += ' (Disadvantage)';
     }
-    title.textContent = titleText;
+    
+    // Check if weapon attack is not proficient
+    const isNotProficient = attackOption.type === 'weapon' && attackOption.weapon && attackOption.weapon._isNotProficient;
+    
+    if (isNotProficient) {
+        title.innerHTML = `${titleText} <br><span class="text-red-500 text-xl font-bold">(Not Proficient) - No Modifier</span>`;
+    } else {
+        title.textContent = titleText;
+    }
     typeDisplay.textContent = attackOption.description;
 
     let breakdownText = '';
@@ -12866,6 +13256,12 @@ function showAttackRollResults(
     if (fightingStyleBonus > 0) {
         breakdownText += ` + Archer: +${fightingStyleBonus}`;
     }
+    if (weaponAttackBonus !== 0) {
+        breakdownText += ` + Weapon: ${weaponAttackBonus >= 0 ? '+' : ''}${weaponAttackBonus}`;
+    }
+    if (armorAttackBonus !== 0) {
+        breakdownText += ` + Armor: ${armorAttackBonus >= 0 ? '+' : ''}${armorAttackBonus}`;
+    }
     breakdownDisplay.textContent = breakdownText;
 
     totalDisplay.textContent = totalAttack;
@@ -12876,6 +13272,9 @@ function showAttackRollResults(
 
     if (fightingStyleBonus > 0) {
         modifierHTML += `<br><strong>Fighting Style (Archer):</strong> +${fightingStyleBonus}`;
+    }
+    if (weaponAttackBonus !== 0) {
+        modifierHTML += `<br><strong>Weapon Attack Bonus:</strong> ${weaponAttackBonus >= 0 ? '+' : ''}${weaponAttackBonus}`;
     }
     if (hasDisadvantage) {
         modifierHTML += `<br><span class="text-red-500 dark:text-red-400">` +
@@ -13108,8 +13507,8 @@ document.getElementById('editCharacterForm').addEventListener('submit', function
         currentCharacter.jackOfAllTradesActive = false;
     }
 
-     // Recalculate Unarmored Defense evasion if DEX changed (for Barbarian/Monk)
-     recalculateUnarmoredDefenseEvasion();
+    // Recalculate Unarmored Defense evasion if DEX changed (for Barbarian/Monk)
+    recalculateUnarmoredDefenseEvasion();
 
     // Save changes
     saveCharacters();
@@ -13147,12 +13546,12 @@ function getCurrentDexModifier(character) {
 
     const totalDex =
         (character.dex || 0) +
-               raceAbilityBonuses.dex +
-         primaryWeaponAbilityBonuses.dex +
-         secondaryWeaponAbilityBonuses.dex +
-         armorAbilityBonuses.dex;
+        raceAbilityBonuses.dex +
+        primaryWeaponAbilityBonuses.dex +
+        secondaryWeaponAbilityBonuses.dex +
+        armorAbilityBonuses.dex;
 
-     return totalDex
+    return totalDex
 }
 
 function getCurrentConModifier(character) {
@@ -13176,47 +13575,47 @@ function getInitialDexModifier(character) {
     return character.initialModifiers?.dex || 0;
 }
 
- /**
-  * Calculate the Unarmored Defense Evasion bonus based on current DEX modifier.
-  */
+/**
+ * Calculate the Unarmored Defense Evasion bonus based on current DEX modifier.
+ */
 function getUnarmoredDefenseEvasionBonus(character) {
     const currentDexMod = getCurrentDexModifier(character);
     //Update here to update Evasion bonus fo UD
     return Math.min(4, Math.max(1, currentDexMod));
 }
 
- 
- /**
-  * Recalculate and update Unarmored Defense evasion bonus when DEX changes.
-  * This should be called when: editing DEX, equipping/unequipping weapons or armor.
-  */
- function recalculateUnarmoredDefenseEvasion() {
-     if (!currentCharacter) return;
- 
-     // Only apply for Barbarian and Monk with active Unarmored Defense
-     if (currentCharacter.class !== 'Barbarian' && currentCharacter.class !== 'Monk') return;
-     if (!currentCharacter.unarmoredDefenseActive) return;
- 
-     // Check if wearing non-ceremonial armor (shouldn't have Unarmored Defense active)
-     if (currentCharacter.armorItem && !currentCharacter.armorItem.isUnarmoredDefense) return;
- 
-     // Initialize evasion data if missing
-     if (!currentCharacter.evasionData) {
-         currentCharacter.evasionData = {
-             base: currentCharacter.evasion || 0,
-             temporary: 0,
-             unarmoredDefense: 0,
-             mageArmor: 0
-         };
-     }
- 
-     // Calculate new Unarmored Defense evasion bonus
-     const newBonus = getUnarmoredDefenseEvasionBonus(currentCharacter);
-     currentCharacter.evasionData.unarmoredDefense = newBonus;
- 
-     // Update character's main evasion value
-     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
- }
+
+/**
+ * Recalculate and update Unarmored Defense evasion bonus when DEX changes.
+ * This should be called when: editing DEX, equipping/unequipping weapons or armor.
+ */
+function recalculateUnarmoredDefenseEvasion() {
+    if (!currentCharacter) return;
+
+    // Only apply for Barbarian and Monk with active Unarmored Defense
+    if (currentCharacter.class !== 'Barbarian' && currentCharacter.class !== 'Monk') return;
+    if (!currentCharacter.unarmoredDefenseActive) return;
+
+    // Check if wearing non-ceremonial armor (shouldn't have Unarmored Defense active)
+    if (currentCharacter.armorItem && !currentCharacter.armorItem.isUnarmoredDefense) return;
+
+    // Initialize evasion data if missing
+    if (!currentCharacter.evasionData) {
+        currentCharacter.evasionData = {
+            base: currentCharacter.evasion || 0,
+            temporary: 0,
+            unarmoredDefense: 0,
+            mageArmor: 0
+        };
+    }
+
+    // Calculate new Unarmored Defense evasion bonus
+    const newBonus = getUnarmoredDefenseEvasionBonus(currentCharacter);
+    currentCharacter.evasionData.unarmoredDefense = newBonus;
+
+    // Update character's main evasion value
+    currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+}
 
 
 function handleUnarmoredDefenseToggle(isChecked) {
@@ -13297,9 +13696,9 @@ function applyUnarmoredDefenseBonuses() {
         };
     }
 
-            // Calculate Unarmored Defense evasion bonus based on current DEX (min +1, max +3)
-     const evasionBonus = getUnarmoredDefenseEvasionBonus(currentCharacter);
-     currentCharacter.evasionData.unarmoredDefense = evasionBonus;
+    // Calculate Unarmored Defense evasion bonus based on current DEX (min +1, max +3)
+    const evasionBonus = getUnarmoredDefenseEvasionBonus(currentCharacter);
+    currentCharacter.evasionData.unarmoredDefense = evasionBonus;
 
     // Update character's main evasion value
     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
@@ -17083,6 +17482,8 @@ function initRangerCompanionIfNeeded() {
         updateCompanionDisplay(currentCharacter);
     }
 }
+
+
 
 // =================================================
 // TOKENS OF THE DEPARTED ABILITY SYSTEM (Warlock)
