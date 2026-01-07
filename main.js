@@ -386,7 +386,7 @@ const classAbilities = {
             name: 'Echo Howl <i class="skill1">1 Stress</i>', description:
                 `<ul>
             <li>- Cause <b>1 Stress</b> to all your enemies in close range.</li>
-            <li>- Each enemy can roll a <b>WIS Save</b>.</li>
+            <li>- Each enemy can roll a <b>Save</b>.</li>
             <li>- For each failed Save, you can select an ally to recover <b>1 Stress</b>.</li>
     </ul>` },
         {
@@ -445,13 +445,13 @@ const classAbilities = {
         {
             name: 'Unsettling Words <i class="skill2">1 Class</i>', description:
                 `<ul>
-        <li>- You can force a creature\'s next roll to be with Disadvantage.</li>
+        <li>- You can force a creature's next roll to be with Disadvantage.</li>
         <li>- They will also take 1 Stress.</li>
     </ul>` },
         {
             name: 'Song of Valor <i class="skill2">1 Class</i>', description:
                 `<ul>
-        <li>- You or an ally can increase their next Attack and the Damage die by +1.</li>
+        <li>- You or an ally can increase their next <b>Attack</b> and the <b>Damage</b> die by +1.</li>
     </ul>` },
         {
             name: 'Silver Tongue <i class="skill2">1 Class</i>', description:
@@ -525,7 +525,7 @@ const classAbilities = {
     <li>Use <b>1 Class</b> point equal to the monster Tier.</li>
         <li>- Create a barrier of Godly energy around you at Close Range that Undead cannot cross. Until the End of Combat.</li>
         <li>- All Undead creatures within Close Range caught in the area on creation must make a Con Save, on a failure they will also take 1 Hit and 1 Stress.</li>
-        <li>- A creature that is forced into the area through your movement. Will make a CON Save at <b>Advantage</b> and take the penalties on a failure.</li>
+        <li>- A creature that is forced into the area through your movement. Will make a Save at <b>Advantage</b> and take the penalties on a failure.</li>
         <li>If they succeed they are no longer restricted by the barrier and take no penalties.</li>
         <li>- A creature that is successfully turned will, not approach or attack you or any ally within close range of you.</li><hr class="m-2">
     <li><b>Level 6: Commune with the Dead</b></li>
@@ -596,8 +596,8 @@ const classAbilities = {
             name: 'Fungal Infestation <i class="skill2">1 Class</i>', description:
                 `<ul>
     <li>- Use fungal spores to infect a creature.</li>
-    <li>- The creature must succeed a CON Save. (Repeat at the end of each turn).</li>
-    <li>- On a fail the creature will Attack, Move or do nothing on it\'s turn (Player\'s Choice.)</li>
+    <li>- The creature must succeed a Save. (Repeat at the end of each turn).</li>
+    <li>- On a fail the creature will Attack, Move or do nothing on it's turn (Player's Choice.)</li>
 </ul>` },
         {
             name: 'Radiant Soul <i class="skill2">1 Class</i>', description:
@@ -617,11 +617,12 @@ const classAbilities = {
                 `<ul>
             <li>- Select yourself or an Ally.</li>
             <li>- Roll 1d4 and remove that amount of Stress or Hit Points, but not both.</li>
-        </ul>` },
+        </ul>
+         <button class="natural-recovery-btn" id="naturalRecoveryActivateBtn"><i class="fas fa-leaf"></i><span>Use Natural Recovery</span></button> `},
         {
             name: 'Healing Hands <i class="skill1">1 Stress</i>', description:
                 `<ul>
-            <li><b>Option 1:</b> <i class="skill2">1 Class</i></li>
+            <li><b>Option 1:</b> <i class="skill2">1 Class</i></li>
             <li>- Recover 1 Hit Point or 1 Stress Point or a Poison/Disease.</li>
             <li><b>Option 2:</b> <i class="skill2">2 Class</i></li>
             <li>- You can roll an attack (this is not your attack action) and on a success, you touch an enemy, roll 1d4 and remove that amount of <b>HP</b> from the target and then touch an ally and they recover the result in <b>HP</b>.</li>
@@ -630,12 +631,12 @@ const classAbilities = {
             name: 'Spirit Totem <i class="skill1">Stress</i>', description:
                 `<ul>
             <li>The Totem will  last Until the end of Combat or the Druid is Unconscious.</li>
-            <li>- <b>Bear:</b> <i class="skill1">1 Stress</i><li>- Add 1 Temp HP to all allies.</li>
+            <li>- <b>Bear:</b> <i class="skill1">1 Stress</i><li>- Add 1 Temp HP to all allies.</li>
                 <li>- You gain +1|+2 to your threshold per level.</li>
-            <li>- <b>Hawk:</b> <i class="skill1">1 Stress</i></li>
+            <li>- <b>Hawk:</b> <i class="skill1">1 Stress</i></li>
                 <li>- Select 1 ally, they can combine attack with you once this combat.</li>
             <li>- Attacks against you are with <b>Disadvantage</b>.</li>
-            <li>- <b>Unicorn:</b> <i class="skill1">1 Stress</i></li>
+            <li>- <b>Unicorn:</b> <i class="skill1">1 Stress</i></li>
                 <li>- Heal spells add 1 extra <b>HP</b> to all affected.</li><li>- Advantage on checks to detect creatures.</li>
         </ul>` },
         {
@@ -708,8 +709,8 @@ const classAbilities = {
             name: 'Rune Carver <i class="skill1">1 Stress</i>', description:
                 `<ul>
         <li>- When you make a successful Attack you can apply one of the below.</li>
-        <li>- <b>Fire:</b> Inflicts the <b>Burning</b> condition. 1d10 Fire damage on this attack and at the start of your next turn. The target can make a <b>CON Save</b>.</li><hr class = "m-1">
-        <li>- <b>Stone:</b> Forces the Enemy to take 1d10 <b>Psychic</b> damage. The target can make a <b>WIS Save</b></li>
+        <li>- <b>Fire:</b> Inflicts the <b>Burning</b> condition. 1d10 Fire damage on this attack and at the start of your next turn. The target can make a <b>Save</b>.</li><hr class = "m-1">
+        <li>- <b>Stone:</b> Forces the Enemy to take 1d10 <b>Psychic</b> damage. The target can make a <b>Save</b></li>
         <li>- On a successful Save the target resists the effects.</li>
     </ul>` },
         {
@@ -778,7 +779,7 @@ const classAbilities = {
         <li>- <b>Sweeping Attack</b> <i class="skill1">1 Stress</i></li>
             <li>- On a successful Attack, select up to 2 more targets in Melee Range and give them 1 Hit.</li>
         <li>- <b>Menacing Attack</b> <i class="skill1">1 Stress</i></li>
-            <li>- Force a WIS Save or they become Frightened of you until the end of your next turn.</li>
+            <li>- Force a Save or they become Frightened of you until the end of your next turn.</li>
     </ul>` },
         {
             name: 'Fighting Style', description:
@@ -839,14 +840,14 @@ const classAbilities = {
                 `<ul>
         <li>- Must use fists. On your next Attack.</li>
         <li>- Make an attempt to stun your enemy.</li>
-        <li>- Target rolls a CON Save. </li>
+        <li>- Target rolls a Save. </li>
         <li>- On a Fail target is stunned for 1d4 rounds. (Rolled by the GM)</li>
     </ul>` },
         {
             name: 'Deflect Missiles <i class="skill2">1 Class</i>', description:
                 `<ul>
         <li>- If a missile attack is directed at you.</li>
-        <li>- Roll a DEX Save</li>
+        <li>- Roll a Save</li>
         <li>- On a Fail reduce the damage by 1 Hit.</li>
         <li>- On a Success reduce the damage by 2 Hits.</li>
     </ul>` },
@@ -927,7 +928,7 @@ const classAbilities = {
     <li>Use <b>2 Class</b> point equal to the monster Tier.</li>
         <li>- Create a barrier of Godly energy around you at Close Range that Undead cannot cross. Until the End of Combat.</li>
         <li>- All Undead creatures within Close Range caught in the area on creation must make a Con Save, on a failure they will also take 1 Hit and 1 Stress.</li>
-        <li>- A creature that is forced into the area through your movement. Will make a CON Save at <b>Advantage</b> and take the penalties on a failure.</li>
+        <li>- A creature that is forced into the area through your movement. Will make a Save at <b>Advantage</b> and take the penalties on a failure.</li>
         <li>If they succeed they are no longer restricted by the barrier and take no penalties.</li>
         <li>- A creature that is successfully turned will, not approach or attack you or any ally within close range of you.</li><hr class="m-2">
     <li><b>Level 6: Commune with the Dead</b></li>
@@ -1147,7 +1148,7 @@ const classAbilities = {
             <li>- Use 1 Class Point to roll 1d4 extra damage.</li><hr class="m-2">
         <li>- <b>Tier 2</b> <i>(Level 6~7)</i></li>  <li>- Use 2 Stress Points to make a stronger poison.</li> 
             <li>- Use 2 Class Points to roll 2d4 extra damage</li>
-            <li>- The damage will reoccur at the start of the creature\'s turn unless it succeeds a CON Save.</li><hr class="m-2">
+            <li>- The damage will reoccur at the start of the creature\'s turn unless it succeeds a Save.</li><hr class="m-2">
         <li>- <b>Tier 3</b> <i>(Level 8-9)</i></li>
             <li>- Use 3 Stress Points to create poison.</li>
             <li>- Use 2 Class Points to roll 1d4 on an Attack and add that number to reduce a creatures <b>HP</b> by the result.</li><hr class="m-2">
@@ -1293,7 +1294,7 @@ const classAbilities = {
             <li><b>1 Class:</b> Add an extra damage die to the damage roll.</li>
             <li><b>Feature:</b> Resistant to peircing damage. (Half Damage).</li><br>
             <li><b>Zombie:</b> <i>Fate</i>, <b>HP:4, Class:2, Stress:1, Mod:+5, Atk:2d8</b></li>
-            <li><b>1 Stress:</b> Cause any creature they are currently attacking to roll a CON Save or take 1 Stress caused by their grotesque nature.</li>
+            <li><b>1 Stress:</b> Cause any creature they are currently attacking to roll a Save or take 1 Stress caused by their grotesque nature.</li>
             <li><b>1 Class:</b> Add an extra damage die to the damage roll.</li>
             <li><b>Feature:</b> Roll Divine Dice on a success they return with 1HP/0 Stress</li>
     </ul>` },
@@ -12495,11 +12496,11 @@ if (primaryNotProf || secondaryNotProf) {
             <div class="grid grid-cols-2 gap-4 text-center">
                 <div>
                     <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Primary Total</div>
-                    <div class="text-2xl font-bold">${primaryTotals.join(' + ')}</div>
+                    <div class="text-2xl font-bold">${primaryTotals.join(' / ')}</div>
                 </div>
                 <div>
                     <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Secondary Total</div>
-                    <div class="text-2xl font-bold">${secondaryTotals.join(' + ')}</div>
+                    <div class="text-2xl font-bold">${secondaryTotals.join(' / ')}</div>
                 </div>
             </div>
         `;
@@ -12545,7 +12546,7 @@ if (primaryNotProf || secondaryNotProf) {
         totalDisplay.innerHTML = `
             <div class="text-center">
                 <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Final Damage Totals</div>
-                <div class="text-2xl font-bold">${totals.join(' + ')}</div>
+                <div class="text-2xl font-bold">${totals.join(' / ')}</div>
             </div>
         `;
 
@@ -14685,17 +14686,79 @@ function getRandomMonster(characterLevel) {
     return monsterDatabase[monsterDatabase.length - 1];
 }
 
-// Roll 1d4 (or 1d4+1 at level 5+) for quantity
+// Roll for monster quantity based on character level
 function rollMonsterQuantity(characterLevel) {
-    const d4Roll = Math.floor(Math.random() * 4) + 1;
-    const bonus = characterLevel >= 6 ? 1 : 0;
-    return d4Roll + bonus;
+    const level = characterLevel || 1;
+ 
+     if (level < 3) {
+         // Level 1-2: 1 Monster Card
+         return 1;
+     } else if (level < 5) {
+         // Level 3-4: 2 Monster Cards
+         return 2;
+     } else if (level < 8) {
+         // Level 5-7: Roll 1d4-1 (min 1)
+         const d4Roll = Math.floor(Math.random() * 4) + 1;
+         return Math.max(1, d4Roll - 1);
+     } else {
+         // Level 8+: Roll 1d4+1 (max 4)
+         const d4Roll = Math.floor(Math.random() * 4) + 1;
+         return Math.min(4, d4Roll + 1);
+     }
+ }
+ 
+ // Get the quantity display text for the banner
+ function getQuantityRollText(characterLevel, quantity) {
+     const level = characterLevel || 1;
+ 
+     if (level < 3) {
+         return `${quantity} (Level 1-2)`;
+     } else if (level < 5) {
+         return `${quantity} (Level 3-4)`;
+     } else if (level < 8) {
+         return `1d4-1 = ${quantity}`;
+     } else {
+         return `1d4+1 = ${quantity}`;
+     }
 }
 
 // Summon monsters
 function summonMonsters() {
     if (!currentCharacter) return;
     if (!hasMightySummoner(currentCharacter)) return;
+
+// Check if we have stress resources available (including temporary)
+     const stressResource = currentCharacter.resources?.stress;
+     if (!stressResource) {
+         console.warn('No stress resource found');
+         return;
+     }
+ 
+     const stressMax = stressResource.max || 0;
+     const stressTemp = stressResource.temp || 0;
+     const stressTotalMax = stressMax + stressTemp;
+     const stressUsed = stressResource.used?.length || 0;
+ 
+     // Check if there's an available stress slot (including temp)
+     if (stressUsed >= stressTotalMax) {
+         // Show warning - no stress available
+         const banner = document.getElementById('summonResultBanner');
+         banner.innerHTML = `<i class="fas fa-exclamation-triangle mr-1"></i> <strong>Cannot summon!</strong> No Stress resources available.`;
+         banner.style.display = 'block';
+         banner.style.backgroundColor = '#dc2626'; // Red background for error
+         setTimeout(() => {
+             banner.style.display = 'none';
+             banner.style.backgroundColor = ''; // Reset
+         }, 5000);
+         return;
+     }
+ 
+     // Consume 1 Stress (add the next index to used array)
+     if (!stressResource.used) {
+         stressResource.used = [];
+     }
+     const nextStressIndex = stressUsed; // The next unused index
+     stressResource.used.push(nextStressIndex);
 
     const level = currentCharacter.level || 1;
     const quantity = rollMonsterQuantity(level);
@@ -14728,9 +14791,9 @@ function summonMonsters() {
 
     // Show result banner
     const banner = document.getElementById('summonResultBanner');
-    const diceRoll = level >= 6 ? `1d4+1 = ${quantity}` : `1d4 = ${quantity}`;
-    banner.innerHTML = `<i class="fas fa-magic mr-1"></i> Summoned ${quantity}x <strong>${monster.name}</strong>! (${diceRoll})`;
-    banner.style.display = 'block';
+    const quantityText = getQuantityRollText(level, quantity);
+     banner.innerHTML = `<i class="fas fa-magic mr-1"></i> Summoned ${quantity}x <strong>${monster.name}</strong>! (${quantityText}) <span class="text-yellow-300">(Cost: 1 Stress)</span>`;  
+        banner.style.display = 'block';
 
     // Hide banner after 5 seconds
     setTimeout(() => {
@@ -14739,6 +14802,7 @@ function summonMonsters() {
 
     // Save and re-render
     saveCharacters();
+    populateSheetResourceBoxes(currentCharacter); // Update stress display
     renderSummonedMonsters(currentCharacter);
 }
 
@@ -14746,6 +14810,7 @@ function summonMonsters() {
 function renderSummonedMonsters(character) {
     const container = document.getElementById('monstersContainer');
     const clearBtn = document.getElementById('clearMonstersBtn');
+    const summonBtn = document.getElementById('summonMonstersBtn');
 
     if (!container) return;
 
@@ -14755,11 +14820,23 @@ function renderSummonedMonsters(character) {
     if (!character.summonedMonsters || character.summonedMonsters.length === 0) {
         container.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 text-sm py-4">No monsters summoned yet. Click "Summon Monsters" to call forth your allies!</div>';
         if (clearBtn) clearBtn.style.display = 'none';
+// Enable summon button when no monsters are summoned
+         if (summonBtn) {
+             summonBtn.disabled = false;
+             summonBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+         }
+
         return;
     }
 
     // Show clear button
     if (clearBtn) clearBtn.style.display = 'block';
+
+// Disable summon button when monsters are already summoned
+     if (summonBtn) {
+         summonBtn.disabled = true;
+         summonBtn.classList.add('opacity-50', 'cursor-not-allowed');
+     }
 
     // Render each monster
     character.summonedMonsters.forEach((monster, index) => {
@@ -14805,8 +14882,10 @@ function createMonsterCard(monster, index) {
                  <div class="monster-stat-value">${monster.mod}</div>
              </div>
              <div>
-                 <div class="monster-stat-label">Damage</div>
-                 <div class="monster-stat-value">${monster.damage}</div>
+                 <button class="monster-damage-btn" data-monster-id="${monster.id}" data-damage="${monster.damage}" data-mod="${monster.mod}" title="Roll ${monster.damage}+${monster.mod} damage">
+                      <div class="monster-stat-label">Damage</div>
+                      <div class="monster-stat-value"><i class="fas fa-dice-d6 mr-1"></i>${monster.damage}</div>
+                  </button>
              </div>
              <div>
                  <div class="monster-stat-label">HP</div>
@@ -14902,15 +14981,76 @@ function clearAllMonsters() {
 document.getElementById('summonMonstersBtn').addEventListener('click', summonMonsters);
 document.getElementById('clearMonstersBtn').addEventListener('click', clearAllMonsters);
 
-// Event delegation for monster resource boxes and dismiss buttons
+// Event delegation for monster resource boxes, dismiss buttons, and damage buttons
 document.getElementById('monstersContainer').addEventListener('click', function (e) {
     if (e.target.closest('.monster-resource-box')) {
         handleMonsterResourceClick(e);
     } else if (e.target.closest('.monster-dismiss')) {
         handleMonsterDismiss(e);
+    } else if (e.target.closest('.monster-damage-btn')) {
+         handleMonsterDamageRoll(e);
     }
 });
 // Note: monstersToggle uses the global toggleSection system via event delegation at line ~6772 // The button ID 'monstersToggle' and content ID 'monstersContent' follow the naming convention
+/**
+ 
+  * Handle monster damage button click - rolls the damage dice and shows result
+  */
+ function handleMonsterDamageRoll(e) {
+     const btn = e.target.closest('.monster-damage-btn');
+     if (!btn) return;
+ 
+     const damageString = btn.dataset.damage; // e.g., "2d6", "1d8", "3d4"
+     const monsterId = parseInt(btn.dataset.monsterId);
+     const monsterMod = parseInt(btn.dataset.mod) || 0;
+ 
+     // Find the monster to get its name
+     let monsterName = 'Monster';
+     if (currentCharacter && currentCharacter.summonedMonsters) {
+         const monster = currentCharacter.summonedMonsters.find(m => m.id === monsterId);
+         if (monster) monsterName = monster.name;
+     }
+ 
+     // Parse the damage string (e.g., "2d6" -> count=2, die=6)
+     const match = damageString.match(/(\d+)d(\d+)/i);
+     if (!match) {
+         showCustomDialog("Error", "Invalid damage format");
+         return;
+     }
+ 
+     const diceCount = parseInt(match[1]);
+     const dieSize = parseInt(match[2]);
+ 
+     // Roll the dice
+     const rolls = [];
+     for (let i = 0; i < diceCount; i++) {
+         rolls.push(Math.floor(Math.random() * dieSize) + 1);
+     }
+ 
+     const diceTotal = rolls.reduce((a, b) => a + b, 0);
+     const total = diceTotal + monsterMod;
+ 
+     // Build the result message
+     let rollsDisplay = rolls.join(' + ');
+     if (rolls.length > 1) {
+         rollsDisplay = `(${rollsDisplay})`;
+     }
+
+     // Format the mod display
+     const modDisplay = monsterMod >= 0 ? `+${monsterMod}` : `${monsterMod}`;
+ 
+     // Show result dialog
+     showCustomDialog(
+         `${monsterName} Damage`,
+         `<div class="text-center">
+             <div class="text-3xl font-bold text-red-600 dark:text-red-400 mb-2">${total}</div>
+             <div class="text-sm text-gray-600 dark:text-gray-400">
+                 <i class="fas fa-dice-d6 mr-1"></i>${damageString}${modDisplay}: ${rollsDisplay} ${modDisplay} = ${total}
+             </div>
+         </div>`
+     );
+ }
+
 
 // =====================================================
 // SPIRIT PROJECTION - WARLOCK ABILITY FUNCTIONALITY
@@ -15010,6 +15150,36 @@ function createSpiritProjection() {
     if (!currentCharacter) return;
     if (!hasSpiritProjection(currentCharacter)) return;
 
+// Check if we have enough Class resources available (need 2, including temporary)
+     const classResource = currentCharacter.resources?.class;
+     if (!classResource) {
+         console.warn('No class resource found');
+         showCustomDialog("Cannot Create Projection", "No Class resources found.");
+         return;
+     }
+ 
+     const classMax = classResource.max || 0;
+     const classTemp = classResource.temp || 0;
+     const classTotalMax = classMax + classTemp;
+     const classUsed = classResource.used?.length || 0;
+     const classAvailable = classTotalMax - classUsed;
+ 
+     // Check if there are at least 2 available class slots
+     if (classAvailable < 2) {
+         showCustomDialog("Cannot Create Projection", `Not enough Class resources available. Need 2, have ${classAvailable}.`);
+         return;
+     }
+ 
+     // Consume 2 Class resources (add the next 2 indices to used array)
+     if (!classResource.used) {
+         classResource.used = [];
+     }
+     // Add 2 class resource uses
+     for (let i = 0; i < 2; i++) {
+         const nextClassIndex = classResource.used.length;
+         classResource.used.push(nextClassIndex);
+     }
+
     // Calculate stats based on current character
     const stats = calculateProjectionStats(currentCharacter);
 
@@ -15024,6 +15194,7 @@ function createSpiritProjection() {
 
     // Save and re-render
     saveCharacters();
+    populateSheetResourceBoxes(currentCharacter); // Update class resource display
     renderSpiritProjection(currentCharacter);
 }
 
@@ -15286,6 +15457,340 @@ document.addEventListener('click', function (e) {
         activateTirelessAbility();
     }
 });
+
+ // ==================== NATURAL RECOVERY (DRUID) ====================
+ 
+ /**
+  * Check if character has Natural Recovery ability selected
+  */
+ function hasNaturalRecovery(character) {
+      return character && character.class === 'Druid';
+ 
+ }
+ 
+ /**
+  * Check if character has enough Class resources for Natural Recovery (need 1)
+  */
+ function canUseNaturalRecovery() {
+     if (!currentCharacter) return false;
+ 
+     const classResource = currentCharacter.resources?.class;
+     if (!classResource) return false;
+ 
+     const classMax = classResource.max || 0;
+     const classTemp = classResource.temp || 0;
+     const classTotalMax = classMax + classTemp;
+     const classUsed = classResource.used?.length || 0;
+ 
+     return (classTotalMax - classUsed) >= 1;
+ }
+ 
+ /**
+  * Consume 1 Class resource for Natural Recovery
+  */
+ function consumeNaturalRecoveryResource() {
+     if (!currentCharacter) return false;
+ 
+     const classResource = currentCharacter.resources?.class;
+     if (!classResource) return false;
+ 
+     if (!classResource.used) {
+         classResource.used = [];
+     }
+ 
+     const nextClassIndex = classResource.used.length;
+     classResource.used.push(nextClassIndex);
+ 
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+     return true;
+ }
+ 
+ /**
+  * Open Natural Recovery target selection modal
+  */
+ function openNaturalRecoveryTargetModal() {
+     if (!currentCharacter) return;
+     if (!hasNaturalRecovery(currentCharacter)) return;
+ 
+     if (!canUseNaturalRecovery()) {
+         showCustomDialog("Cannot Use Natural Recovery", "Not enough Class resources available. Need 1 Class resource.");
+         return;
+     }
+ 
+     const modal = document.getElementById('naturalRecoveryTargetModal');
+     if (modal) {
+         modal.classList.remove('hidden');
+     }
+ }
+ 
+ /**
+  * Close Natural Recovery target modal
+  */
+ function closeNaturalRecoveryTargetModal() {
+     const modal = document.getElementById('naturalRecoveryTargetModal');
+     if (modal) {
+         modal.classList.add('hidden');
+     }
+ }
+ 
+ /**
+  * Open Natural Recovery self modal (HP or Stress choice)
+  */
+ function openNaturalRecoverySelfModal() {
+     closeNaturalRecoveryTargetModal();
+ 
+     const modal = document.getElementById('naturalRecoverySelfModal');
+     if (modal) {
+         modal.classList.remove('hidden');
+     }
+ }
+ 
+ /**
+  * Close Natural Recovery self modal
+  */
+ function closeNaturalRecoverySelfModal() {
+     const modal = document.getElementById('naturalRecoverySelfModal');
+     if (modal) {
+         modal.classList.add('hidden');
+     }
+ }
+ 
+ /**
+  * Show Natural Recovery result modal
+  */
+ function showNaturalRecoveryResult(content) {
+     const modal = document.getElementById('naturalRecoveryResultModal');
+     const contentDiv = document.getElementById('naturalRecoveryResultContent');
+ 
+     if (modal && contentDiv) {
+         contentDiv.innerHTML = content;
+         modal.classList.remove('hidden');
+     }
+ }
+ 
+ /**
+  * Close Natural Recovery result modal
+  */
+ function closeNaturalRecoveryResultModal() {
+     const modal = document.getElementById('naturalRecoveryResultModal');
+     if (modal) {
+         modal.classList.add('hidden');
+     }
+ }
+ 
+ /**
+  * Natural Recovery - Target Ally
+  * Rolls 1d4 and shows result (ally applies it themselves)
+  */
+ function naturalRecoveryAlly() {
+     if (!currentCharacter) return;
+ 
+     // Check resources again
+     if (!canUseNaturalRecovery()) {
+         showCustomDialog("Cannot Use Natural Recovery", "Not enough Class resources available.");
+         closeNaturalRecoveryTargetModal();
+         return;
+     }
+ 
+     // Consume 1 Class resource
+     consumeNaturalRecoveryResource();
+ 
+     // Roll 1d4
+     const roll = Math.floor(Math.random() * 4) + 1;
+ 
+     // Close target modal
+     closeNaturalRecoveryTargetModal();
+ 
+     // Show result
+     showNaturalRecoveryResult(`
+         <div class="text-blue-600 dark:text-blue-400 mb-2">
+             <i class="fas fa-users text-2xl"></i>
+         </div>
+         <div class="text-lg font-medium mb-1">Target: Ally</div>
+         <div class="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">${roll}</div>
+         <div class="text-sm text-gray-600 dark:text-gray-400">
+             <i class="fas fa-dice-d4 mr-1"></i>Rolled 1d4 = ${roll}
+         </div>
+         <div class="text-sm text-gray-500 dark:text-gray-500 mt-2">
+             Tell your ally to recover ${roll} HP or Stress
+         </div>
+         <div class="text-xs text-yellow-600 dark:text-yellow-400 mt-2">
+             <i class="fas fa-minus-circle mr-1"></i>1 Class resource used
+         </div>
+     `);
+ }
+ 
+ /**
+  * Natural Recovery - Recover HP (Self)
+  */
+ function naturalRecoverHP() {
+     if (!currentCharacter) return;
+ 
+     // Check resources again
+     if (!canUseNaturalRecovery()) {
+         showCustomDialog("Cannot Use Natural Recovery", "Not enough Class resources available.");
+         closeNaturalRecoverySelfModal();
+         return;
+     }
+ 
+     const hpResource = currentCharacter.resources?.hp;
+     if (!hpResource) {
+         showCustomDialog("Error", "No HP resource found.");
+         closeNaturalRecoverySelfModal();
+         return;
+     }
+ 
+     const hpUsedCount = hpResource.used?.length || 0;
+ 
+     if (hpUsedCount === 0) {
+         showCustomDialog("Cannot Recover HP", "You have no HP damage to recover.");
+         closeNaturalRecoverySelfModal();
+         return;
+     }
+ 
+     // Consume 1 Class resource
+     consumeNaturalRecoveryResource();
+ 
+     // Roll 1d4
+     const roll = Math.floor(Math.random() * 4) + 1;
+ 
+     // Calculate actual recovery (can't recover more than what's used)
+     const actualRecovery = Math.min(roll, hpUsedCount);
+ 
+     // Recover HP by removing from the used array (remove from the end)
+     hpResource.used.sort((a, b) => a - b);
+     for (let i = 0; i < actualRecovery; i++) {
+         if (hpResource.used.length > 0) {
+             hpResource.used.pop();
+         }
+     }
+ 
+     // Save and update display
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+ 
+     // Close self modal
+     closeNaturalRecoverySelfModal();
+ 
+     // Show result
+     showNaturalRecoveryResult(`
+         <div class="text-red-600 dark:text-red-400 mb-2">
+             <i class="fas fa-heart text-2xl"></i>
+         </div>
+         <div class="text-lg font-medium mb-1">Recovered HP</div>
+         <div class="text-3xl font-bold text-red-600 dark:text-red-400 mb-2">${actualRecovery}</div>
+         <div class="text-sm text-gray-600 dark:text-gray-400">
+             <i class="fas fa-dice-d4 mr-1"></i>Rolled 1d4 = ${roll}
+             ${actualRecovery < roll ? `<br><span class="text-yellow-600">(Only ${actualRecovery} HP was damaged)</span>` : ''}
+         </div>
+         <div class="text-xs text-yellow-600 dark:text-yellow-400 mt-2">
+             <i class="fas fa-minus-circle mr-1"></i>1 Class resource used
+         </div>
+     `);
+ }
+ 
+ /**
+  * Natural Recovery - Recover Stress (Self)
+  */
+ function naturalRecoverStress() {
+     if (!currentCharacter) return;
+ 
+     // Check resources again
+     if (!canUseNaturalRecovery()) {
+         showCustomDialog("Cannot Use Natural Recovery", "Not enough Class resources available.");
+         closeNaturalRecoverySelfModal();
+         return;
+     }
+ 
+     const stressResource = currentCharacter.resources?.stress;
+     if (!stressResource) {
+         showCustomDialog("Error", "No Stress resource found.");
+         closeNaturalRecoverySelfModal();
+         return;
+     }
+ 
+     const stressUsedCount = stressResource.used?.length || 0;
+ 
+     if (stressUsedCount === 0) {
+         showCustomDialog("Cannot Recover Stress", "You have no Stress to recover.");
+         closeNaturalRecoverySelfModal();
+         return;
+     }
+ 
+     // Consume 1 Class resource
+     consumeNaturalRecoveryResource();
+ 
+     // Roll 1d4
+     const roll = Math.floor(Math.random() * 4) + 1;
+ 
+     // Calculate actual recovery (can't recover more than what's used)
+     const actualRecovery = Math.min(roll, stressUsedCount);
+ 
+     // Recover Stress by removing from the used array (remove from the end)
+     stressResource.used.sort((a, b) => a - b);
+     for (let i = 0; i < actualRecovery; i++) {
+         if (stressResource.used.length > 0) {
+             stressResource.used.pop();
+         }
+     }
+ 
+     // Save and update display
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+ 
+     // Close self modal
+     closeNaturalRecoverySelfModal();
+ 
+     // Show result
+     showNaturalRecoveryResult(`
+         <div class="text-purple-600 dark:text-purple-400 mb-2">
+             <i class="fas fa-brain text-2xl"></i>
+         </div>
+         <div class="text-lg font-medium mb-1">Recovered Stress</div>
+         <div class="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">${actualRecovery}</div>
+         <div class="text-sm text-gray-600 dark:text-gray-400">
+             <i class="fas fa-dice-d4 mr-1"></i>Rolled 1d4 = ${roll}
+             ${actualRecovery < roll ? `<br><span class="text-yellow-600">(Only ${actualRecovery} Stress was used)</span>` : ''}
+         </div>
+         <div class="text-xs text-yellow-600 dark:text-yellow-400 mt-2">
+             <i class="fas fa-minus-circle mr-1"></i>1 Class resource used
+         </div>
+     `);
+ }
+ 
+ // Event delegation for Natural Recovery button (since it's dynamically added to the ability display)
+document.addEventListener('click', function (e) {
+    if (e.target.closest('.natural-recovery-btn')) {
+        e.preventDefault();
+
+        // Then open Natural Recovery
+        openNaturalRecoveryTargetModal();
+        // Close the abilities modal first
+        closeClassAbilitiesModal();
+    }
+});
+
+ 
+ // Natural Recovery Modal Event Listeners
+ document.getElementById('closeNaturalRecoveryTarget')?.addEventListener('click', closeNaturalRecoveryTargetModal);
+ document.getElementById('naturalRecoverySelf')?.addEventListener('click', openNaturalRecoverySelfModal);
+ document.getElementById('naturalRecoveryAlly')?.addEventListener('click', naturalRecoveryAlly);
+ document.getElementById('closeNaturalRecoverySelf')?.addEventListener('click', closeNaturalRecoverySelfModal);
+ document.getElementById('naturalRecoverHP')?.addEventListener('click', naturalRecoverHP);
+ document.getElementById('naturalRecoverStress')?.addEventListener('click', naturalRecoverStress);
+ document.getElementById('closeNaturalRecoveryResult')?.addEventListener('click', closeNaturalRecoveryResultModal);
+ 
+ // Close modals when clicking outside
+ document.getElementById('naturalRecoveryTargetModal')?.addEventListener('click', function(e) {
+     if (e.target === this) closeNaturalRecoveryTargetModal();
+ });
+ document.getElementById('naturalRecoverySelfModal')?.addEventListener('click', function(e) {
+     if (e.target === this) closeNaturalRecoverySelfModal();
+ });
+ document.getElementById('naturalRecoveryResultModal')?.addEventListener('click', function(e) {
+     if (e.target === this) closeNaturalRecoveryResultModal();
+ });
 
 // ==================== SECOND WIND (FIGHTER) ====================
 
@@ -17235,14 +17740,19 @@ function handleWildBeastAbility(isEnabled) {
 
     // If disabling and currently transformed, remove transformation
     if (!isEnabled && currentCharacter.wildBeastActive) {
+        removeWildBeastTransformation();
         currentCharacter.wildBeastActive = false;
-        removeWildBeast();
     }
 
-    // Update the character sheet display
+    // Update the Wild Beast section visibility
     updateWildBeastDisplay();
 
     saveCharacters();
+
+    // If we disabled Wild Beast, refresh the entire character sheet to show restored equipment
+    if (!isEnabled) {
+        populateCharacterSheet(currentCharacter);
+    }
 
     // Show feedback to user
     if (isEnabled) {
