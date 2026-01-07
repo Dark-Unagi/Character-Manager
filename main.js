@@ -4225,14 +4225,18 @@ function applyWildBeastTransformation() {
     if (currentCharacter.secondaryWeapon) {
         removeWeaponBonuses(currentCharacter.secondaryWeapon.bonuses, 'secondary');
     }
+    
+    // For armor, we need to delete it BEFORE removing bonuses
+    // so that getCurrentEvasion() doesn't count the armor evasion twice
     if (currentCharacter.armorItem) {
-        removeArmorBonuses(currentCharacter.armorItem.bonuses);
+        const armorBonuses = { ...currentCharacter.armorItem.bonuses };
+        delete currentCharacter.armorItem; // Delete first
+        removeArmorBonuses(armorBonuses); // Then remove bonuses
     }
 
-    // Clear current equipment
+    // Clear remaining equipment
     delete currentCharacter.primaryWeapon;
     delete currentCharacter.secondaryWeapon;
-    delete currentCharacter.armorItem;
 
     // Equip Wild Beast weapon
     currentCharacter.primaryWeapon = { ...wildBeastWeapon };
