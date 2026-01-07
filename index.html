@@ -1690,6 +1690,41 @@
             color: #F3F4F6;
         }
 
+        .monster-damage-btn {
+             background: transparent;
+             border: none;
+             border-radius: 0.375rem;
+             padding: 0.25rem 0.5rem;
+             cursor: pointer;
+             transition: all 0.2s ease;
+             text-align: center;
+         }
+ 
+         .monster-damage-btn:hover {
+             background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+             transform: scale(1.05);
+             box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+         }
+ 
+         .monster-damage-btn:active {
+             transform: scale(0.98);
+         }
+ 
+         .monster-damage-btn .monster-stat-label {
+             color: #FCA5A5;
+         }
+ 
+         .monster-damage-btn .monster-stat-value {
+             color: #FFFFFF;
+         }
+ 
+         .dark .monster-damage-btn .monster-stat-label {
+             color: #FCA5A5;
+         }
+ 
+         .dark .monster-damage-btn .monster-stat-value {
+             color: #FFFFFF;         }
+
         .monster-resources {
             display: flex;
             gap: 1rem;
@@ -1726,8 +1761,8 @@
         }
 
         .monster-resource-box {
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             border: 2px solid #10B981;
             border-radius: 3px;
             cursor: pointer;
@@ -1818,7 +1853,7 @@
         }
 
         .monsters-container {
-            max-height: 400px;
+            max-height: auto;
             overflow-y: auto;
         }
 
@@ -1936,8 +1971,8 @@
         }
 
         .spirit-projection-resource-box {
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             border: 2px solid #8B5CF6;
             border-radius: 3px;
             cursor: pointer;
@@ -1960,7 +1995,7 @@
         }
 
         .spirit-projection-resource-box.hp {
-            border-color: #EF4444;
+            border-color: #ffffff;
         }
 
         .spirit-projection-resource-box.hp.filled {
@@ -1968,7 +2003,7 @@
         }
 
         .spirit-projection-resource-box.stress {
-            border-color: #8B5CF6;
+            border-color: #ffffff;
         }
 
         .spirit-projection-resource-box.stress.filled {
@@ -2095,6 +2130,32 @@
             border-color: #EF4444;
             color: #FECACA;
         }
+
+        /* Natural Recovery Ability Button (Druid) */
+         .natural-recovery-btn {
+             background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+             color: white;
+             padding: 0.5rem 1rem;
+             border-radius: 0.375rem;
+             border: none;
+             cursor: pointer;
+             font-weight: 500;
+             transition: all 0.2s ease;
+             display: inline-flex;
+             align-items: center;
+             gap: 0.5rem;
+             margin-top: 0.75rem;
+         }
+ 
+         .natural-recovery-btn:hover {
+             background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+             transform: scale(1.02);
+             box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+         }
+ 
+         .natural-recovery-btn:disabled {
+             opacity: 0.5;
+             cursor: not-allowed;         }
 
         /* Second Wind Ability Button (Fighter) */
         .second-wind-btn {
@@ -3966,10 +4027,11 @@
                                         </button>
                                     </div>
                                     <div id="languagesList" class="flex flex-wrap gap-2">
-                                        <span class="text-sm text-gray-500 dark:text-gray-400 italic" id="noLanguagesText">No languages selected</span>
+                                        <span class="text-sm text-gray-500 dark:text-gray-400 italic"
+                                            id="noLanguagesText">No languages selected</span>
                                     </div>
                                 </div>
-                                
+
                                 <textarea id="characterNotes" placeholder="Character notes, backstory, abilities..."
                                     class="w-full h-32 px-3 py-2 mb-8 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent resize-none"></textarea>
                             </div>
@@ -5319,10 +5381,85 @@
                 </div>
             </div>
 
+            <!-- Natural Recovery Target Modal -->
+             <div id="naturalRecoveryTargetModal"
+                 class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
+                     <div class="flex justify-between items-center mb-4">
+                         <h3 class="text-lg font-semibold text-green-700 dark:text-green-400">
+                             <i class="fas fa-leaf mr-2"></i>Natural Recovery
+                         </h3>
+                         <button id="closeNaturalRecoveryTarget"
+                             class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                             <i class="fas fa-times"></i>
+                         </button>
+                     </div>
+                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Select a target for Natural Recovery:</p>
+                     <div class="flex flex-col gap-3">
+                         <button id="naturalRecoverySelf"
+                             class="w-full px-4 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                             <i class="fas fa-user"></i>Target Self
+                         </button>
+                         <button id="naturalRecoveryAlly"
+                             class="w-full px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                             <i class="fas fa-users"></i>Target Ally
+                         </button>
+                     </div>
+                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-4 text-center">Cost: 1 Class Resource</p>
+                 </div>
+             </div>
+ 
+             <!-- Natural Recovery Self Modal -->
+             <div id="naturalRecoverySelfModal"
+                 class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
+                     <div class="flex justify-between items-center mb-4">
+                         <h3 class="text-lg font-semibold text-green-700 dark:text-green-400">
+                             <i class="fas fa-user mr-2"></i>Recover Self
+                         </h3>
+                         <button id="closeNaturalRecoverySelf"
+                             class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                             <i class="fas fa-times"></i>
+                         </button>
+                     </div>
+                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Choose what to recover:</p>
+                     <div class="flex flex-col gap-3">
+                         <button id="naturalRecoverHP"
+                             class="w-full px-4 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                             <i class="fas fa-heart"></i>Recover HP
+                         </button>
+                         <button id="naturalRecoverStress"
+                             class="w-full px-4 py-3 bg-purple-500 hover:bg-purple-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                             <i class="fas fa-brain"></i>Recover Stress
+                         </button>
+                     </div>
+                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-4 text-center">Rolls 1d4 and recovers that amount</p>
+                 </div>
+             </div>
+ 
+             <!-- Natural Recovery Result Modal -->
+             <div id="naturalRecoveryResultModal"
+                 class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4 text-center">
+                     <div class="mb-4">
+                         <div class="w-16 h-16 mx-auto bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-3">
+                             <i class="fas fa-leaf text-3xl text-green-600 dark:text-green-400"></i>
+                         </div>
+                         <h3 class="text-lg font-semibold text-green-700 dark:text-green-400">Natural Recovery</h3>
+                     </div>
+                     <div id="naturalRecoveryResultContent" class="mb-4">
+                         <!-- Result will be populated here -->
+                     </div>
+                     <button id="closeNaturalRecoveryResult"
+                         class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg font-medium transition-colors">
+                         Close
+                     </button>                 </div>             </div>
+
             <!-- Languages Modal -->
             <div id="languagesModal"
                 class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-3xl w-full mx-4 max-h-none overflow-visible">
+                <div
+                    class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-3xl w-full mx-4 max-h-none overflow-visible">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-semibold">Select Languages</h3>
                         <button id="closeLanguagesModal"
@@ -5330,88 +5467,104 @@
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                    
+
                     <div class="grid grid-cols-2 gap-6 mb-6">
 
                         <div>
-    <h4 class="font-medium text-sm text-gray-600 dark:text-gray-400 mt-2">Common Languages</h4>
+                            <h4 class="font-medium text-sm text-gray-600 dark:text-gray-400 mt-2">Common Languages</h4>
 
-    <div class="space-y-2 mt-2">
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Common">
-            <span>Common</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Dwarvish">
-            <span>Dwarvish</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Elvish">
-            <span>Elvish</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Giant">
-            <span>Giant</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Gnomish">
-            <span>Gnomish</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Goblin">
-            <span>Goblin</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Halfling">
-            <span>Halfling</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Orc">
-            <span>Orc</span>
-        </label>
-    </div>
-</div>
+                            <div class="space-y-2 mt-2">
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Common">
+                                    <span>Common</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Dwarvish">
+                                    <span>Dwarvish</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Elvish">
+                                    <span>Elvish</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Giant">
+                                    <span>Giant</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Gnomish">
+                                    <span>Gnomish</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Goblin">
+                                    <span>Goblin</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Halfling">
+                                    <span>Halfling</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Orc">
+                                    <span>Orc</span>
+                                </label>
+                            </div>
+                        </div>
 
-<div>
-    <h4 class="font-medium text-sm text-gray-600 dark:text-gray-400 mt-2">Exotic Languages</h4>
+                        <div>
+                            <h4 class="font-medium text-sm text-gray-600 dark:text-gray-400 mt-2">Exotic Languages</h4>
 
-    <div class="space-y-2 mt-2">
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Abyssal">
-            <span>Abyssal</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Celestial">
-            <span>Celestial</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Draconic">
-            <span>Draconic</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Deep Speech">
-            <span>Deep Speech</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Infernal">
-            <span>Infernal</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Primordial">
-            <span>Primordial</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Sylvan">
-            <span>Sylvan</span>
-        </label>
-        <label class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
-            <input type="checkbox" class="language-checkbox" value="Undercommon">
-            <span>Undercommon</span>
-        </label>
-    </div>
-</div>
-</div>
-                    
+                            <div class="space-y-2 mt-2">
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Abyssal">
+                                    <span>Abyssal</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Celestial">
+                                    <span>Celestial</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Draconic">
+                                    <span>Draconic</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Deep Speech">
+                                    <span>Deep Speech</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Infernal">
+                                    <span>Infernal</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Primordial">
+                                    <span>Primordial</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Sylvan">
+                                    <span>Sylvan</span>
+                                </label>
+                                <label
+                                    class="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                    <input type="checkbox" class="language-checkbox" value="Undercommon">
+                                    <span>Undercommon</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="flex justify-end space-x-3">
                         <button id="cancelLanguages"
                             class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Cancel</button>
@@ -5486,4 +5639,3 @@
 </body>
 
 </html>
-
