@@ -8736,7 +8736,6 @@ function resetCompanionLongRest(character) {
     character.defenderActive = false;
     character.rendActive = false;
     character.sentinelActive = false;
-    character.evasion = character.normalEvasion;
 
     updateCompanionEffectsDisplay(character);
     saveCharacters();
@@ -18146,3 +18145,4 @@ function initTokensOfDepartedIfNeeded() {
         updateTokensOfDepartedDisplay();
     }
 }
+
