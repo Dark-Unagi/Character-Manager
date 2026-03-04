@@ -3115,15 +3115,13 @@ function calculateDCSave(character) {
     const secondaryWeaponAbilityBonuses = character.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const armorAbilityBonuses = character.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const wildBeastAbilityBonuses = character.wildBeastAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-    const awakenedMindAbilityBonuses = character.awakenedMindAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
 
     const totalModifier = (character[dcAbility] || 0) +
         raceAbilityBonuses[dcAbility] +
         primaryWeaponAbilityBonuses[dcAbility] +
         secondaryWeaponAbilityBonuses[dcAbility] +
         armorAbilityBonuses[dcAbility] +
-        wildBeastAbilityBonuses[dcAbility] +
-        awakenedMindAbilityBonuses[dcAbility];
+        wildBeastAbilityBonuses[dcAbility];
 
     // DC Save = 8 + modifier
     return 8 + totalModifier;
@@ -3302,56 +3300,56 @@ function getMaxSpells(character) {
 // ====== LANGUAGES SECTION ======
 
 // Open languages modal
-document.getElementById('addLanguage').addEventListener('click', function () {
+document.getElementById('addLanguage').addEventListener('click', function() {
     if (!currentCharacter) {
         showCustomDialog('No Character', 'Please select a character first.');
         return;
     }
-
+    
     // Reset checkboxes to match current character languages
     const currentLanguages = currentCharacter.languages || [];
     document.querySelectorAll('.language-checkbox').forEach(checkbox => {
         checkbox.checked = currentLanguages.includes(checkbox.value);
     });
-
+    
     document.getElementById('languagesModal').classList.remove('hidden');
 });
 
 // Close languages modal
-document.getElementById('closeLanguagesModal').addEventListener('click', function () {
+document.getElementById('closeLanguagesModal').addEventListener('click', function() {
     document.getElementById('languagesModal').classList.add('hidden');
 });
 
-document.getElementById('cancelLanguages').addEventListener('click', function () {
+document.getElementById('cancelLanguages').addEventListener('click', function() {
     document.getElementById('languagesModal').classList.add('hidden');
 });
 
 // Close modal when clicking outside
-document.getElementById('languagesModal').addEventListener('click', function (e) {
+document.getElementById('languagesModal').addEventListener('click', function(e) {
     if (e.target.id === 'languagesModal') {
         document.getElementById('languagesModal').classList.add('hidden');
     }
 });
 
 // Save languages
-document.getElementById('confirmLanguages').addEventListener('click', function () {
+document.getElementById('confirmLanguages').addEventListener('click', function() {
     if (!currentCharacter) return;
-
+    
     // Collect selected languages
     const selectedLanguages = [];
     document.querySelectorAll('.language-checkbox:checked').forEach(checkbox => {
         selectedLanguages.push(checkbox.value);
     });
-
+    
     // Save to character
     currentCharacter.languages = selectedLanguages;
-
+    
     // Update display
     updateLanguagesDisplay();
-
+    
     // Save character
     saveCharacters();
-
+    
     // Close modal
     document.getElementById('languagesModal').classList.add('hidden');
 });
@@ -3361,15 +3359,15 @@ function updateLanguagesDisplay() {
     const languagesList = document.getElementById('languagesList');
     const noLanguagesText = document.getElementById('noLanguagesText');
     const languages = currentCharacter?.languages || [];
-
+    
     // Clear current display (except the "no languages" text)
     languagesList.querySelectorAll('.language-tag').forEach(tag => tag.remove());
-
+    
     if (languages.length === 0) {
         noLanguagesText.classList.remove('hidden');
     } else {
         noLanguagesText.classList.add('hidden');
-
+        
         languages.forEach(language => {
             const tag = document.createElement('span');
             tag.className = 'language-tag inline-flex items-center px-2 py-1 bg-blue-100 dark:bg-transparent text-blue-800 dark:text-white text-sm rounded';
@@ -3387,7 +3385,7 @@ function updateLanguagesDisplay() {
 // Remove a language
 function removeLanguage(language) {
     if (!currentCharacter) return;
-
+    
     currentCharacter.languages = (currentCharacter.languages || []).filter(l => l !== language);
     updateLanguagesDisplay();
     saveCharacters();
@@ -4227,7 +4225,7 @@ function applyWildBeastTransformation() {
     if (currentCharacter.secondaryWeapon) {
         removeWeaponBonuses(currentCharacter.secondaryWeapon.bonuses, 'secondary');
     }
-
+    
     // For armor, we need to delete it BEFORE removing bonuses
     // so that getCurrentEvasion() doesn't count the armor evasion twice
     if (currentCharacter.armorItem) {
@@ -4753,19 +4751,15 @@ function applyDamage(amount) {
     const totalHp = hpResource.max + (hpResource.temp || 0);
     const currentUsed = hpResource.used.length;
 
-    const hpRemaining = totalHp - currentUsed;
- 
-     // Already at 0 HP — nothing to remove
-     if (hpRemaining <= 0) {
-         showDivineRollWarning(amount, 0, 0);
+    // Check if we have enough HP remaining
+    if (currentUsed + amount > totalHp) {
+        showCustomDialog('Insufficient HP', `Cannot apply ${amount} damage. Only ${totalHp - currentUsed} HP remaining.`);
         return;
     }
 
-    // Determine how much damage we can actually apply
-     const damageToApply = Math.min(amount, hpRemaining);
-
     // Apply damage by marking HP boxes as used
-    for (let i = 0; i < damageToApply; i++) {
+    for (let i = 0; i < amount; i++) {
+        // Find the first unused HP box and mark it as used
         for (let j = 0; j < totalHp; j++) {
             if (!hpResource.used.includes(j)) {
                 hpResource.used.push(j);
@@ -4777,124 +4771,6 @@ function applyDamage(amount) {
     // Refresh the HP display
     populateSheetResourceBoxes(currentCharacter);
     saveCharacters();
-
-    // If we couldn't apply the full amount, character has hit 0 HP
-     if (damageToApply < amount) {
-         showDivineRollWarning(amount, damageToApply, hpRemaining);
-     }
- }
- 
- // Show a prominent Divine Roll warning when character reaches 0 HP from damage
- function showDivineRollWarning(damageRequested, damageApplied, hpWasRemaining) {
-     const modal = document.createElement('div');
-     modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
- 
-     let damageLabel = '';
-     if (damageRequested === 1) damageLabel = 'Minor';
-     else if (damageRequested === 2) damageLabel = 'Major';
-     else if (damageRequested === 3) damageLabel = 'Severe';
-     else damageLabel = damageRequested;
- 
-     let bodyMessage = '';
-     if (hpWasRemaining <= 0) {
-         // Was already at 0 HP
-         bodyMessage = `<p class="text-gray-700 dark:text-gray-300 mb-3">${currentCharacter.name} is already at <strong>0 HP</strong> and cannot take any more damage.</p>`;
-     } else {
-         // Had some HP but not enough
-         bodyMessage = `
-             <p class="text-gray-700 dark:text-gray-300 mb-3">
-                 <strong>${damageLabel} Damage</strong> requires <strong>${damageRequested} HP</strong>, but ${currentCharacter.name} only had <strong>${hpWasRemaining} HP</strong> remaining.
-             </p>
-             <p class="text-gray-700 dark:text-gray-300 mb-3">
-                 <strong>${damageApplied} HP</strong> ${damageApplied === 1 ? 'has' : 'have'} been removed. ${currentCharacter.name} is now at <strong>0 HP</strong>.
-             </p>`;
-     }
- 
-     modal.innerHTML = `
-         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
-             <div class="text-center mb-4">
-                 <div class="text-4xl mb-2">⚠️</div>
-                 <h3 class="text-xl font-bold text-red-600 dark:text-red-400">0 HP — Divine Roll Required!</h3>
-             </div>
-             ${bodyMessage}
-             <button class="divine-roll-trigger w-full bg-red-50 dark:bg-red-900/30 border-2 border-red-400 dark:border-red-600 rounded-lg p-3 mb-4 cursor-pointer hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors">
-                 <p class="text-red-700 dark:text-red-300 font-bold text-center text-base">
-                     🎲 Roll Divine Roll for ${currentCharacter.name}! </p>
-            </button>
-             <div class="flex justify-center">
-                 <button class="dismiss-warning px-6 py-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors text-sm">Dismiss</button>
-             </div>
-         </div>
-     `;
- 
-     document.body.appendChild(modal);
- 
-     // Divine Roll button — opens the roll options
-      modal.querySelector('.divine-roll-trigger').addEventListener('click', () => {
-          modal.remove();
-          showDivineRollOptionsModal();
-      });
- 
-      // Dismiss button
-      modal.querySelector('.dismiss-warning').addEventListener('click', () => {
-         modal.remove();
-     });
- 
-     modal.addEventListener('click', function (e) {
-         if (e.target === this) this.remove();
-     });
-}
-// Show a standalone Divine Roll options modal (Normal / Advantage / Disadvantage)
- // Used from the 0 HP warning — rolls dice and shows results inline
- function showDivineRollOptionsModal() {
-     const modal = document.createElement('div');
-     modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
- 
-     modal.innerHTML = `
-         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
-             <div class="text-center mb-4">
-                 <h3 class="text-lg font-bold">Divine Roll</h3>
-                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Choose your roll type</p>
-             </div>
-             <div class="space-y-3 mb-4">
-                 <button class="divine-option-btn w-full p-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-600 hover:text-white transition-colors font-semibold" data-type="normal">
-                     Normal
-                     <span class="block text-xs font-normal mt-1 opacity-70">1 White d12 · 1 Black d12</span>
-                 </button>
-                 <button class="divine-option-btn w-full p-3 border-2 border-green-400 dark:border-green-600 rounded-lg hover:bg-green-500 hover:text-white transition-colors font-semibold text-green-700 dark:text-green-400" data-type="advantage">
-                     Advantage
-                     <span class="block text-xs font-normal mt-1 opacity-70">2 White d12 · 1 Black d12</span>
-                 </button>
-                 <button class="divine-option-btn w-full p-3 border-2 border-red-400 dark:border-red-600 rounded-lg hover:bg-red-500 hover:text-white transition-colors font-semibold text-red-700 dark:text-red-400" data-type="disadvantage">
-                     Disadvantage
-                     <span class="block text-xs font-normal mt-1 opacity-70">1 White d12 · 2 Black d12</span>
-                 </button>
-             </div>
-             <div class="flex justify-center">
-                 <button class="cancel-divine px-4 py-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm transition-colors">Cancel</button>
-             </div>
-         </div>
-     `;
- 
-     document.body.appendChild(modal);
- 
-     // Option buttons — roll and show result
-     modal.querySelectorAll('.divine-option-btn').forEach(btn => {
-         btn.addEventListener('click', function () {
-             const type = this.dataset.type;
-             modal.remove();
-             rollDivine(type);
-         });
-     });
- 
-     // Cancel
-     modal.querySelector('.cancel-divine').addEventListener('click', () => {
-         modal.remove();
-     });
- 
-     modal.addEventListener('click', function (e) {
-         if (e.target === this) this.remove();
-     });
 }
 
 // Rest System Functions
@@ -6604,7 +6480,7 @@ function updateRaceOptions(selectedRace) {
     raceBonusValues.evasion = race.evasion;
     updateFieldsWithRaceBonuses();
     updateAbilityScoreResults();
-
+    
 }
 
 function hideRaceOptions() {
@@ -9049,7 +8925,7 @@ document.getElementById('characterForm').addEventListener('submit', function (e)
     if (characterClass === 'Bard' && document.getElementById('hasJackOfAllTrades').checked) {
         jackOfAllTradesActive = true;
     }
-    // The CHARACTER object
+// The CHARACTER object
     const character = {
         id: Date.now().toString(),
         name: document.getElementById('charName').value,
@@ -11333,16 +11209,14 @@ function populateCharacterEditForm() {
     const primaryWeaponAbilityBonuses = currentCharacter.primaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const secondaryWeaponAbilityBonuses = currentCharacter.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const armorAbilityBonuses = currentCharacter.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-    const wildBeastAbilityBonuses = currentCharacter.wildBeastAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-    const awakenedMindAbilityBonuses = currentCharacter.awakenedMindAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
 
-    // Set the direct input fields with the current total values (must match populateCharacterSheet display formula)
-    document.getElementById('editStrInput').value = (currentCharacter.str || 0) + raceAbilityBonuses.str + primaryWeaponAbilityBonuses.str + secondaryWeaponAbilityBonuses.str + armorAbilityBonuses.str + wildBeastAbilityBonuses.str + awakenedMindAbilityBonuses.str;
-    document.getElementById('editDexInput').value = (currentCharacter.dex || 0) + raceAbilityBonuses.dex + primaryWeaponAbilityBonuses.dex + secondaryWeaponAbilityBonuses.dex + armorAbilityBonuses.dex + wildBeastAbilityBonuses.dex + awakenedMindAbilityBonuses.dex;
-    document.getElementById('editConInput').value = (currentCharacter.con || 0) + raceAbilityBonuses.con + primaryWeaponAbilityBonuses.con + secondaryWeaponAbilityBonuses.con + armorAbilityBonuses.con + wildBeastAbilityBonuses.con + awakenedMindAbilityBonuses.con;
-    document.getElementById('editIntInput').value = (currentCharacter.int || 0) + raceAbilityBonuses.int + primaryWeaponAbilityBonuses.int + secondaryWeaponAbilityBonuses.int + armorAbilityBonuses.int + wildBeastAbilityBonuses.int + awakenedMindAbilityBonuses.int;
-    document.getElementById('editWisInput').value = (currentCharacter.wis || 0) + raceAbilityBonuses.wis + primaryWeaponAbilityBonuses.wis + secondaryWeaponAbilityBonuses.wis + armorAbilityBonuses.wis + wildBeastAbilityBonuses.wis + awakenedMindAbilityBonuses.wis;
-    document.getElementById('editChaInput').value = (currentCharacter.cha || 0) + raceAbilityBonuses.cha + primaryWeaponAbilityBonuses.cha + secondaryWeaponAbilityBonuses.cha + armorAbilityBonuses.cha + wildBeastAbilityBonuses.cha + awakenedMindAbilityBonuses.cha;
+    // Set the direct input fields with the current total values
+    document.getElementById('editStrInput').value = (currentCharacter.str || 0) + raceAbilityBonuses.str + primaryWeaponAbilityBonuses.str + secondaryWeaponAbilityBonuses.str + armorAbilityBonuses.str;
+    document.getElementById('editDexInput').value = (currentCharacter.dex || 0) + raceAbilityBonuses.dex + primaryWeaponAbilityBonuses.dex + secondaryWeaponAbilityBonuses.dex + armorAbilityBonuses.dex;
+    document.getElementById('editConInput').value = (currentCharacter.con || 0) + raceAbilityBonuses.con + primaryWeaponAbilityBonuses.con + secondaryWeaponAbilityBonuses.con + armorAbilityBonuses.con;
+    document.getElementById('editIntInput').value = (currentCharacter.int || 0) + raceAbilityBonuses.int + primaryWeaponAbilityBonuses.int + secondaryWeaponAbilityBonuses.int + armorAbilityBonuses.int;
+    document.getElementById('editWisInput').value = (currentCharacter.wis || 0) + raceAbilityBonuses.wis + primaryWeaponAbilityBonuses.wis + secondaryWeaponAbilityBonuses.wis + armorAbilityBonuses.wis;
+    document.getElementById('editChaInput').value = (currentCharacter.cha || 0) + raceAbilityBonuses.cha + primaryWeaponAbilityBonuses.cha + secondaryWeaponAbilityBonuses.cha + armorAbilityBonuses.cha;
 
     // Populate resources with the actual current maximum values
     document.getElementById('editHpMax').value = currentCharacter.resources?.hp?.max || currentCharacter.hpMax || 0;
@@ -12169,7 +12043,7 @@ function rollDamageType(damageType, proficiency, weaponType = 'primary', weaponB
     }
 
     // Boon damage bonus (per die, from Nature's Boon, Performer's Boon, etc.)
-    const boonDamagePerDie = (currentCharacter && currentCharacter.attackDamageBonus) ? currentCharacter.attackDamageBonus : 0;
+     const boonDamagePerDie = (currentCharacter && currentCharacter.attackDamageBonus) ? currentCharacter.attackDamageBonus : 0;
 
     const rolls = [];
     let total = 0;
@@ -12184,7 +12058,7 @@ function rollDamageType(damageType, proficiency, weaponType = 'primary', weaponB
     const twoHandedTotalBonus = perDieBonus * totalDice;
 
     // Total Boon damage bonus (per die × total dice)
-    const boonDamageTotalBonus = boonDamagePerDie * totalDice;
+     const boonDamageTotalBonus = boonDamagePerDie * totalDice;
 
     return {
         damageType: damageType.originalText,
@@ -12201,8 +12075,8 @@ function rollDamageType(damageType, proficiency, weaponType = 'primary', weaponB
         weaponDamageBonus: weaponDamageBonus, // flat damage bonus from weapon
         armorDamageDiceBonus: armorDamageDiceBonus, // extra dice from armor
         armorDamageBonus: armorDamageBonus, // flat damage bonus from armor
-        boonDamagePerDie: boonDamagePerDie, // per die boon bonus
-        boonDamageTotalBonus: boonDamageTotalBonus // total boon bonus
+         boonDamagePerDie: boonDamagePerDie, // per die boon bonus
+         boonDamageTotalBonus: boonDamageTotalBonus // total boon bonus
     };
 }
 
@@ -12252,12 +12126,12 @@ function getWeaponAbilityModifier(weapon) {
  */
 function isWeaponProficient(weapon) {
     if (!currentCharacter || !weapon || !weapon.trait) return false;
-
+    
     const proficiencies = currentCharacter.proficiencies || {};
-
+    
     // Parse all traits (e.g., "STR", "DEX", "STR/DEX")
     const traits = weapon.trait.split('/').map(t => t.trim().toLowerCase());
-
+    
     // Check if character is proficient in ANY of the weapon's traits
     return traits.some(trait => proficiencies[trait] === true);
 }
@@ -12271,12 +12145,12 @@ function isWeaponProficient(weapon) {
  */
 function getWeaponAbilityModifierWithProficiency(weapon) {
     if (!currentCharacter || !weapon.trait) return 0;
-
+    
     const proficiencies = currentCharacter.proficiencies || {};
-
+    
     // Parse all traits (e.g., "STR", "DEX", "STR/DEX")
     const traits = weapon.trait.split('/').map(t => t.trim().toLowerCase());
-
+    
     const abilityMap = {
         'str': 'str',
         'dex': 'dex',
@@ -12285,11 +12159,11 @@ function getWeaponAbilityModifierWithProficiency(weapon) {
         'wis': 'wis',
         'cha': 'cha'
     };
-
+    
     let highestModifier = -999;
     let usedAbility = '';
     let isProficientWithAny = false;
-
+    
     // Check each trait - only consider proficient abilities
     traits.forEach(trait => {
         const ability = abilityMap[trait];
@@ -12304,18 +12178,18 @@ function getWeaponAbilityModifierWithProficiency(weapon) {
             }
         }
     });
-
+    
     // If not proficient with any trait, return 0 (no modifier bonus)
     if (!isProficientWithAny) {
         weapon._usedAbilityForDamage = weapon.trait + ' (Not Proficient)';
         weapon._isNotProficient = true;
         return 0;
     }
-
+    
     // Store which ability was used for display purposes
     weapon._usedAbilityForDamage = usedAbility;
     weapon._isNotProficient = false;
-
+    
     return highestModifier === -999 ? 0 : highestModifier;
 }
 
@@ -12328,7 +12202,7 @@ function rollWeaponDamage(weaponType = 'primary') {
 
     // Check if character is proficient with this weapon's ability score
     const isProficient = isWeaponProficient(weapon);
-
+    
     // Get proficiency dice count:
     // - If proficient AND primary weapon: use weapon proficiency circles
     // - If proficient AND secondary weapon: use 1 (secondary never gets proficiency dice)
@@ -12344,10 +12218,10 @@ function rollWeaponDamage(weaponType = 'primary') {
     const damageTypes = parseDamageString(weapon.damage);
 
     // Get weapon ability modifier (only if proficient)
-    const abilityModifier = isProficient
-        ? getWeaponAbilityModifierWithProficiency(weapon)
+    const abilityModifier = isProficient 
+        ? getWeaponAbilityModifierWithProficiency(weapon) 
         : 0;
-
+    
     // Mark weapon proficiency status for display
     weapon._isNotProficient = !isProficient;
 
@@ -12368,383 +12242,6 @@ function rollWeaponDamage(weaponType = 'primary') {
     showWeaponDamageResults(weapon.name, rollResults, abilityModifier, weaponType);
 }
 
-// =================================================
-// SPELL DAMAGE SYSTEM
-// =================================================
-
-// Map of spell names (clean, lowercase) to their rollable damage dice
-// usesProficiency: true = dice count multiplied by Weapon Proficiency circles
-//                  false = always rolls the base dice only (no proficiency scaling)
-// Players can toggle this per-spell via the spell damage modal settings
-const SPELL_DAMAGE_DATA = {
-    'magic missile': { dice: '1d4', note: '+ Modifier (Max damage)', usesProficiency: false },
-    'shatter': { dice: '1d8', note: '', usesProficiency: true },
-    'inflict wounds': { dice: '2d6', note: '', usesProficiency: true },
-    'barkskin': { dice: '1d6', note: 'piercing damage', usesProficiency: true },
-    'spiritual weapon': { dice: '1d6', note: 'per Spell Point used', usesProficiency: false },
-    'chill touch': { dice: '1d4', note: '+ Modifier (Max damage)', usesProficiency: false },
-    'shocking grasp': { dice: '1d8', note: '', usesProficiency: true },
-    'burning hands': { dice: '1d8', note: '', usesProficiency: true },
-    'vampiric touch': { dice: '1d8', note: 'heals caster', usesProficiency: true },
-    'chromatic orb': { dice: '1d6', note: '', usesProficiency: true },
-    'flame strike': { dice: '1d8', note: '', usesProficiency: true },
-    'fire storm': { dice: '1d10', note: '', usesProficiency: true },
-    'bolt': { dice: '1d10', note: '', usesProficiency: true },
-    'acid/poison spray': { dice: '1d6', note: '', usesProficiency: true },
-    'call lightning': { dice: '1d6', note: '', usesProficiency: true },
-    'lightning bolt': { dice: '1d10', note: '', usesProficiency: true },
-    'chain lightning': { dice: '1d10', note: '', usesProficiency: true },
-    'scorching ray': { dice: '1d6', note: 'per bolt', usesProficiency: false },
-    'fireball': { dice: '1d8', note: '', usesProficiency: true },
-    'cloud kill': { dice: '1d6', note: '', usesProficiency: true },
-    'eldritch blast': { dice: '1d6', note: 'per bolt', usesProficiency: false },
-    'moonbeam': { dice: '1d6', note: '', usesProficiency: true },
-    'sunbeam': { dice: '1d6', note: '', usesProficiency: true },
-    'wall of fire': { dice: '1d10', note: '', usesProficiency: true },
-    'wall of ice': { dice: '1d8', note: '', usesProficiency: true },
-    'feeblemind': { dice: '1d4', note: '', usesProficiency: true },
-};
-
-// Check if a spell uses proficiency scaling for this character
-// Character overrides take priority, then falls back to SPELL_DAMAGE_DATA default
-function getSpellUsesProficiency(spellNameLower) {
-    if (currentCharacter && currentCharacter.spellProficiencySettings &&
-        currentCharacter.spellProficiencySettings.hasOwnProperty(spellNameLower)) {
-        return currentCharacter.spellProficiencySettings[spellNameLower];
-    }
-    const data = SPELL_DAMAGE_DATA[spellNameLower];
-    return data ? data.usesProficiency : false;
-}
-
-// Toggle proficiency scaling for a spell on the current character
-function toggleSpellProficiency(spellNameLower) {
-    if (!currentCharacter) return;
-    if (!currentCharacter.spellProficiencySettings) {
-        currentCharacter.spellProficiencySettings = {};
-    }
-    const currentValue = getSpellUsesProficiency(spellNameLower);
-    currentCharacter.spellProficiencySettings[spellNameLower] = !currentValue;
-    saveCharacters();
-    return !currentValue;
-}
-
-// Get the current weapon proficiency count (filled circles)
-function getSpellProficiencyDiceCount() {
-    return currentCharacter?.weaponProficiency || 1;
-}
-
-// Strip HTML tags from spell name to get clean text
-function getCleanSpellName(spellName) {
-    const temp = document.createElement('div');
-    temp.innerHTML = spellName;
-    // Get only the text before the <i> cost tag
-    const text = temp.textContent || temp.innerText || '';
-    return text.split(/\d+\s*(Spell|Stress|Class)/i)[0].trim();
-}
-
-// Get all known damage spells for the current character
-function getKnownDamageSpells() {
-    if (!currentCharacter) return [];
-
-    const regularSpells = currentCharacter.knownSpellGroups || [];
-    const necromancerBonusSpells = currentCharacter.necromancerBonusSpells || [];
-    const signatureBonusSpells = currentCharacter.signatureBonusSpells || [];
-    const allGroups = [...regularSpells, ...necromancerBonusSpells, ...signatureBonusSpells];
-
-    const damageSpells = [];
-    const seenNames = new Set(); // Avoid duplicates
-
-    allGroups.forEach(group => {
-        if (!group.spells) return;
-        group.spells.forEach(spell => {
-            const cleanName = getCleanSpellName(spell.name);
-            const lowerName = cleanName.toLowerCase();
-
-            // Check if this spell is in our damage data map
-            if (SPELL_DAMAGE_DATA[lowerName] && !seenNames.has(lowerName)) {
-                seenNames.add(lowerName);
-                const data = SPELL_DAMAGE_DATA[lowerName];
-                damageSpells.push({
-                    name: cleanName,
-                    dice: data.dice,
-                    note: data.note,
-                    fullName: spell.name, // original with HTML
-                    range: spell.range || '',
-                    save: spell.save || '',
-                    usesProficiency: getSpellUsesProficiency(lowerName)
-                });
-            }
-        });
-    });
-
-    return damageSpells;
-}
-
-// Show the spell damage selection modal (list of known damage spells)
-function showSpellDamageSelectionModal() {
-    const damageSpells = getKnownDamageSpells();
-
-    if (damageSpells.length === 0) {
-        showCustomDialog('No Damage Spells', 'This character does not know any attack spells that deal rollable damage.');
-        return;
-    }
-
-    const proficiency = getSpellProficiencyDiceCount();
-
-    const modal = document.createElement('div');
-    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-
-    function buildSpellRowHTML(spell, index) {
-        const useProf = getSpellUsesProficiency(spell.name.toLowerCase());
-        const parsed = parseDamageString(spell.dice);
-        const baseDice = parsed.length > 0 ? parsed[0].numDice : 1;
-        const totalDice = useProf ? baseDice * proficiency : baseDice;
-        const sides = parsed.length > 0 ? parsed[0].sides : '?';
-        const diceLabel = useProf && proficiency > 1
-            ? `${spell.dice} × ${proficiency} = ${totalDice}d${sides}`
-            : spell.dice;
-        const profActiveClass = useProf
-            ? 'bg-blue-500 text-white border-blue-500'
-            : 'bg-gray-200 dark:bg-gray-600 text-gray-500 dark:text-gray-400 border-gray-300 dark:border-gray-500';
-
-        return `
-          <div class="flex items-center justify-between p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" data-spell-row="${index}">
-              <button class="spell-prof-toggle flex-shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold mr-2 transition-colors cursor-pointer ${profActiveClass}" data-spell-name="${spell.name.toLowerCase()}" title="${useProf ? 'Proficiency ON — click to disable' : 'Proficiency OFF — click to enable'}">
-                  P
-              </button>
-              <div class="flex-1 mr-3 min-w-0">
-                 <div class="font-semibold text-sm">${spell.name}</div>
-                 <div class="text-xs text-gray-500 dark:text-gray-400" data-spell-info>
-                     ${diceLabel}${spell.note ? ' — ' + spell.note : ''}
-                     ${spell.range ? ' | Range: ' + spell.range : ''}
-                 </div>
-             </div>
-             <button class="spell-damage-roll-btn px-3 py-2 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition-colors whitespace-nowrap" data-spell-index="${index}">
-                 Roll
-             </button>
-         </div>`;
-    }
-
-    const spellButtonsHTML = damageSpells.map((spell, index) => buildSpellRowHTML(spell, index)).join('');
-
-    modal.innerHTML = `
-         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full mx-4 max-h-[80vh] overflow-y-auto">
-             <h3 class="text-lg font-semibold mb-1 text-center">Spell Damage</h3>
-              <p class="text-xs text-gray-500 dark:text-gray-400 text-center mb-1">Select a spell to roll damage</p>
-              <p class="text-xs text-gray-400 dark:text-gray-500 text-center mb-4">Weapon Proficiency: ${proficiency} · Toggle <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-500 text-white text-xs font-bold align-middle">P</span> to scale dice</p>
-              <div class="space-y-2 mb-6" id="spellDamageList">
-                 ${spellButtonsHTML}
-             </div>
-             <div class="flex justify-center">
-                 <button class="cancel-spell-damage px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Cancel</button>
-             </div>
-         </div>
-     `;
-
-    document.body.appendChild(modal);
-
-    // Roll buttons
-    modal.querySelectorAll('.spell-damage-roll-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const spellIndex = parseInt(this.dataset.spellIndex);
-            // Re-fetch spell data to get latest proficiency setting
-            const freshSpells = getKnownDamageSpells();
-            const spell = freshSpells[spellIndex];
-            modal.remove();
-            rollSpellDamage(spell);
-        });
-    });
-
-    // Proficiency toggle buttons
-    modal.querySelectorAll('.spell-prof-toggle').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const spellName = this.dataset.spellName;
-            const newValue = toggleSpellProficiency(spellName);
-
-            // Update the toggle button appearance
-            if (newValue) {
-                this.className = this.className
-                    .replace('bg-gray-200', 'bg-blue-500')
-                    .replace('dark:bg-gray-600', '')
-                    .replace('text-gray-500', 'text-white')
-                    .replace('dark:text-gray-400', '')
-                    .replace('border-gray-300', 'border-blue-500')
-                    .replace('dark:border-gray-500', '');
-                this.title = 'Proficiency ON — click to disable';
-            } else {
-                this.className = this.className
-                    .replace('bg-blue-500', 'bg-gray-200')
-                    .replace('text-white', 'text-gray-500')
-                    .replace('border-blue-500', 'border-gray-300');
-                this.className += ' dark:bg-gray-600 dark:text-gray-400 dark:border-gray-500';
-                this.title = 'Proficiency OFF — click to enable';
-            }
-
-            // Update the dice label in this row
-            const row = this.closest('[data-spell-row]');
-            const rowIndex = parseInt(row.dataset.spellRow);
-            const freshSpells = getKnownDamageSpells();
-            const spell = freshSpells[rowIndex];
-            const parsed = parseDamageString(spell.dice);
-            const baseDice = parsed.length > 0 ? parsed[0].numDice : 1;
-            const totalDice = newValue ? baseDice * proficiency : baseDice;
-            const sides = parsed.length > 0 ? parsed[0].sides : '?';
-            const diceLabel = newValue && proficiency > 1
-                ? `${spell.dice} × ${proficiency} = ${totalDice}d${sides}`
-                : spell.dice;
-            const infoDiv = row.querySelector('[data-spell-info]');
-            if (infoDiv) {
-                infoDiv.innerHTML = `${diceLabel}${spell.note ? ' — ' + spell.note : ''} ${spell.range ? ' | Range: ' + spell.range : ''}`;
-            }
-        });
-    });
-
-    // Cancel
-    modal.querySelector('.cancel-spell-damage').addEventListener('click', () => {
-        modal.remove();
-    });
-
-    // Close on backdrop click
-    modal.addEventListener('click', function (e) {
-        if (e.target === this) this.remove();
-    });
-}
-
-// Roll spell damage and show results
-function rollSpellDamage(spell) {
-    // Parse the dice string (e.g., "1d8", "2d6")
-    const parsed = parseDamageString(spell.dice);
-    if (parsed.length === 0) {
-        showCustomDialog('Cannot Roll', `Could not parse damage dice for ${spell.name}.`);
-        return;
-    }
-
-    const damageType = parsed[0];
-    const lowerName = spell.name.toLowerCase();
-
-    // Determine dice count: base dice × proficiency (if spell uses proficiency)
-    const useProf = getSpellUsesProficiency(lowerName);
-    const proficiency = getSpellProficiencyDiceCount();
-    const totalDice = useProf ? damageType.numDice * proficiency : damageType.numDice;
-
-    // Roll all dice
-    const rolls = [];
-    let total = 0;
-
-    for (let i = 0; i < totalDice; i++) {
-        const roll = Math.floor(Math.random() * damageType.sides) + 1;
-        rolls.push(roll);
-        total += roll;
-    }
-
-    // Get Spell Attack Bonus (class spellcasting ability modifier)
-    // Uses the same value shown in the Spell Casting section of the character sheet
-    // Spell Attack Bonus = DC Save - 8, where DC Save = 8 + ability modifier
-    const dcSave = calculateDCSave(currentCharacter);
-    const spellModifier = dcSave !== null ? dcSave - 8 : 0;
-    const spellAbility = getSpellcastingAbility();
-
-    // Boon damage bonus (per die, same as weapons)
-    const boonDamagePerDie = currentCharacter.attackDamageBonus || 0;
-    const boonDamageTotalBonus = boonDamagePerDie * totalDice;
-
-    const grandTotal = total + spellModifier + boonDamageTotalBonus;
-
-    // Build the formula line: e.g. "1d8 × 3 = 3d8"
-    let formulaHTML = '';
-    if (useProf && proficiency > 1) {
-        formulaHTML = `<div class="font-semibold text-sm mb-2">${spell.dice} × ${proficiency} Prof = ${totalDice}d${damageType.sides} ${spell.range ? '| Range: ' + spell.range : ''}</div>`;
-    } else {
-        formulaHTML = `<div class="font-semibold text-sm mb-2">${totalDice}d${damageType.sides} ${spell.range ? '| Range: ' + spell.range : ''}</div>`;
-    }
-
-    // Build the results breakdown: [rolls] + modifier
-    let breakdownHTML = `[${rolls.join(', ')}]`;
-
-    breakdownHTML += ` + ${spellModifier} ${spellAbility.toUpperCase()}`;
-
-    if (boonDamageTotalBonus > 0) {
-        breakdownHTML += ` + ${boonDamageTotalBonus} Boon (+${boonDamagePerDie}/die)`;
-    }
-
-
-
-    let noteHTML = '';
-    if (spell.note) {
-        noteHTML = `<div class="text-xs text-gray-500 dark:text-gray-400 mt-2 italic">${spell.note}</div>`;
-    }
-
-    // Detail lines
-    let modifierDetailHTML = '';
-    if (useProf) {
-        modifierDetailHTML += `<div class="text-sm text-gray-600 dark:text-gray-400 mt-2"><strong>Weapon Proficiency:</strong> ${proficiency} (${damageType.numDice}d${damageType.sides} × ${proficiency} = ${totalDice}d${damageType.sides})</div>`;
-    }
-    modifierDetailHTML += `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1"><strong>Spell Attack Bonus (${spellAbility.toUpperCase()}):</strong> ${spellModifier >= 0 ? '+' : ''}${spellModifier}</div>`;
-    if (boonDamageTotalBonus > 0) {
-        modifierDetailHTML += `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1"><strong>Boon Damage Bonus:</strong> +${boonDamagePerDie} per die (${totalDice} dice = +${boonDamageTotalBonus})</div>`;
-    }
-
-    // Store current spell data for reroll
-    const spellRollData = JSON.stringify(spell);
-
-    const resultModal = document.createElement('div');
-    resultModal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-    resultModal.id = 'spellDamageResultModal';
-    resultModal.innerHTML = `
-         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
-             <h3 class="text-lg font-semibold mb-1 text-center">${spell.name}</h3>
-             <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-4">Spell Damage Roll</p>
- 
-             <div class="text-center mb-4">
-                 ${formulaHTML}
-                 <div class="damage-rolls-display text-lg mb-2">${breakdownHTML}</div>
-                 <div class="text-3xl font-bold text-red-600 dark:text-red-400">${grandTotal}</div>
-                 ${noteHTML}
-                 ${modifierDetailHTML}
-             </div>
- 
-             <div class="flex justify-center space-x-3 mt-4">
-                 <button class="spell-damage-reroll px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-semibold transition-colors" data-spell='${spellRollData.replace(/'/g, "&#39;")}'>
-                     Re-Roll
-                 </button>
-                 <button class="spell-damage-back px-4 py-2 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-semibold transition-colors">
-                     Back to Spells
-                 </button>
-                 <button class="spell-damage-close px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm transition-colors">
-                     Close
-                 </button>
-             </div>
-         </div>
-     `;
-
-    document.body.appendChild(resultModal);
-
-    // Reroll
-    resultModal.querySelector('.spell-damage-reroll').addEventListener('click', function () {
-        const spellData = JSON.parse(this.dataset.spell);
-        resultModal.remove();
-        rollSpellDamage(spellData);
-    });
-
-    // Back to spell list
-    resultModal.querySelector('.spell-damage-back').addEventListener('click', function () {
-        resultModal.remove();
-        showSpellDamageSelectionModal();
-    });
-
-    // Close
-    resultModal.querySelector('.spell-damage-close').addEventListener('click', function () {
-        resultModal.remove();
-    });
-
-    // Close on backdrop click
-    resultModal.addEventListener('click', function (e) {
-        if (e.target === this) this.remove();
-    });
-}
-
-
-
 // Function to handle the general Damage button click
 function openWeaponDamageModal() {
     if (!currentCharacter) {
@@ -12755,71 +12252,42 @@ function openWeaponDamageModal() {
     const hasPrimary = currentCharacter.primaryWeapon;
     const hasSecondary = currentCharacter.secondaryWeapon;
 
-    const hasDamageSpells = getKnownDamageSpells().length > 0;
-
-    // If no weapons and no damage spells at all
-    if (!hasPrimary && !hasSecondary && !hasDamageSpells) {
-        showCustomDialog('No Damage Options', 'This character has no weapons equipped and no attack spells known.');
+    if (!hasPrimary && !hasSecondary) {
+        showCustomDialog('No Weapons', 'This character has no weapons equipped to roll damage for.');
         return;
     }
 
-    // Count total options to decide if we need a selection modal
-    const weaponCount = (hasPrimary ? 1 : 0) + (hasSecondary ? 1 : 0);
-    const totalOptions = weaponCount + (hasDamageSpells ? 1 : 0);
-
-    if (totalOptions === 1 && !hasDamageSpells) {
-        // Only one weapon, no spells — roll directly
-        if (hasPrimary) rollWeaponDamage('primary');
-        else rollWeaponDamage('secondary');
-    } else if (totalOptions === 1 && hasDamageSpells && weaponCount === 0) {
-        // Only spells, no weapons — go straight to spell list
-        showSpellDamageSelectionModal();
+    if (hasPrimary && !hasSecondary) {
+        // Only primary weapon - roll it
+        rollWeaponDamage('primary');
+    } else if (!hasPrimary && hasSecondary) {
+        // Only secondary weapon - roll it
+        rollWeaponDamage('secondary');
     } else {
-        // Multiple options or spells available — show selection modal
-        showDamageTypeSelectionModal(hasPrimary, hasSecondary, hasDamageSpells);
+        // Both weapons available - let user choose
+        showWeaponSelectionModal();
     }
 }
 
-// Unified damage type selection modal (weapons + spell option)
-function showDamageTypeSelectionModal(hasPrimary, hasSecondary, hasDamageSpells) {
+// Function to show weapon selection when both weapons are available
+function showWeaponSelectionModal() {
     const modal = document.createElement('div');
     modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-    let buttonsHTML = '';
-
-    if (hasPrimary) {
-        buttonsHTML += `
-            <button class="weapon-choice-btn w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-primary hover:text-white transition-colors text-left" data-weapon="primary">
-                <div class="font-semibold">${currentCharacter.primaryWeapon.name}</div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">Primary weapon (with proficiency)</div>
-                <div class="text-sm font-medium mt-1">${currentCharacter.primaryWeapon.damage}</div>
-            </button>
-        `;
-    }
-
-    if (hasSecondary) {
-        buttonsHTML += `
-            <button class="weapon-choice-btn w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-primary hover:text-white transition-colors text-left" data-weapon="secondary">
-                <div class="font-semibold">${currentCharacter.secondaryWeapon.name}</div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">Secondary weapon (no proficiency)</div>
-                <div class="text-sm font-medium mt-1">${currentCharacter.secondaryWeapon.damage}</div>
-            </button>
-        `;
-    }
-
-    if (hasDamageSpells) {
-        const spellCount = getKnownDamageSpells().length;
-        buttonsHTML += `
-            <button class="spell-damage-choice-btn w-full p-3 border border-purple-400 dark:border-purple-500 rounded-lg hover:bg-purple-500 hover:text-white transition-colors text-left bg-purple-50 dark:bg-purple-900">
-                <div class="font-semibold"><i class="fas fa-hat-wizard mr-2"></i>Spell Damage</div>
-                <div class="text-sm text-purple-600 dark:text-purple-300">${spellCount} attack spell${spellCount !== 1 ? 's' : ''} known</div>
-            </button>
-        `;
-    }
     modal.innerHTML = `
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
-            <h3 class="text-lg font-semibold mb-4 text-center">Select Damage Type</h3>
+            <h3 class="text-lg font-semibold mb-4 text-center">Select Weapon to Roll</h3>
             <div class="space-y-3 mb-6">
-                ${buttonsHTML}
+                <button class="weapon-choice-btn w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-primary hover:text-white transition-colors text-left" data-weapon="primary">
+                    <div class="font-semibold">${currentCharacter.primaryWeapon.name}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Primary weapon (with proficiency)</div>
+                    <div class="text-sm font-medium mt-1">${currentCharacter.primaryWeapon.damage}</div>
+                </button>
+                
+                <button class="weapon-choice-btn w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-primary hover:text-white transition-colors text-left" data-weapon="secondary">
+                    <div class="font-semibold">${currentCharacter.secondaryWeapon.name}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Secondary weapon (no proficiency)</div>
+                    <div class="text-sm font-medium mt-1">${currentCharacter.secondaryWeapon.damage}</div>
+                </button>
             </div>
             <div class="flex justify-center">
                 <button class="cancel-weapon-choice px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Cancel</button>
@@ -12829,7 +12297,7 @@ function showDamageTypeSelectionModal(hasPrimary, hasSecondary, hasDamageSpells)
 
     document.body.appendChild(modal);
 
-    // Weapon buttons
+    // Add event listeners
     modal.querySelectorAll('.weapon-choice-btn').forEach(btn => {
         btn.addEventListener('click', function () {
             const weaponType = this.dataset.weapon;
@@ -12838,23 +12306,15 @@ function showDamageTypeSelectionModal(hasPrimary, hasSecondary, hasDamageSpells)
         });
     });
 
-    // Spell damage button
-    const spellBtn = modal.querySelector('.spell-damage-choice-btn');
-    if (spellBtn) {
-        spellBtn.addEventListener('click', function () {
-            modal.remove();
-            showSpellDamageSelectionModal();
-        });
-    }
-
-    // Cancel
     modal.querySelector('.cancel-weapon-choice').addEventListener('click', () => {
         modal.remove();
     });
 
-    // Close on backdrop click
+    // Close modal when clicking outside
     modal.addEventListener('click', function (e) {
-        if (e.target === this) this.remove();
+        if (e.target === this) {
+            this.remove();
+        }
     });
 }
 
@@ -12978,30 +12438,30 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
     // ---------------------------------------------------------------
     if (existingResults) {
         // Check proficiency for both weapons
-        const primaryWeapon = currentCharacter.primaryWeapon;
-        const secondaryWeapon = currentCharacter.secondaryWeapon;
+const primaryWeapon = currentCharacter.primaryWeapon;
+const secondaryWeapon = currentCharacter.secondaryWeapon;
 
-        const primaryNotProf = primaryWeapon && primaryWeapon._isNotProficient;
-        const secondaryNotProf = secondaryWeapon && secondaryWeapon._isNotProficient;
+const primaryNotProf = primaryWeapon && primaryWeapon._isNotProficient;
+const secondaryNotProf = secondaryWeapon && secondaryWeapon._isNotProficient;
 
-        if (primaryNotProf || secondaryNotProf) {
-            title.innerHTML = `
+if (primaryNotProf || secondaryNotProf) {
+    title.innerHTML = `
         Primary + Secondary Weapon Damage<br>
         <span class="text-red-500 text-xl font-bold">
             (Not Proficient) – No Modifier & Damage Die Reduced.
         </span>
     `;
-        } else {
-            title.textContent = `Primary + Secondary Weapon Damage`;
-        }
+} else {
+    title.textContent = `Primary + Secondary Weapon Damage`;
+}
 
     } else {
         const weaponTypeText = weaponType === 'primary' ? 'Primary' : 'Secondary';
-
+        
         // Check if weapon is not proficient
         const weapon = weaponType === 'primary' ? currentCharacter.primaryWeapon : currentCharacter.secondaryWeapon;
         const isNotProficient = weapon && weapon._isNotProficient;
-
+        
         if (isNotProficient) {
             title.innerHTML = `${weaponName} (${weaponTypeText}) Damage Roll<br><span class="text-red-500 text-xl font-bold">(Not Proficient) - No Modifier & Damage Die Reduced.</span>`;
         } else {
@@ -13261,15 +12721,15 @@ function rollSecondaryWeaponDamage() {
     // Roll secondary weapon
     const secondaryWeapon = currentCharacter.secondaryWeapon;
     const secondaryDamageTypes = parseDamageString(secondaryWeapon.damage);
-
+    
     // Check if character is proficient with secondary weapon's ability score
     const isSecondaryProficient = isWeaponProficient(secondaryWeapon);
-
+    
     // Get modifier only if proficient
-    const secondaryAbilityModifier = isSecondaryProficient
-        ? getWeaponAbilityModifierWithProficiency(secondaryWeapon)
+    const secondaryAbilityModifier = isSecondaryProficient 
+        ? getWeaponAbilityModifierWithProficiency(secondaryWeapon) 
         : 0;
-
+    
     // Mark proficiency status for display
     secondaryWeapon._isNotProficient = !isSecondaryProficient;
 
@@ -13470,8 +12930,81 @@ function makeSecondaryWeaponDamageClickable() {
     }
 }
 
-// OLD openWeaponDamageModal and showWeaponSelectionModal removed —
-// replaced by new versions above (lines ~12511-12620) that include Spell Damage support
+// Function to handle the general Damage button click
+function openWeaponDamageModal() {
+    if (!currentCharacter) {
+        showCustomDialog('No Character Selected', 'Please select a character first.');
+        return;
+    }
+
+    const hasPrimary = currentCharacter.primaryWeapon;
+    const hasSecondary = currentCharacter.secondaryWeapon;
+
+    if (!hasPrimary && !hasSecondary) {
+        showCustomDialog('No Weapons', 'This character has no weapons equipped to roll damage for.');
+        return;
+    }
+
+    if (hasPrimary && !hasSecondary) {
+        // Only primary weapon - roll it
+        rollWeaponDamage('primary');
+    } else if (!hasPrimary && hasSecondary) {
+        // Only secondary weapon - roll it
+        rollWeaponDamage('secondary');
+    } else {
+        // Both weapons available - let user choose
+        showWeaponSelectionModal();
+    }
+}
+
+// Function to show weapon selection when both weapons are available
+function showWeaponSelectionModal() {
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+    modal.innerHTML = `
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
+            <h3 class="text-lg font-semibold mb-4 text-center">Select Weapon to Roll</h3>
+            <div class="space-y-3 mb-6">
+                <button class="weapon-choice-btn w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-primary hover:text-white transition-colors text-left" data-weapon="primary">
+                    <div class="font-semibold">${currentCharacter.primaryWeapon.name}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Primary weapon (with proficiency)</div>
+                    <div class="text-sm font-medium mt-1">${currentCharacter.primaryWeapon.damage}</div>
+                </button>
+                
+                <button class="weapon-choice-btn w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-primary hover:text-white transition-colors text-left" data-weapon="secondary">
+                    <div class="font-semibold">${currentCharacter.secondaryWeapon.name}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Secondary weapon (no proficiency)</div>
+                    <div class="text-sm font-medium mt-1">${currentCharacter.secondaryWeapon.damage}</div>
+                </button>
+            </div>
+            <div class="flex justify-center">
+                <button class="cancel-weapon-choice px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Cancel</button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Add event listeners
+    modal.querySelectorAll('.weapon-choice-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const weaponType = this.dataset.weapon;
+            rollWeaponDamage(weaponType);
+            modal.remove();
+        });
+    });
+
+    modal.querySelector('.cancel-weapon-choice').addEventListener('click', () => {
+        modal.remove();
+    });
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', function (e) {
+        if (e.target === this) {
+            this.remove();
+        }
+    });
+}
 
 // Update the main function to call both
 function makeWeaponDamageClickable() {
@@ -13647,7 +13180,7 @@ function rollAttackRoll(attackOption) {
     if (attackOption.type === 'weapon') {
         // Check if character is proficient with this weapon's ability score
         const isProficient = isWeaponProficient(attackOption.weapon);
-
+        
         if (isProficient) {
             // Proficient: Get modifier from proficient abilities only
             abilityModifier = getWeaponAbilityModifierWithProficiency(attackOption.weapon);
@@ -13658,7 +13191,7 @@ function rollAttackRoll(attackOption) {
             abilityUsed = attackOption.weapon.trait + ' (Not Proficient)';
             attackOption.weapon._isNotProficient = true;
         }
-
+        
         fightingStyleBonus = getArcherAttackBonus(currentCharacter);
         // Get weapon's Attack Bonus from bonuses (if any)
         if (attackOption.weapon.bonuses && attackOption.weapon.bonuses.attackBonus) {
@@ -13675,10 +13208,10 @@ function rollAttackRoll(attackOption) {
         abilityUsed = spellAbility.toUpperCase();
     }
 
-    // Boon attack bonus (from Nature's Boon, Performer's Boon, etc.)
-    const boonAttackBonus = currentCharacter.attackDamageBonus || 0;
-
-    const totalAttack = usedRoll + abilityModifier + fightingStyleBonus + weaponAttackBonus + armorAttackBonus + boonAttackBonus;
+         // Boon attack bonus (from Nature's Boon, Performer's Boon, etc.)
+     const boonAttackBonus = currentCharacter.attackDamageBonus || 0;
+ 
+     const totalAttack = usedRoll + abilityModifier + fightingStyleBonus + weaponAttackBonus + armorAttackBonus + boonAttackBonus;
 
     // Note the extra firstRoll argument
     showAttackRollResults(
@@ -13724,10 +13257,10 @@ function showAttackRollResults(
     if (hasDisadvantage) {
         titleText += ' (Disadvantage)';
     }
-
+    
     // Check if weapon attack is not proficient
     const isNotProficient = attackOption.type === 'weapon' && attackOption.weapon && attackOption.weapon._isNotProficient;
-
+    
     if (isNotProficient) {
         title.innerHTML = `${titleText} <br><span class="text-red-500 text-xl font-bold">(Not Proficient) - No Modifier</span>`;
     } else {
@@ -13759,8 +13292,8 @@ function showAttackRollResults(
         breakdownText += ` + Armor: ${armorAttackBonus >= 0 ? '+' : ''}${armorAttackBonus}`;
     }
     if (boonAttackBonus > 0) {
-        breakdownText += ` + Boon: +${boonAttackBonus}`;
-    }
+         breakdownText += ` + Boon: +${boonAttackBonus}`;
+     }
     breakdownDisplay.textContent = breakdownText;
 
     totalDisplay.textContent = totalAttack;
@@ -13775,9 +13308,9 @@ function showAttackRollResults(
     if (weaponAttackBonus !== 0) {
         modifierHTML += `<br><strong>Weapon Attack Bonus:</strong> ${weaponAttackBonus >= 0 ? '+' : ''}${weaponAttackBonus}`;
     }
-    if (boonAttackBonus > 0) {
-        modifierHTML += `<br><strong>Boon Attack Bonus:</strong> +${boonAttackBonus}`;
-    }
+     if (boonAttackBonus > 0) {
+         modifierHTML += `<br><strong>Boon Attack Bonus:</strong> +${boonAttackBonus}`;
+     }
     if (hasDisadvantage) {
         modifierHTML += `<br><span class="text-red-500 dark:text-red-400">` +
             `<strong>⚠️ Wizard Armor Penalty:</strong> Disadvantage</span>`;
@@ -13885,21 +13418,19 @@ document.getElementById('editCharacterForm').addEventListener('submit', function
     const wisInput = parseInt(document.getElementById('editWisInput').value) || 0;
     const chaInput = parseInt(document.getElementById('editChaInput').value) || 0;
 
-    // Calculate the base ability scores by removing all bonuses (must match pre-fill formula)
+    // Calculate the base ability scores by removing all bonuses
     const raceAbilityBonuses = currentCharacter.abilityScoreAllocations || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const primaryWeaponAbilityBonuses = currentCharacter.primaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const secondaryWeaponAbilityBonuses = currentCharacter.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const armorAbilityBonuses = currentCharacter.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-    const wildBeastAbilityBonuses = currentCharacter.wildBeastAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-    const awakenedMindAbilityBonuses = currentCharacter.awakenedMindAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
 
     // Set base ability scores (input minus all bonuses)
-    currentCharacter.str = strInput - raceAbilityBonuses.str - primaryWeaponAbilityBonuses.str - secondaryWeaponAbilityBonuses.str - armorAbilityBonuses.str - wildBeastAbilityBonuses.str - awakenedMindAbilityBonuses.str;
-    currentCharacter.dex = dexInput - raceAbilityBonuses.dex - primaryWeaponAbilityBonuses.dex - secondaryWeaponAbilityBonuses.dex - armorAbilityBonuses.dex - wildBeastAbilityBonuses.dex - awakenedMindAbilityBonuses.dex;
-    currentCharacter.con = conInput - raceAbilityBonuses.con - primaryWeaponAbilityBonuses.con - secondaryWeaponAbilityBonuses.con - armorAbilityBonuses.con - wildBeastAbilityBonuses.con - awakenedMindAbilityBonuses.con;
-    currentCharacter.int = intInput - raceAbilityBonuses.int - primaryWeaponAbilityBonuses.int - secondaryWeaponAbilityBonuses.int - armorAbilityBonuses.int - wildBeastAbilityBonuses.int - awakenedMindAbilityBonuses.int;
-    currentCharacter.wis = wisInput - raceAbilityBonuses.wis - primaryWeaponAbilityBonuses.wis - secondaryWeaponAbilityBonuses.wis - armorAbilityBonuses.wis - wildBeastAbilityBonuses.wis - awakenedMindAbilityBonuses.wis;
-    currentCharacter.cha = chaInput - raceAbilityBonuses.cha - primaryWeaponAbilityBonuses.cha - secondaryWeaponAbilityBonuses.cha - armorAbilityBonuses.cha - wildBeastAbilityBonuses.cha - awakenedMindAbilityBonuses.cha;
+    currentCharacter.str = strInput - raceAbilityBonuses.str - primaryWeaponAbilityBonuses.str - secondaryWeaponAbilityBonuses.str - armorAbilityBonuses.str;
+    currentCharacter.dex = dexInput - raceAbilityBonuses.dex - primaryWeaponAbilityBonuses.dex - secondaryWeaponAbilityBonuses.dex - armorAbilityBonuses.dex;
+    currentCharacter.con = conInput - raceAbilityBonuses.con - primaryWeaponAbilityBonuses.con - secondaryWeaponAbilityBonuses.con - armorAbilityBonuses.con;
+    currentCharacter.int = intInput - raceAbilityBonuses.int - primaryWeaponAbilityBonuses.int - secondaryWeaponAbilityBonuses.int - armorAbilityBonuses.int;
+    currentCharacter.wis = wisInput - raceAbilityBonuses.wis - primaryWeaponAbilityBonuses.wis - secondaryWeaponAbilityBonuses.wis - armorAbilityBonuses.wis;
+    currentCharacter.cha = chaInput - raceAbilityBonuses.cha - primaryWeaponAbilityBonuses.cha - secondaryWeaponAbilityBonuses.cha - armorAbilityBonuses.cha;
 
     // Update resources
     currentCharacter.hpMax = parseInt(document.getElementById('editHpMax').value) || 0;
@@ -13932,18 +13463,18 @@ document.getElementById('editCharacterForm').addEventListener('submit', function
     // Update combat stats
     currentCharacter.evasion = parseInt(document.getElementById('editEvasion').value) || 0;
 
-    // MISSING: Update evasionData.base to match
-    if (!currentCharacter.evasionData) {
-        currentCharacter.evasionData = {
-            base: currentCharacter.evasion,
-            temporary: 0,
-            unarmoredDefense: 0,
-            mageArmor: 0,
-            fightingStyle: 0
-        };
-    } else {
-        currentCharacter.evasionData.base = currentCharacter.evasion;
-    }
+// MISSING: Update evasionData.base to match
+if (!currentCharacter.evasionData) {
+    currentCharacter.evasionData = {
+        base: currentCharacter.evasion,
+        temporary: 0,
+        unarmoredDefense: 0,
+        mageArmor: 0,
+        fightingStyle: 0
+    };
+} else {
+    currentCharacter.evasionData.base = currentCharacter.evasion;
+}
 
     currentCharacter.armor = parseInt(document.getElementById('editArmor').value) || 0;
 
@@ -14061,17 +13592,13 @@ function getCurrentDexModifier(character) {
     const primaryWeaponAbilityBonuses = character.primaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const secondaryWeaponAbilityBonuses = character.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const armorAbilityBonuses = character.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-    const wildBeastAbilityBonuses = character.wildBeastAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-    const awakenedMindAbilityBonuses = character.awakenedMindAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
 
     const totalDex =
         (character.dex || 0) +
         raceAbilityBonuses.dex +
         primaryWeaponAbilityBonuses.dex +
         secondaryWeaponAbilityBonuses.dex +
-        armorAbilityBonuses.dex +
-        wildBeastAbilityBonuses.dex +
-        awakenedMindAbilityBonuses.dex;
+        armorAbilityBonuses.dex;
 
     return totalDex
 }
@@ -14081,17 +13608,13 @@ function getCurrentConModifier(character) {
     const primaryWeaponAbilityBonuses = character.primaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const secondaryWeaponAbilityBonuses = character.secondaryWeaponAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const armorAbilityBonuses = character.armorAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-    const wildBeastAbilityBonuses = character.wildBeastAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-    const awakenedMindAbilityBonuses = character.awakenedMindAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
 
     const totalCon =
         (character.con || 0) +
         raceAbilityBonuses.con +
         primaryWeaponAbilityBonuses.con +
         secondaryWeaponAbilityBonuses.con +
-        armorAbilityBonuses.con +
-        wildBeastAbilityBonuses.con +
-        awakenedMindAbilityBonuses.con;
+        armorAbilityBonuses.con;
 
     return totalCon
 }
@@ -15214,37 +14737,37 @@ function getRandomMonster(characterLevel) {
 // Roll for monster quantity based on character level
 function rollMonsterQuantity(characterLevel) {
     const level = characterLevel || 1;
-
-    if (level < 3) {
-        // Level 1-2: 1 Monster Card
-        return 1;
-    } else if (level < 5) {
-        // Level 3-4: 2 Monster Cards
-        return 2;
-    } else if (level < 8) {
-        // Level 5-7: Roll 1d4-1 (min 1)
-        const d4Roll = Math.floor(Math.random() * 4) + 1;
-        return Math.max(1, d4Roll - 1);
-    } else {
-        // Level 8+: Roll 1d4+1 (max 4)
-        const d4Roll = Math.floor(Math.random() * 4) + 1;
-        return Math.min(4, d4Roll + 1);
-    }
-}
-
-// Get the quantity display text for the banner
-function getQuantityRollText(characterLevel, quantity) {
-    const level = characterLevel || 1;
-
-    if (level < 3) {
-        return `${quantity} (Level 1-2)`;
-    } else if (level < 5) {
-        return `${quantity} (Level 3-4)`;
-    } else if (level < 8) {
-        return `1d4-1 = ${quantity}`;
-    } else {
-        return `1d4+1 = ${quantity}`;
-    }
+ 
+     if (level < 3) {
+         // Level 1-2: 1 Monster Card
+         return 1;
+     } else if (level < 5) {
+         // Level 3-4: 2 Monster Cards
+         return 2;
+     } else if (level < 8) {
+         // Level 5-7: Roll 1d4-1 (min 1)
+         const d4Roll = Math.floor(Math.random() * 4) + 1;
+         return Math.max(1, d4Roll - 1);
+     } else {
+         // Level 8+: Roll 1d4+1 (max 4)
+         const d4Roll = Math.floor(Math.random() * 4) + 1;
+         return Math.min(4, d4Roll + 1);
+     }
+ }
+ 
+ // Get the quantity display text for the banner
+ function getQuantityRollText(characterLevel, quantity) {
+     const level = characterLevel || 1;
+ 
+     if (level < 3) {
+         return `${quantity} (Level 1-2)`;
+     } else if (level < 5) {
+         return `${quantity} (Level 3-4)`;
+     } else if (level < 8) {
+         return `1d4-1 = ${quantity}`;
+     } else {
+         return `1d4+1 = ${quantity}`;
+     }
 }
 
 // Summon monsters
@@ -15252,38 +14775,38 @@ function summonMonsters() {
     if (!currentCharacter) return;
     if (!hasMightySummoner(currentCharacter)) return;
 
-    // Check if we have stress resources available (including temporary)
-    const stressResource = currentCharacter.resources?.stress;
-    if (!stressResource) {
-        console.warn('No stress resource found');
-        return;
-    }
-
-    const stressMax = stressResource.max || 0;
-    const stressTemp = stressResource.temp || 0;
-    const stressTotalMax = stressMax + stressTemp;
-    const stressUsed = stressResource.used?.length || 0;
-
-    // Check if there's an available stress slot (including temp)
-    if (stressUsed >= stressTotalMax) {
-        // Show warning - no stress available
-        const banner = document.getElementById('summonResultBanner');
-        banner.innerHTML = `<i class="fas fa-exclamation-triangle mr-1"></i> <strong>Cannot summon!</strong> No Stress resources available.`;
-        banner.style.display = 'block';
-        banner.style.backgroundColor = '#dc2626'; // Red background for error
-        setTimeout(() => {
-            banner.style.display = 'none';
-            banner.style.backgroundColor = ''; // Reset
-        }, 5000);
-        return;
-    }
-
-    // Consume 1 Stress (add the next index to used array)
-    if (!stressResource.used) {
-        stressResource.used = [];
-    }
-    const nextStressIndex = stressUsed; // The next unused index
-    stressResource.used.push(nextStressIndex);
+// Check if we have stress resources available (including temporary)
+     const stressResource = currentCharacter.resources?.stress;
+     if (!stressResource) {
+         console.warn('No stress resource found');
+         return;
+     }
+ 
+     const stressMax = stressResource.max || 0;
+     const stressTemp = stressResource.temp || 0;
+     const stressTotalMax = stressMax + stressTemp;
+     const stressUsed = stressResource.used?.length || 0;
+ 
+     // Check if there's an available stress slot (including temp)
+     if (stressUsed >= stressTotalMax) {
+         // Show warning - no stress available
+         const banner = document.getElementById('summonResultBanner');
+         banner.innerHTML = `<i class="fas fa-exclamation-triangle mr-1"></i> <strong>Cannot summon!</strong> No Stress resources available.`;
+         banner.style.display = 'block';
+         banner.style.backgroundColor = '#dc2626'; // Red background for error
+         setTimeout(() => {
+             banner.style.display = 'none';
+             banner.style.backgroundColor = ''; // Reset
+         }, 5000);
+         return;
+     }
+ 
+     // Consume 1 Stress (add the next index to used array)
+     if (!stressResource.used) {
+         stressResource.used = [];
+     }
+     const nextStressIndex = stressUsed; // The next unused index
+     stressResource.used.push(nextStressIndex);
 
     const level = currentCharacter.level || 1;
     const quantity = rollMonsterQuantity(level);
@@ -15317,8 +14840,8 @@ function summonMonsters() {
     // Show result banner
     const banner = document.getElementById('summonResultBanner');
     const quantityText = getQuantityRollText(level, quantity);
-    banner.innerHTML = `<i class="fas fa-magic mr-1"></i> Summoned ${quantity}x <strong>${monster.name}</strong>! (${quantityText}) <span class="text-yellow-300">(Cost: 1 Stress)</span>`;
-    banner.style.display = 'block';
+     banner.innerHTML = `<i class="fas fa-magic mr-1"></i> Summoned ${quantity}x <strong>${monster.name}</strong>! (${quantityText}) <span class="text-yellow-300">(Cost: 1 Stress)</span>`;  
+        banner.style.display = 'block';
 
     // Hide banner after 5 seconds
     setTimeout(() => {
@@ -15345,11 +14868,11 @@ function renderSummonedMonsters(character) {
     if (!character.summonedMonsters || character.summonedMonsters.length === 0) {
         container.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 text-sm py-4">No monsters summoned yet. Click "Summon Monsters" to call forth your allies!</div>';
         if (clearBtn) clearBtn.style.display = 'none';
-        // Enable summon button when no monsters are summoned
-        if (summonBtn) {
-            summonBtn.disabled = false;
-            summonBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-        }
+// Enable summon button when no monsters are summoned
+         if (summonBtn) {
+             summonBtn.disabled = false;
+             summonBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+         }
 
         return;
     }
@@ -15357,11 +14880,11 @@ function renderSummonedMonsters(character) {
     // Show clear button
     if (clearBtn) clearBtn.style.display = 'block';
 
-    // Disable summon button when monsters are already summoned
-    if (summonBtn) {
-        summonBtn.disabled = true;
-        summonBtn.classList.add('opacity-50', 'cursor-not-allowed');
-    }
+// Disable summon button when monsters are already summoned
+     if (summonBtn) {
+         summonBtn.disabled = true;
+         summonBtn.classList.add('opacity-50', 'cursor-not-allowed');
+     }
 
     // Render each monster
     character.summonedMonsters.forEach((monster, index) => {
@@ -15513,7 +15036,7 @@ document.getElementById('monstersContainer').addEventListener('click', function 
     } else if (e.target.closest('.monster-dismiss')) {
         handleMonsterDismiss(e);
     } else if (e.target.closest('.monster-damage-btn')) {
-        handleMonsterDamageRoll(e);
+         handleMonsterDamageRoll(e);
     }
 });
 // Note: monstersToggle uses the global toggleSection system via event delegation at line ~6772 // The button ID 'monstersToggle' and content ID 'monstersContent' follow the naming convention
@@ -15521,60 +15044,60 @@ document.getElementById('monstersContainer').addEventListener('click', function 
  
   * Handle monster damage button click - rolls the damage dice and shows result
   */
-function handleMonsterDamageRoll(e) {
-    const btn = e.target.closest('.monster-damage-btn');
-    if (!btn) return;
+ function handleMonsterDamageRoll(e) {
+     const btn = e.target.closest('.monster-damage-btn');
+     if (!btn) return;
+ 
+     const damageString = btn.dataset.damage; // e.g., "2d6", "1d8", "3d4"
+     const monsterId = parseInt(btn.dataset.monsterId);
+     const monsterMod = parseInt(btn.dataset.mod) || 0;
+ 
+     // Find the monster to get its name
+     let monsterName = 'Monster';
+     if (currentCharacter && currentCharacter.summonedMonsters) {
+         const monster = currentCharacter.summonedMonsters.find(m => m.id === monsterId);
+         if (monster) monsterName = monster.name;
+     }
+ 
+     // Parse the damage string (e.g., "2d6" -> count=2, die=6)
+     const match = damageString.match(/(\d+)d(\d+)/i);
+     if (!match) {
+         showCustomDialog("Error", "Invalid damage format");
+         return;
+     }
+ 
+     const diceCount = parseInt(match[1]);
+     const dieSize = parseInt(match[2]);
+ 
+     // Roll the dice
+     const rolls = [];
+     for (let i = 0; i < diceCount; i++) {
+         rolls.push(Math.floor(Math.random() * dieSize) + 1);
+     }
+ 
+     const diceTotal = rolls.reduce((a, b) => a + b, 0);
+     const total = diceTotal + monsterMod;
+ 
+     // Build the result message
+     let rollsDisplay = rolls.join(' + ');
+     if (rolls.length > 1) {
+         rollsDisplay = `(${rollsDisplay})`;
+     }
 
-    const damageString = btn.dataset.damage; // e.g., "2d6", "1d8", "3d4"
-    const monsterId = parseInt(btn.dataset.monsterId);
-    const monsterMod = parseInt(btn.dataset.mod) || 0;
-
-    // Find the monster to get its name
-    let monsterName = 'Monster';
-    if (currentCharacter && currentCharacter.summonedMonsters) {
-        const monster = currentCharacter.summonedMonsters.find(m => m.id === monsterId);
-        if (monster) monsterName = monster.name;
-    }
-
-    // Parse the damage string (e.g., "2d6" -> count=2, die=6)
-    const match = damageString.match(/(\d+)d(\d+)/i);
-    if (!match) {
-        showCustomDialog("Error", "Invalid damage format");
-        return;
-    }
-
-    const diceCount = parseInt(match[1]);
-    const dieSize = parseInt(match[2]);
-
-    // Roll the dice
-    const rolls = [];
-    for (let i = 0; i < diceCount; i++) {
-        rolls.push(Math.floor(Math.random() * dieSize) + 1);
-    }
-
-    const diceTotal = rolls.reduce((a, b) => a + b, 0);
-    const total = diceTotal + monsterMod;
-
-    // Build the result message
-    let rollsDisplay = rolls.join(' + ');
-    if (rolls.length > 1) {
-        rollsDisplay = `(${rollsDisplay})`;
-    }
-
-    // Format the mod display
-    const modDisplay = monsterMod >= 0 ? `+${monsterMod}` : `${monsterMod}`;
-
-    // Show result dialog
-    showCustomDialog(
-        `${monsterName} Damage`,
-        `<div class="text-center">
+     // Format the mod display
+     const modDisplay = monsterMod >= 0 ? `+${monsterMod}` : `${monsterMod}`;
+ 
+     // Show result dialog
+     showCustomDialog(
+         `${monsterName} Damage`,
+         `<div class="text-center">
              <div class="text-3xl font-bold text-red-600 dark:text-red-400 mb-2">${total}</div>
              <div class="text-sm text-gray-600 dark:text-gray-400">
                  <i class="fas fa-dice-d6 mr-1"></i>${damageString}${modDisplay}: ${rollsDisplay} ${modDisplay} = ${total}
              </div>
          </div>`
-    );
-}
+     );
+ }
 
 
 // =====================================================
@@ -15675,35 +15198,35 @@ function createSpiritProjection() {
     if (!currentCharacter) return;
     if (!hasSpiritProjection(currentCharacter)) return;
 
-    // Check if we have enough Class resources available (need 2, including temporary)
-    const classResource = currentCharacter.resources?.class;
-    if (!classResource) {
-        console.warn('No class resource found');
-        showCustomDialog("Cannot Create Projection", "No Class resources found.");
-        return;
-    }
-
-    const classMax = classResource.max || 0;
-    const classTemp = classResource.temp || 0;
-    const classTotalMax = classMax + classTemp;
-    const classUsed = classResource.used?.length || 0;
-    const classAvailable = classTotalMax - classUsed;
-
-    // Check if there are at least 2 available class slots
-    if (classAvailable < 2) {
-        showCustomDialog("Cannot Create Projection", `Not enough Class resources available. Need 2, have ${classAvailable}.`);
-        return;
-    }
-
-    // Consume 2 Class resources (add the next 2 indices to used array)
-    if (!classResource.used) {
-        classResource.used = [];
-    }
-    // Add 2 class resource uses
-    for (let i = 0; i < 2; i++) {
-        const nextClassIndex = classResource.used.length;
-        classResource.used.push(nextClassIndex);
-    }
+// Check if we have enough Class resources available (need 2, including temporary)
+     const classResource = currentCharacter.resources?.class;
+     if (!classResource) {
+         console.warn('No class resource found');
+         showCustomDialog("Cannot Create Projection", "No Class resources found.");
+         return;
+     }
+ 
+     const classMax = classResource.max || 0;
+     const classTemp = classResource.temp || 0;
+     const classTotalMax = classMax + classTemp;
+     const classUsed = classResource.used?.length || 0;
+     const classAvailable = classTotalMax - classUsed;
+ 
+     // Check if there are at least 2 available class slots
+     if (classAvailable < 2) {
+         showCustomDialog("Cannot Create Projection", `Not enough Class resources available. Need 2, have ${classAvailable}.`);
+         return;
+     }
+ 
+     // Consume 2 Class resources (add the next 2 indices to used array)
+     if (!classResource.used) {
+         classResource.used = [];
+     }
+     // Add 2 class resource uses
+     for (let i = 0; i < 2; i++) {
+         const nextClassIndex = classResource.used.length;
+         classResource.used.push(nextClassIndex);
+     }
 
     // Calculate stats based on current character
     const stats = calculateProjectionStats(currentCharacter);
@@ -15983,152 +15506,152 @@ document.addEventListener('click', function (e) {
     }
 });
 
-// ==================== NATURAL RECOVERY (DRUID) ====================
-
-/**
- * Check if character has Natural Recovery ability selected
- */
-function hasNaturalRecovery(character) {
-    return character && character.class === 'Druid';
-
-}
-
-/**
- * Check if character has enough Class resources for Natural Recovery (need 1)
- */
-function canUseNaturalRecovery() {
-    if (!currentCharacter) return false;
-
-    const classResource = currentCharacter.resources?.class;
-    if (!classResource) return false;
-
-    const classMax = classResource.max || 0;
-    const classTemp = classResource.temp || 0;
-    const classTotalMax = classMax + classTemp;
-    const classUsed = classResource.used?.length || 0;
-
-    return (classTotalMax - classUsed) >= 1;
-}
-
-/**
- * Consume 1 Class resource for Natural Recovery
- */
-function consumeNaturalRecoveryResource() {
-    if (!currentCharacter) return false;
-
-    const classResource = currentCharacter.resources?.class;
-    if (!classResource) return false;
-
-    if (!classResource.used) {
-        classResource.used = [];
-    }
-
-    const nextClassIndex = classResource.used.length;
-    classResource.used.push(nextClassIndex);
-
-    saveCharacters();
-    populateSheetResourceBoxes(currentCharacter);
-    return true;
-}
-
-/**
- * Open Natural Recovery target selection modal
- */
-function openNaturalRecoveryTargetModal() {
-    if (!currentCharacter) return;
-    if (!hasNaturalRecovery(currentCharacter)) return;
-
-    if (!canUseNaturalRecovery()) {
-        showCustomDialog("Cannot Use Natural Recovery", "Not enough Class resources available. Need 1 Class resource.");
-        return;
-    }
-
-    const modal = document.getElementById('naturalRecoveryTargetModal');
-    if (modal) {
-        modal.classList.remove('hidden');
-    }
-}
-
-/**
- * Close Natural Recovery target modal
- */
-function closeNaturalRecoveryTargetModal() {
-    const modal = document.getElementById('naturalRecoveryTargetModal');
-    if (modal) {
-        modal.classList.add('hidden');
-    }
-}
-
-/**
- * Open Natural Recovery self modal (HP or Stress choice)
- */
-function openNaturalRecoverySelfModal() {
-    closeNaturalRecoveryTargetModal();
-
-    const modal = document.getElementById('naturalRecoverySelfModal');
-    if (modal) {
-        modal.classList.remove('hidden');
-    }
-}
-
-/**
- * Close Natural Recovery self modal
- */
-function closeNaturalRecoverySelfModal() {
-    const modal = document.getElementById('naturalRecoverySelfModal');
-    if (modal) {
-        modal.classList.add('hidden');
-    }
-}
-
-/**
- * Show Natural Recovery result modal
- */
-function showNaturalRecoveryResult(content) {
-    const modal = document.getElementById('naturalRecoveryResultModal');
-    const contentDiv = document.getElementById('naturalRecoveryResultContent');
-
-    if (modal && contentDiv) {
-        contentDiv.innerHTML = content;
-        modal.classList.remove('hidden');
-    }
-}
-
-/**
- * Close Natural Recovery result modal
- */
-function closeNaturalRecoveryResultModal() {
-    const modal = document.getElementById('naturalRecoveryResultModal');
-    if (modal) {
-        modal.classList.add('hidden');
-    }
-}
-
-/**
- * Natural Recovery - Target Ally
- * Rolls 1d4 and shows result (ally applies it themselves)
- */
-function naturalRecoveryAlly() {
-    if (!currentCharacter) return;
-
-    // Check resources again
-    if (!canUseNaturalRecovery()) {
-        showCustomDialog("Cannot Use Natural Recovery", "Not enough Class resources available.");
-        closeNaturalRecoveryTargetModal();
-        return;
-    }
-
-    // Consume 1 Class resource
-    consumeNaturalRecoveryResource();
-
-    // Roll 1d4
-    const roll = Math.floor(Math.random() * 4) + 1;
-
-    // Close target modal
-    closeNaturalRecoveryTargetModal();
-
-    // Show result
-    showNaturalRecoveryResult(`
+ // ==================== NATURAL RECOVERY (DRUID) ====================
+ 
+ /**
+  * Check if character has Natural Recovery ability selected
+  */
+ function hasNaturalRecovery(character) {
+      return character && character.class === 'Druid';
+ 
+ }
+ 
+ /**
+  * Check if character has enough Class resources for Natural Recovery (need 1)
+  */
+ function canUseNaturalRecovery() {
+     if (!currentCharacter) return false;
+ 
+     const classResource = currentCharacter.resources?.class;
+     if (!classResource) return false;
+ 
+     const classMax = classResource.max || 0;
+     const classTemp = classResource.temp || 0;
+     const classTotalMax = classMax + classTemp;
+     const classUsed = classResource.used?.length || 0;
+ 
+     return (classTotalMax - classUsed) >= 1;
+ }
+ 
+ /**
+  * Consume 1 Class resource for Natural Recovery
+  */
+ function consumeNaturalRecoveryResource() {
+     if (!currentCharacter) return false;
+ 
+     const classResource = currentCharacter.resources?.class;
+     if (!classResource) return false;
+ 
+     if (!classResource.used) {
+         classResource.used = [];
+     }
+ 
+     const nextClassIndex = classResource.used.length;
+     classResource.used.push(nextClassIndex);
+ 
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+     return true;
+ }
+ 
+ /**
+  * Open Natural Recovery target selection modal
+  */
+ function openNaturalRecoveryTargetModal() {
+     if (!currentCharacter) return;
+     if (!hasNaturalRecovery(currentCharacter)) return;
+ 
+     if (!canUseNaturalRecovery()) {
+         showCustomDialog("Cannot Use Natural Recovery", "Not enough Class resources available. Need 1 Class resource.");
+         return;
+     }
+ 
+     const modal = document.getElementById('naturalRecoveryTargetModal');
+     if (modal) {
+         modal.classList.remove('hidden');
+     }
+ }
+ 
+ /**
+  * Close Natural Recovery target modal
+  */
+ function closeNaturalRecoveryTargetModal() {
+     const modal = document.getElementById('naturalRecoveryTargetModal');
+     if (modal) {
+         modal.classList.add('hidden');
+     }
+ }
+ 
+ /**
+  * Open Natural Recovery self modal (HP or Stress choice)
+  */
+ function openNaturalRecoverySelfModal() {
+     closeNaturalRecoveryTargetModal();
+ 
+     const modal = document.getElementById('naturalRecoverySelfModal');
+     if (modal) {
+         modal.classList.remove('hidden');
+     }
+ }
+ 
+ /**
+  * Close Natural Recovery self modal
+  */
+ function closeNaturalRecoverySelfModal() {
+     const modal = document.getElementById('naturalRecoverySelfModal');
+     if (modal) {
+         modal.classList.add('hidden');
+     }
+ }
+ 
+ /**
+  * Show Natural Recovery result modal
+  */
+ function showNaturalRecoveryResult(content) {
+     const modal = document.getElementById('naturalRecoveryResultModal');
+     const contentDiv = document.getElementById('naturalRecoveryResultContent');
+ 
+     if (modal && contentDiv) {
+         contentDiv.innerHTML = content;
+         modal.classList.remove('hidden');
+     }
+ }
+ 
+ /**
+  * Close Natural Recovery result modal
+  */
+ function closeNaturalRecoveryResultModal() {
+     const modal = document.getElementById('naturalRecoveryResultModal');
+     if (modal) {
+         modal.classList.add('hidden');
+     }
+ }
+ 
+ /**
+  * Natural Recovery - Target Ally
+  * Rolls 1d4 and shows result (ally applies it themselves)
+  */
+ function naturalRecoveryAlly() {
+     if (!currentCharacter) return;
+ 
+     // Check resources again
+     if (!canUseNaturalRecovery()) {
+         showCustomDialog("Cannot Use Natural Recovery", "Not enough Class resources available.");
+         closeNaturalRecoveryTargetModal();
+         return;
+     }
+ 
+     // Consume 1 Class resource
+     consumeNaturalRecoveryResource();
+ 
+     // Roll 1d4
+     const roll = Math.floor(Math.random() * 4) + 1;
+ 
+     // Close target modal
+     closeNaturalRecoveryTargetModal();
+ 
+     // Show result
+     showNaturalRecoveryResult(`
          <div class="text-blue-600 dark:text-blue-400 mb-2">
              <i class="fas fa-users text-2xl"></i>
          </div>
@@ -16144,62 +15667,62 @@ function naturalRecoveryAlly() {
              <i class="fas fa-minus-circle mr-1"></i>1 Class resource used
          </div>
      `);
-}
-
-/**
- * Natural Recovery - Recover HP (Self)
- */
-function naturalRecoverHP() {
-    if (!currentCharacter) return;
-
-    // Check resources again
-    if (!canUseNaturalRecovery()) {
-        showCustomDialog("Cannot Use Natural Recovery", "Not enough Class resources available.");
-        closeNaturalRecoverySelfModal();
-        return;
-    }
-
-    const hpResource = currentCharacter.resources?.hp;
-    if (!hpResource) {
-        showCustomDialog("Error", "No HP resource found.");
-        closeNaturalRecoverySelfModal();
-        return;
-    }
-
-    const hpUsedCount = hpResource.used?.length || 0;
-
-    if (hpUsedCount === 0) {
-        showCustomDialog("Cannot Recover HP", "You have no HP damage to recover.");
-        closeNaturalRecoverySelfModal();
-        return;
-    }
-
-    // Consume 1 Class resource
-    consumeNaturalRecoveryResource();
-
-    // Roll 1d4
-    const roll = Math.floor(Math.random() * 4) + 1;
-
-    // Calculate actual recovery (can't recover more than what's used)
-    const actualRecovery = Math.min(roll, hpUsedCount);
-
-    // Recover HP by removing from the used array (remove from the end)
-    hpResource.used.sort((a, b) => a - b);
-    for (let i = 0; i < actualRecovery; i++) {
-        if (hpResource.used.length > 0) {
-            hpResource.used.pop();
-        }
-    }
-
-    // Save and update display
-    saveCharacters();
-    populateSheetResourceBoxes(currentCharacter);
-
-    // Close self modal
-    closeNaturalRecoverySelfModal();
-
-    // Show result
-    showNaturalRecoveryResult(`
+ }
+ 
+ /**
+  * Natural Recovery - Recover HP (Self)
+  */
+ function naturalRecoverHP() {
+     if (!currentCharacter) return;
+ 
+     // Check resources again
+     if (!canUseNaturalRecovery()) {
+         showCustomDialog("Cannot Use Natural Recovery", "Not enough Class resources available.");
+         closeNaturalRecoverySelfModal();
+         return;
+     }
+ 
+     const hpResource = currentCharacter.resources?.hp;
+     if (!hpResource) {
+         showCustomDialog("Error", "No HP resource found.");
+         closeNaturalRecoverySelfModal();
+         return;
+     }
+ 
+     const hpUsedCount = hpResource.used?.length || 0;
+ 
+     if (hpUsedCount === 0) {
+         showCustomDialog("Cannot Recover HP", "You have no HP damage to recover.");
+         closeNaturalRecoverySelfModal();
+         return;
+     }
+ 
+     // Consume 1 Class resource
+     consumeNaturalRecoveryResource();
+ 
+     // Roll 1d4
+     const roll = Math.floor(Math.random() * 4) + 1;
+ 
+     // Calculate actual recovery (can't recover more than what's used)
+     const actualRecovery = Math.min(roll, hpUsedCount);
+ 
+     // Recover HP by removing from the used array (remove from the end)
+     hpResource.used.sort((a, b) => a - b);
+     for (let i = 0; i < actualRecovery; i++) {
+         if (hpResource.used.length > 0) {
+             hpResource.used.pop();
+         }
+     }
+ 
+     // Save and update display
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+ 
+     // Close self modal
+     closeNaturalRecoverySelfModal();
+ 
+     // Show result
+     showNaturalRecoveryResult(`
          <div class="text-red-600 dark:text-red-400 mb-2">
              <i class="fas fa-heart text-2xl"></i>
          </div>
@@ -16213,62 +15736,62 @@ function naturalRecoverHP() {
              <i class="fas fa-minus-circle mr-1"></i>1 Class resource used
          </div>
      `);
-}
-
-/**
- * Natural Recovery - Recover Stress (Self)
- */
-function naturalRecoverStress() {
-    if (!currentCharacter) return;
-
-    // Check resources again
-    if (!canUseNaturalRecovery()) {
-        showCustomDialog("Cannot Use Natural Recovery", "Not enough Class resources available.");
-        closeNaturalRecoverySelfModal();
-        return;
-    }
-
-    const stressResource = currentCharacter.resources?.stress;
-    if (!stressResource) {
-        showCustomDialog("Error", "No Stress resource found.");
-        closeNaturalRecoverySelfModal();
-        return;
-    }
-
-    const stressUsedCount = stressResource.used?.length || 0;
-
-    if (stressUsedCount === 0) {
-        showCustomDialog("Cannot Recover Stress", "You have no Stress to recover.");
-        closeNaturalRecoverySelfModal();
-        return;
-    }
-
-    // Consume 1 Class resource
-    consumeNaturalRecoveryResource();
-
-    // Roll 1d4
-    const roll = Math.floor(Math.random() * 4) + 1;
-
-    // Calculate actual recovery (can't recover more than what's used)
-    const actualRecovery = Math.min(roll, stressUsedCount);
-
-    // Recover Stress by removing from the used array (remove from the end)
-    stressResource.used.sort((a, b) => a - b);
-    for (let i = 0; i < actualRecovery; i++) {
-        if (stressResource.used.length > 0) {
-            stressResource.used.pop();
-        }
-    }
-
-    // Save and update display
-    saveCharacters();
-    populateSheetResourceBoxes(currentCharacter);
-
-    // Close self modal
-    closeNaturalRecoverySelfModal();
-
-    // Show result
-    showNaturalRecoveryResult(`
+ }
+ 
+ /**
+  * Natural Recovery - Recover Stress (Self)
+  */
+ function naturalRecoverStress() {
+     if (!currentCharacter) return;
+ 
+     // Check resources again
+     if (!canUseNaturalRecovery()) {
+         showCustomDialog("Cannot Use Natural Recovery", "Not enough Class resources available.");
+         closeNaturalRecoverySelfModal();
+         return;
+     }
+ 
+     const stressResource = currentCharacter.resources?.stress;
+     if (!stressResource) {
+         showCustomDialog("Error", "No Stress resource found.");
+         closeNaturalRecoverySelfModal();
+         return;
+     }
+ 
+     const stressUsedCount = stressResource.used?.length || 0;
+ 
+     if (stressUsedCount === 0) {
+         showCustomDialog("Cannot Recover Stress", "You have no Stress to recover.");
+         closeNaturalRecoverySelfModal();
+         return;
+     }
+ 
+     // Consume 1 Class resource
+     consumeNaturalRecoveryResource();
+ 
+     // Roll 1d4
+     const roll = Math.floor(Math.random() * 4) + 1;
+ 
+     // Calculate actual recovery (can't recover more than what's used)
+     const actualRecovery = Math.min(roll, stressUsedCount);
+ 
+     // Recover Stress by removing from the used array (remove from the end)
+     stressResource.used.sort((a, b) => a - b);
+     for (let i = 0; i < actualRecovery; i++) {
+         if (stressResource.used.length > 0) {
+             stressResource.used.pop();
+         }
+     }
+ 
+     // Save and update display
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+ 
+     // Close self modal
+     closeNaturalRecoverySelfModal();
+ 
+     // Show result
+     showNaturalRecoveryResult(`
          <div class="text-purple-600 dark:text-purple-400 mb-2">
              <i class="fas fa-brain text-2xl"></i>
          </div>
@@ -16282,9 +15805,9 @@ function naturalRecoverStress() {
              <i class="fas fa-minus-circle mr-1"></i>1 Class resource used
          </div>
      `);
-}
-
-// Event delegation for Natural Recovery button (since it's dynamically added to the ability display)
+ }
+ 
+ // Event delegation for Natural Recovery button (since it's dynamically added to the ability display)
 document.addEventListener('click', function (e) {
     if (e.target.closest('.natural-recovery-btn')) {
         e.preventDefault();
@@ -16296,26 +15819,26 @@ document.addEventListener('click', function (e) {
     }
 });
 
-
-// Natural Recovery Modal Event Listeners
-document.getElementById('closeNaturalRecoveryTarget')?.addEventListener('click', closeNaturalRecoveryTargetModal);
-document.getElementById('naturalRecoverySelf')?.addEventListener('click', openNaturalRecoverySelfModal);
-document.getElementById('naturalRecoveryAlly')?.addEventListener('click', naturalRecoveryAlly);
-document.getElementById('closeNaturalRecoverySelf')?.addEventListener('click', closeNaturalRecoverySelfModal);
-document.getElementById('naturalRecoverHP')?.addEventListener('click', naturalRecoverHP);
-document.getElementById('naturalRecoverStress')?.addEventListener('click', naturalRecoverStress);
-document.getElementById('closeNaturalRecoveryResult')?.addEventListener('click', closeNaturalRecoveryResultModal);
-
-// Close modals when clicking outside
-document.getElementById('naturalRecoveryTargetModal')?.addEventListener('click', function (e) {
-    if (e.target === this) closeNaturalRecoveryTargetModal();
-});
-document.getElementById('naturalRecoverySelfModal')?.addEventListener('click', function (e) {
-    if (e.target === this) closeNaturalRecoverySelfModal();
-});
-document.getElementById('naturalRecoveryResultModal')?.addEventListener('click', function (e) {
-    if (e.target === this) closeNaturalRecoveryResultModal();
-});
+ 
+ // Natural Recovery Modal Event Listeners
+ document.getElementById('closeNaturalRecoveryTarget')?.addEventListener('click', closeNaturalRecoveryTargetModal);
+ document.getElementById('naturalRecoverySelf')?.addEventListener('click', openNaturalRecoverySelfModal);
+ document.getElementById('naturalRecoveryAlly')?.addEventListener('click', naturalRecoveryAlly);
+ document.getElementById('closeNaturalRecoverySelf')?.addEventListener('click', closeNaturalRecoverySelfModal);
+ document.getElementById('naturalRecoverHP')?.addEventListener('click', naturalRecoverHP);
+ document.getElementById('naturalRecoverStress')?.addEventListener('click', naturalRecoverStress);
+ document.getElementById('closeNaturalRecoveryResult')?.addEventListener('click', closeNaturalRecoveryResultModal);
+ 
+ // Close modals when clicking outside
+ document.getElementById('naturalRecoveryTargetModal')?.addEventListener('click', function(e) {
+     if (e.target === this) closeNaturalRecoveryTargetModal();
+ });
+ document.getElementById('naturalRecoverySelfModal')?.addEventListener('click', function(e) {
+     if (e.target === this) closeNaturalRecoverySelfModal();
+ });
+ document.getElementById('naturalRecoveryResultModal')?.addEventListener('click', function(e) {
+     if (e.target === this) closeNaturalRecoveryResultModal();
+ });
 
 // ==================== SECOND WIND (FIGHTER) ====================
 
@@ -18652,6 +18175,8 @@ function handleTokenCircleClick(event) {
     saveCharacters(currentCharacter);
     updateTokensOfDepartedDisplay();
 }
+
+
 
 /**
  * Initialize Tokens of the Departed if ability is selected (for restoring state)
