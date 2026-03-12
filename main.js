@@ -323,24 +323,22 @@ const classAbilities = {
             name: 'Rage <i class="skill1">Stress</i>', description:
                 `<ul>
         <b class="text-green-600">Rage: </b><i class="skill1">1 Stress</i><br>
-            <li>- Reduce any damage by 1 Hit.</li> <li>- Increase STR +1</li><br>
-            <li><i>If one of the below Rage types are selected add the effects to the Rage bonuses plus the other bonuses.</i></li>
-            <li>- Until the End of Combat or your decide to end it.</li>
-        <li><b class="text-green-600">Totem Rage:</b> <i class="skill1">1 Stress</i></li>
-            <li><b>Bear:</b> +1 HP, +1 Stress, Reduce damage by 1 Hit.</li>
+                    <li>- Increase STR +1</li>
+             <li>- Until the End of Combat or you decide to end it.</li><br>
+         <li><b class="text-green-600">Totem Rage:</b> <i class="skill1">1 Stress</i> + <i class="skill2">1 Class</i></li>
+             <li>- STR +1, plus one of the following:</li>
+             <li><b>Bear:</b> +1 HP (temp), +2 Stress (temp).</li>
             <li><b>Eagle:</b> +1 Evasion, +1 DEX, Perception <b>Advantage</b>.</li>
-            <li><b>Tiger:</b> +1 DEX, Jump distance doubles, Jump check with <b>Advantage</b>.</li>
-            <li><b>Wolf:</b> +2 When combining Attacks, <b>Advantage</b> on  Tracking.
-            </li><br>
-        <li><b class="text-green-600">Blood Rage:</b> <i class="skill1">1 Stress</i>
-            <li>- Add 1d4 Temp HP. If you are at max this skill will increase it beyond the max.</li>
-            <li>- Add 1d6 Temp Stress. If you are at max this skill will increase it beyond the max.</li>
-            <li>- Add 1d4 to your Attack Roll. Level 5: 1d6, Level 10: 1d8</li>
-            <li>- Add 1 die to your Damage Roll. Level 5: 1 dice, Level 10: 3 Dice.</li>
-            <li>- Resist any Stress effects incurred by an Enemy.</li>
-            <li>- Roll attacks on any creature within melee range. Any successful attacks cause +1 Hit of damage.</li>
-            <li>- <b><u>Cannot</u></b> receive any Healing while raging.</li>
-            <li>- Remove any temporary effects (HP, Stress) when the Blood Rage ends.</li>
+            <li><b>Tiger:</b> +1 DEX, Acrobatics &amp; Athletics <b>Advantage</b>.</li>
+             <li><b>Wolf:</b> Survival <b>Advantage</b>, +2 Attack Rolls.</li><br>
+         <li><b class="text-green-600">Blood Rage:</b> <i class="skill1">1 Stress</i> + <i class="skill2">2 Class</i></li>
+             <li>- STR +1</li>
+             <li>- Roll 1d4 &rarr; Temporary HP.</li>
+             <li>- Roll 1d4 &rarr; Temporary Stress.</li>
+             <li>- Attack Roll bonus: 1d4 (Lv1), 1d6 (Lv5), 1d8 (Lv10).</li>
+             <li>- Extra Damage dice: +1 (Lv1), +2 (Lv5), +3 (Lv10).</li>
+             <li>- <b><u>Cannot</u></b> recover HP while raging.</li>
+             <li>- Temporary effects removed when Blood Rage ends.</li>
     </ul>` },
         {
             name: 'Reckless Attack <i class="skill2">1 Class</i>', description:
@@ -432,16 +430,23 @@ const classAbilities = {
             name: 'Blade Flourish <i class="skill1">Stress</i>', description:
                 `<ul>
         <li><i class="skill1">1 Stress</i></li>
-            <li>- Increase Attack +1</li>
+        <li>Until a <b>Short Rest</b></li>
+            <li>- Increase Attack +1 on your next Attack Roll.</li>
             <li>- On a successful Attack cause 1 Stress.</li>
         <li><i class="skill1">2 Stress</i></li>
             <li>- Add 2d4 Psychic damage dice on top of all other damage.</li>
-            <li>- A successful Attack now cause 2 Stress.</li>
+            <li>- A successful Attack now causes 2 Stress.</li>
         <li><i class="skill1">3 Stress</i></li>
             <li>- Increase the Attack +2</li>
             <li>- Add 3d4 Psychic Damage.</li>
             <li>- Cause 3 Stress.</li>
-    </ul>` },
+    </ul>
+          <div class="blade-flourish-buttons" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
+              <button class="blade-flourish-btn" data-cost="1"><i class="fas fa-music"></i><span>1 Stress</span></button>
+              <button class="blade-flourish-btn" data-cost="2"><i class="fas fa-music"></i><span>2 Stress</span></button>
+              <button class="blade-flourish-btn" data-cost="3"><i class="fas fa-music"></i><span>3 Stress</span></button>
+          </div>
+          ` },
         {
             name: 'Unsettling Words <i class="skill2">1 Class</i>', description:
                 `<ul>
@@ -716,7 +721,7 @@ const classAbilities = {
         {
             name: 'Second Wind <i class="skill1">1 Stress</i>', description:
                 `<ul>
-                <li><b>Once</b> unitl a <b>Long Rest</b>.</li>
+                <li><b>Once</b> until a <b>Long Rest</b>.</li>
         <li>- Roll 1d4 and recover that many Hit Points and half as much to Class.</li>
     </ul>
          <button class="second-wind-btn" id="secondWindActivateBtn"><i class="fas fa-dice-d20"></i><span>Activate Second Wind</span></button>
@@ -752,13 +757,14 @@ const classAbilities = {
         {
             name: 'Relentless <i class="skill2">1 Class</i>', description:
                 `<ul>
+        <li><b>Once</b> until a <b>Long Rest</b>.</li>
         <li>- When you have <b>NO </b> Stress available.</li>
         <li>- Roll 1d4 and return that much Stress.</li>
     </ul>
          <button class="relentless-btn" id="relentlessActivateBtn"><i class="fas fa-dice-d20"></i><span>Activate Relentless</span></button>
          <div id="relentlessResultDisplay"></div>` },
         {
-            name: 'Battle Master <i class="skill1">1 Stress</i>', description:
+            name: 'Battle Master <i class="skill3">Special</i>', description:
                 `<ul>
         <li>- <b>Commander's Strike</b> <i class="skill1">1 Stress</i></li>
             <li>- Allow an ally to retaliate when they are hit.</li>
@@ -864,6 +870,7 @@ const classAbilities = {
         {
             name: 'Quivering Palm <i class="skill2">1 Class</i>', description:
                 `<ul>
+        <li><b>Must</b> call this skill before the <b>Attack</b> is made.</li>
         <li>- Must use fists.</li>
         <li>- Make 1 Attack to a creature within range.</li>
         <li>- At the start of your next turn (before you take any actions) you Force the target to Roll Divine Die and on a fail you can repeat the damage.</li>
@@ -885,7 +892,12 @@ const classAbilities = {
             <li>- Recover 1d4+1 Stress</li>
             <li>- Remove 1 Poison or Disease</li>
             <li>- <b>Cannot use on self.</b></li>
-    </ul>` },
+    </ul>
+          <div class="lay-on-hands-buttons" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
+              <button class="lay-on-hands-btn" data-action="heal"><i class="fas fa-hand-holding-heart"></i> Heal (1d4+1)</button>
+              <button class="lay-on-hands-btn" data-action="cure"><i class="fas fa-shield-virus"></i> Cure Poison/Disease</button>
+          </div>
+          ` },
         {
             name: 'Smite <i class="skill2">1 Class</i>', description:
                 `<ul>
@@ -1230,14 +1242,20 @@ const classAbilities = {
         {
             name: 'Divine Soul <i class="skill2">1 Class</i>', description:
                 `<ul>
-        <li>- Temporarily gain +1 Hit Point, +1 <b>Spell</b> Point.</li>
+         <li>- Level 1~4: Temporarily gain +1 Hit Point, +1 <b>Spell</b> Point.</li>
+         <li>- Level 5~9: Temporarily gain +2 Hit Points, +2 <b>Spell</b> Points.</li>
+         <li>- Level 10: Temporarily gain +3 Hit Points, +3 <b>Spell</b> Points.</li>
         <li>- Remove after a Long Rest.</li>
-    </ul>` },
+     </ul>
+         <button class="divine-soul-btn" id="divineSoulActivateBtn"><i class="fas fa-sun"></i><span>Activate Divine Soul</span></button>
+         <div id="divineSoulResultDisplay"></div>` },
         {
             name: 'Unearthly Recovery <i class="skill2">2 Class</i>', description:
                 `<ul>
         <li>- You and only you recover +2 HP and +2 Stress and +2 <b>Spell</b>.</li>
-    </ul>` },
+    </ul>
+          <button class="unearthly-recovery-btn"><i class="fas fa-star-of-life"></i> Unearthly Recovery</button>
+          <div id="unearthlyRecoveryResultDisplay"></div>` },
         {
             name: 'Telepathic Speech', description:
                 `<ul>
@@ -1431,7 +1449,9 @@ const classAbilities = {
                 `<ul>
         <li>- Gain <b>Advantage</b> on Arcane Checks.</li>
         <li>- Add +1 Damage die to next damage roll.</li>
-    </ul>` },
+    </ul>
+          <button class="knowledge-power-btn" id="knowledgePowerActivateBtn"><i class="fas fa-book"></i><span>Activate (+1 Damage Die)</span></button>
+          <div id="knowledgePowerResultDisplay"></div>` },
         {
             name: 'Mystic Glyphs <i class="skill2">Class</i>', description:
                 `<ul>
@@ -2134,6 +2154,90 @@ function handleAbilityCheckboxChange(checkbox) {
         const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
         if (ability && ability.name.toLowerCase().includes('tokens of the departed')) {
             handleTokensOfDepartedAbility(checkbox.checked);
+            }
+    }
+
+    // Special handling for Danger Sense ability (Monk) - DEX Advantage
+    if (currentCharacter && currentCharacter.class === 'Monk') {
+        const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+        if (ability && ability.name.toLowerCase().includes('danger sense')) {
+            if (!currentCharacter.skillAdvantageSettings) {
+                currentCharacter.skillAdvantageSettings = {};
+            }
+            const dexSkills = ['Acrobatics_DEX', 'Sleight_of_Hand_DEX', 'Stealth_DEX'];
+            if (checkbox.checked) {
+                dexSkills.forEach(skill => {
+                    currentCharacter.skillAdvantageSettings[skill] = { mode: 'advantage', always: true };
+                });
+            } else {
+                dexSkills.forEach(skill => {
+                    currentCharacter.skillAdvantageSettings[skill] = { mode: 'none', always: false };
+                });
+            }
+            saveCharacters();
+            populateCharacterSheet(currentCharacter);
+        }
+    }
+     // Special handling for Danger Sense ability (Barbarian) - DEX Advantage
+      if (currentCharacter && currentCharacter.class === 'Barbarian') {
+          const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+          if (ability && ability.name.toLowerCase().includes('danger sense')) {
+              if (!currentCharacter.skillAdvantageSettings) {
+                  currentCharacter.skillAdvantageSettings = {};
+              }
+              const dexSkills = ['Acrobatics_DEX', 'Sleight_of_Hand_DEX', 'Stealth_DEX'];
+              if (checkbox.checked) {
+                  dexSkills.forEach(skill => {
+                      currentCharacter.skillAdvantageSettings[skill] = { mode: 'advantage', always: true };
+                  });
+              } else {
+                  dexSkills.forEach(skill => {
+                      currentCharacter.skillAdvantageSettings[skill] = { mode: 'none', always: false };
+                  });
+              }
+              saveCharacters();
+              populateCharacterSheet(currentCharacter);
+          }
+      }
+  
+
+
+    // Special handling for Thief Reflexes ability (Rogue) - DEX Advantage
+    if (currentCharacter && currentCharacter.class === 'Rogue') {
+        const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+        if (ability && ability.name.toLowerCase().includes('thief reflexes')) {
+            if (!currentCharacter.skillAdvantageSettings) {
+                currentCharacter.skillAdvantageSettings = {};
+            }
+            const dexSkills = ['Acrobatics_DEX', 'Sleight_of_Hand_DEX', 'Stealth_DEX'];
+            if (checkbox.checked) {
+                dexSkills.forEach(skill => {
+                    currentCharacter.skillAdvantageSettings[skill] = { mode: 'advantage', always: true };
+                });
+            } else {
+                dexSkills.forEach(skill => {
+                    currentCharacter.skillAdvantageSettings[skill] = { mode: 'none', always: false };
+                });
+            }
+            saveCharacters();
+            populateCharacterSheet(currentCharacter);
+        }
+    }
+
+    // Special handling for Knowledge is Power ability (Wizard) - Arcane Advantage
+    if (currentCharacter && currentCharacter.class === 'Wizard') {
+        const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+        if (ability && ability.name.toLowerCase().includes('knowledge is power')) {
+            if (!currentCharacter.skillAdvantageSettings) {
+                currentCharacter.skillAdvantageSettings = {};
+            }
+            if (checkbox.checked) {
+                currentCharacter.skillAdvantageSettings['Arcana_INT'] = { mode: 'advantage', always: true };
+            } else {
+                currentCharacter.skillAdvantageSettings['Arcana_INT'] = { mode: 'none', always: false };
+            }
+            saveCharacters();
+            populateCharacterSheet(currentCharacter);
         }
     }
 
@@ -2141,6 +2245,36 @@ function handleAbilityCheckboxChange(checkbox) {
     saveClassAbilitiesSelection();
     // Update checkbox states after any change
     updateAbilityCheckboxStates();
+
+          // Special handling for Rage ability (Barbarian) - Show/Hide Rage button
+      if (currentCharacter && currentCharacter.class === 'Barbarian') {
+          const ability = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+          if (ability && ability.name.toLowerCase().includes('rage') && !ability.name.toLowerCase().includes('relentless')) {
+              if (!checkbox.checked && currentCharacter.rageActive) {
+                  deactivateRage();
+              }
+              updateRageButtonVisibility();
+         }
+     }
+
+      // Special handling for Fighting Style ability (Fighter)
+    // Must run AFTER saveClassAbilitiesSelection() so select values are already updated
+    if (currentCharacter && currentCharacter.class === 'Fighter') {
+        const fightingAbility = type === 'class' ? classAbilities[currentCharacter.class][index] : null;
+        if (fightingAbility && fightingAbility.name.toLowerCase().includes('fighting style')) {
+            if (!checkbox.checked) {
+                // Ability unchecked — remove Fighting Style evasion bonus directly
+                const ed = ensureEvasionData(currentCharacter);
+                ed.mod.fightingStyle = 0;
+                currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+            } else {
+                // Ability re-checked — recalculate from current select value
+                updateEvasionWithFightingStyle();
+            }
+            saveCharacters();
+            populateCharacterSheet(currentCharacter);
+        }
+    }
 
     // Special handling for Unarmored Defense ability (Barbarian/Monk)
     if (currentCharacter && (currentCharacter.class === 'Barbarian' || currentCharacter.class === 'Monk')) {
@@ -2158,6 +2292,8 @@ function handleAbilityCheckboxChange(checkbox) {
         updateSpellCastingDisplay(currentCharacter);
         // Update Monsters section visibility (Mighty Summoner)
         updateMonstersDisplay(currentCharacter);
+        // Update Necromancer section visibility (Warlock)
+        updateNecromancerDisplay(currentCharacter);
         // Update Spirit Projection section visibility (Warlock)
         updateSpiritProjectionDisplay(currentCharacter);
     }
@@ -2662,6 +2798,12 @@ function restoreClassAbilitiesSelection() {
     initRangerCompanionIfNeeded();
     // Initialize Tokens of the Departed if ability is selected
     initTokensOfDepartedIfNeeded();
+  // Update button states for abilities with one-time-use buttons
+     updateSecondWindButtonState();
+     updateRelentlessButtonState();
+     updateDivineSoulButtonState();
+     updateKnowledgePowerButtonState();
+     updateRageButtonVisibility();
 }
 
 // =================================================
@@ -2906,18 +3048,14 @@ function applyBoonBonus(boonName, boonType, selectedAbility = null) {
             break;
 
         case 'evasion':
-            // Add +1 to base evasion
-            if (!currentCharacter.evasionData) {
-                currentCharacter.evasionData = {
-                    base: currentCharacter.evasion || 0,
-                    temporary: 0,
-                    unarmoredDefense: 0,
-                    mageArmor: 0
-                };
+            // Add +1 to evasion via boon modifier (base is fixed)
+             {
+                 const ed = ensureEvasionData(currentCharacter);
+                 ed.mod.boon = (ed.mod.boon || 0) + 1;
+                 currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+                 currentCharacter.boonBonuses[boonName] = { type: 'evasion' };
             }
-            currentCharacter.evasionData.base += 1;
-            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
-            currentCharacter.boonBonuses[boonName] = { type: 'evasion' };
+            
             break;
 
         case 'armor':
@@ -3007,8 +3145,9 @@ function removeBoonBonus(boonName) {
             break;
 
         case 'evasion':
-            if (currentCharacter.evasionData) {
-                currentCharacter.evasionData.base -= 1;
+            {
+                 const ed = ensureEvasionData(currentCharacter);
+                 ed.mod.boon = Math.max(0, (ed.mod.boon || 0) - 1);
                 currentCharacter.evasion = getCurrentEvasion(currentCharacter);
             }
             break;
@@ -4184,17 +4323,194 @@ function handleWildBeastToggle(isChecked) {
     if (!currentCharacter) return;
 
     if (isChecked) {
-        // Apply Wild Beast transformation
-        applyWildBeastTransformation();
-        currentCharacter.wildBeastActive = true;
-    } else {
-        // Remove Wild Beast transformation
-        removeWildBeastTransformation();
-        currentCharacter.wildBeastActive = false;
-    }
 
-    saveCharacters();
-    populateCharacterSheet(currentCharacter);
+          // Open Wild Shape modal to choose beast type and spend stress
+         showWildShapeModal();
+     } else {
+         
+         // Remove Wild Beast transformation (unchanged)
+         removeWildBeastTransformation();
+         currentCharacter.wildBeastActive = false;
+      
+          saveCharacters();
+          populateCharacterSheet(currentCharacter);
+      }
+  }
+  
+  // Show Wild Shape selection modal
+  function showWildShapeModal() {
+      if (!currentCharacter) return;
+  
+      // Calculate available stress
+      const stressRes = currentCharacter.resources?.stress;
+      const stressAvailable = stressRes
+          ? ((stressRes.max || 0) + (stressRes.temp || 0)) - (stressRes.used?.length || 0)
+          : 0;
+  
+      const beastOptions = [
+          { cost: 1, label: 'Basic Beast', icon: 'fa-paw' },
+          { cost: 2, label: 'Can Swim', icon: 'fa-water' },
+          { cost: 3, label: 'Can Fly', icon: 'fa-feather-alt' }
+      ];
+  
+      const modal = document.createElement('div');
+      modal.id = 'wildShapeModal';
+      modal.className = 'fixed inset-0 flex items-center justify-center z-50';
+      modal.style.backgroundColor = 'rgba(0,0,0,0.6)';
+  
+      modal.innerHTML = `
+          <div style="
+              background: linear-gradient(135deg, #1a3a1a 0%, #0d1f0d 100%);
+              border: 2px solid #4ade80;
+              border-radius: 12px;
+              padding: 24px;
+              max-width: 340px;
+              width: 90%;
+              box-shadow: 0 0 30px rgba(74, 222, 128, 0.3);
+          ">
+              <h3 style="
+                  color: #86efac;
+                  font-size: 18px;
+                  font-weight: 700;
+                  margin: 0 0 6px 0;
+                  text-align: center;
+                  text-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+              "><i class="fas fa-paw" style="margin-right: 6px;"></i>Wild Shape</h3>
+              <p style="
+                  color: #6ee7b7;
+                  font-size: 12px;
+                  text-align: center;
+                  margin: 0 0 16px 0;
+                  opacity: 0.8;
+              ">Choose your beast form</p>
+  
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                  ${beastOptions.map(opt => {
+                      const canAfford = stressAvailable >= opt.cost;
+                      return `
+                          <button class="wild-shape-option-btn" data-cost="${opt.cost}" ${!canAfford ? 'disabled' : ''} style="
+                              display: flex;
+                              align-items: center;
+                              justify-content: space-between;
+                              padding: 12px 16px;
+                              border-radius: 8px;
+                              border: 1px solid ${canAfford ? '#4ade80' : '#555'};
+                              background: ${canAfford ? 'linear-gradient(135deg, #14532d, #1a3a1a)' : '#1a1a1a'};
+                              color: ${canAfford ? '#d1fae5' : '#666'};
+                              cursor: ${canAfford ? 'pointer' : 'not-allowed'};
+                              font-size: 14px;
+                              font-weight: 600;
+                              transition: all 0.2s;
+                              opacity: ${canAfford ? '1' : '0.5'};
+                              position: relative;
+                          ">
+                              <span><i class="fas ${opt.icon}" style="margin-right: 8px; color: ${canAfford ? '#4ade80' : '#555'};"></i>${opt.label}</span>
+                              <span style="
+                                  background: ${canAfford ? 'rgba(74, 222, 128, 0.15)' : 'rgba(100,100,100,0.15)'};
+                                  padding: 3px 10px;
+                                  border-radius: 12px;
+                                  font-size: 12px;
+                                  font-weight: 700;
+                                  color: ${canAfford ? '#86efac' : '#666'};
+                              ">${opt.cost} Stress</span>
+                              ${!canAfford ? `<span style="
+                                  position: absolute;
+                                  bottom: -1px;
+                                  right: 12px;
+                                  font-size: 10px;
+                                  color: #ef4444;
+                                  font-weight: 600;
+                              "><i class="fas fa-exclamation-triangle" style="margin-right: 3px;"></i>Not enough Stress</span>` : ''}
+                          </button>
+                      `;
+                  }).join('')}
+              </div>
+  
+              <p style="
+                  color: #6ee7b7;
+                  font-size: 11px;
+                  text-align: center;
+                  margin: 14px 0 0 0;
+                  opacity: 0.6;
+              ">Available Stress: ${stressAvailable}</p>
+  
+              <button id="wildShapeCancelBtn" style="
+                  display: block;
+                  width: 100%;
+                  margin-top: 12px;
+                  padding: 8px;
+                  border-radius: 6px;
+                  border: 1px solid #555;
+                  background: transparent;
+                  color: #9ca3af;
+                  cursor: pointer;
+                  font-size: 13px;
+              ">Cancel</button>
+          </div>
+      `;
+  
+      document.body.appendChild(modal);
+  
+      // Cancel button — close modal and uncheck the checkbox
+      modal.querySelector('#wildShapeCancelBtn').addEventListener('click', function() {
+          const checkbox = document.getElementById('wildBeastToggle');
+          if (checkbox) checkbox.checked = false;
+          modal.remove();
+      });
+  
+      // Backdrop click — same as cancel
+      modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+              const checkbox = document.getElementById('wildBeastToggle');
+              if (checkbox) checkbox.checked = false;
+              modal.remove();
+          }
+      });
+  
+      // Beast option buttons
+      modal.querySelectorAll('.wild-shape-option-btn').forEach(btn => {
+          if (!btn.disabled) {
+              btn.addEventListener('mouseenter', function() {
+                  this.style.borderColor = '#86efac';
+                  this.style.boxShadow = '0 0 12px rgba(74, 222, 128, 0.25)';
+              });
+              btn.addEventListener('mouseleave', function() {
+                  this.style.borderColor = '#4ade80';
+                  this.style.boxShadow = 'none';
+              });
+              btn.addEventListener('click', function() {
+                  const cost = parseInt(this.dataset.cost);
+                  executeWildShape(cost);
+                  modal.remove();
+              });
+          }
+      });
+  }
+  
+  // Execute Wild Shape — spend stress and apply transformation
+  function executeWildShape(stressCost) {
+      if (!currentCharacter) return;
+  
+      const stressRes = currentCharacter.resources?.stress;
+      if (!stressRes) return;
+  
+      if (!stressRes.used) stressRes.used = [];
+  
+      // Spend the stress
+      for (let i = 0; i < stressCost; i++) {
+          const nextIndex = stressRes.used.length;
+          stressRes.used.push(nextIndex);
+      }
+  
+      // Store what type of beast was chosen (for reference)
+      currentCharacter.wildShapeCost = stressCost;
+  
+      // Apply the transformation
+      applyWildBeastTransformation();
+      currentCharacter.wildBeastActive = true;
+ 
+     saveCharacters();
+     populateCharacterSheet(currentCharacter);
 }
 
 function applyWildBeastTransformation() {
@@ -4295,7 +4611,10 @@ function applyWildBeastBonuses(bonuses) {
         const bonus = bonuses[stat];
 
         if (stat === 'evasion') {
-            currentCharacter[stat] = (currentCharacter[stat] || 0) + bonus;
+           // Track Wild Beast evasion in evasionData.mod.wildBeast
+            const ed = ensureEvasionData(currentCharacter);
+            ed.mod.wildBeast = (ed.mod.wildBeast || 0) + bonus;
+            currentCharacter.evasion = getCurrentEvasion(currentCharacter);
             currentCharacter.wildBeastBonuses[stat] = bonus;
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) + bonus;
@@ -4329,7 +4648,10 @@ function removeWildBeastBonuses(bonuses) {
         const bonus = bonuses[stat];
 
         if (stat === 'evasion') {
-            currentCharacter[stat] = (currentCharacter[stat] || 0) - bonus;
+             // Remove Wild Beast evasion from evasionData.mod.wildBeast
+             const ed = ensureEvasionData(currentCharacter);
+             ed.mod.wildBeast = (ed.mod.wildBeast || 0) - bonus;
+             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) - bonus;
             // Remove armor slots
@@ -4355,6 +4677,10 @@ function removeWildBeastBonuses(bonuses) {
     // Clear Wild Beast bonuses tracking
     currentCharacter.wildBeastBonuses = {};
     currentCharacter.wildBeastAbilityBonuses = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+    // Safety: force Wild Beast evasion mod to 0 since transformation is fully removed
+    const edWB = ensureEvasionData(currentCharacter);
+    edWB.mod.wildBeast = 0;
+    currentCharacter.evasion = getCurrentEvasion(currentCharacter);
 }
 
 function updateWildBeastDisplay() {
@@ -4974,11 +5300,38 @@ function executeShortRest() {
     updateCompanionDisplay(currentCharacter);
     updateCompanionEffectsDisplay(currentCharacter);
 
-
+    // Reset Blade Flourish attack bonus on Short Rest
+    resetBladeFlourishOnRest();
+   // Reset Rage on Short Rest
+     resetRageOnRest();
+    // Reset Knowledge is Power on Short Rest
+    resetKnowledgePowerOnLongRest();
     // 🔥 Companion reset for Short Rest
     resetCompanionShortRest(currentCharacter);
     updateCompanionDisplay(currentCharacter);
     updateCompanionEffectsDisplay(currentCharacter);
+
+    // 🔥 Clear Mighty Summoner beasts on Short Rest
+     if (currentCharacter.summonedMonsters && currentCharacter.summonedMonsters.length > 0) {
+         currentCharacter.summonedMonsters = [];
+         renderSummonedMonsters(currentCharacter);
+         const summonBanner = document.getElementById('summonResultBanner');
+         if (summonBanner) summonBanner.style.display = 'none';
+     }
+ 
+     // 🔥 Clear Necromancer raised undead on Short Rest
+     if (currentCharacter.raisedUndead && currentCharacter.raisedUndead.length > 0) {
+         currentCharacter.raisedUndead = [];
+         renderRaisedUndead(currentCharacter);
+         const undeadBanner = document.getElementById('raiseResultBanner');
+         if (undeadBanner) undeadBanner.style.display = 'none';
+     }
+ 
+     // 🔥 Dismiss Spirit Projection on Short Rest
+     if (currentCharacter.spiritProjection && currentCharacter.spiritProjection.active) {
+         currentCharacter.spiritProjection = null;
+         renderSpiritProjection(currentCharacter);
+     }
 
     // Save and refresh
     saveCharacters();
@@ -5030,15 +5383,10 @@ function executeLongRest() {
         currentCharacter.tempThreshold = { lower: 0, upper: 0 };
     }
 
-    if (currentCharacter.normalEvasionData) {
-        currentCharacter.normalEvasionData.temporary = 0;
-    }
-    if (currentCharacter.unarmoredDefenseEvasionData) {
-        currentCharacter.unarmoredDefenseEvasionData.temporary = 0;
-    }
-    if (currentCharacter.evasionData) {
-        currentCharacter.evasionData.temporary = 0;
-    }
+    // Clear temporary evasion and companion modifier on Long Rest
+     const edLR = ensureEvasionData(currentCharacter);
+     edLR.temporary = 0;
+     edLR.mod.companion = 0
 
     if (currentCharacter.mageArmorActive) {
         removeMageArmorBonuses();
@@ -5054,6 +5402,11 @@ function executeLongRest() {
 
     resetRelentlessOnLongRest();
     resetSpellSequencerOnLongRest();
+    resetSecondWindOnLongRest();
+     resetDivineSoulOnLongRest();
+     resetBladeFlourishOnRest();
+     resetRageOnRest();
+     resetKnowledgePowerOnLongRest();
 
     // Companion Long Rest recovery
     const fullRestore = Math.random() < 0.5 ? 'hp' : 'stress';
@@ -5074,6 +5427,28 @@ function executeLongRest() {
     resetCompanionLongRest(currentCharacter);
     updateCompanionDisplay(currentCharacter);
     updateCompanionEffectsDisplay(currentCharacter);
+
+    // 🔥 Clear Mighty Summoner beasts on Long Rest
+     if (currentCharacter.summonedMonsters && currentCharacter.summonedMonsters.length > 0) {
+         currentCharacter.summonedMonsters = [];
+         renderSummonedMonsters(currentCharacter);
+         const summonBanner = document.getElementById('summonResultBanner');
+         if (summonBanner) summonBanner.style.display = 'none';
+     }
+ 
+     // 🔥 Clear Necromancer raised undead on Long Rest
+     if (currentCharacter.raisedUndead && currentCharacter.raisedUndead.length > 0) {
+         currentCharacter.raisedUndead = [];
+         renderRaisedUndead(currentCharacter);
+         const undeadBanner = document.getElementById('raiseResultBanner');
+         if (undeadBanner) undeadBanner.style.display = 'none';
+     }
+ 
+     // 🔥 Dismiss Spirit Projection on Long Rest
+     if (currentCharacter.spiritProjection && currentCharacter.spiritProjection.active) {
+         currentCharacter.spiritProjection = null;
+         renderSpiritProjection(currentCharacter);
+     }
 
     // Save and refresh
     saveCharacters();
@@ -5708,19 +6083,9 @@ function applyWeaponBonuses(bonuses, weaponType) {
 
         // Update the actual character stat
         if (stat === 'evasion') {
-            // Track weapon evasion separately in evasionData
-            if (!currentCharacter.evasionData) {
-                currentCharacter.evasionData = {
-                    base: currentCharacter.evasion || 0,
-                    temporary: 0,
-                    unarmoredDefense: 0,
-                    mageArmor: 0,
-                    fightingStyle: 0,
-                    weapons: 0
-                };
-            }
-            currentCharacter.evasionData.weapons = (currentCharacter.evasionData.weapons || 0) + bonus;
-            // Update the main evasion value
+      // Track weapon evasion in evasionData.mod.weapons
+             const ed = ensureEvasionData(currentCharacter);
+             ed.mod.weapons = (ed.mod.weapons || 0) + bonus;
             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) + bonus;
@@ -5790,8 +6155,9 @@ function applyArmorBonuses(bonuses) {
 
         // Update the actual character stat
         if (stat === 'evasion') {
-            // Armor evasion is handled by getArmorEvasionValue() in getCurrentEvasion()
-            // Just update the main evasion value to reflect the new total
+            // Track armor evasion in evasionData.mod.armor
+             const ed = ensureEvasionData(currentCharacter);
+             ed.mod.armor = (ed.mod.armor || 0) + bonus;
             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) + bonus;
@@ -5838,11 +6204,9 @@ function removeWeaponBonuses(bonuses, weaponType) {
 
         // Remove the actual bonus from character stat
         if (stat === 'evasion') {
-            // Remove weapon evasion from evasionData
-            if (currentCharacter.evasionData) {
-                currentCharacter.evasionData.weapons = (currentCharacter.evasionData.weapons || 0) - bonus;
-            }
-            // Update the main evasion value
+            // Remove weapon evasion from evasionData.mod.weapons
+            const ed = ensureEvasionData(currentCharacter);
+            ed.mod.weapons = (ed.mod.weapons || 0) - bonus;
             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) - bonus;
@@ -5881,6 +6245,17 @@ function removeWeaponBonuses(bonuses, weaponType) {
         currentCharacter[abilityBonusProperty] = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     }
 
+   // Safety: recalculate weapons evasion mod from remaining equipped weapon bonuses
+     // (current weapon's bonusProperty was just cleared, so only the OTHER weapon contributes)
+     const edWeapons = ensureEvasionData(currentCharacter);
+     const otherBonusProperty = weaponType === 'primary' ? 'secondaryWeaponBonuses' : 'primaryWeaponBonuses';
+     let remainingWeaponEvasion = 0;
+     if (currentCharacter[otherBonusProperty] && currentCharacter[otherBonusProperty].evasion) {
+         remainingWeaponEvasion += currentCharacter[otherBonusProperty].evasion;
+     }
+     edWeapons.mod.weapons = remainingWeaponEvasion;
+     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+
     // Recalculate Unarmored Defense evasion if DEX changed (for Barbarian/Monk)
     recalculateUnarmoredDefenseEvasion();
 
@@ -5897,9 +6272,9 @@ function removeArmorBonuses(bonuses) {
 
         // Remove the actual bonus from character stat
         if (stat === 'evasion') {
-            // Armor evasion is handled by getArmorEvasionValue() in getCurrentEvasion()
-            // The evasion will be recalculated by the caller AFTER armorItem is deleted
-            // Don't update evasion here - it would still include the armor bonus
+            // Remove armor evasion from evasionData.mod.armor
+             const ed = ensureEvasionData(currentCharacter);
+             ed.mod.armor = (ed.mod.armor || 0) - bonus;
             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         } else if (stat === 'armor') {
             currentCharacter[stat] = (currentCharacter[stat] || 0) - bonus;
@@ -5937,6 +6312,11 @@ function removeArmorBonuses(bonuses) {
     if (currentCharacter.armorAbilityBonuses) {
         currentCharacter.armorAbilityBonuses = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     }
+     // Safety: force armor evasion mod to 0 since armor is fully removed
+     // (only one armor slot exists, so removal always means zero armor evasion)
+     const edArmor = ensureEvasionData(currentCharacter);
+     edArmor.mod.armor = 0;
+     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
 
     // DO NOT auto-enable Unarmored Defense when armor is removed
     // The player must manually check the UD toggle if they want UD active
@@ -6130,10 +6510,10 @@ function removeWeapon() {
 
         // If it was Unarmored Defense armor, also uncheck the checkbox and update status
         if (isUnarmoredDefenseArmor) {
-            // Recalculate evasion without UD bonus
-            if (currentCharacter.evasionData) {
-                currentCharacter.evasionData.unarmoredDefense = 0;
-            }
+             // Recalculate evasion without UD bonus — use mod.unarmoredDefense (new evasion model)
+             const edUD = ensureEvasionData(currentCharacter);
+             edUD.mod.unarmoredDefense = 0;
+             currentCharacter.unarmoredDefenseActive = false;
             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
 
             // Update the checkbox in the UI
@@ -7645,8 +8025,11 @@ function populateCharacterSheet(character) {
     const wildBeastAbilityBonuses = character.wildBeastAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
     const awakenedMindAbilityBonuses = character.awakenedMindAbilityBonuses || { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
 
-    const displayStr = (character.str || 0) + raceAbilityBonuses.str + primaryWeaponAbilityBonuses.str + secondaryWeaponAbilityBonuses.str + armorAbilityBonuses.str + wildBeastAbilityBonuses.str + awakenedMindAbilityBonuses.str;
-    const displayDex = (character.dex || 0) + raceAbilityBonuses.dex + primaryWeaponAbilityBonuses.dex + secondaryWeaponAbilityBonuses.dex + armorAbilityBonuses.dex + wildBeastAbilityBonuses.dex + awakenedMindAbilityBonuses.dex;
+    const rageSTR = character.rageSTRBonus || 0;
+     const rageDEX = character.rageDEXBonus || 0;
+ 
+     const displayStr = (character.str || 0) + raceAbilityBonuses.str + primaryWeaponAbilityBonuses.str + secondaryWeaponAbilityBonuses.str + armorAbilityBonuses.str + wildBeastAbilityBonuses.str + awakenedMindAbilityBonuses.str + rageSTR;
+     const displayDex = (character.dex || 0) + raceAbilityBonuses.dex + primaryWeaponAbilityBonuses.dex + secondaryWeaponAbilityBonuses.dex + armorAbilityBonuses.dex + wildBeastAbilityBonuses.dex + awakenedMindAbilityBonuses.dex + rageDEX;
     const displayCon = (character.con || 0) + raceAbilityBonuses.con + primaryWeaponAbilityBonuses.con + secondaryWeaponAbilityBonuses.con + armorAbilityBonuses.con + wildBeastAbilityBonuses.con + awakenedMindAbilityBonuses.con;
     const displayInt = (character.int || 0) + raceAbilityBonuses.int + primaryWeaponAbilityBonuses.int + secondaryWeaponAbilityBonuses.int + armorAbilityBonuses.int + wildBeastAbilityBonuses.int + awakenedMindAbilityBonuses.int;
     const displayWis = (character.wis || 0) + raceAbilityBonuses.wis + primaryWeaponAbilityBonuses.wis + secondaryWeaponAbilityBonuses.wis + armorAbilityBonuses.wis + wildBeastAbilityBonuses.wis + awakenedMindAbilityBonuses.wis;
@@ -7727,6 +8110,9 @@ function populateCharacterSheet(character) {
     // Update Monsters display (Mighty Summoner)
     updateMonstersDisplay(character);
 
+    // Update Necromancer display (Warlock)
+    updateNecromancerDisplay(character);
+
     // Update Spirit Projection display (Warlock)
     updateSpiritProjectionDisplay(character);
 
@@ -7761,6 +8147,8 @@ function populateCharacterSheet(character) {
     setTimeout(() => {
         makeWeaponDamageClickable();
     }, 100);
+    // Update Rage button visibility (Barbarian)
+        updateRageButtonVisibility();
 
 }
 
@@ -8588,11 +8976,15 @@ function updateCompanionDisplay(character) {
     </div>
 
     <div class="flex flex-col items-center">
-        <div class="text-xs font-medium mb-1">Mod</div>
-        <div class="text-sm font-medium">+${companionData.mod}</div>
-    </div>
+        <button class="threshold-damage-button mt-2" id="companionAttackButton"
+             title="Roll Companion Attack (d20 +${companionData.mod})" style="border-color: #3b82f6;">
+             <div class="threshold-label" style="color: #93c5fd;">ATTACK</div>
+             <div class="threshold-hp">d20 +${companionData.mod}</div>
+         </button>
+     </div>
+ 
+     <div class="flex flex-col items-center">
 
-    <div class="flex flex-col items-center">
         <button class="threshold-damage-button mt-2" id="companionDamageButton"
             title="Roll Companion Damage">
             <div class="threshold-label">DAMAGE</div>
@@ -8669,21 +9061,31 @@ function updateCompanionDisplay(character) {
 
             stressContainer.appendChild(box);
         }
+        // Attach attack roll handler (MUST be inside companion block to avoid crash on non-companion characters)
+         const atkBtn = document.getElementById('companionAttackButton');
+         if (atkBtn) {
+             const companionStats = getScaledCompanionStats(character.companion.type, character.level || 1);
+             atkBtn.addEventListener('click', () => rollCreatureAttack(character.companion.name || 'Companion', companionStats.mod));
+         }
+ 
+         // Attach damage roll handler
+         const dmgBtn = document.getElementById('companionDamageButton');
+         if (dmgBtn) {
+             dmgBtn.addEventListener('click', () => rollCompanionDamage(character));
+         }
+ 
+         // Attach ability button handlers
+         document.getElementById('companionDefenderBtn')?.addEventListener('click', () => useCompanionDefender(character));
+         document.getElementById('companionEyeGougeBtn')?.addEventListener('click', () => useCompanionEyeGouge(character));
+         document.getElementById('companionRendBtn')?.addEventListener('click', () => useCompanionRend(character));
+         document.getElementById('companionSentinelBtn')?.addEventListener('click', () => useCompanionSentinel(character));
     } else {
         companionSection.style.display = 'none';
-    }
-    // Attach damage roll handler
-    const dmgBtn = document.getElementById('companionDamageButton');
-    if (dmgBtn) {
-        dmgBtn.addEventListener('click', () => rollCompanionDamage(character));
-    }
-
-    // Attach ability button handlers
-    document.getElementById('companionDefenderBtn')?.addEventListener('click', () => useCompanionDefender(character));
-    document.getElementById('companionEyeGougeBtn')?.addEventListener('click', () => useCompanionEyeGouge(character));
-    document.getElementById('companionRendBtn')?.addEventListener('click', () => useCompanionRend(character));
-    document.getElementById('companionSentinelBtn')?.addEventListener('click', () => useCompanionSentinel(character));
-
+    
+// Clear companion content to prevent stale elements from being found by getElementById
+         const companionContent = document.getElementById('companionContent');
+         if (companionContent) companionContent.innerHTML = '';
+     }
 }
 
 function useCompanionDefender(character) {
@@ -8692,36 +9094,13 @@ function useCompanionDefender(character) {
 
     character.defenderActive = true;
 
-    let appliedTempBonus = false;
-
-    // Prefer your structured evasion system if it exists
-    if (character.normalEvasionData) {
-        character.normalEvasionData.temporary = (character.normalEvasionData.temporary || 0) + 1;
-        appliedTempBonus = true;
-    }
-
-    if (character.unarmoredDefenseEvasionData) {
-        // If you want Defender to apply when unarmored is active too,
-        // you can also bump this. If that double-counts, comment this out.
-        character.unarmoredDefenseEvasionData.temporary =
-            (character.unarmoredDefenseEvasionData.temporary || 0) + 1;
-        appliedTempBonus = true;
-    }
-
-    if (character.evasionData) {
-        character.evasionData.temporary = (character.evasionData.temporary || 0) + 1;
-        appliedTempBonus = true;
-    }
-
-    // Fallback: if none of the evasionData structures exist, bump evasion directly
-    if (!appliedTempBonus && typeof character.evasion === 'number') {
-        character.evasion = character.evasion + 1;
-    }
-
-    // Recalculate if your system uses this
-    if (typeof updateCharacterEvasion === 'function') {
-        updateCharacterEvasion();
-    }
+   // Add +1 companion evasion modifier (cleared on short rest)
+     const ed = ensureEvasionData(character);
+     ed.mod.companion = (ed.mod.companion || 0) + 1;
+     character.evasion = getCurrentEvasion(character);
+ 
+     // Update display
+     updateCharacterEvasion();
 
     saveCharacters();
     updateCharacterDisplay();
@@ -8855,29 +9234,61 @@ function rollCompanionDamage(character) {
         rolls.push(Math.floor(Math.random() * die) + 1);
     }
 
-    const total = rolls.reduce((a, b) => a + b, 0);
+    const diceTotal = rolls.reduce((a, b) => a + b, 0);
+    const modValue = data.mod || 0;
+    const total = diceTotal + modValue;
+    const modDisplay = modValue >= 0 ? `+${modValue}` : `${modValue}`;
+    
 
     saveCharacters();
     updateCharacterDisplay();
 
-    showCustomDialog("Companion Damage Roll", `Rolled ${diceCount}d${die}: ${rolls.join(' + ')} = ${total}`);
+    showCustomDialog(
+        "Companion Damage Roll",
+        `<div class="text-center">
+            <div class="text-3xl font-bold text-red-600 dark:text-red-400 mb-2">${total}</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">
+                <i class="fas fa-dice-d6 mr-1"></i>${diceCount}d${die}: ${rolls.join(' + ')} ${modDisplay} (Mod) = ${total}
+            </div>
+        </div>`
+    );
 }
+
+ function rollCreatureAttack(creatureName, mod) {
+     const d20Roll = Math.floor(Math.random() * 20) + 1;
+     const modValue = typeof mod === 'string' ? parseInt(mod) || 0 : (mod || 0);
+     const total = d20Roll + modValue;
+     const modDisplay = modValue >= 0 ? `+${modValue}` : `${modValue}`;
+ 
+     let specialText = '';
+     if (d20Roll === 20) {
+         specialText = '<div class="text-2xl mt-2">🎯 Critical Hit!</div>';
+     } else if (d20Roll === 1) {
+         specialText = '<div class="text-2xl mt-2">💥 Critical Miss!</div>';
+     }
+ 
+     showCustomDialog(
+         `${creatureName} Attack Roll`,
+         `<div class="text-center">
+             <div class="text-4xl font-bold mb-2" style="color: ${d20Roll === 20 ? '#22c55e' : d20Roll === 1 ? '#ef4444' : '#3b82f6'}">${total}</div>
+             <div class="text-sm text-gray-600 dark:text-gray-400">
+                 <i class="fas fa-dice-d20 mr-1"></i>d20: ${d20Roll} ${modDisplay} (Mod) = ${total}
+             </div>
+             ${specialText}
+         </div>`
+     );
+ }
+
 function resetCompanionShortRest(character) {
     if (!character) return;
 
     character.defenderActive = false;
     character.rendActive = false;
 
-    // Clear temporary evasion bonuses safely
-    if (character.normalEvasionData) {
-        character.normalEvasionData.temporary = 0;
-    }
-    if (character.unarmoredDefenseEvasionData) {
-        character.unarmoredDefenseEvasionData.temporary = 0;
-    }
-    if (character.evasionData) {
-        character.evasionData.temporary = 0;
-    }
+   // Clear temporary evasion and companion modifier on Short Rest
+     const edSR = ensureEvasionData(character);
+     edSR.temporary = 0;
+     edSR.mod.companion = 0;
 
     if (typeof updateCharacterEvasion === 'function') {
         updateCharacterEvasion();
@@ -8891,8 +9302,6 @@ function resetCompanionShortRest(character) {
     // Re-enable Defender button 
     const btn = document.getElementById('companionDefenderBtn'); if (btn) btn.disabled = false;
 }
-
-
 
 function resetCompanionLongRest(character) {
     character.defenderActive = false;
@@ -9120,8 +9529,22 @@ document.getElementById('characterForm').addEventListener('submit', function (e)
             class: { max: parseInt(document.getElementById('classMax').value), used: [], temp: 0 },
             spell: { max: parseInt(document.getElementById('spellMax').value), used: [], temp: 0 }
         },
-        // Store both evasion values for Unarmored Defense classes
+        // Evasion system — base is the racial value, mod tracks all bonuses
         evasion: normalEvasion,
+      evasionData: {
+             base: normalEvasion,
+             mod: {
+                 armor: 0,
+                 weapons: 0,
+                 unarmoredDefense: 0,
+                 mageArmor: 0,
+                 wildBeast: 0,
+                 fightingStyle: 0,
+                 companion: 0,
+                 boon: 0
+             },
+             temporary: 0
+         },
         normalEvasion: normalEvasion,
         unarmoredDefenseEvasion: unarmoredDefenseEvasion,
         hasUnarmoredDefense: hasUnarmoredDefense,
@@ -9877,12 +10300,7 @@ document.getElementById('adjustTempEvasion').addEventListener('click', function 
     }
 });
 
-document.getElementById('adjustBaseEvasion').addEventListener('click', function () {
-    const amount = parseInt(document.getElementById('evasionAmount').value);
-    if (amount) {
-        adjustBaseEvasion(amount);
-    }
-});
+// "Adjust Base" button removed — base evasion is only editable via Edit Character screen
 
 // Allow Enter key to focus on Add Temp button for evasion
 document.getElementById('evasionAmount').addEventListener('keypress', function (e) {
@@ -9897,77 +10315,101 @@ function showEvasionModal() {
 
     const modal = document.getElementById('evasionModal');
 
-    // Initialize simplified evasion data if missing
-    if (!currentCharacter.evasionData) {
-        currentCharacter.evasionData = {
-            base: currentCharacter.evasion || 0,
-            temporary: 0,
-            unarmoredDefense: 0,
-            mageArmor: 0
-        };
-    }
-
-    // Get armor evasion value
-    const armorEvasion = getArmorEvasionValue(currentCharacter);
-
-    // Calculate current total evasion
-    const currentEvasion = getCurrentEvasion(currentCharacter);
+    const ed = ensureEvasionData(currentCharacter);
+ 
+     const base = ed.base || 0;
+     const modTotal = getEvasionModTotal(currentCharacter);
+     const temp = ed.temporary || 0;
+     const total = base + modTotal + temp;
 
     // Update modal display
-    document.getElementById('currentEvasion').textContent = currentEvasion;
-    document.getElementById('baseEvasion').textContent = currentCharacter.evasionData.base || 0;
-    document.getElementById('temporaryEvasion').textContent = currentCharacter.evasionData.temporary || 0;
-    document.getElementById('armorEvasion').textContent = armorEvasion;
+     document.getElementById('currentEvasion').textContent = total;
+     document.getElementById('baseEvasion').textContent = base;
+     document.getElementById('modEvasion').textContent = (modTotal >= 0 ? '+' : '') + modTotal;
+     document.getElementById('temporaryEvasion').textContent = (temp >= 0 ? '+' : '') + temp;
+
+// Build mod breakdown tooltip/detail
+     const m = ed.mod;
+     const parts = [];
+     if (m.armor) parts.push('Armor ' + (m.armor >= 0 ? '+' : '') + m.armor);
+     if (m.weapons) parts.push('Weapons ' + (m.weapons >= 0 ? '+' : '') + m.weapons);
+     if (m.unarmoredDefense) parts.push('Unarmored ' + (m.unarmoredDefense >= 0 ? '+' : '') + m.unarmoredDefense);
+     if (m.mageArmor) parts.push('Mage Armor ' + (m.mageArmor >= 0 ? '+' : '') + m.mageArmor);
+     if (m.wildBeast) parts.push('Wild Beast ' + (m.wildBeast >= 0 ? '+' : '') + m.wildBeast);
+     if (m.fightingStyle) parts.push('Fighting Style ' + (m.fightingStyle >= 0 ? '+' : '') + m.fightingStyle);
+     if (m.companion) parts.push('Companion ' + (m.companion >= 0 ? '+' : '') + m.companion);
+     if (m.boon) parts.push('Boon ' + (m.boon >= 0 ? '+' : '') + m.boon);
+     if (m.rage) parts.push('Rage ' + (m.rage >= 0 ? '+' : '') + m.rage);
+     const breakdownEl = document.getElementById('modEvasionBreakdown');
+     if (breakdownEl) {
+         breakdownEl.textContent = parts.length > 0 ? '(' + parts.join(', ') + ')' : '(none)';
+         breakdownEl.style.display = parts.length > 0 ? 'block' : 'none';
+     }
 
     document.getElementById('evasionAmount').value = '';
     modal.classList.remove('hidden');
     document.getElementById('evasionAmount').focus();
 }
 
-function getArmorEvasionValue(character) {
-    if (!character.armorItem) return 0;
-
-    // Get the evasion bonus from armor (can be negative)
-    return character.armorItem.bonuses?.evasion || 0;
-}
-
-function getCurrentEvasion(character) {
-    if (!character.evasionData) {
-        character.evasionData = {
-            base: character.evasion || 0,
-            temporary: 0,
-            unarmoredDefense: 0,
-            mageArmor: 0,
-            fightingStyle: 0,
-            weapons: 0
-        };
-    }
-
-    const baseEvasion = character.evasionData.base || 0;
-    const tempEvasion = character.evasionData.temporary || 0;
-    const unarmoredDefenseEvasion = character.evasionData.unarmoredDefense || 0;
-    const mageArmorEvasion = character.evasionData.mageArmor || 0;
-    const fightingStyleEvasion = character.evasionData.fightingStyle || getDefenderEvasionBonus(character);
-    const armorEvasion = getArmorEvasionValue(character);
-
-    const weaponEvasion = character.evasionData.weapons || 0;
-
-    return baseEvasion + tempEvasion + unarmoredDefenseEvasion + mageArmorEvasion + fightingStyleEvasion + armorEvasion + weaponEvasion;
-}
-
-function calculateTotalEvasion(character) {
-    if (!character.evasionData) {
-        character.evasionData = {
-            base: character.evasion || 0,
-            temporary: 0
-        };
-    }
-
-    const baseEvasion = character.evasionData.base || 0;
-    const tempEvasion = character.evasionData.temporary || 0;
-    const armorEvasion = getArmorEvasionValue(character);
-
-    return baseEvasion + tempEvasion + armorEvasion;
+ // =====================================================
+ // NEW EVASION SYSTEM
+ // base: Set at character creation, only changeable via Edit Character
+ // mod: Object tracking all modifier sources (armor, weapons, UD, mage armor, etc.)
+ // temporary: Manual temp evasion, cleared on rest
+ // currentEvasion = base + modTotal
+ // displayEvasion = currentEvasion + temporary
+ // =====================================================
+ 
+ // Ensure evasionData exists with the new structure, migrating old data if needed
+ function ensureEvasionData(character) {
+     if (!character.evasionData || !character.evasionData.mod) {
+         const oldData = character.evasionData || {};
+         character.evasionData = {
+             base: oldData.base || character.evasion || 0,
+             mod: {
+                 armor: oldData.armor || 0,
+                 weapons: oldData.weapons || 0,
+                 unarmoredDefense: oldData.unarmoredDefense || 0,
+                 mageArmor: oldData.mageArmor || 0,
+                 wildBeast: oldData.wildBeast || 0,
+                 fightingStyle: oldData.fightingStyle || 0,
+                 companion: oldData.companion || 0,
+                 boon: oldData.boon || 0,
+                 rage: oldData.rage || 0
+             },
+             temporary: oldData.temporary || 0
+         };
+     }
+     return character.evasionData;
+ }
+ 
+ // Calculate the total modifier from all mod sources
+ function getEvasionModTotal(character) {
+     const ed = ensureEvasionData(character);
+     const m = ed.mod;
+     return (m.armor || 0) + (m.weapons || 0) + (m.unarmoredDefense || 0) +
+         (m.mageArmor || 0) + (m.wildBeast || 0) + (m.fightingStyle || 0) +
+         (m.companion || 0) + (m.boon || 0) + (m.rage || 0);
+ }
+ 
+ // Get the current evasion (base + mod + temporary)
+ function getCurrentEvasion(character) {
+     const ed = ensureEvasionData(character);
+     const base = ed.base || 0;
+     const modTotal = getEvasionModTotal(character);
+     const temp = ed.temporary || 0;
+     return base + modTotal + temp;
+ }
+ 
+ // Legacy alias — some callers still use this
+ function calculateTotalEvasion(character) {
+     return getCurrentEvasion(character);
+ }
+ 
+ function getMinimumEvasionValue(character) {
+     const modTotal = getEvasionModTotal(character);
+     // Evasion cannot drop below 1, but if mod provides a positive floor, respect that
+     return Math.max(1, modTotal);
 }
 
 function getMinimumEvasionValue(character) {
@@ -9997,15 +10439,7 @@ function updateLevelUpButtonState(character) {
 function updateCharacterEvasion() {
     if (!currentCharacter) return;
 
-    // Initialize simplified evasion data if missing
-    if (!currentCharacter.evasionData) {
-        currentCharacter.evasionData = {
-            base: currentCharacter.evasion || 0,
-            temporary: 0,
-            unarmoredDefense: 0,
-            mageArmor: 0
-        };
-    }
+    ensureEvasionData(currentCharacter);
 
     // Update character's main evasion value
     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
@@ -10020,18 +10454,10 @@ function updateCharacterEvasion() {
 function adjustTempEvasion(amount) {
     if (!currentCharacter || !amount) return;
 
-    // Initialize evasion data if missing
-    if (!currentCharacter.evasionData) {
-        currentCharacter.evasionData = {
-            base: currentCharacter.evasion || 0,
-            temporary: 0,
-            unarmoredDefense: 0,
-            mageArmor: 0
-        };
-    }
+    const ed = ensureEvasionData(currentCharacter);
 
     // Add temporary evasion
-    currentCharacter.evasionData.temporary = (currentCharacter.evasionData.temporary || 0) + amount;
+    ed.temporary = (ed.temporary || 0) + amount;
 
     // Update the character's main evasion value
     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
@@ -10042,43 +10468,10 @@ function adjustTempEvasion(amount) {
     document.getElementById('evasionModal').classList.add('hidden');
 }
 
+ // adjustBaseEvasion is no longer used — base is only editable in Edit Character screen.
+ // Kept as a safeguarded no-op so existing button bindings don't break.
 function adjustBaseEvasion(amount) {
-    if (!currentCharacter || !amount) return;
-
-    // Initialize evasion data if missing
-    if (!currentCharacter.evasionData) {
-        currentCharacter.evasionData = {
-            base: currentCharacter.evasion || 0,
-            temporary: 0,
-            unarmoredDefense: 0,
-            mageArmor: 0
-        };
-    }
-
-    // Get minimum evasion value (1 or armor's evasion value, whichever is higher)
-    const minimumEvasion = getMinimumEvasionValue(currentCharacter);
-    const newBaseEvasion = (currentCharacter.evasionData.base || 0) + amount;
-
-    // Check if the new value would go below the minimum
-    if (newBaseEvasion < minimumEvasion) {
-        const armorEvasion = getArmorEvasionValue(currentCharacter);
-        if (armorEvasion > 1) {
-            showCustomDialog('Evasion Restriction', `Sorry, you can't go below your Armor's Value of ${armorEvasion}.`);
-        } else {
-            showCustomDialog('Evasion Restriction', "Sorry, you can't go below your Armor's Value. Evasion cannot drop below 1.");
-        }
-        document.getElementById('evasionModal').classList.add('hidden');
-        return;
-    }
-
-    // Adjust base evasion
-    currentCharacter.evasionData.base = newBaseEvasion;
-
-    // Update the character's main evasion value
-    currentCharacter.evasion = getCurrentEvasion(currentCharacter);
-
-    saveCharacters();
-    populateCharacterSheet(currentCharacter);
+    showCustomDialog('Base Evasion', 'Base Evasion can only be changed via the Edit Character screen.');
 
     document.getElementById('evasionModal').classList.add('hidden');
 }
@@ -10486,6 +10879,130 @@ document.getElementById('editCharacterBtn').addEventListener('click', function (
     if (!currentCharacter) return;
     populateCharacterCreationForm();
 });
+
+// Other Abilities reference modal (character name click)
+ document.getElementById('sheetCharName').addEventListener('click', function () {
+     if (!currentCharacter) return;
+     showOtherAbilitiesModal();
+ });
+
+ function stripInteractiveElements(html) {
+    return html
+        .replace(/<button[\s\S]*?<\/button>/gi, '')
+        .replace(/<input[^>]*>/gi, '')
+        .replace(/<select[\s\S]*?<\/select>/gi, '')
+        .replace(/<textarea[\s\S]*?<\/textarea>/gi, '')
+        .replace(/<label[\s\S]*?<\/label>/gi, '');
+}
+
+ 
+ function showOtherAbilitiesModal() {
+     if (!currentCharacter) return;
+ 
+     const charClass = currentCharacter.class;
+     const charClassAbilities = classAbilities[charClass] || [];
+     const allUniversal = typeof universalAbilities !== 'undefined' ? universalAbilities : [];
+ 
+     const modal = document.createElement('div');
+     modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+ 
+     // Build class ability options
+     let classOptions = '';
+     charClassAbilities.forEach((ability, i) => {
+         // Strip HTML tags from name for option text, but keep for display
+         const plainName = ability.name.replace(/<[^>]*>/g, '').trim();
+         classOptions += `<option value="class_${i}">${plainName}</option>`;
+     });
+ 
+     // Build universal ability options
+     let universalOptions = '';
+     allUniversal.forEach((ability, i) => {
+         const plainName = ability.name.replace(/<[^>]*>/g, '').trim();
+         universalOptions += `<option value="universal_${i}">${plainName}</option>`;
+     });
+ 
+     modal.innerHTML = `
+         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full mx-4 flex flex-col" style="max-width: 500px; max-height: 85vh;">
+             <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                 <div class="flex justify-between items-center mb-3">
+                     <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">
+                         <i class="fas fa-book-open mr-2 text-primary"></i>Abilities Reference
+                     </h3>
+                     <button class="close-abilities-modal text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xl transition-colors">
+                         <i class="fas fa-times"></i>
+                     </button>
+                 </div>
+                 <select id="abilitiesRefSelect" class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent">
+                     <option value="">-- Select an Ability --</option>
+                     <optgroup label="${charClass} Abilities">
+                         ${classOptions}
+                     </optgroup>
+                     <optgroup label="Universal Abilities">
+                         ${universalOptions}
+                     </optgroup>
+                 </select>
+             </div>
+             <div id="abilityRefContent" class="p-4 overflow-y-auto flex-1" style="min-height: 120px;">
+                 <div class="text-center text-gray-400 dark:text-gray-500 text-sm py-8">
+                     <i class="fas fa-hand-pointer mb-2 text-lg"></i>
+                     <p>Select an ability above to view its details.</p>
+                 </div>
+             </div>
+         </div>
+     `;
+ 
+     document.body.appendChild(modal);
+ 
+     const selectEl = modal.querySelector('#abilitiesRefSelect');
+     const contentEl = modal.querySelector('#abilityRefContent');
+ 
+     selectEl.addEventListener('change', function () {
+         const val = this.value;
+         if (!val) {
+             contentEl.innerHTML = `
+                 <div class="text-center text-gray-400 dark:text-gray-500 text-sm py-8">
+                     <i class="fas fa-hand-pointer mb-2 text-lg"></i>
+                     <p>Select an ability above to view its details.</p>
+                 </div>`;
+             return;
+         }
+ 
+         const parts = val.split('_');
+         const type = parts[0];
+         const index = parseInt(parts[1]);
+ 
+         let ability;
+         if (type === 'class') {
+             ability = charClassAbilities[index];
+         } else {
+             ability = allUniversal[index];
+         }
+ 
+         if (!ability) return;
+ 
+         const sourceLabel = type === 'class'
+             ? `<span class="inline-block px-2 py-0.5 text-xs rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">${charClass}</span>`
+             : `<span class="inline-block px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">Universal</span>`;
+ 
+         const cleanDescription = stripInteractiveElements(ability.description);
+
+contentEl.innerHTML = `
+    <div class="mb-3">
+        <div class="flex items-center gap-2 flex-wrap mb-2">
+            <h4 class="text-base font-bold text-gray-800 dark:text-gray-100">${ability.name}</h4>
+            ${sourceLabel}
+        </div>
+    </div>
+    <div class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed ability-ref-description">
+        ${cleanDescription}
+    </div>
+`;
+     });
+ 
+     // Close handlers
+     modal.querySelector('.close-abilities-modal').addEventListener('click', () => modal.remove());
+     modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+ }
 
 // Individual Character Save/Load Event Listeners
 const saveCharacterBtn = document.getElementById('saveCharacter');
@@ -11397,8 +11914,11 @@ function populateCharacterEditForm() {
     document.getElementById('editClassMax').value = currentCharacter.resources?.class?.max || currentCharacter.classMax || 0;
     document.getElementById('editSpellMax').value = currentCharacter.resources?.spell?.max || currentCharacter.spellMax || 0;
 
-    // Populate combat stats
-    document.getElementById('editEvasion').value = currentCharacter.evasion || 0;
+   // Populate combat stats — show base evasion only (modifiers are separate)
+     {
+         const ed = ensureEvasionData(currentCharacter);
+         document.getElementById('editEvasion').value = ed.base || 0;
+     }
     document.getElementById('editArmor').value = currentCharacter.armor || 0;
 
     // Populate threshold values - show the actual stored base values
@@ -11580,20 +12100,11 @@ function populateCharacterCreationForm() {
         document.getElementById('classMax').value = classInfo.class + (raceBonusValues.class || 0);
         document.getElementById('spellMax').value = classInfo.spell + (raceBonusValues.spell || 0);
 
-        // Evasion - use base evasion (without temporary and armor values)
-        let baseEvasion = currentCharacter.evasion || 0;
-
-        // If we have evasion data, use the base value
-        if (currentCharacter.evasionData && currentCharacter.evasionData.base !== undefined) {
-            baseEvasion = currentCharacter.evasionData.base;
-        } else {
-            // Calculate base by removing temporary and armor bonuses
-            const tempEvasion = currentCharacter.evasionData?.temporary || 0;
-            const armorEvasion = getArmorEvasionValue(currentCharacter);
-            baseEvasion = (currentCharacter.evasion || 0) - tempEvasion - armorEvasion;
-        }
-
-        document.getElementById('evasion').value = baseEvasion;
+      // Evasion - use base evasion only (fixed at creation, editable via Edit Character)
+         {
+             const ed = ensureEvasionData(currentCharacter);
+             document.getElementById('evasion').value = ed.base || 0;
+         }
 
         // Armor - use base armor value
         let baseArmor = 0;
@@ -12215,6 +12726,13 @@ function rollDamageType(damageType, proficiency, weaponType = 'primary', weaponB
         armorDamageBonus = currentCharacter.armorItem.bonuses.damageBonus;
     }
 
+     // Rage Damage Dice bonus (Blood Rage: +1/+2/+3 extra dice based on level)
+     let rageDamageDiceBonus = 0;
+     if (currentCharacter && currentCharacter.rageDamageDiceBonus) {
+         rageDamageDiceBonus = currentCharacter.rageDamageDiceBonus;
+         totalDice += rageDamageDiceBonus;
+     }
+
     // Boon damage bonus (per die, from Nature's Boon, Performer's Boon, etc.)
     const boonDamagePerDie = (currentCharacter && currentCharacter.attackDamageBonus) ? currentCharacter.attackDamageBonus : 0;
 
@@ -12249,7 +12767,8 @@ function rollDamageType(damageType, proficiency, weaponType = 'primary', weaponB
         armorDamageDiceBonus: armorDamageDiceBonus, // extra dice from armor
         armorDamageBonus: armorDamageBonus, // flat damage bonus from armor
         boonDamagePerDie: boonDamagePerDie, // per die boon bonus
-        boonDamageTotalBonus: boonDamageTotalBonus // total boon bonus
+       boonDamageTotalBonus: boonDamageTotalBonus, // total boon bonus
+         rageDamageDiceBonus: rageDamageDiceBonus // Blood Rage extra dice
     };
 }
 
@@ -12691,7 +13210,7 @@ function rollSpellDamage(spell) {
     const proficiency = getSpellProficiencyDiceCount();
     const totalDice = useProf ? damageType.numDice * proficiency : damageType.numDice;
 
-    // Roll all dice
+    // Roll all base dice
     const rolls = [];
     let total = 0;
 
@@ -12701,8 +13220,23 @@ function rollSpellDamage(spell) {
         total += roll;
     }
 
-    // Healing spells skip Spell Attack Bonus and Boon
+    // Healing spells skip Spell Attack Bonus, Boon, and KoP
     const isHealing = spell.isHealing || false;
+    // Knowledge is Power extra dice (Wizard — not for healing spells)
+    const kopBonusDice = (!isHealing && currentCharacter.knowledgePowerDamageBonus) ? currentCharacter.knowledgePowerDamageBonus : 0;
+    const kopRolls = [];
+    let kopTotal = 0;
+    if (kopBonusDice > 0) {
+        for (let i = 0; i < kopBonusDice; i++) {
+            const roll = Math.floor(Math.random() * damageType.sides) + 1;
+            kopRolls.push(roll);
+            kopTotal += roll;
+        }
+        // Consume the KoP bonus after rolling
+        currentCharacter.knowledgePowerDamageBonus = 0;
+        updateKnowledgePowerButtonState();
+        saveCharacters();
+    }
 
     // Get Spell Attack Bonus (class spellcasting ability modifier)
     // Healing spells do NOT use Spell Attack Bonus
@@ -12718,7 +13252,7 @@ function rollSpellDamage(spell) {
      const boonDamagePerDie = !isHealing ? (currentCharacter.attackDamageBonus || 0) : 0;
     const boonDamageTotalBonus = boonDamagePerDie * totalDice;
 
-    const grandTotal = total + spellModifier + boonDamageTotalBonus;
+    const grandTotal = total + spellModifier + boonDamageTotalBonus + kopTotal;
 
     // Build the formula line: e.g. "1d8 × 3 = 3d8"
     let formulaHTML = '';
@@ -12738,6 +13272,9 @@ function rollSpellDamage(spell) {
     if (boonDamageTotalBonus > 0) {
         breakdownHTML += ` + ${boonDamageTotalBonus} Boon (+${boonDamagePerDie}/die)`;
     }
+    if (kopTotal > 0) {
+        breakdownHTML += ` + ${kopTotal} KoP [${kopRolls.join(', ')}]`;
+    }
 
     let noteHTML = '';
     if (spell.note) {
@@ -12755,6 +13292,9 @@ function rollSpellDamage(spell) {
     if (boonDamageTotalBonus > 0) {
         modifierDetailHTML += `<div class="text-sm text-gray-600 dark:text-gray-400 mt-1"><strong>Boon Damage Bonus:</strong> +${boonDamagePerDie} per die (${totalDice} dice = +${boonDamageTotalBonus})</div>`;
     }
+    if (kopTotal > 0) {
+         modifierDetailHTML += `<div class="text-sm text-purple-600 dark:text-purple-400 mt-1"><strong>Knowledge is Power (KoP):</strong> +${kopBonusDice} extra d${damageType.sides} = [${kopRolls.join(', ')}] = +${kopTotal}</div>`;
+     }
 
     // Store current spell data for reroll
     const spellRollData = JSON.stringify(spell);
@@ -12978,6 +13518,9 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
 
         if (r.dualWieldBonus > 0)
             parts.push(`<span class="text-purple-500 dark:text-purple-400 ml-1">+${r.dualWieldBonus} Dual‑Wield dice</span>`);
+
+        if (r.rageDamageDiceBonus > 0)
+            parts.push(`<span class="text-red-500 dark:text-red-400 ml-1">+${r.rageDamageDiceBonus} Rage dice</span>`);
 
         return parts.join('');
     }
@@ -13218,7 +13761,8 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
             armorDamageBonus: r.armorDamageBonus || 0,
             boonDamagePerDie: r.boonDamagePerDie || 0,
             boonDamageTotalBonus: r.boonDamageTotalBonus || 0,
-            isNotProficient: r.isNotProficient || false
+            isNotProficient: r.isNotProficient || false,
+            rageDamageDiceBonus: r.rageDamageDiceBonus || 0
         }))
     );
 
@@ -13229,9 +13773,215 @@ function showWeaponDamageResults(weaponName, rollResults, abilityModifier, weapo
     } else {
         delete modal.dataset.existingResults;
     }
+    //  BLADE FLOURISH PSYCHIC DAMAGE SECTION (Bard only)
+     // ---------------------------------------------------------------
+     addBladeFlourishToWeaponDamageModal();
+
+    // ---------------------------------------------------------------
+     //  SNEAK ATTACK SECTION (Rogue only)
+     // ---------------------------------------------------------------
+     addSneakAttackToWeaponDamageModal();
 
     modal.classList.remove('hidden');
 }
+
+// ===============================================================
+ //  BLADE FLOURISH — Psychic Damage in Weapon Damage Modal (Bard)
+ // ===============================================================
+ 
+ /**
+  * Check if the current character has Blade Flourish psychic dice pending
+  */
+ function isBladeFlourishActive() {
+     if (!currentCharacter) return false;
+     return (currentCharacter.bladeFlourishPsychicDice || 0) > 0;
+ }
+ 
+ /**
+  * Add Blade Flourish psychic damage section to weapon damage modal
+  * Dice are rolled when the player clicks the button inside the modal.
+  */
+ function addBladeFlourishToWeaponDamageModal() {
+     // Remove any existing section first
+     const existingSection = document.getElementById('bladeFlourishModalSection');
+     if (existingSection) existingSection.remove();
+ 
+     if (!isBladeFlourishActive()) return;
+ 
+     const resultsContainer = document.getElementById('weaponDamageResults');
+     if (!resultsContainer) return;
+ 
+     const numDice = currentCharacter.bladeFlourishPsychicDice;
+     const diceStr = numDice + 'd4';
+ 
+     const section = document.createElement('div');
+     section.id = 'bladeFlourishModalSection';
+     section.className = 'mt-4 pt-3 border-t border-gray-300 dark:border-gray-600';
+ 
+     section.innerHTML = '<div class="flex items-center justify-between flex-wrap gap-2">' +
+         '<span class="font-semibold text-sm text-purple-600 dark:text-purple-400"><i class="fas fa-music mr-1"></i>Blade Flourish (' + diceStr + ' Psychic)</span>' +
+         '<button class="blade-flourish-btn" id="bladeFlourishModalBtn"><i class="fas fa-music"></i><span>Roll Psychic Damage</span></button>' +
+         '</div>' +
+         '<div id="bladeFlourishModalResult"></div>';
+ 
+     resultsContainer.appendChild(section);
+ }
+ 
+ /**
+  * Roll Blade Flourish psychic damage from within the weapon damage modal
+  */
+ function activateBladeFlourishFromModal() {
+     if (!currentCharacter) return;
+ 
+     const numDice = currentCharacter.bladeFlourishPsychicDice || 0;
+     if (numDice === 0) return;
+ 
+     const resultDisplay = document.getElementById('bladeFlourishModalResult');
+     const btn = document.getElementById('bladeFlourishModalBtn');
+ 
+     const diceStr = numDice + 'd4';
+ 
+     // Roll dice
+     const rolls = [];
+     for (let i = 0; i < numDice; i++) {
+         rolls.push(Math.floor(Math.random() * 4) + 1);
+     }
+     const total = rolls.reduce(function (a, b) { return a + b; }, 0);
+ 
+     // Consume the psychic dice
+     currentCharacter.bladeFlourishPsychicDice = 0;
+     saveCharacters();
+ 
+     // Disable button after use
+     if (btn) {
+         btn.disabled = true;
+         btn.classList.add('disabled');
+         btn.style.opacity = '0.5';
+         btn.style.cursor = 'not-allowed';
+         var spanEl = btn.querySelector('span');
+         if (spanEl) spanEl.textContent = 'Flourish Rolled';
+     }
+ 
+     if (resultDisplay) {
+         resultDisplay.innerHTML = '<div class="blade-flourish-result" style="margin-top:6px;">' +
+             '<i class="fas fa-music mr-2"></i>Psychic Damage! ' + diceStr + ': [' + rolls.join(', ') + '] = <strong class="text-purple-600 dark:text-purple-400">' + total + '</strong></div>';
+     }
+ }
+ 
+ // Event delegation for Blade Flourish modal button
+ document.addEventListener('click', function (e) {
+     if (e.target.closest('#bladeFlourishModalBtn')) {
+         e.preventDefault();
+         activateBladeFlourishFromModal();
+     }
+ });
+ 
+ // ===============================================================
+ //  SNEAK ATTACK — in Weapon Damage Modal (Rogue)
+ // ===============================================================
+
+/**
+  * Check if the current character has Sneak Attack ability selected
+  */
+ function isSneakAttackSelected() {
+     if (!currentCharacter || currentCharacter.class !== 'Rogue') return false;
+     if (!currentCharacter.classAbilities || !currentCharacter.classAbilities.selectedClass) return false;
+     const rogueAbilities = classAbilities['Rogue'] || [];
+     const sneakAttackIndex = rogueAbilities.findIndex(a => a.name.toLowerCase().includes('sneak attack'));
+     if (sneakAttackIndex === -1) return false;
+     return currentCharacter.classAbilities.selectedClass.includes(sneakAttackIndex);
+ }
+ 
+ /**
+  * Add Sneak Attack button to weapon damage modal if Rogue has the ability selected
+  */
+ function addSneakAttackToWeaponDamageModal() {
+     // Remove any existing sneak attack section first
+     const existingSection = document.getElementById('sneakAttackModalSection');
+     if (existingSection) existingSection.remove();
+ 
+     if (!isSneakAttackSelected()) return;
+ 
+     const resultsContainer = document.getElementById('weaponDamageResults');
+     if (!resultsContainer) return;
+ 
+     const section = document.createElement('div');
+     section.id = 'sneakAttackModalSection';
+     section.className = 'mt-4 pt-3 border-t border-gray-300 dark:border-gray-600';
+ 
+     // Determine dice based on level
+     const level = currentCharacter.level || 1;
+     let diceStr;
+     if (level >= 7) diceStr = '3d6';
+     else if (level >= 4) diceStr = '2d6';
+     else diceStr = '1d6';
+ 
+     section.innerHTML = '<div class="flex items-center justify-between flex-wrap gap-2">' +
+         '<span class="font-semibold text-sm text-indigo-600 dark:text-indigo-400"><i class="fas fa-user-ninja mr-1"></i>Sneak Attack (' + diceStr + ') — Cost: 1 Class</span>' +
+         '<button class="sneak-attack-btn" id="sneakAttackModalBtn"><i class="fas fa-user-ninja"></i><span>Roll Sneak Attack</span></button>' +
+         '</div>' +
+         '<div id="sneakAttackModalResult"></div>';
+ 
+     resultsContainer.appendChild(section);
+ }
+ 
+ /**
+  * Activate Sneak Attack from the weapon damage modal
+  */
+ function activateSneakAttackFromModal() {
+     if (!currentCharacter) return;
+ 
+     if (!currentCharacter.resources) return;
+     const classResource = currentCharacter.resources.class;
+     if (!classResource) return;
+ 
+     const classMax = classResource.max + (classResource.temp || 0);
+     const classAvailable = classMax - classResource.used.length;
+     const resultDisplay = document.getElementById('sneakAttackModalResult');
+     const btn = document.getElementById('sneakAttackModalBtn');
+ 
+     if (classAvailable < 1) {
+         if (resultDisplay) {
+             resultDisplay.innerHTML = '<div class="sneak-attack-result error" style="margin-top:6px;"><i class="fas fa-exclamation-triangle mr-2"></i>Not enough Class available! Need 1 Class.</div>';
+             setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+         }
+         return;
+     }
+ 
+     // Spend 1 Class
+     classResource.used.push(classResource.used.length);
+ 
+     // Determine dice based on level
+     const level = currentCharacter.level || 1;
+     let numDice, diceStr;
+     if (level >= 7) { numDice = 3; diceStr = '3d6'; }
+     else if (level >= 4) { numDice = 2; diceStr = '2d6'; }
+     else { numDice = 1; diceStr = '1d6'; }
+ 
+     // Roll dice
+     const rolls = [];
+     for (let i = 0; i < numDice; i++) {
+         rolls.push(Math.floor(Math.random() * 6) + 1);
+     }
+     const total = rolls.reduce((a, b) => a + b, 0);
+ 
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+     updateCharacterDisplay();
+ 
+     // Disable button after use
+     if (btn) {
+         btn.disabled = true;
+         btn.classList.add('disabled');
+         btn.style.opacity = '0.5';
+         btn.style.cursor = 'not-allowed';
+         const spanEl = btn.querySelector('span');
+         if (spanEl) spanEl.textContent = 'Sneak Attack Used';
+     }
+ 
+     if (resultDisplay) {
+         resultDisplay.innerHTML = '<div class="sneak-attack-result" style="margin-top:6px;"><i class="fas fa-user-ninja mr-2"></i>Sneak Attack! ' + diceStr + ': [' + rolls.join(', ') + '] = <strong>' + total + '</strong> extra damage. (Cost: 1 Class)</div>';
+     } }
 
 function rerollWeaponDamage() {
     const modal = document.getElementById('weaponDamageModal');
@@ -13750,7 +14500,27 @@ function rollAttackRoll(attackOption) {
     // Boon attack bonus (from Nature's Boon, Performer's Boon, etc.)
     const boonAttackBonus = currentCharacter.attackDamageBonus || 0;
 
-    const totalAttack = usedRoll + abilityModifier + fightingStyleBonus + weaponAttackBonus + armorAttackBonus + boonAttackBonus;
+    // Blade Flourish attack bonus (Bard)
+     const bladeFlourishBonus = currentCharacter.bladeFlourishAttackBonus || 0;
+ 
+     // Rage attack bonus (Barbarian - Wolf Totem: flat +2)
+     const rageAttackBonus = currentCharacter.rageAttackBonus || 0;
+ 
+     // Rage attack die (Barbarian - Blood Rage: roll extra die)
+     let rageAttackDieResult = 0;
+     let rageAttackDieSides = 0;
+     if (currentCharacter.rageAttackDieSides && currentCharacter.rageAttackDieSides > 0) {
+         rageAttackDieSides = currentCharacter.rageAttackDieSides;
+         rageAttackDieResult = Math.floor(Math.random() * rageAttackDieSides) + 1;
+     }
+ 
+     const totalAttack = usedRoll + abilityModifier + fightingStyleBonus + weaponAttackBonus + armorAttackBonus + boonAttackBonus + bladeFlourishBonus + rageAttackBonus + rageAttackDieResult;
+ 
+     // Consume the Blade Flourish attack bonus after use
+     if (bladeFlourishBonus > 0) {
+         currentCharacter.bladeFlourishAttackBonus = 0;
+         saveCharacters();
+     }
 
     // Note the extra firstRoll argument
     showAttackRollResults(
@@ -13765,7 +14535,11 @@ function rollAttackRoll(attackOption) {
         secondRoll,
         weaponAttackBonus,
         armorAttackBonus,
-        boonAttackBonus
+        boonAttackBonus,
+        bladeFlourishBonus,
+         rageAttackBonus,
+         rageAttackDieResult,
+         rageAttackDieSides
     );
 }
 
@@ -13782,7 +14556,11 @@ function showAttackRollResults(
     secondRoll = null,
     weaponAttackBonus = 0,
     armorAttackBonus = 0,
-    boonAttackBonus = 0
+    boonAttackBonus = 0,
+    bladeFlourishBonus = 0,
+     rageAttackBonus = 0,
+     rageAttackDieResult = 0,
+     rageAttackDieSides = 0,
 ) {
     const modal = document.getElementById('attackRollModal');
     const title = document.getElementById('attackRollTitle');
@@ -13833,6 +14611,15 @@ function showAttackRollResults(
     if (boonAttackBonus > 0) {
         breakdownText += ` + Boon: +${boonAttackBonus}`;
     }
+    if (bladeFlourishBonus > 0) {
+         breakdownText += ` + Flourish: +${bladeFlourishBonus}`;
+     }
+    if (rageAttackBonus > 0) {
+         breakdownText += ` + Rage: +${rageAttackBonus}`;
+     }
+     if (rageAttackDieResult > 0) {
+         breakdownText += ` + Rage 1d${rageAttackDieSides}: +${rageAttackDieResult}`;
+     }
     breakdownDisplay.textContent = breakdownText;
 
     totalDisplay.textContent = totalAttack;
@@ -13850,6 +14637,15 @@ function showAttackRollResults(
     if (boonAttackBonus > 0) {
         modifierHTML += `<br><strong>Boon Attack Bonus:</strong> +${boonAttackBonus}`;
     }
+    if (bladeFlourishBonus > 0) {
+         modifierHTML += `<br><span class="text-purple-600 dark:text-purple-400"><strong>Blade Flourish:</strong> +${bladeFlourishBonus}</span>`;
+     }
+      if (rageAttackBonus > 0) {
+         modifierHTML += `<br><span class="text-red-500 dark:text-red-400"><strong>Rage (Wolf):</strong> +${rageAttackBonus}</span>`;
+     }
+     if (rageAttackDieResult > 0) {
+         modifierHTML += `<br><span class="text-red-500 dark:text-red-400"><strong>Blood Rage (1d${rageAttackDieSides}):</strong> +${rageAttackDieResult}</span>`;
+     }
     if (hasDisadvantage) {
         modifierHTML += `<br><span class="text-red-500 dark:text-red-400">` +
             `<strong>⚠️ Wizard Armor Penalty:</strong> Disadvantage</span>`;
@@ -14001,20 +14797,12 @@ document.getElementById('editCharacterForm').addEventListener('submit', function
         resource.used = resource.used.filter(index => index < totalMax);
     });
 
-    // Update combat stats
-    currentCharacter.evasion = parseInt(document.getElementById('editEvasion').value) || 0;
-
-    // MISSING: Update evasionData.base to match
-    if (!currentCharacter.evasionData) {
-        currentCharacter.evasionData = {
-            base: currentCharacter.evasion,
-            temporary: 0,
-            unarmoredDefense: 0,
-            mageArmor: 0,
-            fightingStyle: 0
-        };
-    } else {
-        currentCharacter.evasionData.base = currentCharacter.evasion;
+     // Update combat stats — only change the base evasion, preserve all modifiers
+     {
+         const newBase = parseInt(document.getElementById('editEvasion').value) || 0;
+         const ed = ensureEvasionData(currentCharacter);
+         ed.base = newBase;
+         currentCharacter.evasion = getCurrentEvasion(currentCharacter);
     }
 
     currentCharacter.armor = parseInt(document.getElementById('editArmor').value) || 0;
@@ -14197,19 +14985,11 @@ function recalculateUnarmoredDefenseEvasion() {
     // Check if wearing non-ceremonial armor (shouldn't have Unarmored Defense active)
     if (currentCharacter.armorItem && !currentCharacter.armorItem.isUnarmoredDefense) return;
 
-    // Initialize evasion data if missing
-    if (!currentCharacter.evasionData) {
-        currentCharacter.evasionData = {
-            base: currentCharacter.evasion || 0,
-            temporary: 0,
-            unarmoredDefense: 0,
-            mageArmor: 0
-        };
-    }
+    const ed = ensureEvasionData(currentCharacter);
 
     // Calculate new Unarmored Defense evasion bonus
     const newBonus = getUnarmoredDefenseEvasionBonus(currentCharacter);
-    currentCharacter.evasionData.unarmoredDefense = newBonus;
+    ed.mod.unarmoredDefense = newBonus;
 
     // Update character's main evasion value
     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
@@ -14284,19 +15064,11 @@ function removeUnarmoredDefenseTransformation() {
 function applyUnarmoredDefenseBonuses() {
     if (!currentCharacter) return;
 
-    // Initialize evasion data if missing
-    if (!currentCharacter.evasionData) {
-        currentCharacter.evasionData = {
-            base: currentCharacter.evasion || 0,
-            temporary: 0,
-            unarmoredDefense: 0,
-            mageArmor: 0
-        };
-    }
+    const ed = ensureEvasionData(currentCharacter);
 
     // Calculate Unarmored Defense evasion bonus based on current DEX (min +1, max +3)
     const evasionBonus = getUnarmoredDefenseEvasionBonus(currentCharacter);
-    currentCharacter.evasionData.unarmoredDefense = evasionBonus;
+    ed.mod.unarmoredDefense = evasionBonus;
 
     // Update character's main evasion value
     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
@@ -14336,18 +15108,10 @@ function applyUnarmoredDefenseBonuses() {
 function removeUnarmoredDefenseBonuses() {
     if (!currentCharacter) return;
 
-    // Initialize evasion data if missing
-    if (!currentCharacter.evasionData) {
-        currentCharacter.evasionData = {
-            base: currentCharacter.evasion || 0,
-            temporary: 0,
-            unarmoredDefense: 0,
-            mageArmor: 0
-        };
-    }
+    const ed = ensureEvasionData(currentCharacter);
 
     // Remove Unarmored Defense evasion bonus
-    currentCharacter.evasionData.unarmoredDefense = 0;
+    ed.mod.unarmoredDefense = 0;
 
     // Update character's main evasion value
     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
@@ -14509,8 +15273,10 @@ function applyMageArmorBonuses() {
         upperThresholdBonus += 15;
     }
 
-    // Apply evasion bonus to current evasion
-    currentCharacter.evasion = (currentCharacter.evasion || 0) + evasionBonus;
+     // Apply evasion bonus via evasionData.mod.mageArmor
+     const ed = ensureEvasionData(currentCharacter);
+     ed.mod.mageArmor = evasionBonus;
+     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
 
     // Apply temporary threshold bonuses
     if (!currentCharacter.tempThreshold) {
@@ -14537,8 +15303,10 @@ function removeMageArmorBonuses() {
 
     const bonuses = currentCharacter.mageArmorBonuses;
 
-    // Remove evasion bonus
-    currentCharacter.evasion = (currentCharacter.evasion || 0) - bonuses.evasion;
+     // Remove evasion bonus via evasionData.mod.mageArmor
+     const ed = ensureEvasionData(currentCharacter);
+     ed.mod.mageArmor = 0;
+     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
 
     // Remove temporary threshold bonuses
     if (currentCharacter.tempThreshold) {
@@ -15475,13 +16243,15 @@ function createMonsterCard(monster, index) {
                  <div class="monster-stat-value">${monster.evasion}</div>
              </div>
              <div>
-                 <div class="monster-stat-label">Mod</div>
-                 <div class="monster-stat-value">${monster.mod}</div>
+                 <button class="monster-attack-btn" data-monster-id="${monster.id}" data-mod="${monster.mod}" data-name="${monster.name}" title="Roll d20${monster.mod} attack">
+                      <div class="monster-stat-label" style="color: #93c5fd;">Attack</div>
+                      <div class="monster-stat-value">${monster.mod}</div>
+                  </button>
              </div>
              <div>
                  <button class="monster-damage-btn" data-monster-id="${monster.id}" data-damage="${monster.damage}" data-mod="${monster.mod}" title="Roll ${monster.damage}+${monster.mod} damage">
                       <div class="monster-stat-label">Damage</div>
-                      <div class="monster-stat-value"><i class="fas fa-dice-d6 mr-1"></i>${monster.damage}</div>
+                      <div class="monster-stat-value">${monster.damage}</div>
                   </button>
              </div>
              <div>
@@ -15584,13 +16354,52 @@ document.getElementById('monstersContainer').addEventListener('click', function 
         handleMonsterResourceClick(e);
     } else if (e.target.closest('.monster-dismiss')) {
         handleMonsterDismiss(e);
+    } else if (e.target.closest('.monster-attack-btn')) {
+        handleMonsterAttackRoll(e);
     } else if (e.target.closest('.monster-damage-btn')) {
         handleMonsterDamageRoll(e);
     }
 });
-// Note: monstersToggle uses the global toggleSection system via event delegation at line ~6772 // The button ID 'monstersToggle' and content ID 'monstersContent' follow the naming convention
-/**
+// Note: monstersToggle uses the global toggleSection system via event delegation at line ~6772 
+
+// Initialize Necromancer Section Event Listeners
+ const raiseUndeadBtn = document.getElementById('raiseUndeadBtn');
+ if (raiseUndeadBtn) raiseUndeadBtn.addEventListener('click', showRaiseUndeadModal);
+ const clearUndeadBtn = document.getElementById('clearUndeadBtn');
+ if (clearUndeadBtn) clearUndeadBtn.addEventListener('click', clearAllUndead);
  
+ // Event delegation for undead resource boxes, dismiss, attack, damage, extra die
+ const undeadContainer = document.getElementById('undeadContainer');
+ if (undeadContainer) {
+     undeadContainer.addEventListener('click', function (e) {
+         if (e.target.closest('.monster-resource-box[data-undead-id]')) {
+             handleUndeadResourceClick(e);
+         } else if (e.target.closest('.undead-dismiss')) {
+             handleUndeadDismiss(e);
+         } else if (e.target.closest('.undead-attack-btn')) {
+             handleUndeadAttackRoll(e);
+         } else if (e.target.closest('.undead-damage-btn')) {
+             handleUndeadDamageRoll(e);
+         } else if (e.target.closest('.undead-extra-die-btn')) {
+             handleUndeadExtraDie(e);
+         }
+     });
+ }
+// The button ID 'monstersToggle' and content ID 'monstersContent' follow the naming convention
+/**
+  * Handle monster attack button click - rolls d20 + mod and shows result
+  */
+ function handleMonsterAttackRoll(e) {
+     const btn = e.target.closest('.monster-attack-btn');
+     if (!btn) return;
+ 
+     const monsterMod = btn.dataset.mod || '+0';
+     const monsterName = btn.dataset.name || 'Monster';
+ 
+     rollCreatureAttack(monsterName, monsterMod);
+ }
+ 
+ /**
   * Handle monster damage button click - rolls the damage dice and shows result
   */
 function handleMonsterDamageRoll(e) {
@@ -15648,6 +16457,908 @@ function handleMonsterDamageRoll(e) {
     );
 }
 
+ // =====================================================
+ // NECROMANCER - WARLOCK ABILITY FUNCTIONALITY
+ // =====================================================
+ 
+ const undeadDatabase = {
+     'Skeleton': {
+         hp: 3,
+         stress: 2,
+         classPoints: 2,
+         evasion: 11,
+         mod: 5,
+         damage: '2d6',
+         thresholdLower: 5,
+         thresholdUpper: 11,
+         features: '1 Stress: Reduce a hit by 1. | 1 Class: Add an extra damage die. | Feature: Resistant to piercing damage (Half Damage).'
+     },
+     'Zombie': {
+         hp: 4,
+         stress: 1,
+         classPoints: 2,
+         evasion: 10,
+         mod: 5,
+         damage: '2d8',
+         thresholdLower: 6,
+         thresholdUpper: 12,
+         features: '1 Stress: Cause attacking creature to roll Save or take 1 Stress. | 1 Class: Add an extra damage die. | Feature: Death: Roll Divine Dice, on success return with 1HP/0 Stress.'
+     }
+ };
+ 
+ function getScaledUndeadStats(type, level) {
+     const base = undeadDatabase[type];
+     if (!base) return null;
+ 
+     let hpBonus = 0;
+     let modBonus = 0;
+ 
+     if (level >= 10) {
+         hpBonus = 2;
+         modBonus = 2;
+     } else if (level >= 5) {
+         hpBonus = 1;
+         modBonus = 1;
+     }
+ 
+     return {
+         hp: base.hp + hpBonus,
+         stress: base.stress,
+         classPoints: base.classPoints,
+         evasion: base.evasion,
+         mod: base.mod + modBonus,
+         damage: base.damage,
+         thresholdLower: base.thresholdLower,
+         thresholdUpper: base.thresholdUpper,
+         features: base.features,
+         _hpBonus: hpBonus,
+         _modBonus: modBonus
+     };
+ }
+ 
+ // Update Necromancer section visibility
+ function updateNecromancerDisplay(character) {
+     const necromancerSection = document.getElementById('necromancerSheetSection');
+     if (!necromancerSection) return;
+ 
+     if (hasNecromancerAbility() && character && character.class === 'Warlock') {
+         necromancerSection.style.display = 'block';
+         renderRaisedUndead(character);
+     } else {
+         necromancerSection.style.display = 'none';
+     }
+ }
+ 
+ // Render raised undead cards
+ function renderRaisedUndead(character) {
+     const container = document.getElementById('undeadContainer');
+     const clearBtn = document.getElementById('clearUndeadBtn');
+     const raiseBtn = document.getElementById('raiseUndeadBtn');
+ 
+     if (!container) return;
+ 
+     container.innerHTML = '';
+ 
+     if (!character.raisedUndead || character.raisedUndead.length === 0) {
+         container.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 text-sm py-4">No undead raised yet. Click "Raise" to summon the dead!</div>';
+         if (clearBtn) clearBtn.style.display = 'none';
+         if (raiseBtn) {
+             raiseBtn.disabled = false;
+             raiseBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+         }
+         return;
+     }
+ 
+     if (clearBtn) clearBtn.style.display = 'block';
+     if (raiseBtn) {
+         raiseBtn.disabled = false;
+         raiseBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+     }
+ 
+     character.raisedUndead.forEach((undead, index) => {
+         const card = createUndeadCard(undead, index);
+         container.appendChild(card);
+     });
+ }
+ 
+ // Create undead card element
+ function createUndeadCard(undead, index) {
+     const card = document.createElement('div');
+     card.className = 'monster-card undead-card' + (undead.isHorde ? ' horde-card' : '');
+     card.dataset.undeadId = undead.id;
+ 
+     const modDisplay = undead.mod >= 0 ? `+${undead.mod}` : `${undead.mod}`;
+ 
+     // Generate HP boxes
+     let hpBoxes = '';
+     for (let i = 1; i <= undead.hp; i++) {
+         const filled = i <= undead.hpUsed ? 'filled' : '';
+         hpBoxes += `<div class="monster-resource-box hp ${filled}" data-undead-id="${undead.id}" data-resource="hp" data-box="${i}">${i}</div>`;
+     }
+ 
+     // Generate Stress boxes
+     let stressBoxes = '';
+     for (let i = 1; i <= undead.stress; i++) {
+         const filled = i <= undead.stressUsed ? 'filled' : '';
+         stressBoxes += `<div class="monster-resource-box stress ${filled}" data-undead-id="${undead.id}" data-resource="stress" data-box="${i}">${i}</div>`;
+     }
+ 
+     // Generate Class boxes
+     let classBoxes = '';
+     for (let i = 1; i <= undead.classPoints; i++) {
+         const filled = i <= undead.classUsed ? 'filled' : '';
+         classBoxes += `<div class="monster-resource-box class-res ${filled}" data-undead-id="${undead.id}" data-resource="class" data-box="${i}">${i}</div>`;
+     }
+ 
+     const extraDieActive = undead.extraDamageDie ? ' extra-die-active' : '';
+     const hordeTag = undead.isHorde ? ` <span class="horde-tag">${undead.hordeCount}x</span>` : '';
+ 
+     card.innerHTML = `
+         <div class="monster-card-header">
+             <span class="monster-name">${undead.name}${hordeTag}</span>
+             <button class="monster-dismiss undead-dismiss" data-undead-id="${undead.id}" title="Dismiss undead">
+                 <i class="fas fa-times"></i>
+             </button>
+         </div>
+         <div class="monster-stats" style="grid-template-columns: repeat(5, 1fr);">
+             <div>
+                 <div class="monster-stat-label">Evasion</div>
+                 <div class="monster-stat-value">${undead.evasion}</div>
+             </div>
+             <div>
+                 <button class="monster-attack-btn undead-attack-btn" data-undead-id="${undead.id}" data-mod="${modDisplay}" data-name="${undead.name}" title="Roll d20${modDisplay} attack">
+                     <div class="monster-stat-label" style="color: #93c5fd;">Attack</div>
+                     <div class="monster-stat-value">${modDisplay}</div>
+                 </button>
+             </div>
+             <div>
+                 <button class="monster-damage-btn undead-damage-btn" data-undead-id="${undead.id}" data-damage="${undead.damage}" data-mod="${undead.mod}" data-name="${undead.name}" title="Roll ${undead.damage}+${modDisplay} damage">
+                     <div class="monster-stat-label">Damage</div>
+                     <div class="monster-stat-value">${undead.damage}</div>
+                 </button>
+             </div>
+             <div>
+                 <button class="undead-extra-die-btn${extraDieActive}" data-undead-id="${undead.id}" title="Spend 1 Class: Add extra damage die to next roll">
+                     <div class="monster-stat-label" style="color: #fbbf24;">+1 Die</div>
+                     <div class="monster-stat-value"></div>
+                 </button>
+             </div>
+             <div>
+                 <div class="monster-stat-label">Thresh</div>
+                 <div class="monster-stat-value" style="font-size: 0.65rem;">${undead.thresholdLower} / ${undead.thresholdUpper}</div>
+             </div>
+            
+         </div>
+         <div class="monster-resources">
+             <div class="monster-resource-group">
+                 <div class="monster-resource-label">HP Used</div>
+                 <div class="monster-resource-boxes">${hpBoxes}</div>
+             </div>
+             <div class="monster-resource-group">
+                 <div class="monster-resource-label">Stress Used</div>
+                 <div class="monster-resource-boxes">${stressBoxes}</div>
+             </div>
+             <div class="monster-resource-group">
+                 <div class="monster-resource-label">Class Used</div>
+                 <div class="monster-resource-boxes">${classBoxes}</div>
+             </div>
+         </div>
+         <div class="monster-feature">${undead.features}</div>
+     `;
+ 
+     return card;
+ }
+ 
+ // Show Raise Undead options modal
+ function showRaiseUndeadModal() {
+     if (!currentCharacter) return;
+ 
+     const level = currentCharacter.level || 1;
+ 
+     // Calculate available resources
+     const spellRes = currentCharacter.resources?.spell;
+     const stressRes = currentCharacter.resources?.stress;
+     const classRes = currentCharacter.resources?.class;
+ 
+     const spellAvailable = spellRes ? ((spellRes.max || 0) + (spellRes.temp || 0)) - (spellRes.used?.length || 0) : 0;
+     const stressAvailable = stressRes ? ((stressRes.max || 0) + (stressRes.temp || 0)) - (stressRes.used?.length || 0) : 0;
+     const classAvailable = classRes ? ((classRes.max || 0) + (classRes.temp || 0)) - (classRes.used?.length || 0) : 0;
+ 
+     // Base cost: 3 Spell + 1 Stress
+     if (spellAvailable < 3 || stressAvailable < 1) {
+         showCustomDialog('Cannot Raise Undead',
+             `<div class="text-center">
+                 <div class="text-red-500 text-lg mb-2"><i class="fas fa-exclamation-triangle"></i> Not Enough Resources</div>
+                 <div class="text-sm text-gray-600 dark:text-gray-400">
+                     Need: 3 Spell, 1 Stress<br>
+                     Have: ${spellAvailable} Spell, ${stressAvailable} Stress
+                 </div>
+             </div>`
+         );
+         return;
+     }
+ 
+     // Max extra undead based on remaining stress after base cost
+     const maxExtra = stressAvailable - 1;
+ 
+     const modal = document.createElement('div');
+     modal.className = 'fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50';
+     modal.id = 'raiseUndeadModal';
+ 
+     const levelNote = level >= 10 ? ' <span class="text-green-400 text-xs">(+2 HP, +2 Mod)</span>' :
+                       level >= 5 ? ' <span class="text-green-400 text-xs">(+1 HP, +1 Mod)</span>' : '';
+ 
+     modal.innerHTML = `
+         <div class="bg-gray-900 border border-purple-700 p-6 rounded-lg shadow-2xl max-w-sm w-full mx-4" style="background: linear-gradient(135deg, #1a1025 0%, #0d0d1a 100%);">
+             <div class="text-center mb-4">
+                 <h3 class="text-xl font-bold text-purple-300"><i class="fas fa-skull-crossbones mr-2"></i>Raise the Dead</h3>
+                 <p class="text-xs text-gray-400 mt-1">Control Dead${levelNote}</p>
+             </div>
+ 
+             <!-- Extra Undead Counter -->
+             <div class="mb-4 p-3 bg-gray-800 rounded-lg border border-gray-700">
+                 <div class="text-sm font-medium text-gray-300 mb-2 text-center">Number of Undead</div>
+                 <div class="flex items-center justify-center gap-4">
+                     <button id="raiseCountDown" class="w-8 h-8 bg-gray-700 hover:bg-gray-600 text-white rounded-full flex items-center justify-center text-lg font-bold transition-colors">−</button>
+                     <span id="raiseCount" class="text-2xl font-bold text-purple-300 w-8 text-center">1</span>
+                     <button id="raiseCountUp" class="w-8 h-8 bg-gray-700 hover:bg-gray-600 text-white rounded-full flex items-center justify-center text-lg font-bold transition-colors">+</button>
+                 </div>
+                 <div class="text-xs text-gray-500 text-center mt-1">+1 Stress per extra undead (max ${maxExtra} extra)</div>
+                 <!-- Horde Checkbox -->
+                 <label id="hordeLabel" class="flex items-center justify-center gap-2 mt-3 pt-2 border-t border-gray-700 cursor-pointer opacity-40" style="pointer-events: none;">
+                     <input type="checkbox" id="hordeCheckbox" class="w-4 h-4 accent-purple-500 cursor-pointer" disabled>
+                     <span class="text-sm font-medium text-purple-300">Horde</span>
+                     <span class="text-[10px] text-gray-500">(4+ undead merge into one)</span>
+                 </label>
+             </div>
+ 
+             <!-- Divine Roll Modifier -->
+             <div class="mb-4 p-3 bg-gray-800 rounded-lg border border-gray-700">
+                 <div class="text-sm font-medium text-gray-300 mb-2 text-center">Divine Roll Modifier</div>
+                 <div class="grid grid-cols-3 gap-2">
+                     <button class="raise-roll-type px-2 py-2 border-2 border-gray-600 rounded-lg text-xs font-medium text-gray-300 hover:border-gray-400 transition-colors active-raise-type" data-roll-type="normal">
+                         Normal
+                     </button>
+                     <button class="raise-roll-type px-2 py-2 border-2 border-green-700 rounded-lg text-xs font-medium text-green-400 hover:border-green-500 transition-colors" data-roll-type="advantage">
+                         Advantage<br><span class="text-[10px] opacity-70">+2 Class</span>
+                     </button>
+                     <button class="raise-roll-type px-2 py-2 border-2 border-red-700 rounded-lg text-xs font-medium text-red-400 hover:border-red-500 transition-colors" data-roll-type="disadvantage">
+                         Disadvantage<br><span class="text-[10px] opacity-70">+2 Class</span>
+                     </button>
+                 </div>
+             </div>
+ 
+             <!-- Cost Summary -->
+             <div class="mb-4 p-3 bg-gray-800 rounded-lg border border-purple-800">
+                 <div class="text-sm font-medium text-purple-300 mb-1 text-center">Total Cost</div>
+                 <div id="raiseCostSummary" class="text-center text-xs text-gray-300">
+                     3 Spell · 1 Stress
+                 </div>
+                 <div id="raiseResourceWarning" class="text-center text-xs text-red-400 mt-1" style="display: none;"></div>
+             </div>
+ 
+             <!-- Buttons -->
+             <div class="flex gap-3">
+                 <button id="cancelRaiseBtn" class="flex-1 px-4 py-2 text-gray-400 hover:bg-gray-800 rounded-lg text-sm transition-colors border border-gray-700">Cancel</button>
+                 <button id="confirmRaiseBtn" class="flex-1 px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white rounded-lg text-sm font-semibold transition-colors">
+                     <i class="fas fa-skull mr-1"></i>Raise
+                 </button>
+             </div>
+         </div>
+     `;
+ 
+     document.body.appendChild(modal);
+ 
+     let extraCount = 0;
+     let rollType = 'normal';
+     let isHorde = false;
+ 
+     const countDisplay = modal.querySelector('#raiseCount');
+     const costSummary = modal.querySelector('#raiseCostSummary');
+     const warningEl = modal.querySelector('#raiseResourceWarning');
+     const confirmBtn = modal.querySelector('#confirmRaiseBtn');
+     const hordeCheckbox = modal.querySelector('#hordeCheckbox');
+     const hordeLabel = modal.querySelector('#hordeLabel');
+ 
+     function updateHordeState() {
+    if (!hordeCheckbox || !hordeLabel) return;
+    const totalUndead = 1 + extraCount;
+    if (totalUndead >= 4) {
+        hordeCheckbox.disabled = false;
+        hordeLabel.style.pointerEvents = 'auto';
+        hordeLabel.classList.remove('opacity-40');
+        hordeLabel.classList.add('opacity-100');
+    } else {
+        hordeCheckbox.disabled = true;
+        hordeCheckbox.checked = false;
+        isHorde = false;
+        hordeLabel.style.pointerEvents = 'none';
+        hordeLabel.classList.remove('opacity-100');
+        hordeLabel.classList.add('opacity-40');
+    }
+}
+ 
+     if (hordeCheckbox) {
+    hordeCheckbox.addEventListener('change', function() {
+        isHorde = this.checked;
+    });
+}
+
+     function updateCostDisplay() {
+         const totalUndead = 1 + extraCount;
+         const spellCost = 3;
+         const stressCost = 1 + extraCount;
+         const classCost = rollType !== 'normal' ? 2 : 0;
+ 
+         let costText = `${spellCost} Spell · ${stressCost} Stress`;
+         //if (classCost > 0) costText += ` · ${classCost} Class`;
+         costSummary.textContent = costText;
+ 
+         // Check resources
+         let canAfford = true;
+         let warnings = [];
+         if (spellAvailable < spellCost) { canAfford = false; warnings.push(`Need ${spellCost} Spell (have ${spellAvailable})`); }
+         if (stressAvailable < stressCost) { canAfford = false; warnings.push(`Need ${stressCost} Stress (have ${stressAvailable})`); }
+         if (classCost > 0 && classAvailable < classCost) { canAfford = false; warnings.push(`Need ${classCost} Class (have ${classAvailable})`); }
+ 
+         if (!canAfford) {
+             warningEl.textContent = warnings.join(' | ');
+             warningEl.style.display = 'block';
+             confirmBtn.disabled = true;
+             confirmBtn.classList.add('opacity-50', 'cursor-not-allowed');
+         } else {
+             warningEl.style.display = 'none';
+             confirmBtn.disabled = false;
+             confirmBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+         }
+     }
+ 
+     // Counter buttons
+     modal.querySelector('#raiseCountDown').addEventListener('click', () => {
+         if (extraCount > 0) {
+             extraCount--;
+             countDisplay.textContent = 1 + extraCount;
+             updateHordeState();
+             updateCostDisplay();
+         }
+     });
+ 
+     modal.querySelector('#raiseCountUp').addEventListener('click', () => {
+         if (extraCount < maxExtra) {
+             extraCount++;
+             countDisplay.textContent = 1 + extraCount;
+             updateHordeState();
+             updateCostDisplay();
+         }
+     });
+ 
+     // Roll type buttons
+     modal.querySelectorAll('.raise-roll-type').forEach(btn => {
+         btn.addEventListener('click', function() {
+             modal.querySelectorAll('.raise-roll-type').forEach(b => b.classList.remove('active-raise-type'));
+             this.classList.add('active-raise-type');
+             rollType = this.dataset.rollType;
+             updateCostDisplay();
+         });
+     });
+ 
+     // Cancel
+     modal.querySelector('#cancelRaiseBtn').addEventListener('click', () => modal.remove());
+     modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+ 
+     // Confirm Raise
+     confirmBtn.addEventListener('click', () => {
+         modal.remove();
+         executeRaiseUndead(1 + extraCount, rollType, isHorde);
+     });
+ 
+     updateCostDisplay();
+ }
+ 
+ // Execute the raise: spend resources, roll dice, create undead
+ function executeRaiseUndead(totalUndead, rollType, hordeMode) {
+     if (!currentCharacter) return;
+ 
+     const spellCost = 3;
+     const stressCost = totalUndead; // 1 base + extras
+     const classCost = rollType !== 'normal' ? 2 : 0;
+ 
+     // Spend resources (safety: modal already verified availability)
+     const spellRes = currentCharacter.resources?.spell;
+     const stressRes = currentCharacter.resources?.stress;
+     const classRes = currentCharacter.resources?.class;
+ 
+     if (spellRes) {
+         if (!spellRes.used) spellRes.used = [];
+         for (let i = 0; i < spellCost; i++) spellRes.used.push(spellRes.used.length);
+     }
+ 
+     if (stressRes) {
+         if (!stressRes.used) stressRes.used = [];
+         for (let i = 0; i < stressCost; i++) stressRes.used.push(stressRes.used.length);
+     }
+ 
+     if (classCost > 0 && classRes) {
+         if (!classRes.used) classRes.used = [];
+         for (let i = 0; i < classCost; i++) classRes.used.push(classRes.used.length);
+     }
+ 
+     if (hordeMode) {
+        // Horde: one divine roll determines the horde type, creates a single merged creature
+         const roll = rollNecromancerDivine(rollType);
+        if (roll.result === 'choose') {
+             showHordeChoiceModal(roll, totalUndead);
+         } else {
+             finalizeHorde(roll.type, totalUndead);
+         }
+     } else {
+         // Normal: roll divine dice for each undead individually
+         const rolls = [];
+         for (let i = 0; i < totalUndead; i++) {
+             const roll = rollNecromancerDivine(rollType);
+             rolls.push(roll);
+         }
+ 
+         // Check if any rolls need player choice (crits)
+         const hasCrits = rolls.some(r => r.result === 'choose');
+ 
+         if (hasCrits) {
+             showRaiseResultsModal(rolls);
+         } else {
+             finalizeRaisedUndead(rolls);
+         }
+     }
+ 
+     // Update resource display
+     populateSheetResourceBoxes(currentCharacter);
+ }
+ 
+ // Roll divine dice for necromancer
+ function rollNecromancerDivine(rollType) {
+     let whiteDice = [];
+     let blackDice = [];
+ 
+     switch (rollType) {
+         case 'normal':
+             whiteDice.push(Math.floor(Math.random() * 12) + 1);
+             blackDice.push(Math.floor(Math.random() * 12) + 1);
+             break;
+         case 'advantage':
+             whiteDice.push(Math.floor(Math.random() * 12) + 1);
+             whiteDice.push(Math.floor(Math.random() * 12) + 1);
+             blackDice.push(Math.floor(Math.random() * 12) + 1);
+             break;
+         case 'disadvantage':
+             whiteDice.push(Math.floor(Math.random() * 12) + 1);
+             blackDice.push(Math.floor(Math.random() * 12) + 1);
+             blackDice.push(Math.floor(Math.random() * 12) + 1);
+             break;
+     }
+ 
+     const whiteMax = Math.max(...whiteDice);
+     const blackMax = Math.max(...blackDice);
+ 
+     let result;
+     let type;
+     if (whiteMax === blackMax) {
+         result = 'choose';
+         type = null;
+     } else if (whiteMax > blackMax) {
+         result = 'divine';
+         type = 'Skeleton';
+     } else {
+         result = 'fate';
+         type = 'Zombie';
+     }
+ 
+     return { whiteDice, blackDice, whiteMax, blackMax, result, type };
+ }
+ 
+ // Show results modal with crit choices
+ function showRaiseResultsModal(rolls) {
+     const modal = document.createElement('div');
+     modal.className = 'fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50';
+     modal.id = 'raiseResultsModal';
+ 
+     let resultsHTML = '';
+     rolls.forEach((roll, i) => {
+         const whiteStr = roll.whiteDice.join(', ');
+         const blackStr = roll.blackDice.join(', ');
+ 
+         let resultHTML;
+         if (roll.result === 'divine') {
+             resultHTML = `<span class="text-blue-300 font-semibold">Skeleton (Divine)</span>`;
+         } else if (roll.result === 'fate') {
+             resultHTML = `<span class="text-green-300 font-semibold">Zombie (Fate)</span>`;
+         } else {
+             resultHTML = `
+                 <span class="text-yellow-300 font-semibold">⚡ CRIT — Choose:</span>
+                 <div class="flex gap-2 mt-1">
+                     <button class="crit-choose-btn px-3 py-1 bg-blue-700 hover:bg-blue-600 text-white rounded text-xs font-semibold transition-colors" data-roll-index="${i}" data-choice="Skeleton">Skeleton</button>
+                     <button class="crit-choose-btn px-3 py-1 bg-green-700 hover:bg-green-600 text-white rounded text-xs font-semibold transition-colors" data-roll-index="${i}" data-choice="Zombie">Zombie</button>
+                 </div>
+             `;
+         }
+ 
+         resultsHTML += `
+             <div class="p-2 bg-gray-800 rounded border border-gray-700 mb-2" data-result-index="${i}">
+                 <div class="flex items-center gap-2 text-xs mb-1">
+                     <span class="text-gray-400">Undead ${i + 1}:</span>
+                     <span class="text-white">⚪ ${whiteStr}</span>
+                     <span class="text-gray-500">vs</span>
+                     <span class="text-gray-300">⚫ ${blackStr}</span>
+                 </div>
+                 <div class="result-display">${resultHTML}</div>
+             </div>
+         `;
+     });
+ 
+     modal.innerHTML = `
+         <div class="bg-gray-900 border border-purple-700 p-5 rounded-lg shadow-2xl max-w-sm w-full mx-4" style="background: linear-gradient(135deg, #1a1025 0%, #0d0d1a 100%); max-height: 80vh; overflow-y: auto;">
+             <h3 class="text-lg font-bold text-purple-300 text-center mb-3"><i class="fas fa-dice mr-2"></i>Divine Roll Results</h3>
+             <div id="raiseResultsList">${resultsHTML}</div>
+             <button id="confirmRaiseResults" class="w-full mt-3 px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                 <i class="fas fa-check mr-1"></i>Confirm All
+             </button>
+         </div>
+     `;
+ 
+     document.body.appendChild(modal);
+ 
+     const confirmBtn = modal.querySelector('#confirmRaiseResults');
+     let pendingChoices = rolls.filter(r => r.result === 'choose').length;
+ 
+     // Handle crit choice buttons
+     modal.querySelectorAll('.crit-choose-btn').forEach(btn => {
+         btn.addEventListener('click', function() {
+             const rollIndex = parseInt(this.dataset.rollIndex);
+             const choice = this.dataset.choice;
+ 
+             rolls[rollIndex].type = choice;
+             rolls[rollIndex].result = choice === 'Skeleton' ? 'divine' : 'fate';
+ 
+             // Update display
+             const resultContainer = modal.querySelector(`[data-result-index="${rollIndex}"] .result-display`);
+             if (choice === 'Skeleton') {
+                 resultContainer.innerHTML = `<span class="text-blue-300 font-semibold">Skeleton (Chosen)</span>`;
+             } else {
+                 resultContainer.innerHTML = `<span class="text-green-300 font-semibold">Zombie (Chosen)</span>`;
+             }
+ 
+             pendingChoices--;
+             if (pendingChoices <= 0) {
+                 confirmBtn.disabled = false;
+                 confirmBtn.classList.remove('disabled:opacity-50', 'disabled:cursor-not-allowed');
+             }
+         });
+     });
+ 
+     // If no crits, enable confirm immediately
+     if (pendingChoices === 0) {
+         confirmBtn.disabled = false;
+     }
+ 
+     confirmBtn.addEventListener('click', () => {
+         modal.remove();
+         finalizeRaisedUndead(rolls);
+     });
+ 
+     modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+ }
+ 
+ // Create the undead instances from roll results
+ function finalizeRaisedUndead(rolls) {
+     if (!currentCharacter) return;
+ 
+     const level = currentCharacter.level || 1;
+ 
+     if (!currentCharacter.raisedUndead) {
+         currentCharacter.raisedUndead = [];
+     }
+ 
+     const newUndead = [];
+     rolls.forEach((roll, i) => {
+         const type = roll.type;
+         const stats = getScaledUndeadStats(type, level);
+         if (!stats) return;
+ 
+         newUndead.push({
+             id: Date.now() + i,
+             name: type,
+             hp: stats.hp,
+             stress: stats.stress,
+             classPoints: stats.classPoints,
+             evasion: stats.evasion,
+             mod: stats.mod,
+             damage: stats.damage,
+             thresholdLower: stats.thresholdLower,
+             thresholdUpper: stats.thresholdUpper,
+             features: stats.features,
+             hpUsed: 0,
+             stressUsed: 0,
+             classUsed: 0,
+             extraDamageDie: false
+         });
+     });
+ 
+     currentCharacter.raisedUndead = currentCharacter.raisedUndead.concat(newUndead);
+ 
+     // Show summary banner
+     const banner = document.getElementById('raiseResultBanner');
+     if (banner) {
+         const skeletons = newUndead.filter(u => u.name === 'Skeleton').length;
+         const zombies = newUndead.filter(u => u.name === 'Zombie').length;
+         let summaryParts = [];
+         if (skeletons > 0) summaryParts.push(`${skeletons}x 💀 Skeleton`);
+         if (zombies > 0) summaryParts.push(`${zombies}x 🧟 Zombie`);
+ 
+         banner.innerHTML = `<i class="fas fa-skull-crossbones mr-1"></i> Raised ${summaryParts.join(' and ')}!`;
+         banner.style.display = 'block';
+         setTimeout(() => { banner.style.display = 'none'; }, 5000);
+     }
+ 
+     saveCharacters();
+     renderRaisedUndead(currentCharacter);
+ }
+
+ // Show horde choice modal when divine roll is a crit (pair)
+ function showHordeChoiceModal(roll, totalUndead) {
+     const whiteStr = roll.whiteDice.join(', ');
+     const blackStr = roll.blackDice.join(', ');
+ 
+     const modal = document.createElement('div');
+     modal.className = 'fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50';
+ 
+     modal.innerHTML = `
+         <div class="bg-gray-900 border border-purple-700 p-5 rounded-lg shadow-2xl max-w-sm w-full mx-4" style="background: linear-gradient(135deg, #1a1025 0%, #0d0d1a 100%);">
+             <h3 class="text-lg font-bold text-purple-300 text-center mb-3"><i class="fas fa-dice mr-2"></i>Horde Divine Roll</h3>
+             <div class="p-3 bg-gray-800 rounded border border-gray-700 mb-4 text-center">
+                 <div class="text-xs text-gray-400 mb-2">
+                     <span class="text-white">⚪ ${whiteStr}</span>
+                     <span class="text-gray-500 mx-1">vs</span>
+                     <span class="text-gray-300">⚫ ${blackStr}</span>
+                 </div>
+                 <div class="text-yellow-300 font-semibold">⚡ CRIT — Choose your Horde type:</div>
+             </div>
+             <div class="flex gap-3">
+                 <button class="horde-type-btn flex-1 px-4 py-3 bg-blue-800 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors" data-type="Skeleton">
+                     💀 Skeleton<br><span class="text-xs opacity-70">Horde</span>
+                 </button>
+                 <button class="horde-type-btn flex-1 px-4 py-3 bg-green-800 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors" data-type="Zombie">
+                     🧟 Zombie<br><span class="text-xs opacity-70">Horde</span>
+                 </button>
+             </div>
+         </div>
+     `;
+ 
+     document.body.appendChild(modal);
+ 
+     modal.querySelectorAll('.horde-type-btn').forEach(btn => {
+         btn.addEventListener('click', function() {
+             const chosenType = this.dataset.type;
+             modal.remove();
+             finalizeHorde(chosenType, totalUndead);
+         });
+     });
+ 
+     modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+ }
+ 
+ // Create a single horde card from merged undead
+ function finalizeHorde(type, totalUndead) {
+     if (!currentCharacter) return;
+ 
+     const level = currentCharacter.level || 1;
+     const stats = getScaledUndeadStats(type, level);
+     if (!stats) return;
+ 
+     if (!currentCharacter.raisedUndead) {
+         currentCharacter.raisedUndead = [];
+     }
+ 
+     // Horde bonuses: extra creatures beyond the first add bonuses
+     const extraCreatures = totalUndead - 1;
+ 
+     // Parse base damage dice (e.g. "2d6" -> count=2, die=6)
+     const dmgMatch = stats.damage.match(/(\d+)d(\d+)/i);
+     const baseDiceCount = dmgMatch ? parseInt(dmgMatch[1]) : 2;
+     const dieSize = dmgMatch ? dmgMatch[2] : '6';
+     const hordeDiceCount = baseDiceCount + extraCreatures;
+ 
+     const horde = {
+         id: Date.now(),
+         name: `${type} Horde`,
+         hp: stats.hp,
+         stress: stats.stress,
+         classPoints: stats.classPoints,
+         evasion: stats.evasion,
+         mod: stats.mod + extraCreatures,
+         damage: `${hordeDiceCount}d${dieSize}`,
+         thresholdLower: stats.thresholdLower + 2,
+         thresholdUpper: stats.thresholdUpper + 2,
+         features: stats.features,
+         hpUsed: 0,
+         stressUsed: 0,
+         classUsed: 0,
+         extraDamageDie: false,
+         isHorde: true,
+         hordeCount: totalUndead
+     };
+ 
+     currentCharacter.raisedUndead.push(horde);
+ 
+     // Show summary banner
+     const banner = document.getElementById('raiseResultBanner');
+     if (banner) {
+         const emoji = type === 'Skeleton' ? '💀' : '🧟';
+         banner.innerHTML = `<i class="fas fa-skull-crossbones mr-1"></i> Raised ${emoji} <strong>${type} Horde</strong> (${totalUndead} merged)! Mod ${horde.mod >= 0 ? '+' : ''}${horde.mod} | ${horde.damage} | Thresh ${horde.thresholdLower}/${horde.thresholdUpper}`;
+         banner.style.display = 'block';
+         setTimeout(() => { banner.style.display = 'none'; }, 6000);
+     }
+ 
+     saveCharacters();
+     renderRaisedUndead(currentCharacter);
+ }
+ 
+ // Clear all raised undead
+ function clearAllUndead() {
+     if (!currentCharacter) return;
+ 
+     showCustomDialog('Clear All Undead',
+         'Are you sure you want to dismiss all raised undead?',
+         () => {
+             currentCharacter.raisedUndead = [];
+             saveCharacters();
+             renderRaisedUndead(currentCharacter);
+         }
+     );
+ }
+ 
+ // Handle undead resource box click
+ function handleUndeadResourceClick(e) {
+     const box = e.target.closest('.monster-resource-box');
+     if (!box || !box.dataset.undeadId) return;
+ 
+     const undeadId = parseInt(box.dataset.undeadId);
+     const resource = box.dataset.resource;
+     const boxNum = parseInt(box.dataset.box);
+ 
+     if (!currentCharacter || !currentCharacter.raisedUndead) return;
+ 
+     const undead = currentCharacter.raisedUndead.find(u => u.id === undeadId);
+     if (!undead) return;
+ 
+     let usedKey;
+     if (resource === 'hp') usedKey = 'hpUsed';
+     else if (resource === 'stress') usedKey = 'stressUsed';
+     else if (resource === 'class') usedKey = 'classUsed';
+     else return;
+ 
+     // Toggle: if clicking on current max used, reduce; otherwise set to this box
+     if (undead[usedKey] >= boxNum) {
+         undead[usedKey] = boxNum - 1;
+     } else {
+         undead[usedKey] = boxNum;
+     }
+ 
+     saveCharacters();
+     renderRaisedUndead(currentCharacter);
+ }
+ 
+ // Handle undead dismiss
+ function handleUndeadDismiss(e) {
+     const btn = e.target.closest('.undead-dismiss');
+     if (!btn) return;
+ 
+     const undeadId = parseInt(btn.dataset.undeadId);
+     if (!currentCharacter || !currentCharacter.raisedUndead) return;
+ 
+     currentCharacter.raisedUndead = currentCharacter.raisedUndead.filter(u => u.id !== undeadId);
+     saveCharacters();
+     renderRaisedUndead(currentCharacter);
+ }
+ 
+ // Handle undead attack roll
+ function handleUndeadAttackRoll(e) {
+     const btn = e.target.closest('.undead-attack-btn');
+     if (!btn) return;
+ 
+     const mod = btn.dataset.mod || '+0';
+     const name = btn.dataset.name || 'Undead';
+ 
+     rollCreatureAttack(name, mod);
+ }
+ 
+ // Handle undead damage roll (with extra die support)
+ function handleUndeadDamageRoll(e) {
+     const btn = e.target.closest('.undead-damage-btn');
+     if (!btn) return;
+ 
+     const damageString = btn.dataset.damage;
+     const undeadId = parseInt(btn.dataset.undeadId);
+     const undeadMod = parseInt(btn.dataset.mod) || 0;
+     const undeadName = btn.dataset.name || 'Undead';
+ 
+     const match = damageString.match(/(\d+)d(\d+)/i);
+     if (!match) return;
+ 
+     let diceCount = parseInt(match[1]);
+     const dieSize = parseInt(match[2]);
+ 
+     // Check for extra damage die buff
+     let extraDieUsed = false;
+     if (currentCharacter && currentCharacter.raisedUndead) {
+         const undead = currentCharacter.raisedUndead.find(u => u.id === undeadId);
+         if (undead && undead.extraDamageDie) {
+             diceCount += 1;
+             undead.extraDamageDie = false;
+             extraDieUsed = true;
+             saveCharacters();
+             renderRaisedUndead(currentCharacter);
+         }
+     }
+ 
+     const rolls = [];
+     for (let i = 0; i < diceCount; i++) {
+         rolls.push(Math.floor(Math.random() * dieSize) + 1);
+     }
+ 
+     const diceTotal = rolls.reduce((a, b) => a + b, 0);
+     const total = diceTotal + undeadMod;
+     const modDisplay = undeadMod >= 0 ? `+${undeadMod}` : `${undeadMod}`;
+ 
+     let rollsDisplay = rolls.join(' + ');
+     if (rolls.length > 1) rollsDisplay = `(${rollsDisplay})`;
+ 
+     const extraNote = extraDieUsed ? '<div class="text-xs text-yellow-400 mt-1"><i class="fas fa-plus-circle mr-1"></i>+1 Extra Damage Die used!</div>' : '';
+ 
+     showCustomDialog(
+         `${undeadName} Damage`,
+         `<div class="text-center">
+             <div class="text-3xl font-bold text-red-600 dark:text-red-400 mb-2">${total}</div>
+             <div class="text-sm text-gray-600 dark:text-gray-400">
+                 <i class="fas fa-dice-d6 mr-1"></i>${diceCount}d${dieSize}${modDisplay}: ${rollsDisplay} ${modDisplay} = ${total}
+             </div>
+             ${extraNote}
+         </div>`
+     );
+ }
+ 
+ // Handle extra damage die button
+ function handleUndeadExtraDie(e) {
+     const btn = e.target.closest('.undead-extra-die-btn');
+     if (!btn) return;
+ 
+     const undeadId = parseInt(btn.dataset.undeadId);
+     if (!currentCharacter || !currentCharacter.raisedUndead) return;
+ 
+     const undead = currentCharacter.raisedUndead.find(u => u.id === undeadId);
+     if (!undead) return;
+ 
+     // If already active, toggle off
+     if (undead.extraDamageDie) {
+         undead.extraDamageDie = false;
+         saveCharacters();
+         renderRaisedUndead(currentCharacter);
+         return;
+     }
+ 
+     // Check if undead has available Class resources
+     const classMax = undead.classPoints || 0;
+     const classUsed = undead.classUsed || 0;
+ 
+     if (classUsed >= classMax) {
+         showCustomDialog('No Class Resources', `${undead.name} has no Class resources remaining.`);
+         return;
+     }
+ 
+     // Spend 1 Class and activate buff
+     undead.classUsed = classUsed + 1;
+     undead.extraDamageDie = true;
+ 
+     saveCharacters();
+     renderRaisedUndead(currentCharacter);
+ }
 
 // =====================================================
 // SPIRIT PROJECTION - WARLOCK ABILITY FUNCTIONALITY
@@ -16399,6 +18110,16 @@ document.getElementById('naturalRecoveryResultModal')?.addEventListener('click',
 function activateSecondWindAbility() {
     if (!currentCharacter) return;
 
+ // Check if already used this rest
+    const resultDisplay = document.getElementById('secondWindResultDisplay');
+    if (currentCharacter.secondWindUsed) {
+        if (resultDisplay) {
+            resultDisplay.innerHTML = '<div class="second-wind-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Second Wind already used! Take a Long Rest to use again.</div>';
+            setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+        }
+        return;
+    }
+
     // Ensure resources exist
     if (!currentCharacter.resources) {
         currentCharacter.resources = {
@@ -16417,8 +18138,6 @@ function activateSecondWindAbility() {
     const stressMax = stressResource.max + (stressResource.temp || 0);
     const stressUsed = stressResource.used.length;
     const stressAvailable = stressMax - stressUsed;
-
-    const resultDisplay = document.getElementById('secondWindResultDisplay');
 
     if (stressAvailable < 1) {
         // Not enough Stress available
@@ -16476,6 +18195,9 @@ function activateSecondWindAbility() {
     saveCharacters();
     populateSheetResourceBoxes(currentCharacter);
     updateCharacterDisplay();
+   // Mark as used
+     currentCharacter.secondWindUsed = true;
+     updateSecondWindButtonState();
 
     // Show result
     if (resultDisplay) {
@@ -16483,6 +18205,34 @@ function activateSecondWindAbility() {
         setTimeout(() => { resultDisplay.innerHTML = ''; }, 5000);
     }
 }
+
+// Update Second Wind button state based on used flag
+ function updateSecondWindButtonState() {
+     const btn = document.getElementById('secondWindActivateBtn');
+     if (!btn) return;
+ 
+     if (currentCharacter && currentCharacter.secondWindUsed) {
+         btn.disabled = true;
+         btn.classList.add('disabled');
+         btn.style.opacity = '0.5';
+         btn.style.cursor = 'not-allowed';
+         const spanEl = btn.querySelector('span');
+         if (spanEl) spanEl.textContent = 'Used (Long Rest to restore)';
+     } else {
+         btn.disabled = false;
+         btn.classList.remove('disabled');
+         btn.style.opacity = '1';
+         btn.style.cursor = 'pointer';
+         const spanEl = btn.querySelector('span');
+         if (spanEl) spanEl.textContent = 'Activate Second Wind';
+     }
+ }
+ 
+ // Reset Second Wind on Long Rest
+ function resetSecondWindOnLongRest() {
+     if (!currentCharacter) return;
+     currentCharacter.secondWindUsed = false;
+     updateSecondWindButtonState(); }
 
 // Event delegation for Second Wind button
 document.addEventListener('click', function (e) {
@@ -16654,6 +18404,919 @@ document.addEventListener('click', function (e) {
         activateRelentlessAbility();
     }
 });
+
+ // ==================== BLADE FLOURISH (BARD) ====================
+ 
+ /**
+  * Activate Blade Flourish ability for Bards
+  * - 1 Stress: +1 Attack bonus (until Short/Long Rest)
+  * - 2 Stress: 2d4 Psychic damage
+  * - 3 Stress: +2 Attack bonus (until Short/Long Rest) + 3d4 Psychic damage
+  */
+ function activateBladeFlourish(stressCost) {
+     if (!currentCharacter) return;
+ 
+     if (!currentCharacter.resources) return;
+     const stressResource = currentCharacter.resources.stress;
+     if (!stressResource) return;
+ 
+     const stressMax = stressResource.max + (stressResource.temp || 0);
+     const stressAvailable = stressMax - stressResource.used.length;
+ 
+     if (stressAvailable < stressCost) {
+         showCustomDialog('Blade Flourish', 'Not enough Stress available! Need ' + stressCost + ' Stress.');
+         return;
+     }
+ 
+     // Spend stress
+     for (let i = 0; i < stressCost; i++) {
+         stressResource.used.push(stressResource.used.length);
+     }
+ 
+      // Store bonuses for next Attack/Damage rolls
+     if (stressCost === 1) {
+         currentCharacter.bladeFlourishAttackBonus = 1;
+         currentCharacter.bladeFlourishPsychicDice = 0; // No psychic damage for 1 stress
+     } else if (stressCost === 2) {
+         currentCharacter.bladeFlourishAttackBonus = 1;
+         currentCharacter.bladeFlourishPsychicDice = 2; // 2d4 psychic damage on next Damage roll
+     } else if (stressCost === 3) {
+         currentCharacter.bladeFlourishAttackBonus = 2;
+         currentCharacter.bladeFlourishPsychicDice = 3; // 3d4 psychic damage on next Damage roll
+     }
+ 
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+     updateCharacterDisplay();
+ 
+// Build confirmation modal content
+     let detailsHTML = '<div class="text-center">';
+     detailsHTML += '<div class="text-sm text-gray-500 dark:text-gray-400 mb-3">Cost: ' + stressCost + ' Stress</div>';
+
+     if (stressCost === 1) {
+         detailsHTML += '<div class="text-lg font-semibold text-purple-600 dark:text-purple-400 mb-1">Attack +1</div>';
+         detailsHTML += '<div class="text-sm text-gray-600 dark:text-gray-400">Bonus added to your next Attack Roll.</div>';
+     } else if (stressCost === 2) {
+           detailsHTML += '<div class="text-lg font-semibold text-purple-600 dark:text-purple-400 mb-1">Attack +1 &amp; 2d4 Psychic Damage</div>';
+         detailsHTML += '<div class="text-sm text-gray-600 dark:text-gray-400">Rolled with your next Damage Roll.</div>';
+     } else if (stressCost === 3) {
+         detailsHTML += '<div class="text-lg font-semibold text-purple-600 dark:text-purple-400 mb-1">Attack +2 &amp; 3d4 Psychic Damage</div>';
+         detailsHTML += '<div class="text-sm text-gray-600 dark:text-gray-400">Bonus added to your next Attack Roll.<br>Psychic damage rolled with your next Damage Roll.</div>';
+ }
+ detailsHTML += '</div>';
+
+    showBladeFlourModal('Blade Flourish Activated', detailsHTML);
+ }
+
+ /**
+  * Show a closeable modal for Blade Flourish confirmation
+  */
+ function showBladeFlourModal(title, bodyHTML) {
+     const modal = document.createElement('div');
+     modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+     modal.innerHTML =
+         '<div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">' +
+             '<h3 class="text-lg font-semibold mb-4 text-center"><i class="fas fa-music mr-2 text-purple-500"></i>' + title + '</h3>' +
+             bodyHTML +
+             '<div class="flex justify-center mt-5">' +
+                 '<button class="px-5 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm font-semibold transition-colors">Close</button>' +
+             '</div>' +
+         '</div>';
+
+     document.body.appendChild(modal);
+
+     modal.querySelector('button').addEventListener('click', function () {
+         modal.remove();
+     });
+     modal.addEventListener('click', function (e) {
+         if (e.target === this) this.remove();
+     });
+    }
+ 
+ // Reset Blade Flourish attack bonus and psychic dice on Short/Long Rest
+ function resetBladeFlourishOnRest() {
+     if (!currentCharacter) return;
+     currentCharacter.bladeFlourishAttackBonus = 0;
+     currentCharacter.bladeFlourishPsychicDice = 0;
+ }
+ 
+ // Event delegation for Blade Flourish stress-cost buttons (exclude the modal roll button)
+ document.addEventListener('click', function (e) {
+     const btn = e.target.closest('.blade-flourish-btn');
+     if (btn && btn.dataset.cost) {
+         e.preventDefault();
+         const cost = parseInt(btn.dataset.cost);
+         activateBladeFlourish(cost);
+     }
+ });
+
+ // ==================== RAGE (BARBARIAN) ====================
+ 
+ /**
+  * Show/hide the Rage toggle button based on whether the Rage ability is selected
+  */
+ function updateRageButtonVisibility() {
+     const rageSection = document.getElementById('rageToggleSection');
+     if (!rageSection) return;
+ 
+     if (!currentCharacter || currentCharacter.class !== 'Barbarian') {
+         rageSection.style.display = 'none';
+         return;
+     }
+ 
+     // Check if Rage ability (index 0) is selected
+     const selected = currentCharacter.classAbilities && currentCharacter.classAbilities.selectedClass;
+     const hasRage = selected && selected.includes(0);
+ 
+     rageSection.style.display = hasRage ? 'block' : 'none';
+ 
+     // Update button state
+     updateRageButtonState();
+ }
+ 
+ /**
+  * Update the Rage button visual state (active/inactive)
+  */
+ function updateRageButtonState() {
+     const btn = document.getElementById('rageToggleBtn');
+     if (!btn) return;
+ 
+     if (currentCharacter && currentCharacter.rageActive) {
+         btn.classList.add('rage-active');
+         btn.innerHTML = '<i class="fas fa-fire"></i> Rage Active (' + (currentCharacter.rageType || 'basic') + ')';
+     } else {
+         btn.classList.remove('rage-active');
+         btn.innerHTML = '<i class="fas fa-fire"></i> Rage';
+     }
+ }
+ 
+ /**
+  * Toggle Rage on/off
+  */
+ function toggleRage() {
+     if (!currentCharacter) return;
+ 
+     if (currentCharacter.rageActive) {
+         deactivateRage();
+     } else {
+         showRageModal();
+     }
+ }
+ 
+ /**
+  * Show the Rage selection modal with 3 options
+  */
+ function showRageModal() {
+     if (!currentCharacter) return;
+ 
+     const level = currentCharacter.level || 1;
+     // Determine Blood Rage dice based on level
+     let attackDieStr = '1d4';
+     let damageDiceCount = 1;
+     if (level >= 10) { attackDieStr = '1d8'; damageDiceCount = 3; }
+     else if (level >= 5) { attackDieStr = '1d6'; damageDiceCount = 2; }
+ 
+     const modal = document.createElement('div');
+     modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+     modal.id = 'rageModal';
+     modal.innerHTML =
+         '<div class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-lg max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">' +
+             '<h3 class="text-lg font-semibold mb-4 text-center text-red-600 dark:text-red-400"><i class="fas fa-fire mr-2"></i>Rage</h3>' +
+ 
+             // Option 1: Basic Rage
+             '<label class="flex items-center p-3 mb-2 rounded-lg border-2 border-gray-200 dark:border-gray-600 cursor-pointer hover:border-red-400 dark:hover:border-red-500 transition-colors rage-option-label" data-rage="basic">' +
+                 '<input type="radio" name="rageType" value="basic" class="mr-3" checked>' +
+                 '<div class="flex-1">' +
+                     '<div class="font-semibold">Rage</div>' +
+                     '<div class="text-xs text-gray-500 dark:text-gray-400"><i class="skill1">1 Stress</i></div>' +
+                 '</div>' +
+             '</label>' +
+             '<div class="rage-bonus-info mb-3 pl-4 text-sm text-gray-600 dark:text-gray-400" id="basicRageInfo">' +
+                 '<div>• STR +1</div>' +
+             '</div>' +
+ 
+             // Option 2: Totem Rage
+             '<label class="flex items-center p-3 mb-2 rounded-lg border-2 border-gray-200 dark:border-gray-600 cursor-pointer hover:border-red-400 dark:hover:border-red-500 transition-colors rage-option-label" data-rage="totem">' +
+                 '<input type="radio" name="rageType" value="totem" class="mr-3">' +
+                 '<div class="flex-1">' +
+                     '<div class="font-semibold">Totem Rage</div>' +
+                     '<div class="text-xs text-gray-500 dark:text-gray-400"><i class="skill1">1 Stress</i> + <i class="skill2">1 Class</i></div>' +
+                 '</div>' +
+             '</label>' +
+             '<div class="rage-bonus-info mb-3 pl-4 text-sm text-gray-600 dark:text-gray-400" id="totemRageInfo" style="display:none">' +
+                 '<div class="mb-2">• STR +1</div>' +
+                 '<div class="grid grid-cols-2 gap-2 mb-2">' +
+                     '<label class="flex items-center p-2 rounded border border-gray-200 dark:border-gray-600 cursor-pointer hover:border-amber-400 transition-colors">' +
+                         '<input type="radio" name="totemType" value="bear" class="mr-2" checked>' +
+                         '<span class="text-sm font-medium">🐻 Bear</span>' +
+                     '</label>' +
+                     '<label class="flex items-center p-2 rounded border border-gray-200 dark:border-gray-600 cursor-pointer hover:border-amber-400 transition-colors">' +
+                         '<input type="radio" name="totemType" value="eagle" class="mr-2">' +
+                         '<span class="text-sm font-medium">🦅 Eagle</span>' +
+                     '</label>' +
+                     '<label class="flex items-center p-2 rounded border border-gray-200 dark:border-gray-600 cursor-pointer hover:border-amber-400 transition-colors">' +
+                         '<input type="radio" name="totemType" value="tiger" class="mr-2">' +
+                         '<span class="text-sm font-medium">🐯 Tiger</span>' +
+                     '</label>' +
+                     '<label class="flex items-center p-2 rounded border border-gray-200 dark:border-gray-600 cursor-pointer hover:border-amber-400 transition-colors">' +
+                         '<input type="radio" name="totemType" value="wolf" class="mr-2">' +
+                         '<span class="text-sm font-medium">🐺 Wolf</span>' +
+                     '</label>' +
+                 '</div>' +
+                 '<div id="totemBonusText" class="text-xs text-purple-500 dark:text-orange-500 bg-gray-50 dark:bg-gray-700 p-2 rounded">' +
+                     '<div>• +1 HP (temporary), +2 Stress (temporary)</div>' +
+                 '</div>' +
+             '</div>' +
+ 
+             // Option 3: Blood Rage
+             '<label class="flex items-center p-3 mb-2 rounded-lg border-2 border-gray-200 dark:border-gray-600 cursor-pointer hover:border-red-400 dark:hover:border-red-500 transition-colors rage-option-label" data-rage="blood">' +
+                 '<input type="radio" name="rageType" value="blood" class="mr-3">' +
+                 '<div class="flex-1">' +
+                     '<div class="font-semibold">Blood Rage</div>' +
+                     '<div class="text-xs text-gray-500 dark:text-gray-400"><i class="skill1">1 Stress</i> + <i class="skill2">2 Class</i></div>' +
+                 '</div>' +
+             '</label>' +
+             '<div class="rage-bonus-info mb-3 pl-4 text-sm text-gray-600 dark:text-gray-400" id="bloodRageInfo" style="display:none">' +
+                 '<div>• STR +1</div>' +
+                 '<div>• Roll 1d4 → Temporary HP</div>' +
+                 '<div>• Roll 1d4 → Temporary Stress</div>' +
+                 '<div>• ' + attackDieStr + ' added to Attack Rolls</div>' +
+                 '<div>• +' + damageDiceCount + ' extra Damage dice</div>' +
+                 '<div class="text-red-500 dark:text-red-400 font-semibold mt-1">• Cannot recover HP while raging</div>' +
+             '</div>' +
+ 
+             // Buttons
+             '<div class="flex justify-center space-x-3 mt-4 pt-3 border-t border-gray-200 dark:border-gray-600">' +
+                 '<button id="rageActivateBtn" class="px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition-colors"><i class="fas fa-fire mr-1"></i>Activate</button>' +
+                 '<button id="rageCancelBtn" class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm transition-colors">Cancel</button>' +
+             '</div>' +
+         '</div>';
+ 
+     document.body.appendChild(modal);
+ 
+     // Show/hide bonus info based on selected rage type
+     const rageRadios = modal.querySelectorAll('input[name="rageType"]');
+     rageRadios.forEach(function (radio) {
+         radio.addEventListener('change', function () {
+             document.getElementById('basicRageInfo').style.display = this.value === 'basic' ? 'block' : 'none';
+             document.getElementById('totemRageInfo').style.display = this.value === 'totem' ? 'block' : 'none';
+             document.getElementById('bloodRageInfo').style.display = this.value === 'blood' ? 'block' : 'none';
+ 
+             // Update label highlight
+             modal.querySelectorAll('.rage-option-label').forEach(function (lbl) {
+                 lbl.classList.remove('border-red-400', 'dark:border-red-500');
+                 lbl.classList.add('border-gray-200', 'dark:border-gray-600');
+             });
+             this.closest('.rage-option-label').classList.remove('border-gray-200', 'dark:border-gray-600');
+             this.closest('.rage-option-label').classList.add('border-red-400', 'dark:border-red-500');
+         });
+     });
+ 
+     // Highlight initial selection
+     modal.querySelector('.rage-option-label[data-rage="basic"]').classList.add('border-red-400', 'dark:border-red-500');
+     modal.querySelector('.rage-option-label[data-rage="basic"]').classList.remove('border-gray-200', 'dark:border-gray-600');
+ 
+     // Totem sub-options — update bonus text
+     var totemRadios = modal.querySelectorAll('input[name="totemType"]');
+     var totemBonusTexts = {
+         bear: '<div>• +1 HP (temporary), +2 Stress (temporary)</div>',
+         eagle: '<div>• +1 Evasion (Mod), +1 DEX</div><div>• Perception gains Advantage</div>',
+         tiger: '<div>• +1 DEX</div><div>• Acrobatics &amp; Athletics gain Advantage</div>',
+         wolf: '<div>• Survival gains Advantage</div><div>• +2 to Attack Rolls</div>'
+     };
+     totemRadios.forEach(function (radio) {
+         radio.addEventListener('change', function () {
+             document.getElementById('totemBonusText').innerHTML = totemBonusTexts[this.value] || '';
+         });
+     });
+ 
+     // Activate button
+     modal.querySelector('#rageActivateBtn').addEventListener('click', function () {
+         var selectedType = modal.querySelector('input[name="rageType"]:checked').value;
+         var selectedTotem = modal.querySelector('input[name="totemType"]:checked');
+         var totemValue = selectedTotem ? selectedTotem.value : 'bear';
+         modal.remove();
+         activateRage(selectedType, totemValue);
+     });
+ 
+     // Cancel button
+     modal.querySelector('#rageCancelBtn').addEventListener('click', function () {
+         modal.remove();
+     });
+ 
+     // Close on backdrop
+     modal.addEventListener('click', function (e) {
+         if (e.target === this) this.remove();
+     });
+ }
+ 
+ /**
+  * Activate Rage with the selected type and totem
+  */
+ function activateRage(rageType, totemType) {
+     if (!currentCharacter) return;
+     if (!currentCharacter.resources) return;
+ 
+     var stressResource = currentCharacter.resources.stress;
+     var classResource = currentCharacter.resources.class;
+     if (!stressResource || !classResource) return;
+ 
+     var stressMax = stressResource.max + (stressResource.temp || 0);
+     var stressAvailable = stressMax - stressResource.used.length;
+     var classMax = classResource.max + (classResource.temp || 0);
+     var classAvailable = classMax - classResource.used.length;
+ 
+     // Check resource costs
+     var stressCost = 1; // All rage types cost 1 Stress
+     var classCost = 0;
+     if (rageType === 'totem') classCost = 1;
+     else if (rageType === 'blood') classCost = 2;
+ 
+     if (stressAvailable < stressCost) {
+         showCustomDialog('Rage', 'Not enough Stress available! Need ' + stressCost + ' Stress.');
+         return;
+     }
+     if (classAvailable < classCost) {
+         showCustomDialog('Rage', 'Not enough Class available! Need ' + classCost + ' Class.');
+         return;
+     }
+ 
+     // Spend resources
+     for (var i = 0; i < stressCost; i++) {
+         stressResource.used.push(stressResource.used.length);
+     }
+     for (var j = 0; j < classCost; j++) {
+         classResource.used.push(classResource.used.length);
+     }
+ 
+     // Set rage state
+     currentCharacter.rageActive = true;
+     currentCharacter.rageType = rageType;
+     currentCharacter.rageTotem = rageType === 'totem' ? totemType : null;
+ 
+     // === ALL RAGE: STR +1 ===
+     // STR +1 — tracked via rageSTRBonus, applied by populateCharacterSheet
+     currentCharacter.rageSTRBonus = 1;
+ 
+     // Initialize other bonus trackers
+     currentCharacter.rageDEXBonus = 0;
+     currentCharacter.rageAttackBonus = 0;
+     currentCharacter.rageAttackDieSides = 0;
+     currentCharacter.rageDamageDiceBonus = 0;
+     currentCharacter.rageCannotHealHP = false;
+     currentCharacter.rageAddedTempHP = 0;
+     currentCharacter.rageAddedTempStress = 0;
+ 
+     // === TOTEM RAGE bonuses ===
+     if (rageType === 'totem') {
+         if (totemType === 'bear') {
+             // +1 HP (temporary), +2 Stress (temporary)
+             currentCharacter.resources.hp.temp = (currentCharacter.resources.hp.temp || 0) + 1;
+             currentCharacter.resources.stress.temp = (currentCharacter.resources.stress.temp || 0) + 2;
+             currentCharacter.rageAddedTempHP = 1;
+             currentCharacter.rageAddedTempStress = 2;
+         } else if (totemType === 'eagle') {
+             // +1 Evasion (Mod), +1 DEX, Perception Advantage
+             var ed = ensureEvasionData(currentCharacter);
+             ed.mod.rage = (ed.mod.rage || 0) + 1;
+             currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+ 
+             // DEX +1 — tracked via rageDEXBonus, applied by populateCharacterSheet
+             currentCharacter.rageDEXBonus = 1;
+ 
+             if (!currentCharacter.skillAdvantageSettings) currentCharacter.skillAdvantageSettings = {};
+             currentCharacter.skillAdvantageSettings['Perception_WIS'] = { mode: 'advantage', always: true };
+         } else if (totemType === 'tiger') {
+             // +1 DEX, Acrobatics & Athletics Advantage
+             // DEX +1 — tracked via rageDEXBonus, applied by populateCharacterSheet
+             currentCharacter.rageDEXBonus = 1;
+ 
+             if (!currentCharacter.skillAdvantageSettings) currentCharacter.skillAdvantageSettings = {};
+             currentCharacter.skillAdvantageSettings['Acrobatics_DEX'] = { mode: 'advantage', always: true };
+             currentCharacter.skillAdvantageSettings['Athletics_STR'] = { mode: 'advantage', always: true };
+         } else if (totemType === 'wolf') {
+             // Survival Advantage, +2 Attack Rolls
+             if (!currentCharacter.skillAdvantageSettings) currentCharacter.skillAdvantageSettings = {};
+             currentCharacter.skillAdvantageSettings['Survival_WIS'] = { mode: 'advantage', always: true };
+             currentCharacter.rageAttackBonus = 2;
+         }
+     }
+ 
+     // === BLOOD RAGE bonuses ===
+     if (rageType === 'blood') {
+         var level = currentCharacter.level || 1;
+ 
+         // Roll 1d4 → Temporary HP
+         var tempHPRoll = Math.floor(Math.random() * 4) + 1;
+         currentCharacter.resources.hp.temp = (currentCharacter.resources.hp.temp || 0) + tempHPRoll;
+         currentCharacter.rageAddedTempHP = tempHPRoll;
+ 
+         // Roll 1d4 → Temporary Stress
+         var tempStressRoll = Math.floor(Math.random() * 4) + 1;
+         currentCharacter.resources.stress.temp = (currentCharacter.resources.stress.temp || 0) + tempStressRoll;
+         currentCharacter.rageAddedTempStress = tempStressRoll;
+ 
+         // Attack die based on level
+         if (level >= 10) currentCharacter.rageAttackDieSides = 8;
+         else if (level >= 5) currentCharacter.rageAttackDieSides = 6;
+         else currentCharacter.rageAttackDieSides = 4;
+ 
+         // Extra damage dice based on level
+         if (level >= 10) currentCharacter.rageDamageDiceBonus = 3;
+         else if (level >= 5) currentCharacter.rageDamageDiceBonus = 2;
+         else currentCharacter.rageDamageDiceBonus = 1;
+ 
+         // Cannot recover HP
+         currentCharacter.rageCannotHealHP = true;
+     }
+ 
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+     populateCharacterSheet(currentCharacter);
+     updateCharacterDisplay();
+     updateRageButtonState();
+ }
+ 
+ /**
+  * Deactivate Rage and remove all rage bonuses
+  */
+ function deactivateRage() {
+     if (!currentCharacter || !currentCharacter.rageActive) return;
+ 
+     var rageType = currentCharacter.rageType;
+     var totemType = currentCharacter.rageTotem;
+ 
+     // STR/DEX bonuses are cleared below (rageSTRBonus=0, rageDEXBonus=0)
+     // populateCharacterSheet will recalculate the display values
+ 
+     // === Remove Evasion mod (Eagle totem) ===
+     if (rageType === 'totem' && totemType === 'eagle') {
+         var ed = ensureEvasionData(currentCharacter);
+         ed.mod.rage = 0;
+         currentCharacter.evasion = getCurrentEvasion(currentCharacter);
+     }
+ 
+     // === Remove skill advantages ===
+     if (rageType === 'totem') {
+         if (!currentCharacter.skillAdvantageSettings) currentCharacter.skillAdvantageSettings = {};
+         if (totemType === 'eagle') {
+             currentCharacter.skillAdvantageSettings['Perception_WIS'] = { mode: 'none', always: false };
+         } else if (totemType === 'tiger') {
+             currentCharacter.skillAdvantageSettings['Acrobatics_DEX'] = { mode: 'none', always: false };
+             currentCharacter.skillAdvantageSettings['Athletics_STR'] = { mode: 'none', always: false };
+         } else if (totemType === 'wolf') {
+             currentCharacter.skillAdvantageSettings['Survival_WIS'] = { mode: 'none', always: false };
+         }
+     }
+ 
+     // === Remove temporary HP/Stress (Bear totem and Blood Rage) ===
+     if (currentCharacter.rageAddedTempHP && currentCharacter.resources && currentCharacter.resources.hp) {
+         currentCharacter.resources.hp.temp = Math.max(0, (currentCharacter.resources.hp.temp || 0) - currentCharacter.rageAddedTempHP);
+     }
+     if (currentCharacter.rageAddedTempStress && currentCharacter.resources && currentCharacter.resources.stress) {
+         currentCharacter.resources.stress.temp = Math.max(0, (currentCharacter.resources.stress.temp || 0) - currentCharacter.rageAddedTempStress);
+     }
+ 
+     // === Clear all rage state ===
+     currentCharacter.rageActive = false;
+     currentCharacter.rageType = null;
+     currentCharacter.rageTotem = null;
+     currentCharacter.rageSTRBonus = 0;
+     currentCharacter.rageDEXBonus = 0;
+     currentCharacter.rageAttackBonus = 0;
+     currentCharacter.rageAttackDieSides = 0;
+     currentCharacter.rageDamageDiceBonus = 0;
+     currentCharacter.rageCannotHealHP = false;
+     currentCharacter.rageAddedTempHP = 0;
+     currentCharacter.rageAddedTempStress = 0;
+ 
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+     populateCharacterSheet(currentCharacter);
+     updateCharacterDisplay();
+     updateRageButtonState();
+ }
+ 
+ /**
+  * Reset Rage on rest (Short or Long) — auto-deactivate if active
+  */
+ function resetRageOnRest() {
+     if (!currentCharacter) return;
+     if (currentCharacter.rageActive) {
+         deactivateRage();
+     }
+ }
+ 
+ // Event delegation for Rage toggle button
+ document.addEventListener('click', function (e) {
+     if (e.target.closest('#rageToggleBtn')) {
+         e.preventDefault();
+         toggleRage();
+     }
+ });
+ 
+ // ==================== LAY ON HANDS (PALADIN) ====================
+ 
+ /**
+  * Activate Lay on Hands ability for Paladins
+  * - Heal: Costs 1 Class, rolls 1d4+1, player picks HP or Stress
+  * - Cure: Costs 1 Class, removes 1 Poison or Disease
+  */
+ function activateLayOnHands(action) {
+     if (!currentCharacter) return;
+ 
+     if (!currentCharacter.resources) return;
+     const classResource = currentCharacter.resources.class;
+     if (!classResource) return;
+ 
+     const classMax = classResource.max + (classResource.temp || 0);
+     const classAvailable = classMax - classResource.used.length;
+ 
+     if (classAvailable < 1) {
+         showCustomDialog('Lay on Hands', 'Not enough Class available! Need 1 Class.');
+         return;
+     }
+ 
+     // Spend 1 Class
+     classResource.used.push(classResource.used.length);
+     saveCharacters();
+      populateSheetResourceBoxes(currentCharacter);
+     updateCharacterDisplay();
+ 
+     if (action === 'heal') {
+         // Roll 1d4+1 - verbal action for the player to announce to their ally
+         const dieRoll = Math.floor(Math.random() * 4) + 1;
+          const total = dieRoll + 1;
+ 
+          showLayOnHandsModal(
+              'Lay on Hands — Heal',
+              '<div class="text-center">' +
+                  '<div class="text-sm text-gray-500 dark:text-gray-400 mb-2">1d4 + 1</div>' +
+                  '<div class="text-lg mb-1">[' + dieRoll + '] + 1</div>' +
+                  '<div class="text-4xl font-bold text-green-600 dark:text-green-400 my-3">' + total + '</div>' +
+                  '<div class="text-sm text-gray-600 dark:text-gray-400">The ally recovers <strong>' + total + '</strong> — they choose HP or Stress.</div>' +
+                  '<div class="text-xs text-gray-400 dark:text-gray-500 mt-2">Cost: 1 Class</div>' +
+              '</div>'
+          );
+     } else if (action === 'cure') {
+ 
+         showLayOnHandsModal(
+              'Lay on Hands — Cure',
+              '<div class="text-center">' +
+                  '<div class="text-4xl mb-3"><i class="fas fa-shield-virus text-green-600 dark:text-green-400"></i></div>' +
+                  '<div class="text-lg font-semibold text-green-600 dark:text-green-400 mb-2">Poison / Disease Cured!</div>' +
+                  '<div class="text-sm text-gray-600 dark:text-gray-400">The ally is cured of one Poison or Disease.</div>' +
+                  '<div class="text-xs text-gray-400 dark:text-gray-500 mt-2">Cost: 1 Class</div>' +
+              '</div>'
+          );
+     }
+ }
+ 
+ /**
+   * Show a closeable modal for Lay on Hands results
+   */
+  function showLayOnHandsModal(title, bodyHTML) {
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+      modal.innerHTML =
+          '<div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">' +
+              '<h3 class="text-lg font-semibold mb-4 text-center"><i class="fas fa-hand-holding-heart mr-2 text-green-500"></i>' + title + '</h3>' +
+              bodyHTML +
+              '<div class="flex justify-center mt-5">' +
+                  '<button class="px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-semibold transition-colors">Close</button>' +
+              '</div>' +
+          '</div>';
+ 
+      document.body.appendChild(modal);
+ 
+      modal.querySelector('button').addEventListener('click', function () {
+          modal.remove();
+      });
+      modal.addEventListener('click', function (e) {
+          if (e.target === this) this.remove();
+      });  }
+ 
+ // Event delegation for Lay on Hands buttons
+ document.addEventListener('click', function (e) {
+     if (e.target.closest('.lay-on-hands-btn')) {
+         e.preventDefault();
+         const btn = e.target.closest('.lay-on-hands-btn');
+         const action = btn.dataset.action;
+         activateLayOnHands(action);
+     }
+ });
+ 
+ // ==================== SNEAK ATTACK (ROGUE) ====================
+ 
+ /**
+  * Activate Sneak Attack ability for Rogues
+  * - Costs 1 Class
+  * - Rolls sneak attack dice based on level: 1d6 (1-3), 2d6 (4-6), 3d6 (7-10)
+  */
+ function activateSneakAttack() {
+     if (!currentCharacter) return;
+ 
+     if (!currentCharacter.resources) return;
+     const classResource = currentCharacter.resources.class;
+     if (!classResource) return;
+ 
+     const classMax = classResource.max + (classResource.temp || 0);
+     const classAvailable = classMax - classResource.used.length;
+     const resultDisplay = document.getElementById('sneakAttackResultDisplay');
+ 
+     if (classAvailable < 1) {
+         if (resultDisplay) {
+             resultDisplay.innerHTML = '<div class="sneak-attack-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Not enough Class available! Need 1 Class.</div>';
+             setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+         }
+         return;
+     }
+ 
+     // Spend 1 Class
+     classResource.used.push(classResource.used.length);
+ 
+     // Determine dice based on level
+     const level = currentCharacter.level || 1;
+     let numDice, diceStr;
+     if (level >= 7) { numDice = 3; diceStr = '3d6'; }
+     else if (level >= 4) { numDice = 2; diceStr = '2d6'; }
+     else { numDice = 1; diceStr = '1d6'; }
+ 
+     // Roll dice
+     const rolls = [];
+     for (let i = 0; i < numDice; i++) {
+         rolls.push(Math.floor(Math.random() * 6) + 1);
+     }
+     const total = rolls.reduce((a, b) => a + b, 0);
+ 
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+     updateCharacterDisplay();
+ 
+     if (resultDisplay) {
+         resultDisplay.innerHTML = '<div class="sneak-attack-result"><i class="fas fa-user-ninja mr-2"></i>Sneak Attack! ' + diceStr + ': [' + rolls.join(', ') + '] = <strong>' + total + '</strong> extra damage. (Cost: 1 Class)</div>';
+         setTimeout(() => { resultDisplay.innerHTML = ''; }, 6000);
+     }
+ }
+ 
+ // Event delegation for Sneak Attack button (in weapon damage modal)
+ document.addEventListener('click', function (e) {
+     if (e.target.closest('.sneak-attack-btn')) {
+         e.preventDefault();
+         activateSneakAttackFromModal();
+     }
+ });
+ 
+ // ==================== DIVINE SOUL (SORCERER) ====================
+ 
+ /**
+  * Activate Divine Soul ability for Sorcerers
+  * - Costs 1 Class
+  * - Adds temporary HP and Spell points based on level
+  * - Once per Long Rest
+  */
+ function activateDivineSoul() {
+     if (!currentCharacter) return;
+ 
+     const resultDisplay = document.getElementById('divineSoulResultDisplay');
+ 
+     if (currentCharacter.divineSoulUsed) {
+         if (resultDisplay) {
+             resultDisplay.innerHTML = '<div class="divine-soul-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Divine Soul already used! Take a Long Rest to use again.</div>';
+             setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+         }
+         return;
+     }
+ 
+     if (!currentCharacter.resources) return;
+     const classResource = currentCharacter.resources.class;
+     if (!classResource) return;
+ 
+     const classMax = classResource.max + (classResource.temp || 0);
+     const classAvailable = classMax - classResource.used.length;
+ 
+     if (classAvailable < 1) {
+         if (resultDisplay) {
+             resultDisplay.innerHTML = '<div class="divine-soul-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Not enough Class available! Need 1 Class.</div>';
+             setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+         }
+         return;
+     }
+ 
+     // Spend 1 Class
+     classResource.used.push(classResource.used.length);
+ 
+     // Determine bonus based on level
+     const level = currentCharacter.level || 1;
+     let bonus;
+     if (level >= 10) bonus = 3;
+     else if (level >= 5) bonus = 2;
+     else bonus = 1;
+ 
+     // Add temporary HP
+     const hpResource = currentCharacter.resources.hp;
+     if (hpResource) hpResource.temp = (hpResource.temp || 0) + bonus;
+ 
+     // Add temporary Spell
+     const spellResource = currentCharacter.resources.spell;
+     if (spellResource) spellResource.temp = (spellResource.temp || 0) + bonus;
+ 
+     currentCharacter.divineSoulUsed = true;
+ 
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+     updateCharacterDisplay();
+     updateDivineSoulButtonState();
+ 
+     if (resultDisplay) {
+         resultDisplay.innerHTML = '<div class="divine-soul-result"><i class="fas fa-sun mr-2"></i>Divine Soul activated! +' + bonus + ' temporary HP, +' + bonus + ' temporary Spell. (Cost: 1 Class)</div>';
+         setTimeout(() => { resultDisplay.innerHTML = ''; }, 5000);
+     }
+ }
+ 
+ // Update Divine Soul button state
+ function updateDivineSoulButtonState() {
+     const btn = document.getElementById('divineSoulActivateBtn');
+     if (!btn) return;
+ 
+     if (currentCharacter && currentCharacter.divineSoulUsed) {
+         btn.disabled = true;
+         btn.classList.add('disabled');
+         btn.style.opacity = '0.5';
+         btn.style.cursor = 'not-allowed';
+         const spanEl = btn.querySelector('span');
+         if (spanEl) spanEl.textContent = 'Used (Long Rest to restore)';
+     } else {
+         btn.disabled = false;
+         btn.classList.remove('disabled');
+         btn.style.opacity = '1';
+         btn.style.cursor = 'pointer';
+         const spanEl = btn.querySelector('span');
+         if (spanEl) spanEl.textContent = 'Activate Divine Soul';
+     }
+ }
+ 
+ // Reset Divine Soul on Long Rest
+ function resetDivineSoulOnLongRest() {
+     if (!currentCharacter) return;
+     currentCharacter.divineSoulUsed = false;
+     updateDivineSoulButtonState();
+ }
+ 
+ // Event delegation for Divine Soul button
+ document.addEventListener('click', function (e) {
+     if (e.target.closest('.divine-soul-btn')) {
+         e.preventDefault();
+         activateDivineSoul();
+     }
+ });
+ 
+ // ==================== UNEARTHLY RECOVERY (SORCERER) ====================
+ 
+ /**
+  * Activate Unearthly Recovery ability for Sorcerers
+  * - Costs 2 Class
+  * - Recovers +2 HP, +2 Stress, +2 Spell
+  */
+ function activateUnearthlyRecovery() {
+     if (!currentCharacter) return;
+ 
+     if (!currentCharacter.resources) return;
+     const classResource = currentCharacter.resources.class;
+     if (!classResource) return;
+ 
+     const classMax = classResource.max + (classResource.temp || 0);
+     const classAvailable = classMax - classResource.used.length;
+     const resultDisplay = document.getElementById('unearthlyRecoveryResultDisplay');
+ 
+     if (classAvailable < 2) {
+         if (resultDisplay) {
+             resultDisplay.innerHTML = '<div class="unearthly-recovery-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Not enough Class available! Need 2 Class.</div>';
+             setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+         }
+         return;
+     }
+
+ // Check if any resources have actually been used (HP, Stress, or Spell)
+      // Must have at least 1 used point across HP/Stress/Spell to benefit
+      const hpUsed = (currentCharacter.resources.hp && currentCharacter.resources.hp.used.length) || 0;
+      const stressUsed = (currentCharacter.resources.stress && currentCharacter.resources.stress.used.length) || 0;
+      const spellUsed = (currentCharacter.resources.spell && currentCharacter.resources.spell.used.length) || 0;
+      const totalUsed = hpUsed + stressUsed + spellUsed;
+ 
+      if (totalUsed === 0) {
+          if (resultDisplay) {
+              resultDisplay.innerHTML = '<div class="unearthly-recovery-result error"><i class="fas fa-exclamation-triangle mr-2"></i>All resources are full! Nothing to recover.</div>';
+              setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+          }
+          return;
+      }
+ 
+     // Spend 2 Class
+     classResource.used.push(classResource.used.length);
+     classResource.used.push(classResource.used.length);
+ 
+     // Recover 2 HP, 2 Stress, 2 Spell
+     ['hp', 'stress', 'spell'].forEach(type => {
+         const resource = currentCharacter.resources[type];
+         if (!resource) return;
+         resource.used.sort((a, b) => a - b);
+         for (let i = 0; i < 2; i++) {
+             if (resource.used.length > 0) {
+                 resource.used.pop();
+             }
+         }
+     });
+ 
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+     updateCharacterDisplay();
+ 
+     if (resultDisplay) {
+         resultDisplay.innerHTML = '<div class="unearthly-recovery-result"><i class="fas fa-star-of-life mr-2"></i>Unearthly Recovery! Recovered +2 HP, +2 Stress, +2 Spell. (Cost: 2 Class)</div>';
+         setTimeout(() => { resultDisplay.innerHTML = ''; }, 5000);
+     }
+ }
+ 
+ // Event delegation for Unearthly Recovery button
+ document.addEventListener('click', function (e) {
+     if (e.target.closest('.unearthly-recovery-btn')) {
+         e.preventDefault();
+         activateUnearthlyRecovery();
+     }
+ });
+ 
+ // ==================== KNOWLEDGE IS POWER (WIZARD) ====================
+ 
+ /**
+  * Activate Knowledge is Power ability for Wizards
+  * - Costs 1 Class
+  * - Adds +1 damage die to next Spell damage roll
+  */
+ function activateKnowledgeIsPower() {
+     if (!currentCharacter) return;
+ 
+     if (!currentCharacter.resources) return;
+     const classResource = currentCharacter.resources.class;
+     if (!classResource) return;
+ 
+     const classMax = classResource.max + (classResource.temp || 0);
+     const classAvailable = classMax - classResource.used.length;
+     const resultDisplay = document.getElementById('knowledgePowerResultDisplay');
+ 
+     if (classAvailable < 1) {
+         if (resultDisplay) {
+             resultDisplay.innerHTML = '<div class="knowledge-power-result error"><i class="fas fa-exclamation-triangle mr-2"></i>Not enough Class available! Need 1 Class.</div>';
+             setTimeout(() => { resultDisplay.innerHTML = ''; }, 4000);
+         }
+         return;
+     }
+ 
+     // Spend 1 Class
+     classResource.used.push(classResource.used.length);
+ 
+     // Set bonus flag (accumulates)
+     currentCharacter.knowledgePowerDamageBonus = (currentCharacter.knowledgePowerDamageBonus || 0) + 1;
+ 
+     saveCharacters();
+     populateSheetResourceBoxes(currentCharacter);
+     updateCharacterDisplay();
+     updateKnowledgePowerButtonState();
+ 
+     if (resultDisplay) {
+         const totalBonus = currentCharacter.knowledgePowerDamageBonus;
+         resultDisplay.innerHTML = '<div class="knowledge-power-result"><i class="fas fa-book mr-2"></i>Knowledge is Power activated! +' + totalBonus + ' Damage Die to next Spell damage. (Cost: 1 Class)</div>';
+         setTimeout(() => { resultDisplay.innerHTML = ''; }, 5000);
+     }
+ }
+ 
+ // Update Knowledge is Power button state
+ function updateKnowledgePowerButtonState() {
+     const btn = document.getElementById('knowledgePowerActivateBtn');
+     if (!btn) return;
+ 
+     const spanEl = btn.querySelector('span');
+     if (spanEl && currentCharacter && currentCharacter.knowledgePowerDamageBonus > 0) {
+         spanEl.textContent = 'Activate (+1 Damage Die) [Current: +' + currentCharacter.knowledgePowerDamageBonus + ']';
+     } else if (spanEl) {
+         spanEl.textContent = 'Activate (+1 Damage Die)';
+     }
+ }
+ 
+ // Reset Knowledge is Power on Long Rest
+ function resetKnowledgePowerOnLongRest() {
+     if (!currentCharacter) return;
+     currentCharacter.knowledgePowerDamageBonus = 0;
+     updateKnowledgePowerButtonState();
+ }
+ 
+ // Event delegation for Knowledge is Power button
+ document.addEventListener('click', function (e) {
+     if (e.target.closest('.knowledge-power-btn')) {
+         e.preventDefault();
+         activateKnowledgeIsPower();
+     }
+ });
 
 // ==================== ARCANE RECOVERY (WIZARD) ====================
 
@@ -17164,7 +19827,7 @@ function handleUnarmoredDefenseAbilityToggle(isEnabled) {
 
     // If ability is being disabled, also deactivate the toggle if it was active
     if (!isEnabled && currentCharacter.unarmoredDefenseActive) {
-        handleUnarmoredDefenseToggle(true);
+        handleUnarmoredDefenseToggle(false);
     }
 
     saveCharacters();
@@ -17227,30 +19890,29 @@ function applyAwakenedMindBonuses() {
     if (!currentCharacter) return;
 
     // Initialize ability bonuses object (used by populateCharacterSheet for stat display)
-    if (!currentCharacter.awakenedMindAbilityBonuses) {
-        currentCharacter.awakenedMindAbilityBonuses = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-    }
-
-
-    // Apply +1 INT bonus
-    currentCharacter.awakenedMindAbilityBonuses.int = 1;
-
-    // Apply +1 Armor (to the base armor value)
-    currentCharacter.armor = (currentCharacter.armor || 0) + 1;
-
-    // Apply +1 Armor Slot
-    if (!currentCharacter.armorSlots) {
-        currentCharacter.armorSlots = { total: 0, filled: [], permanent: 0, temporary: 0 };
-    }
-    currentCharacter.armorSlots.total += 1;
-    currentCharacter.armorSlots.permanent += 1;
+     if (!currentCharacter.awakenedMindAbilityBonuses) {
+         currentCharacter.awakenedMindAbilityBonuses = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+     }
+ 
+     // Apply +1 INT bonus
+     currentCharacter.awakenedMindAbilityBonuses.int = 1;
+ 
+     // Apply +1 Armor (to the base armor value)
+     currentCharacter.armor = (currentCharacter.armor || 0) + 1;
+ 
+     // Apply +1 Armor Slot
+     if (!currentCharacter.armorSlots) {
+         currentCharacter.armorSlots = { total: 0, filled: [], permanent: 0, temporary: 0 };
+     }
+     currentCharacter.armorSlots.total += 1;
+     currentCharacter.armorSlots.permanent += 1;
 
     // Mark Awakened Mind as active
     currentCharacter.awakenedMindActive = true;
 }
 
 /**
- * Remove Awakened Mind bonuses
+* Remove Awakened Mind bonuses - ALL bonuses removed when ability is unchecked
  */
 function removeAwakenedMindBonuses() {
     if (!currentCharacter) return;
@@ -17566,38 +20228,21 @@ function updateEvasionWithFightingStyle() {
 
     const defenderBonus = getDefenderEvasionBonus(currentCharacter);
 
-    // Store the fighting style evasion bonus separately
-    if (!currentCharacter.evasionData) {
-        currentCharacter.evasionData = {
-            base: currentCharacter.evasion || 0,
-            temporary: 0,
-            unarmoredDefense: 0,
-            mageArmor: 0,
-            fightingStyle: 0
-        };
-    }
-
-    currentCharacter.evasionData.fightingStyle = defenderBonus;
-
-    // Recalculate total evasion
-    const totalEvasion = (currentCharacter.evasionData.base || 0) +
-        (currentCharacter.evasionData.temporary || 0) +
-        (currentCharacter.evasionData.unarmoredDefense || 0) +
-        (currentCharacter.evasionData.mageArmor || 0) +
-        (currentCharacter.evasionData.fightingStyle || 0) +
-        getArmorEvasionValue(currentCharacter);
-
-    currentCharacter.evasion = totalEvasion;
+   const ed = ensureEvasionData(currentCharacter);
+ 
+     ed.mod.fightingStyle = defenderBonus;
+ 
+     // Recalculate total evasion using the new system
+     currentCharacter.evasion = getCurrentEvasion(currentCharacter);
 
     // Update display
     const evasionDisplay = document.getElementById('displayEvasion');
     if (evasionDisplay) {
-        evasionDisplay.textContent = totalEvasion;
+        evasionDisplay.textContent = currentCharacter.evasion;
     }
 }
 
 // ==================== SPELL SEQUENCER (WIZARD) ====================
-
 // Flexible spell list for Spell Sequencer - easily modifiable
 const spellSequencerSpellList = [
     { name: 'Bolt', spellCost: 1, stressCost: 1 },
@@ -18028,7 +20673,6 @@ function initSpellSequencerIfNeeded() {
 }
 
 // ==================== EXPERTISE (UNIVERSAL) ====================
-
 // All ability scores for Expertise
 const expertiseAbilityScores = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
 
@@ -18253,7 +20897,6 @@ function initExpertiseIfNeeded() {
 }
 
 // ==================== JACK OF ALL TRADES (BARD) ====================
-
 /**
  * Check if Jack of All Trades ability is selected
  */
@@ -18309,7 +20952,6 @@ function initJackOfAllTradesIfNeeded() {
 }
 
 // ==================== WILD BEAST (DRUID) ====================
-
 /**
  * Check if Wild Beast ability is selected
  */
@@ -18372,7 +21014,6 @@ function initWildBeastIfNeeded() {
 }
 
 // ==================== RANGER COMPANION (RANGER) ====================
-
 /**
  * Check if Ranger Companion ability is selected
  */
@@ -18538,8 +21179,16 @@ function showCompanionRemoveConfirmDialog() {
     document.body.appendChild(modal);
 
     modal.querySelector('.confirm-remove').addEventListener('click', () => {
+      // Clear any active companion effects and evasion bonuses
+         currentCharacter.defenderActive = false;
+         currentCharacter.rendActive = false;
+         currentCharacter.sentinelActive = false;
+         const edComp = ensureEvasionData(currentCharacter);
+         edComp.mod.companion = 0;
+         currentCharacter.evasion = getCurrentEvasion(currentCharacter);
         currentCharacter.companion = null;
         updateCompanionDisplay(currentCharacter);
+        populateCharacterSheet(currentCharacter);
         saveCharacters();
         modal.remove();
 
@@ -18724,8 +21373,6 @@ function handleTokenCircleClick(event) {
     saveCharacters(currentCharacter);
     updateTokensOfDepartedDisplay();
 }
-
-
 
 /**
  * Initialize Tokens of the Departed if ability is selected (for restoring state)
