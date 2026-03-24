@@ -22092,11 +22092,11 @@ function closeSilverTongueModal() {
 
     // Build roll display string
     var rollParts = rolls.map(function(r) {
-        return '[<strong style="color:#ec4899;font-size:2rem;">' + r + '</strong>]';
-    }).join(' + ');
+        return '[<strong style="color:#ec4899;font-size:1rem;">' + r + '</strong>]';
+    }).join(',');
 
     var totalLine = numDice > 1
-        ? '<div style="margin-top:6px;font-size:1rem;font-weight:700;color:#ec4899;">Total: ' + total + ' Psychic damage</div>'
+        ? '<div style="margin-top:6px;font-size:2rem;font-weight:700;color:#ec4899;">Total: ' + total + ' Psychic damage</div>'
         : '';
 
     // Show result
@@ -22108,7 +22108,7 @@ function closeSilverTongueModal() {
             '<i class="fas fa-fire" style="margin-right:6px;"></i>Psychic Damage!' +
             '</div>' +
             '<div style="font-size:0.95rem;color:#d1d5db;">' +
-            numDice + 'd10: ' + rollParts + ' Psychic damage' +
+            numDice + 'd10: ' + rollParts +  ' Psychic damage' +
             '</div>' +
             totalLine +
             '</div>';
