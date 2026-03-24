@@ -11133,14 +11133,16 @@ function showOtherAbilitiesModal() {
      classOptionItems.forEach(function(item) {
          var style = item.selected ? ' style="color:#3b82f6;font-weight:600;"' : '';
          var marker = item.selected ? '● ' : '';
-         classOptions += '<option value="class_' + item.index + '"' + style + '>' + marker + item.name + '</option>';
+         var dataAttr = item.selected ? ' data-selected="true"' : '';
+          classOptions += '<option value="class_' + item.index + '"' + style + dataAttr + '>' + marker + item.name + '</option>';
      });
  
      var universalOptions = '';
      universalOptionItems.forEach(function(item) {
          var style = item.selected ? ' style="color:#3b82f6;font-weight:600;"' : '';
          var marker = item.selected ? '● ' : '';
-         universalOptions += '<option value="universal_' + item.index + '"' + style + '>' + marker + item.name + '</option>';
+          var uDataAttr = item.selected ? ' data-selected="true"' : '';
+         universalOptions += '<option value="universal_' + item.index + '"' + style + uDataAttr + '>' + marker + item.name + '</option>';
     });
 
     modal.innerHTML = `
@@ -11177,8 +11179,21 @@ function showOtherAbilitiesModal() {
 
     const selectEl = modal.querySelector('#abilitiesRefSelect');
     const contentEl = modal.querySelector('#abilityRefContent');
+    // Helper: color the select element itself blue when a selected/checked ability is chosen
+    // This works on mobile/tablet where option-level styling is ignored by native pickers
+    function updateSelectColor() {
+        var chosen = selectEl.options[selectEl.selectedIndex];
+        if (chosen && chosen.dataset.selected === 'true') {
+            selectEl.style.color = '#3b82f6';
+            selectEl.style.fontWeight = '600';
+        } else {
+            selectEl.style.color = '';
+            selectEl.style.fontWeight = '';
+        }
+    }
 
     selectEl.addEventListener('change', function () {
+        updateSelectColor();
         const val = this.value;
         if (!val) {
             contentEl.innerHTML = `
@@ -21937,17 +21952,32 @@ function showSilverTongueModal() {
         '</div>' +
 
         '<div style="display:flex;flex-direction:column;gap:10px;">' +
-        // Option 1
-        '<button class="silver-tongue-option-btn" data-option="1" ' + (canAfford ? '' : 'disabled') + ' style="' +
-        'display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:8px;border:1px solid rgba(236,72,153,0.3);' +
-        'background:rgba(236,72,153,0.1);cursor:' + (canAfford ? 'pointer' : 'not-allowed') + ';' +
-        'opacity:' + (canAfford ? '1' : '0.5') + ';transition:all 0.2s;text-align:left;color:inherit;font-size:inherit;">' +
-        '<i class="fas fa-fire" style="font-size:1.3rem;color:#ec4899;"></i>' +
-        '<div style="flex:1;">' +
-        '<div style="font-weight:600;color:#f472b6;font-size:0.9rem;">Option 1: Psychic Damage</div>' +
-        '<div style="font-size:0.75rem;color:#9ca3af;">Roll 1d10 Psychic damage to target</div>' +
+        // Option 1 — Psychic Damage with -/+ resource selector (matches Crimson Rite / Brutal Critical pattern)
+        '<div class="p-3 bg-pink-50 dark:bg-pink-900/30 rounded-lg border border-pink-200 dark:border-pink-700">' +
+            '<div class="flex items-center gap-2 mb-2">' +
+                '<i class="fas fa-fire text-lg" style="color:#ec4899;"></i>' +
+                '<div class="flex-1">' +
+                    '<div class="text-sm font-semibold" style="color:#f472b6;">Option 1: Psychic Damage</div>' +
+                    '<div class="text-xs text-gray-500 dark:text-gray-400">Each Class resource = 1d10 Psychic damage</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="text-sm font-medium text-pink-700 dark:text-pink-300 mb-2 text-center">Dice to Roll</div>' +
+             '<div class="flex items-center justify-center gap-4">' +
+                 '<button id="stDiceMinus" class="w-8 h-8 bg-pink-200 dark:bg-gray-700 hover:bg-pink-300 dark:hover:bg-gray-600 text-pink-800 dark:text-white rounded-full flex items-center justify-center text-lg font-bold transition-colors">−</button>' +
+                 '<span id="stDiceCount" class="text-2xl font-bold text-pink-500 dark:text-pink-400 w-8 text-center">1</span>' +
+                 '<button id="stDicePlus" class="w-8 h-8 bg-pink-200 dark:bg-gray-700 hover:bg-pink-300 dark:hover:bg-gray-600 text-pink-800 dark:text-white rounded-full flex items-center justify-center text-lg font-bold transition-colors">+</button>' +
+             '</div>' +
+             '<div class="text-xs text-gray-500 dark:text-gray-400 text-center mt-2" id="stCostSummary">' +
+                 '<i class="fas fa-dice-d20 mr-1"></i><span id="stCostDisplay">1</span>d10 Psychic Damage &nbsp;&nbsp; <i class="fas fa-bolt mr-1"></i>Cost: <strong id="stCostValue" style="color:#60a5fa;">1</strong> Class' +
+             '</div>' +
+             '<div class="flex justify-center mt-3">' +
+                 '<button id="stRollBtn" ' + (canAfford ? '' : 'disabled') + ' class="px-5 py-2 rounded-lg font-semibold text-sm transition-all ' +
+                     (canAfford ? 'cursor-pointer opacity-100 hover:opacity-90' : 'cursor-not-allowed opacity-50') + '" ' +
+                     'style="background:rgba(236,72,153,0.2);border:1px solid rgba(236,72,153,0.5);color:#f472b6;">' +
+                     '<i class="fas fa-dice-d20 mr-1"></i>Roll Psychic Damage' +
+                '</button>' +
+              '</div>' +
         '</div>' +
-        '</button>' +
 
         // Option 2
         '<button class="silver-tongue-option-btn" data-option="2" ' + (canAfford ? '' : 'disabled') + ' style="' +
@@ -21973,12 +22003,44 @@ function showSilverTongueModal() {
 
     document.body.appendChild(modal);
 
-    // Option buttons
+    // --- -/+ dice counter logic for Option 1 ---
+     var stDiceCount = 1;
+     var countEl = modal.querySelector('#stDiceCount');
+     var costEl = modal.querySelector('#stCostDisplay');
+     var costValueEl = modal.querySelector('#stCostValue');
+     var rollBtn = modal.querySelector('#stRollBtn');
+     var minusBtn = modal.querySelector('#stDiceMinus');
+     var plusBtn = modal.querySelector('#stDicePlus');
+ 
+     function updateStCounter() {
+         countEl.textContent = stDiceCount;
+         costEl.textContent = stDiceCount;
+         if (costValueEl) costValueEl.textContent = stDiceCount;
+         // Dim minus at 1, plus at classAvailable
+         minusBtn.style.opacity = stDiceCount <= 1 ? '0.35' : '1';
+         plusBtn.style.opacity = stDiceCount >= classAvailable ? '0.35' : '1';
+     }
+ 
+     minusBtn.addEventListener('click', function(e) {
+         e.stopPropagation();
+         if (stDiceCount > 1) { stDiceCount--; updateStCounter(); }
+     });
+     plusBtn.addEventListener('click', function(e) {
+         e.stopPropagation();
+         if (stDiceCount < classAvailable) { stDiceCount++; updateStCounter(); }
+     });
+     updateStCounter();
+ 
+     // Roll button for Option 1
+     rollBtn.addEventListener('click', function() {
+         activateSilverTongueOption1(stDiceCount);
+     });
+ 
+     // Option 2 button
     modal.querySelectorAll('.silver-tongue-option-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
             var option = parseInt(btn.dataset.option);
-            if (option === 1) activateSilverTongueOption1();
-            else if (option === 2) activateSilverTongueOption2();
+        if (option === 2) activateSilverTongueOption2();
         });
     });
 
@@ -22030,7 +22092,7 @@ function closeSilverTongueModal() {
 
     // Build roll display string
     var rollParts = rolls.map(function(r) {
-        return '[<strong style="color:#ec4899;font-size:1.1rem;">' + r + '</strong>]';
+        return '[<strong style="color:#ec4899;font-size:2rem;">' + r + '</strong>]';
     }).join(' + ');
 
     var totalLine = numDice > 1
@@ -22046,7 +22108,7 @@ function closeSilverTongueModal() {
             '<i class="fas fa-fire" style="margin-right:6px;"></i>Psychic Damage!' +
             '</div>' +
             '<div style="font-size:0.95rem;color:#d1d5db;">' +
-            numDice + 'd10: ' + rollParts + ' Psychic damage to target' +
+            numDice + 'd10: ' + rollParts + ' Psychic damage' +
             '</div>' +
             totalLine +
             '</div>';
@@ -22067,6 +22129,7 @@ function closeSilverTongueModal() {
     if (minusBtn) { minusBtn.style.opacity = '0.35'; minusBtn.style.pointerEvents = 'none'; }
     var plusBtn = document.getElementById('stDicePlus');
     if (plusBtn) { plusBtn.style.opacity = '0.35'; plusBtn.style.pointerEvents = 'none'; }
+
 /**
  * Silver Tongue Option 2: Distraction (Disadvantage), spend 1 Class
  */
