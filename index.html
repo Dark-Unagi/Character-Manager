@@ -320,25 +320,25 @@
         }
 
         .ability-ref-description ul {
-             list-style: none;
-             padding-left: 0;
-             margin: 0;
-         }
- 
-         .ability-ref-description li {
-             margin-bottom: 0.25rem;
-         }
- 
-         .ability-ref-description hr {
-             border-color: rgba(156, 163, 175, 0.3);
-             margin: 0.5rem 0;
-         }
- 
-         .ability-ref-description select,
-         .ability-ref-description input,
-         .ability-ref-description .boon-radio {
-             display: none;
-         }
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .ability-ref-description li {
+            margin-bottom: 0.25rem;
+        }
+
+        .ability-ref-description hr {
+            border-color: rgba(156, 163, 175, 0.3);
+            margin: 0.5rem 0;
+        }
+
+        .ability-ref-description select,
+        .ability-ref-description input,
+        .ability-ref-description .boon-radio {
+            display: none;
+        }
 
         .stat-circle {
             cursor: pointer;
@@ -656,6 +656,34 @@
         }
 
         .dark .threshold-damage-button:active {
+            background-color: rgba(220, 38, 38, 0.2);
+        }
+
+        .companion-btn-attack {
+            background: none;
+            border: 2px solid #3b82f6;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .companion-btn-damage {
+            background: none;
+            border: 2px solid rgb(255, 0, 0);
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .companion-btn-attack:hover {
+            background-color: #4582e4;
+        }
+
+        .companion-btn-damage:hover {
             background-color: rgba(220, 38, 38, 0.2);
         }
 
@@ -1627,34 +1655,35 @@
             cursor: pointer;
             transition: all 0.2s ease;
             width: 100%;
-         }
- 
-         .monster-damage-btn:hover {
-             background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-             transform: scale(1.05);
-             box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
-         }
- 
-         .monster-damage-btn:active {
-             transform: scale(0.98);
-         }
- 
-         .monster-damage-btn .monster-stat-label {
-             color: #FCA5A5;
-         }
- 
-         .monster-damage-btn .monster-stat-value {
-             color: #FFFFFF;
-         }
- 
-         .dark .monster-damage-btn .monster-stat-label {
-             color: #FCA5A5;
-         }
- 
-         .dark .monster-damage-btn .monster-stat-value {
-             color: #FFFFFF;         }
+        }
 
-         .monster-attack-btn {
+        .monster-damage-btn:hover {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+        }
+
+        .monster-damage-btn:active {
+            transform: scale(0.98);
+        }
+
+        .monster-damage-btn .monster-stat-label {
+            color: #FCA5A5;
+        }
+
+        .monster-damage-btn .monster-stat-value {
+            color: #FFFFFF;
+        }
+
+        .dark .monster-damage-btn .monster-stat-label {
+            color: #FCA5A5;
+        }
+
+        .dark .monster-damage-btn .monster-stat-value {
+            color: #FFFFFF;
+        }
+
+        .monster-attack-btn {
             background: none;
             border: 2px solid #036feb;
             border-radius: 0.375rem;
@@ -1662,33 +1691,33 @@
             cursor: pointer;
             transition: all 0.2s ease;
             width: 100%;
-          }
- 
-          .monster-attack-btn:hover {
-              background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
-              transform: scale(1.05);
-              box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
-          }
- 
-          .monster-attack-btn:active {
-              transform: scale(0.98);
-          }
- 
-          .monster-attack-btn .monster-stat-label {
-              color: #000000;
-          }
- 
-          .monster-attack-btn .monster-stat-value {
-              color: #FFFFFF;
-          }
- 
-          .dark .monster-attack-btn .monster-stat-label {
-              color: #ffffff;
-          }
- 
-          .dark .monster-attack-btn .monster-stat-value {
-              color: #FFFFFF;
-          }
+        }
+
+        .monster-attack-btn:hover {
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+        }
+
+        .monster-attack-btn:active {
+            transform: scale(0.98);
+        }
+
+        .monster-attack-btn .monster-stat-label {
+            color: #000000;
+        }
+
+        .monster-attack-btn .monster-stat-value {
+            color: #FFFFFF;
+        }
+
+        .dark .monster-attack-btn .monster-stat-label {
+            color: #ffffff;
+        }
+
+        .dark .monster-attack-btn .monster-stat-value {
+            color: #FFFFFF;
+        }
 
         .monster-resources {
             display: flex;
@@ -1839,165 +1868,165 @@
             color: #A7F3D0;
         }
 
-               /* Necromancer Section Styles (Warlock) */
-         .necromancer-section {
-             background-color: #1a1025;
-             border: 1px solid #7e22ce;
-         }
- 
-         .dark .necromancer-section {
-             background-color: #0d0a14;
-             border-color: #581c87;
-         }
- 
-         .necromancer-section h3 {
-             color: #c4b5fd;
-         }
- 
-         .necromancer-section .text-center.text-gray-500 {
-             color: #a78bfa !important;
-         }
- 
-         .dark .necromancer-section .text-center.text-gray-500 {
-             color: #8b5cf6 !important;
-         }
- 
-         .raise-btn {
-             background: linear-gradient(135deg, #7e22ce 0%, #581c87 100%);
-             color: white;
-             padding: 0.5rem 1.25rem;
-             border-radius: 0.375rem;
-             border: none;
-             cursor: pointer;
-             font-weight: 600;
-             transition: all 0.2s ease;
-             display: flex;
-             align-items: center;
-             gap: 0.5rem;
-         }
- 
-         .raise-btn:hover {
-             background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
-             box-shadow: 0 0 12px rgba(147, 51, 234, 0.4);
-         }
- 
-         .raise-btn:disabled {
-             opacity: 0.5;
-             cursor: not-allowed;
-         }
- 
-         .raise-result-banner {
-             background-color: #2e1065;
-             border: 1px solid #7e22ce;
-             border-radius: 0.375rem;
-             padding: 0.5rem;
-             margin-bottom: 0.5rem;
-             text-align: center;
-             font-size: 0.85rem;
-             color: #c4b5fd;
-         }
- 
-         .dark .raise-result-banner {
-             background-color: #1a0a2e;
-             border-color: #581c87;
-             color: #a78bfa;
-         }
- 
-         .undead-card {
-             background-color: #1e1030 !important;
-             border: 1px solid #7e22ce !important;
-         }
- 
-         .dark .undead-card {
-             background-color: #130a20 !important;
-             border-color: #581c87 !important;
-         }
- 
-         .undead-card .monster-name {
-             color: #c4b5fd;
-         }
- 
-         .dark .undead-card .monster-name {
-             color: #a78bfa;
-         }
- 
-         .undead-card .monster-stat-label {
-             color: #a78bfa;
-         }
- 
-         .dark .undead-card .monster-stat-label {
-             color: #8b5cf6;
-         }
- 
-         .undead-card .monster-stat-value {
-             color: #e9d5ff;
-         }
- 
-         .dark .undead-card .monster-stat-value {
-             color: #c4b5fd;
-         }
- 
-         .undead-card .monster-feature {
-             color: #a78bfa;
-             border-color: #581c87;
-         }
- 
-         .dark .undead-card .monster-feature {
-             color: #8b5cf6;
-             border-color: #3b0764;
-         }
- 
-         .undead-card .monster-resources {
-             border-color: #581c87;
-         }
- 
-         .dark .undead-card .monster-resources {
-             border-color: #3b0764;
-         }
- 
-         .undead-card .monster-resource-label {
-             color: #a78bfa;
-         }
- 
-         .dark .undead-card .monster-resource-label {
-             color: #8b5cf6;
-         }
- 
-         .monster-resource-box.class-res {
-             border-color: #f59e0b;
-         }
- 
-         .monster-resource-box.class-res.filled {
-             background-color: #f59e0b;
-         }
- 
-         .undead-extra-die-btn {
-             background: none;
-             border: 2px solid #a16207;
-             border-radius: 0.375rem;
-             padding: 0.5rem;
-             cursor: pointer;
-             transition: all 0.2s ease;
-             width: 100%;
-         }
- 
-         .undead-extra-die-btn:hover {
-             background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-             transform: scale(1.05);
-             box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
-         }
- 
-         .undead-extra-die-btn:active {
-             transform: scale(0.98);
-         }
- 
-         .undead-extra-die-btn.extra-die-active {
-             background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-             border-color: #f59e0b;
-             box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
-         }
+        /* Necromancer Section Styles (Warlock) */
+        .necromancer-section {
+            background-color: #1a1025;
+            border: 1px solid #7e22ce;
+        }
 
-         .horde-card {
+        .dark .necromancer-section {
+            background-color: #0d0a14;
+            border-color: #581c87;
+        }
+
+        .necromancer-section h3 {
+            color: #c4b5fd;
+        }
+
+        .necromancer-section .text-center.text-gray-500 {
+            color: #a78bfa !important;
+        }
+
+        .dark .necromancer-section .text-center.text-gray-500 {
+            color: #8b5cf6 !important;
+        }
+
+        .raise-btn {
+            background: linear-gradient(135deg, #7e22ce 0%, #581c87 100%);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .raise-btn:hover {
+            background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+            box-shadow: 0 0 12px rgba(147, 51, 234, 0.4);
+        }
+
+        .raise-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .raise-result-banner {
+            background-color: #2e1065;
+            border: 1px solid #7e22ce;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #c4b5fd;
+        }
+
+        .dark .raise-result-banner {
+            background-color: #1a0a2e;
+            border-color: #581c87;
+            color: #a78bfa;
+        }
+
+        .undead-card {
+            background-color: #1e1030 !important;
+            border: 1px solid #7e22ce !important;
+        }
+
+        .dark .undead-card {
+            background-color: #130a20 !important;
+            border-color: #581c87 !important;
+        }
+
+        .undead-card .monster-name {
+            color: #c4b5fd;
+        }
+
+        .dark .undead-card .monster-name {
+            color: #a78bfa;
+        }
+
+        .undead-card .monster-stat-label {
+            color: #a78bfa;
+        }
+
+        .dark .undead-card .monster-stat-label {
+            color: #8b5cf6;
+        }
+
+        .undead-card .monster-stat-value {
+            color: #e9d5ff;
+        }
+
+        .dark .undead-card .monster-stat-value {
+            color: #c4b5fd;
+        }
+
+        .undead-card .monster-feature {
+            color: #a78bfa;
+            border-color: #581c87;
+        }
+
+        .dark .undead-card .monster-feature {
+            color: #8b5cf6;
+            border-color: #3b0764;
+        }
+
+        .undead-card .monster-resources {
+            border-color: #581c87;
+        }
+
+        .dark .undead-card .monster-resources {
+            border-color: #3b0764;
+        }
+
+        .undead-card .monster-resource-label {
+            color: #a78bfa;
+        }
+
+        .dark .undead-card .monster-resource-label {
+            color: #8b5cf6;
+        }
+
+        .monster-resource-box.class-res {
+            border-color: #f59e0b;
+        }
+
+        .monster-resource-box.class-res.filled {
+            background-color: #f59e0b;
+        }
+
+        .undead-extra-die-btn {
+            background: none;
+            border: 2px solid #a16207;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .undead-extra-die-btn:hover {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+        }
+
+        .undead-extra-die-btn:active {
+            transform: scale(0.98);
+        }
+
+        .undead-extra-die-btn.extra-die-active {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            border-color: #f59e0b;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+        }
+
+        .horde-card {
             border-width: 2px !important;
             border-color: #a855f7 !important;
             box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
@@ -2017,11 +2046,13 @@
             background: linear-gradient(135deg, #7e22ce, #581c87);
             color: #e9d5ff;
             border-radius: 0.25rem;
-            vertical-align: middle;        }
- 
-         .active-raise-type {
-             background-color: rgba(147, 51, 234, 0.3) !important;
-             border-color: #9333ea !important;         }
+            vertical-align: middle;
+        }
+
+        .active-raise-type {
+            background-color: rgba(147, 51, 234, 0.3) !important;
+            border-color: #9333ea !important;
+        }
 
         /* Spirit Projection Section Styles (Warlock) */
         .spirit-projection-section {
@@ -2281,30 +2312,31 @@
         }
 
         /* Natural Recovery Ability Button (Druid) */
-         .natural-recovery-btn {
-             background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-             color: white;
-             padding: 0.5rem 1rem;
-             border-radius: 0.375rem;
-             border: none;
-             cursor: pointer;
-             font-weight: 500;
-             transition: all 0.2s ease;
-             display: inline-flex;
-             align-items: center;
-             gap: 0.5rem;
-             margin-top: 0.75rem;
-         }
- 
-         .natural-recovery-btn:hover {
-             background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
-             transform: scale(1.02);
-             box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
-         }
- 
-         .natural-recovery-btn:disabled {
-             opacity: 0.5;
-             cursor: not-allowed;         }
+        .natural-recovery-btn {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .natural-recovery-btn:hover {
+            background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+            transform: scale(1.02);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+        }
+
+        .natural-recovery-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
 
         /* Second Wind Ability Button (Fighter) */
         .second-wind-btn {
@@ -2414,434 +2446,1238 @@
         }
 
         /* ==================== BLADE FLOURISH BUTTONS (BARD) ==================== */
-         .blade-flourish-btn {
-             background-color: #D97706;
-             color: white;
-             padding: 0.5rem 1rem;
-             border-radius: 0.375rem;
-             border: none;
-             cursor: pointer;
-             font-weight: 500;
-             transition: background-color 0.2s ease;
-             display: inline-flex;
-             align-items: center;
-             gap: 0.5rem;
-             margin-top: 0.75rem;
-         }
- 
-         .blade-flourish-btn:hover:not(:disabled) {
-             background-color: #B45309;
-         }
- 
-         .blade-flourish-btn:disabled {
-             opacity: 0.5;
-             cursor: not-allowed;
-             background-color: #9CA3AF;
-         }
- 
-         .blade-flourish-result {
-             margin-top: 0.5rem;
-             padding: 0.5rem 0.75rem;
-             background-color: #FEF3C7;
-             border: 1px solid #D97706;
-             border-radius: 0.375rem;
-             font-weight: 500;
-             color: #92400E;
-         }
- 
-         .dark .blade-flourish-result {
-             background-color: #78350F;
-             border-color: #D97706;
-             color: #FDE68A;
-         }
- 
-         .blade-flourish-result.error {
-             background-color: #FEF3C7;
-             border-color: #F59E0B;
-             color: #92400E;
-         }
- 
-         .dark .blade-flourish-result.error {
-             background-color: #78350F;
-             border-color: #F59E0B;
-             color: #FDE68A;
-         }
- 
-         /* ==================== LAY ON HANDS BUTTONS (PALADIN) ==================== */
-         .lay-on-hands-btn {
-             background-color: #10B981;
-             color: white;
-             padding: 0.5rem 1rem;
-             border-radius: 0.375rem;
-             border: none;
-             cursor: pointer;
-             font-weight: 500;
-             transition: background-color 0.2s ease;
-             display: inline-flex;
-             align-items: center;
-             gap: 0.5rem;
-             margin-top: 0.75rem;
-         }
- 
-         .lay-on-hands-btn:hover:not(:disabled) {
-             background-color: #059669;
-         }
- 
-         .lay-on-hands-btn:disabled {
-             opacity: 0.5;
-             cursor: not-allowed;
-             background-color: #9CA3AF;
-         }
- 
-         .lay-on-hands-result {
-             margin-top: 0.5rem;
-             padding: 0.5rem 0.75rem;
-             background-color: #D1FAE5;
-             border: 1px solid #10B981;
-             border-radius: 0.375rem;
-             font-weight: 500;
-             color: #065F46;
-         }
- 
-         .dark .lay-on-hands-result {
-             background-color: #064E3B;
-             border-color: #10B981;
-             color: #A7F3D0;
-         }
- 
-         .lay-on-hands-result.error {
-             background-color: #FEF3C7;
-             border-color: #F59E0B;
-             color: #92400E;
-         }
- 
-         .dark .lay-on-hands-result.error {
-             background-color: #78350F;
-             border-color: #F59E0B;
-             color: #FDE68A;
-         }
- 
-         /* ==================== SNEAK ATTACK BUTTON (ROGUE) ==================== */
-         .sneak-attack-btn {
-             background-color: #6366F1;
-             color: white;
-             padding: 0.5rem 1rem;
-             border-radius: 0.375rem;
-             border: none;
-             cursor: pointer;
-             font-weight: 500;
-             transition: background-color 0.2s ease;
-             display: inline-flex;
-             align-items: center;
-             gap: 0.5rem;
-             margin-top: 0.75rem;
-         }
- 
-         .sneak-attack-btn:hover:not(:disabled) {
-             background-color: #4F46E5;
-         }
- 
-         .sneak-attack-btn:disabled {
-             opacity: 0.5;
-             cursor: not-allowed;
-             background-color: #9CA3AF;
-         }
- 
-         .sneak-attack-result {
-             margin-top: 0.5rem;
-             padding: 0.5rem 0.75rem;
-             background-color: #E0E7FF;
-             border: 1px solid #6366F1;
-             border-radius: 0.375rem;
-             font-weight: 500;
-             color: #3730A3;
-         }
- 
-         .dark .sneak-attack-result {
-             background-color: #312E81;
-             border-color: #6366F1;
-             color: #C7D2FE;
-         }
- 
-         .sneak-attack-result.error {
-             background-color: #FEF3C7;
-             border-color: #F59E0B;
-             color: #92400E;
-         }
- 
-         .dark .sneak-attack-result.error {
-             background-color: #78350F;
-             border-color: #F59E0B;
-             color: #FDE68A;
-         }
- 
-         /* ==================== DIVINE SOUL BUTTON (SORCERER) ==================== */
-         .divine-soul-btn {
-             background-color: #F59E0B;
-             color: white;
-             padding: 0.5rem 1rem;
-             border-radius: 0.375rem;
-             border: none;
-             cursor: pointer;
-             font-weight: 500;
-             transition: background-color 0.2s ease;
-             display: inline-flex;
-             align-items: center;
-             gap: 0.5rem;
-             margin-top: 0.75rem;
-         }
- 
-         .divine-soul-btn:hover:not(:disabled) {
-             background-color: #D97706;
-         }
- 
-         .divine-soul-btn:disabled {
-             opacity: 0.5;
-             cursor: not-allowed;
-             background-color: #9CA3AF;
-         }
- 
-         .divine-soul-result {
-             margin-top: 0.5rem;
-             padding: 0.5rem 0.75rem;
-             background-color: #FEF3C7;
-             border: 1px solid #F59E0B;
-             border-radius: 0.375rem;
-             font-weight: 500;
-             color: #92400E;
-         }
- 
-         .dark .divine-soul-result {
-             background-color: #78350F;
-             border-color: #F59E0B;
-             color: #FDE68A;
-         }
- 
-         .divine-soul-result.error {
-             background-color: #FEF3C7;
-             border-color: #F59E0B;
-             color: #92400E;
-         }
- 
-         .dark .divine-soul-result.error {
-             background-color: #78350F;
-             border-color: #F59E0B;
-             color: #FDE68A;
-         }
- 
-         /* ==================== UNEARTHLY RECOVERY BUTTON (SORCERER) ==================== */
-         .unearthly-recovery-btn {
-             background-color: #14B8A6;
-             color: white;
-             padding: 0.5rem 1rem;
-             border-radius: 0.375rem;
-             border: none;
-             cursor: pointer;
-             font-weight: 500;
-             transition: background-color 0.2s ease;
-             display: inline-flex;
-             align-items: center;
-             gap: 0.5rem;
-             margin-top: 0.75rem;
-         }
- 
-         .unearthly-recovery-btn:hover:not(:disabled) {
-             background-color: #0D9488;
-         }
- 
-         .unearthly-recovery-btn:disabled {
-             opacity: 0.5;
-             cursor: not-allowed;
-             background-color: #9CA3AF;
-         }
- 
-         .unearthly-recovery-result {
-             margin-top: 0.5rem;
-             padding: 0.5rem 0.75rem;
-             background-color: #CCFBF1;
-             border: 1px solid #14B8A6;
-             border-radius: 0.375rem;
-             font-weight: 500;
-             color: #115E59;
-         }
- 
-         .dark .unearthly-recovery-result {
-             background-color: #134E4A;
-             border-color: #14B8A6;
-             color: #99F6E4;
-         }
- 
-         .unearthly-recovery-result.error {
-             background-color: #FEF3C7;
-             border-color: #F59E0B;
-             color: #92400E;
-         }
- 
-         .dark .unearthly-recovery-result.error {
-             background-color: #78350F;
-             border-color: #F59E0B;
-             color: #FDE68A;
-         }
- 
-         /* ==================== AWAKENED MIND BUTTON (WIZARD) ==================== */
-         .awakened-mind-btn {
-             background-color: #8B5CF6;
-             color: white;
-             padding: 0.5rem 1rem;
-             border-radius: 0.375rem;
-             border: none;
-             cursor: pointer;
-             font-weight: 500;
-             transition: background-color 0.2s ease;
-             display: inline-flex;
-             align-items: center;
-             gap: 0.5rem;
-             margin-top: 0.75rem;
-         }
- 
-         .awakened-mind-btn:hover:not(:disabled) {
-             background-color: #7C3AED;
-         }
- 
-         .awakened-mind-btn:disabled {
-             opacity: 0.5;
-             cursor: not-allowed;
-             background-color: #9CA3AF;
-         }
- 
-         .awakened-mind-result {
-             margin-top: 0.5rem;
-             padding: 0.5rem 0.75rem;
-             background-color: #EDE9FE;
-             border: 1px solid #8B5CF6;
-             border-radius: 0.375rem;
-             font-weight: 500;
-             color: #5B21B6;
-         }
- 
-         .dark .awakened-mind-result {
-             background-color: #4C1D95;
-             border-color: #8B5CF6;
-             color: #DDD6FE;
-         }
- 
-         .awakened-mind-result.error {
-             background-color: #FEF3C7;
-             border-color: #F59E0B;
-             color: #92400E;
-         }
- 
-         .dark .awakened-mind-result.error {
-             background-color: #78350F;
-             border-color: #F59E0B;
-             color: #FDE68A;
-         }
- 
-         /* ==================== KNOWLEDGE IS POWER BUTTON (WIZARD) ==================== */
-         .knowledge-power-btn {
-             background-color: #4F46E5;
-             color: white;
-             padding: 0.5rem 1rem;
-             border-radius: 0.375rem;
-             border: none;
-             cursor: pointer;
-             font-weight: 500;
-             transition: background-color 0.2s ease;
-             display: inline-flex;
-             align-items: center;
-             gap: 0.5rem;
-             margin-top: 0.75rem;
-         }
- 
-         .knowledge-power-btn:hover:not(:disabled) {
-             background-color: #4338CA;
-         }
- 
-         .knowledge-power-btn:disabled {
-             opacity: 0.5;
-             cursor: not-allowed;
-             background-color: #9CA3AF;
-         }
- 
-         .knowledge-power-result {
-             margin-top: 0.5rem;
-             padding: 0.5rem 0.75rem;
-             background-color: #E0E7FF;
-             border: 1px solid #4F46E5;
-             border-radius: 0.375rem;
-             font-weight: 500;
-             color: #3730A3;
-         }
- 
-         .dark .knowledge-power-result {
-             background-color: #312E81;
-             border-color: #4F46E5;
-             color: #C7D2FE;
-         }
- 
-         .knowledge-power-result.error {
-             background-color: #FEF3C7;
-             border-color: #F59E0B;
-             color: #92400E;
-         }
- 
-         .dark .knowledge-power-result.error {
-             background-color: #78350F;
-             border-color: #F59E0B;
-             color: #FDE68A;
-         }
+        .blade-flourish-btn,
+        .blade-flourish-open-btn {
+            background-color: #D97706;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
 
-       /* ==================== RAGE TOGGLE BUTTON (BARBARIAN) ==================== */
-         .rage-toggle-btn {
-             background-color: gray;
-             color: white;
-             padding: 0.5rem 1.25rem;
-             border-radius: 0.375rem;
-             border: 2px solid #B91C1C;
-             cursor: pointer;
-             font-weight: 600;
-             font-size: 0.875rem;
-             transition: all 0.2s ease;
-             display: inline-flex;
-             align-items: center;
-             gap: 0.5rem;
-             width: 100%;
-             justify-content: center;
-         }
+        .blade-flourish-btn:hover:not(:disabled),
+        .blade-flourish-open-btn:hover:not(:disabled) {
+            background-color: #B45309;
+        }
 
-         .rage-toggle-btn:hover {
-             background-color: #B91C1C;
-             box-shadow: 0 0 8px rgba(220, 38, 38, 0.4);
-         }
+        .blade-flourish-btn:disabled,
+        .blade-flourish-open-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #9CA3AF;
+        }
 
-         .rage-toggle-btn.rage-active {
-             background-color: #991B1B;
-             border-color: #F87171;
-             box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
-             animation: rage-pulse 1.5s ease-in-out infinite;
-         }
+        .blade-flourish-result {
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background-color: #FEF3C7;
+            border: 1px solid #D97706;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            color: #92400E;
+        }
 
-         .rage-toggle-btn.rage-active:hover {
-             background-color: #7F1D1D;
-         }
+        .dark .blade-flourish-result {
+            background-color: #78350F;
+            border-color: #D97706;
+            color: #FDE68A;
+        }
 
-         @keyframes rage-pulse {
-             0%, 100% { box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); }
-             50% { box-shadow: 0 0 16px rgba(239, 68, 68, 0.7); }
-         }
+        .blade-flourish-result.error {
+            background-color: #FEF3C7;
+            border-color: #F59E0B;
+            color: #92400E;
+        }
 
-         .dark .rage-toggle-btn {
-             background-color: gray;
-             border-color: #EF4444;
-         }
+        .dark .blade-flourish-result.error {
+            background-color: #78350F;
+            border-color: #F59E0B;
+            color: #FDE68A;
+        }
 
-         .dark .rage-toggle-btn:hover {
-             background-color: #B91C1C;
-         }
+        /* ==================== LAY ON HANDS BUTTONS (PALADIN) ==================== */
+        .lay-on-hands-btn {
+            background-color: #10B981;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
 
-         .dark .rage-toggle-btn.rage-active {
-             background-color: #7F1D1D;
-             border-color: #F87171;         
+        .lay-on-hands-btn:hover:not(:disabled) {
+            background-color: #059669;
+        }
+
+        .lay-on-hands-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #9CA3AF;
+        }
+
+        .lay-on-hands-result {
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background-color: #D1FAE5;
+            border: 1px solid #10B981;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            color: #065F46;
+        }
+
+        .dark .lay-on-hands-result {
+            background-color: #064E3B;
+            border-color: #10B981;
+            color: #A7F3D0;
+        }
+
+        .lay-on-hands-result.error {
+            background-color: #FEF3C7;
+            border-color: #F59E0B;
+            color: #92400E;
+        }
+
+        .dark .lay-on-hands-result.error {
+            background-color: #78350F;
+            border-color: #F59E0B;
+            color: #FDE68A;
+        }
+
+        /* ==================== SNEAK ATTACK BUTTON (ROGUE) ==================== */
+        .sneak-attack-btn {
+            background-color: #6366F1;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .sneak-attack-btn:hover:not(:disabled) {
+            background-color: #4F46E5;
+        }
+
+        .sneak-attack-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #9CA3AF;
+        }
+
+        .sneak-attack-result {
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background-color: #E0E7FF;
+            border: 1px solid #6366F1;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            color: #3730A3;
+        }
+
+        .dark .sneak-attack-result {
+            background-color: #312E81;
+            border-color: #6366F1;
+            color: #C7D2FE;
+        }
+
+        .sneak-attack-result.error {
+            background-color: #FEF3C7;
+            border-color: #F59E0B;
+            color: #92400E;
+        }
+
+        .dark .sneak-attack-result.error {
+            background-color: #78350F;
+            border-color: #F59E0B;
+            color: #FDE68A;
+        }
+
+        /* ==================== DIVINE SOUL BUTTON (SORCERER) ==================== */
+        .divine-soul-btn {
+            background-color: #F59E0B;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .divine-soul-btn:hover:not(:disabled) {
+            background-color: #D97706;
+        }
+
+        .divine-soul-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #9CA3AF;
+        }
+
+        .divine-soul-result {
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background-color: #FEF3C7;
+            border: 1px solid #F59E0B;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            color: #92400E;
+        }
+
+        .dark .divine-soul-result {
+            background-color: #78350F;
+            border-color: #F59E0B;
+            color: #FDE68A;
+        }
+
+        .divine-soul-result.error {
+            background-color: #FEF3C7;
+            border-color: #F59E0B;
+            color: #92400E;
+        }
+
+        .dark .divine-soul-result.error {
+            background-color: #78350F;
+            border-color: #F59E0B;
+            color: #FDE68A;
+        }
+
+        /* ==================== UNEARTHLY RECOVERY BUTTON (SORCERER) ==================== */
+        .unearthly-recovery-btn {
+            background-color: #14B8A6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .unearthly-recovery-btn:hover:not(:disabled) {
+            background-color: #0D9488;
+        }
+
+        .unearthly-recovery-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #9CA3AF;
+        }
+
+        .unearthly-recovery-result {
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background-color: #CCFBF1;
+            border: 1px solid #14B8A6;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            color: #115E59;
+        }
+
+        .dark .unearthly-recovery-result {
+            background-color: #134E4A;
+            border-color: #14B8A6;
+            color: #99F6E4;
+        }
+
+        .unearthly-recovery-result.error {
+            background-color: #FEF3C7;
+            border-color: #F59E0B;
+            color: #92400E;
+        }
+
+        .dark .unearthly-recovery-result.error {
+            background-color: #78350F;
+            border-color: #F59E0B;
+            color: #FDE68A;
+        }
+
+        /* ==================== AWAKENED MIND BUTTON (WIZARD) ==================== */
+        .awakened-mind-btn {
+            background-color: #8B5CF6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .awakened-mind-btn:hover:not(:disabled) {
+            background-color: #7C3AED;
+        }
+
+        .awakened-mind-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #9CA3AF;
+        }
+
+        .awakened-mind-result {
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background-color: #EDE9FE;
+            border: 1px solid #8B5CF6;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            color: #5B21B6;
+        }
+
+        .dark .awakened-mind-result {
+            background-color: #4C1D95;
+            border-color: #8B5CF6;
+            color: #DDD6FE;
+        }
+
+        .awakened-mind-result.error {
+            background-color: #FEF3C7;
+            border-color: #F59E0B;
+            color: #92400E;
+        }
+
+        .dark .awakened-mind-result.error {
+            background-color: #78350F;
+            border-color: #F59E0B;
+            color: #FDE68A;
+        }
+
+        /* ==================== KNOWLEDGE IS POWER BUTTON (WIZARD) ==================== */
+        .knowledge-power-btn {
+            background-color: #4F46E5;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .knowledge-power-btn:hover:not(:disabled) {
+            background-color: #4338CA;
+        }
+
+        .knowledge-power-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #9CA3AF;
+        }
+
+        .knowledge-power-result {
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background-color: #E0E7FF;
+            border: 1px solid #4F46E5;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            color: #3730A3;
+        }
+
+        .dark .knowledge-power-result {
+            background-color: #312E81;
+            border-color: #4F46E5;
+            color: #C7D2FE;
+        }
+
+        .knowledge-power-result.error {
+            background-color: #FEF3C7;
+            border-color: #F59E0B;
+            color: #92400E;
+        }
+
+        .dark .knowledge-power-result.error {
+            background-color: #78350F;
+            border-color: #F59E0B;
+            color: #FDE68A;
+        }
+
+        /* ==================== BRUTAL CRITICAL BUTTON (BARBARIAN) ==================== */
+        .brutal-critical-btn {
+            background-color: #D97706;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: 2px solid #F59E0B;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .brutal-critical-btn:hover {
+            background-color: #B45309;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+        }
+
+        .dark .brutal-critical-btn {
+            background-color: #92400E;
+            border-color: #F59E0B;
+        }
+
+        .dark .brutal-critical-btn:hover {
+            background-color: #B45309;
+        }
+
+        /* ==================== SPIRIT TOTEM BUTTON (DRUID) ==================== */
+        .spirit-totem-btn {
+            background-color: #059669;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 0.375rem;
+            border: 2px solid #047857;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 6px;
+        }
+
+        .spirit-totem-btn:hover {
+            background-color: #047857;
+            transform: translateY(-1px);
+        }
+
+        .dark .spirit-totem-btn {
+            background-color: #065F46;
+            border-color: #059669;
+        }
+
+        .dark .spirit-totem-btn:hover {
+            background-color: #047857;
+        }
+
+        /* ==================== SMITE BUTTON (PALADIN) ==================== */
+        .smite-btn {
+            background-color: #CA8A04;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 0.375rem;
+            border: 2px solid #A16207;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 6px;
+        }
+
+        .smite-btn:hover {
+            background-color: #A16207;
+            transform: translateY(-1px);
+        }
+
+        .smite-active {
+            background-color: #EAB308 !important;
+            border-color: #CA8A04 !important;
+            animation: smitePulse 2s infinite;
+        }
+
+        @keyframes smitePulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(234, 179, 8, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 15px rgba(234, 179, 8, 0.7);
+            }
+        }
+
+        .dark .smite-btn {
+            background-color: #854D0E;
+            border-color: #CA8A04;
+        }
+
+        .dark .smite-btn:hover {
+            background-color: #A16207;
+        }
+
+        /* ==================== RADIANT SOUL MODAL BUTTON (DRUID) ==================== */
+        .radiant-soul-modal-btn {
+            background-color: #D97706;
+            color: white;
+            padding: 0.35rem 0.85rem;
+            border-radius: 0.375rem;
+            border: 2px solid #B45309;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .radiant-soul-modal-btn:hover:not(:disabled) {
+            background-color: #B45309;
+            transform: translateY(-1px);
+        }
+
+        .dark .radiant-soul-modal-btn {
+            background-color: #92400E;
+            border-color: #D97706;
+        }
+
+        .dark .radiant-soul-modal-btn:hover:not(:disabled) {
+            background-color: #B45309;
+        }
+
+        /* ==================== SILVER TONGUE BUTTON (BARD) ==================== */
+        .silver-tongue-btn {
+            background-color: #DB2777;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 0.375rem;
+            border: 2px solid #BE185D;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 6px;
+        }
+
+        .silver-tongue-btn:hover {
+            background-color: #BE185D;
+            transform: translateY(-1px);
+        }
+
+        .dark .silver-tongue-btn {
+            background-color: #9D174D;
+            border-color: #DB2777;
+        }
+
+        .dark .silver-tongue-btn:hover {
+            background-color: #BE185D;
+        }
+
+        /* ==================== KNOW THY ENEMY BUTTON (FIGHTER) ==================== */
+        .know-thy-enemy-btn {
+            background-color: #2563EB;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 0.375rem;
+            border: 2px solid #1D4ED8;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 6px;
+        }
+
+        .know-thy-enemy-btn:hover {
+            background-color: #1D4ED8;
+            transform: translateY(-1px);
+        }
+
+        .dark .know-thy-enemy-btn {
+            background-color: #1E40AF;
+            border-color: #2563EB;
+        }
+
+        .dark .know-thy-enemy-btn:hover {
+            background-color: #1D4ED8;
+        }
+
+        /* ==================== SPIRIT SHIELD BUTTON (WARLOCK) ==================== */
+        .spirit-shield-btn {
+            background-color: #4F46E5;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 0.375rem;
+            border: 2px solid #4338CA;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 6px;
+        }
+
+        .spirit-shield-btn:hover {
+            background-color: #4338CA;
+            transform: translateY(-1px);
+        }
+
+        .dark .spirit-shield-btn {
+            background-color: #3730A3;
+            border-color: #4F46E5;
+        }
+
+        .dark .spirit-shield-btn:hover {
+            background-color: #4338CA;
+        }
+
+        /* ==================== SPELL MASTERY CONFIRM BUTTON (WIZARD) ==================== */
+        .spell-mastery-confirm-btn {
+            background: linear-gradient(135deg, #0D9488, #0891B2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: 2px solid #0F766E;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .spell-mastery-confirm-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #0F766E, #0E7490);
+            transform: translateY(-1px);
+            box-shadow: 0 0 10px rgba(13, 148, 136, 0.4);
+        }
+
+        .spell-mastery-confirm-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .dark .spell-mastery-confirm-btn {
+            background: linear-gradient(135deg, #115E59, #155E75);
+            border-color: #0D9488;
+        }
+
+        .dark .spell-mastery-confirm-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #0D9488, #0891B2);
+            box-shadow: 0 0 10px rgba(13, 148, 136, 0.5);
+        }
+
+        /* ==================== SUPERNATURAL DEFENSE BUTTON (RANGER) ==================== */
+        .supernatural-defense-btn {
+            background: linear-gradient(135deg, #059669, #10B981);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 0.375rem;
+            border: 2px solid #047857;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 6px;
+        }
+
+        .supernatural-defense-btn:hover {
+            background: linear-gradient(135deg, #047857, #059669);
+            transform: translateY(-1px);
+            box-shadow: 0 0 10px rgba(5, 150, 105, 0.4);
+        }
+
+        .dark .supernatural-defense-btn {
+            background: linear-gradient(135deg, #065F46, #047857);
+            border-color: #059669;
+        }
+
+        .dark .supernatural-defense-btn:hover {
+            background: linear-gradient(135deg, #047857, #059669);
+            box-shadow: 0 0 10px rgba(5, 150, 105, 0.5);
+        }
+
+        /* ==================== PERFECT SELF BUTTON (MONK) ==================== */
+        .perfect-self-btn {
+            background: linear-gradient(135deg, #0891B2, #06B6D4);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 0.375rem;
+            border: 2px solid #0E7490;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 6px;
+        }
+
+        .perfect-self-btn:hover {
+            background: linear-gradient(135deg, #0E7490, #0891B2);
+            transform: translateY(-1px);
+            box-shadow: 0 0 10px rgba(8, 145, 178, 0.4);
+        }
+
+        .dark .perfect-self-btn {
+            background: linear-gradient(135deg, #155E75, #0E7490);
+            border-color: #0891B2;
+        }
+
+        .dark .perfect-self-btn:hover {
+            background: linear-gradient(135deg, #0E7490, #0891B2);
+            box-shadow: 0 0 10px rgba(8, 145, 178, 0.5);
+        }
+
+        /* ==================== FLURRY OF BLOWS MODAL BUTTON (MONK) ==================== */
+        .flurry-of-blows-modal-btn {
+            background: linear-gradient(135deg, #0891B2, #22D3EE);
+            color: white;
+            padding: 0.35rem 0.85rem;
+            border-radius: 0.375rem;
+            border: 2px solid #0E7490;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.78rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .flurry-of-blows-modal-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #0E7490, #0891B2);
+            transform: translateY(-1px);
+            box-shadow: 0 0 8px rgba(8, 145, 178, 0.4);
+        }
+
+        .flurry-of-blows-modal-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .dark .flurry-of-blows-modal-btn {
+            background: linear-gradient(135deg, #155E75, #0E7490);
+            border-color: #0891B2;
+        }
+
+        .dark .flurry-of-blows-modal-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #0E7490, #0891B2);
+            box-shadow: 0 0 8px rgba(8, 145, 178, 0.5);
+        }
+
+        /* ==================== STILLNESS OF MIND BUTTON (MONK) ==================== */
+        .stillness-mind-btn {
+            background: linear-gradient(135deg, #0D9488, #14B8A6);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 0.375rem;
+            border: 2px solid #0F766E;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 6px;
+        }
+
+        .stillness-mind-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #0F766E, #0D9488);
+            transform: translateY(-1px);
+            box-shadow: 0 0 10px rgba(13, 148, 136, 0.4);
+        }
+
+        .stillness-mind-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .dark .stillness-mind-btn {
+            background: linear-gradient(135deg, #115E59, #0F766E);
+            border-color: #0D9488;
+        }
+
+        .dark .stillness-mind-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #0F766E, #0D9488);
+            box-shadow: 0 0 10px rgba(13, 148, 136, 0.5);
+        }
+
+        /* ==================== CREATE POISON BUTTON (ROGUE) ==================== */
+        .create-poison-btn {
+            background: linear-gradient(135deg, #16A34A, #22C55E);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 0.375rem;
+            border: 2px solid #15803D;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 6px;
+        }
+
+        .create-poison-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #15803D, #16A34A);
+            transform: translateY(-1px);
+            box-shadow: 0 0 10px rgba(22, 163, 74, 0.4);
+        }
+
+        .create-poison-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .dark .create-poison-btn {
+            background: linear-gradient(135deg, #14532D, #166534);
+            border-color: #16A34A;
+        }
+
+        .dark .create-poison-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #166534, #16A34A);
+            box-shadow: 0 0 10px rgba(22, 163, 74, 0.5);
+        }
+
+        /* ==================== MAKER OF FATE BUTTON (ROGUE) ==================== */
+        .maker-of-fate-btn {
+            background: linear-gradient(135deg, #7C3AED, #A78BFA);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 0.375rem;
+            border: 2px solid #6D28D9;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 6px;
+        }
+
+        .maker-of-fate-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #6D28D9, #7C3AED);
+            transform: translateY(-1px);
+            box-shadow: 0 0 10px rgba(124, 58, 237, 0.4);
+        }
+
+        .maker-of-fate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .dark .maker-of-fate-btn {
+            background: linear-gradient(135deg, #4C1D95, #5B21B6);
+            border-color: #7C3AED;
+        }
+
+        .dark .maker-of-fate-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #5B21B6, #7C3AED);
+            box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        /* ==================== RAGE TOGGLE BUTTON (BARBARIAN) ==================== */
+        .rage-toggle-btn {
+            background-color: gray;
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.375rem;
+            border: 2px solid #B91C1C;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .rage-toggle-btn:hover {
+            background-color: #B91C1C;
+            box-shadow: 0 0 8px rgba(220, 38, 38, 0.4);
+        }
+
+        .rage-toggle-btn.rage-active {
+            background-color: #991B1B;
+            border-color: #F87171;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+            animation: rage-pulse 1.5s ease-in-out infinite;
+        }
+
+        .rage-toggle-btn.rage-active:hover {
+            background-color: #7F1D1D;
+        }
+
+        @keyframes rage-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 16px rgba(239, 68, 68, 0.7);
+            }
+        }
+
+        .dark .rage-toggle-btn {
+            background-color: gray;
+            border-color: #EF4444;
+        }
+
+        .dark .rage-toggle-btn:hover {
+            background-color: #B91C1C;
+        }
+
+        .dark .rage-toggle-btn.rage-active {
+            background-color: #7F1D1D;
+            border-color: #F87171;
+        }
+
+        /* ==================== CRIMSON RITE BUTTON (UNIVERSAL) ==================== */
+        .crimson-rite-btn {
+            background-color: #9F1239;
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.375rem;
+            border: 2px solid #B91C1C;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .crimson-rite-btn:hover {
+            background-color: #881337;
+            box-shadow: 0 0 10px rgba(251, 113, 133, 0.4);
+        }
+
+        .crimson-rite-btn.crimson-rite-active {
+            background-color: #7F1D1D;
+            border-color: #FCA5A5;
+            animation: crimsonPulse 2s ease-in-out infinite;
+        }
+
+        .crimson-rite-btn.crimson-rite-active:hover {
+            background-color: #6B0F1A;
+        }
+
+        @keyframes crimsonPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(251, 113, 133, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 15px rgba(251, 113, 133, 0.7), 0 0 25px rgba(251, 113, 133, 0.3);
+            }
+        }
+
+        .dark .crimson-rite-btn {
+            background-color: #881337;
+            border-color: #FB7185;
+        }
+
+        .dark .crimson-rite-btn:hover {
+            background-color: #9F1239;
+        }
+
+        .dark .crimson-rite-btn.crimson-rite-active {
+            background-color: #7F1D1D;
+            border-color: #FCA5A5;
+        }
+
+        /* ==================== GUIDED STRIKE TOGGLE BUTTON (CLERIC) ==================== */
+        .guided-strike-toggle-btn {
+            background-color: gray;
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.375rem;
+            border: 2px solid #B45309;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .guided-strike-toggle-btn:hover:not(:disabled) {
+            background-color: #B45309;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+        }
+
+        .guided-strike-toggle-btn.guided-strike-active {
+            background-color: #92400E;
+            border-color: #FBBF24;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+            animation: guided-strike-pulse 1.5s ease-in-out infinite;
+        }
+
+        .guided-strike-toggle-btn.guided-strike-active:hover {
+            background-color: #78350F;
+        }
+
+        .guided-strike-toggle-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #4B5563;
+            border-color: #6B7280;
+        }
+
+        @keyframes guided-strike-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 16px rgba(245, 158, 11, 0.7);
+            }
+        }
+
+        .dark .guided-strike-toggle-btn {
+            background-color: gray;
+            border-color: #F59E0B;
+        }
+
+        .dark .guided-strike-toggle-btn:hover:not(:disabled) {
+            background-color: #B45309;
+        }
+
+        .dark .guided-strike-toggle-btn.guided-strike-active {
+            background-color: #78350F;
+            border-color: #FBBF24;
+        }
+
+        .dark .guided-strike-toggle-btn:disabled {
+            opacity: 0.5;
+            background-color: #374151;
+            border-color: #4B5563;
+        }
+
+        /* ==================== ACTIONS BUTTON & MODAL ==================== */
+        .actions-toggle-btn {
+            background: linear-gradient(135deg, #4F46E5, #6366F1);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.375rem;
+            border: 2px solid #4338CA;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .actions-toggle-btn:hover {
+            background: linear-gradient(135deg, #4338CA, #4F46E5);
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+        }
+
+        .dark .actions-toggle-btn {
+            background: linear-gradient(135deg, #3730A3, #4F46E5);
+            border-color: #818CF8;
+        }
+
+        .dark .actions-toggle-btn:hover {
+            background: linear-gradient(135deg, #312E81, #4338CA);
+            box-shadow: 0 0 10px rgba(129, 140, 248, 0.4);
+        }
+
+        /* Actions Modal Row */
+        .actions-modal-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            background: #F9FAFB;
+            position: relative;
+            flex-wrap: wrap;
+        }
+
+        .dark .actions-modal-row {
+            border-color: #4B5563;
+            background: #374151;
+        }
+
+        .actions-name-label {
+            flex-shrink: 0;
+        }
+
+        .actions-name-text {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #4F46E5;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 3px;
+            transition: color 0.15s;
+        }
+
+        .actions-name-text:hover {
+            color: #4338CA;
+        }
+
+        .dark .actions-name-text {
+            color: #A5B4FC;
+        }
+
+        .dark .actions-name-text:hover {
+            color: #C7D2FE;
+        }
+
+        .actions-buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .actions-buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+        }
+
+        /* Force ALL buttons inside the Actions modal to be full & uniform width */
+        .actions-buttons-container button {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Override inline flex wrappers from Blade Flourish / Lay on Hands */
+        .actions-buttons-container .blade-flourish-buttons,
+        .actions-buttons-container .lay-on-hands-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+        }
+
+        .actions-buttons-container .blade-flourish-buttons button,
+        .actions-buttons-container .lay-on-hands-buttons button {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Tooltip popup for ability description */
+        .action-tooltip-popup {
+            width: 100%;
+            margin-top: 8px;
+            padding: 10px;
+            background: #EEF2FF;
+            border: 1px solid #C7D2FE;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #1E1B4B;
+            position: relative;
+        }
+
+        .dark .action-tooltip-popup {
+            background: #1E1B4B;
+            border-color: #4338CA;
+            color: #E0E7FF;
+        }
+
+        .action-tooltip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+        }
+
+        .action-tooltip-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6B7280;
+            font-size: 0.75rem;
+            padding: 2px 4px;
+        }
+
+        .action-tooltip-close:hover {
+            color: #EF4444;
+        }
+
+        .action-tooltip-body ul {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+
+        .action-tooltip-body li {
+            margin-bottom: 2px;
+        }
+
+        .action-tooltip-body hr {
+            margin: 4px 0;
+            border-color: #C7D2FE;
+        }
+
+        .dark .action-tooltip-body hr {
+            border-color: #4338CA;
         }
 
         /* Tokens of the Departed Circles (Warlock) */
@@ -2963,6 +3799,177 @@
 
         .dark .signature-spell-select option:disabled {
             color: #6B7280;
+        }
+
+        /* ===== TORCH, LANTERN & CANDLE TIMER BUTTONS ===== */
+        .light-timer-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+
+        .light-timer-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            /*padding: 8px 10px;*/
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            position: relative;
+            /*min-height: 56px;*/
+        }
+
+        /* Torch button */
+        .light-timer-btn.torch-btn {
+            background: rgba(234, 88, 12, 0.08);
+            border-color: rgba(234, 88, 12, 0.3);
+            color: #ea580c;
+        }
+
+        .dark .light-timer-btn.torch-btn {
+            background: rgba(251, 146, 60, 0.1);
+            border-color: rgba(251, 146, 60, 0.3);
+            color: #fb923c;
+        }
+
+        .light-timer-btn.torch-btn:hover {
+            background: rgba(234, 88, 12, 0.15);
+            border-color: rgba(234, 88, 12, 0.5);
+        }
+
+        .light-timer-btn.torch-btn.active {
+            background: rgba(234, 88, 12, 0.18);
+            border-color: #ea580c;
+            box-shadow: 0 0 10px rgba(234, 88, 12, 0.25);
+        }
+
+        .dark .light-timer-btn.torch-btn.active {
+            background: rgba(251, 146, 60, 0.18);
+            border-color: #fb923c;
+            box-shadow: 0 0 10px rgba(251, 146, 60, 0.25);
+        }
+
+        /* Lantern button */
+        .light-timer-btn.lantern-btn {
+            background: rgba(202, 138, 4, 0.08);
+            border-color: rgba(202, 138, 4, 0.3);
+            color: #ca8a04;
+        }
+
+        .dark .light-timer-btn.lantern-btn {
+            background: rgba(250, 204, 21, 0.1);
+            border-color: rgba(250, 204, 21, 0.3);
+            color: #facc15;
+        }
+
+        .light-timer-btn.lantern-btn:hover {
+            background: rgba(202, 138, 4, 0.15);
+            border-color: rgba(202, 138, 4, 0.5);
+        }
+
+        .light-timer-btn.lantern-btn.active {
+            background: rgba(202, 138, 4, 0.18);
+            border-color: #ca8a04;
+            box-shadow: 0 0 10px rgba(202, 138, 4, 0.25);
+        }
+
+        .dark .light-timer-btn.lantern-btn.active {
+            background: rgba(250, 204, 21, 0.18);
+            border-color: #facc15;
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.25);
+        }
+
+        .light-timer-btn .timer-label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+        }
+
+        /* Candle button */
+        .light-timer-btn.candle-btn {
+            background: rgba(190, 18, 60, 0.08);
+            border-color: rgba(190, 18, 60, 0.3);
+            color: #be123c;
+        }
+
+        .dark .light-timer-btn.candle-btn {
+            background: rgba(251, 113, 133, 0.1);
+            border-color: rgba(251, 113, 133, 0.3);
+            color: #fb7185;
+        }
+
+        .light-timer-btn.candle-btn:hover {
+            background: rgba(190, 18, 60, 0.15);
+            border-color: rgba(190, 18, 60, 0.5);
+        }
+
+        .light-timer-btn.candle-btn.active {
+            background: rgba(190, 18, 60, 0.18);
+            border-color: #be123c;
+            box-shadow: 0 0 10px rgba(190, 18, 60, 0.25);
+        }
+
+        .dark .light-timer-btn.candle-btn.active {
+            background: rgba(251, 113, 133, 0.18);
+            border-color: #fb7185;
+            box-shadow: 0 0 10px rgba(251, 113, 133, 0.25);
+        }
+
+        /* Greyed-out state when equipment item is missing */
+        .light-timer-btn.light-unavailable {
+            opacity: 0.35;
+            filter: grayscale(0.6);
+        }
+
+        .light-timer-btn .timer-display {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            opacity: 0.85;
+            color: black;
+        }
+
+        .dark .light-timer-btn .timer-display {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            opacity: 0.85;
+            color: white;
+        }
+
+        .light-timer-btn.active .timer-display {
+            opacity: 1;
+        }
+
+        .light-timer-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Flickering glow animation for active timers */
+        @keyframes timerFlicker {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .light-timer-btn.active .timer-icon {
+            animation: timerFlicker 1.5s ease-in-out infinite;
         }
     </style>
 
@@ -3863,7 +4870,9 @@
                     </button>
                     <div class="flex-1">
                         <div class="flex items-center">
-                            <button id="sheetCharName" class="text-2xl font-bold mr-3 bg-transparent border-none p-0 text-left cursor-pointer hover:text-primary dark:hover:text-primary transition-colors" title="View Abilities Reference" style="font-family: inherit; color: inherit;"></button>
+                            <button id="sheetCharName"
+                                class="text-2xl font-bold mr-3 bg-transparent border-none p-0 text-left cursor-pointer hover:text-primary dark:hover:text-primary transition-colors"
+                                title="View Abilities Reference" style="font-family: inherit; color: inherit;"></button>
                             <button id="editCharacterBtn"
                                 class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors"
                                 title="Edit Character">
@@ -3970,53 +4979,82 @@
                                 </div>
 
                                 <!-- Rage Toggle (Barbarian) -->
-                                 <div id="rageToggleSection" class="mt-2 mb-2 text-center" style="display: none;">
-                                     <button id="rageToggleBtn" class="rage-toggle-btn">
-                                         <i class="fas fa-fire"></i> Rage
-                                     </button>  
+                                <div id="rageToggleSection" class="mt-2 mb-2 text-center" style="display: none;">
+                                    <button id="rageToggleBtn" class="rage-toggle-btn">
+                                        <i class="fas fa-fire"></i> Rage
+                                    </button>
+                                </div>
+
+                                <!-- Crimson Rite Toggle (Universal) -->
+                                <div id="crimsonRiteToggleSection" class="mt-2 mb-2 text-center" style="display: none;">
+                                    <button id="crimsonRiteBtn" class="crimson-rite-btn">
+                                        <i class="fas fa-tint"></i> <span>Crimson Rite</span>
+                                    </button>
+                                </div>
+
+                                <!-- Guided Strike Toggle (Cleric) -->
+                                <div id="guidedStrikeToggleSection" class="mt-2 mb-2 text-center"
+                                    style="display: none;">
+                                    <button id="guidedStrikeToggleBtn" class="guided-strike-toggle-btn">
+                                        <i class="fas fa-star"></i> Guided Strike
+                                    </button>
+                                </div>
+
+                                <!-- Actions Button (All Classes - Consolidated Ability Actions) -->
+                                <div id="actionsToggleSection" class="mt-2 mb-2 text-center" style="display: none;">
+                                    <button id="actionsToggleBtn" class="actions-toggle-btn">
+                                        <i class="fas fa-bolt"></i> <span>Actions</span>
+                                    </button>
                                 </div>
 
                                 <!-- Unarmored Defense -->
-                                <label><div id="unarmoredDefenseSection"
-                                    class="mt-4 p-3 bg-blue-50 dark:bg-blue-900 rounded-lg" style="display: none;">
-                                    <label class="flex items-center cursor-pointer">
-                                        <input type="checkbox" id="unarmoredDefenseToggle" class="mr-2">
-                                        <span class="text-sm font-medium text-blue-800 dark:text-blue-200">Unarmored
-                                            Defense</span>
-                                    </label>
-                                    <div class="text-xs text-blue-600 dark:text-blue-300 mt-1"
-                                        id="unarmoredDefenseDescription">
-                                        <!-- Description will be populated based on class -->
+                                <label>
+                                    <div id="unarmoredDefenseSection"
+                                        class="mt-4 p-3 bg-blue-50 dark:bg-blue-900 rounded-lg" style="display: none;">
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="checkbox" id="unarmoredDefenseToggle" class="mr-2">
+                                            <span class="text-sm font-medium text-blue-800 dark:text-blue-200">Unarmored
+                                                Defense</span>
+                                        </label>
+                                        <div class="text-xs text-blue-600 dark:text-blue-300 mt-1"
+                                            id="unarmoredDefenseDescription">
+                                            <!-- Description will be populated based on class -->
+                                        </div>
                                     </div>
-                                </div></label>
+                                </label>
 
                                 <!-- Mage Armor -->
-                                <label><div id="mageArmorSection" class="mt-4 p-3 bg-purple-50 dark:bg-purple-900 rounded-lg"
-                                    style="display: none;">
-                                    <label class="flex items-center cursor-pointer">
-                                        <input type="checkbox" id="mageArmorToggle" class="mr-2">
-                                        <span class="text-sm font-medium text-purple-800 dark:text-purple-200">Mage
-                                            Armor</span>
-                                    </label>
-                                    <div class="text-xs text-purple-600 dark:text-purple-300 mt-1"
-                                        id="mageArmorDescription">
-                                        Add DEX modifier to Evasion and Level/2×Level to Thresholds
+                                <label>
+                                    <div id="mageArmorSection"
+                                        class="mt-4 p-3 bg-purple-50 dark:bg-purple-900 rounded-lg"
+                                        style="display: none;">
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="checkbox" id="mageArmorToggle" class="mr-2">
+                                            <span class="text-sm font-medium text-purple-800 dark:text-purple-200">Mage
+                                                Armor</span>
+                                        </label>
+                                        <div class="text-xs text-purple-600 dark:text-purple-300 mt-1"
+                                            id="mageArmorDescription">
+                                            Add DEX modifier to Evasion and Level/2×Level to Thresholds
+                                        </div>
                                     </div>
-                                </div></label>
+                                </label>
 
                                 <!-- Wild Beast -->
-                                <label><div id="wildBeastSection" class="mt-4 p-3 bg-green-50 dark:bg-green-900 rounded-lg"
-                                    style="display: none;">
-                                    <label class="flex items-center cursor-pointer">
-                                        <input type="checkbox" id="wildBeastToggle" class="mr-2">
-                                        <span class="text-sm font-medium text-green-800 dark:text-green-200">Wild
-                                            Beast</span>
-                                    </label>
-                                    <div class="text-xs text-green-600 dark:text-green-300 mt-1"
-                                        id="wildBeastDescription">
-                                        Transform into a wild beast with level-appropriate bonuses
+                                <label>
+                                    <div id="wildBeastSection" class="mt-4 p-3 bg-green-50 dark:bg-green-900 rounded-lg"
+                                        style="display: none;">
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="checkbox" id="wildBeastToggle" class="mr-2">
+                                            <span class="text-sm font-medium text-green-800 dark:text-green-200">Wild
+                                                Beast</span>
+                                        </label>
+                                        <div class="text-xs text-green-600 dark:text-green-300 mt-1"
+                                            id="wildBeastDescription">
+                                            Transform into a wild beast with level-appropriate bonuses
+                                        </div>
                                     </div>
-                                </div></label>
+                                </label>
 
                                 <!-- Jack of all Trades -->
                                 <div id="jackOfAllTradesSheetSection"
@@ -4154,6 +5192,30 @@
                             </div>
                         </div>
 
+                        <!-- Poison (Rogue) -->
+                        <div id="poisonSheetSection" class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg"
+                            style="display: none;">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-semibold"><i
+                                        class="fas fa-skull-crossbones mr-1 text-green-600 dark:text-green-400"></i>Poison
+                                </h3>
+                                <button id="poisonToggle"
+                                    class="w-6 h-6 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded flex items-center justify-center transition-colors">
+                                    <i class="fas fa-angle-up text-xs"></i>
+                                </button>
+                            </div>
+                            <div id="poisonContent">
+                                <div id="poisonTierStatus" class="text-xs text-gray-500 dark:text-gray-400 mb-3"></div>
+                                <div class="text-center">
+                                    <button id="createPoisonBtn" class="create-poison-btn">
+                                        <i class="fas fa-flask mr-1"></i> <span>Create Poison</span>
+                                    </button>
+                                </div>
+                                <div id="poisonActiveDisplay" class="mt-3"></div>
+                            </div>
+                        </div>
+
+
                         <!-- Familiar -->
                         <div id="familiarSheetSection" class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg"
                             style="display: none;">
@@ -4207,36 +5269,37 @@
                         </div>
 
                         <!-- Necromancer (Warlock) -->
-                         <div id="necromancerSheetSection"
-                             class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg necromancer-section" style="display: none;">
-                             <div class="flex justify-between items-center mb-3">
-                                 <h3 class="font-semibold">Necromancer</h3>
-                                 <div class="flex items-center gap-2">
-                                     <button id="clearUndeadBtn" class="clear-monsters-btn" style="display: none;">
-                                         <i class="fas fa-trash-alt mr-1"></i>Clear All
-                                     </button>
-                                     <button id="necromancerToggle"
-                                         class="w-6 h-6 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded flex items-center justify-center transition-colors">
-                                         <i class="fas fa-angle-up text-xs"></i>
-                                     </button>
-                                 </div>
-                             </div>
-                             <div id="necromancerContent">
-                                 <!-- Raise Button -->
-                                 <div class="flex justify-center mb-3">
-                                     <button id="raiseUndeadBtn" class="raise-btn">
-                                         <i class="fas fa-skull-crossbones"></i>
-                                         <span>Raise</span>
-                                     </button>
-                                 </div>
-                                 <!-- Raise Result Banner -->
-                                 <div id="raiseResultBanner" class="raise-result-banner" style="display: none;"></div>
-                                 <!-- Undead Container -->
-                                 <div id="undeadContainer" class="monsters-container">
-                                     <!-- Undead cards will be generated here -->
-                                 </div>
-                             </div>
-                         </div>
+                        <div id="necromancerSheetSection"
+                            class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg necromancer-section"
+                            style="display: none;">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-semibold">Necromancer</h3>
+                                <div class="flex items-center gap-2">
+                                    <button id="clearUndeadBtn" class="clear-monsters-btn" style="display: none;">
+                                        <i class="fas fa-trash-alt mr-1"></i>Clear All
+                                    </button>
+                                    <button id="necromancerToggle"
+                                        class="w-6 h-6 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded flex items-center justify-center transition-colors">
+                                        <i class="fas fa-angle-up text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="necromancerContent">
+                                <!-- Raise Button -->
+                                <div class="flex justify-center mb-3">
+                                    <button id="raiseUndeadBtn" class="raise-btn">
+                                        <i class="fas fa-skull-crossbones"></i>
+                                        <span>Raise</span>
+                                    </button>
+                                </div>
+                                <!-- Raise Result Banner -->
+                                <div id="raiseResultBanner" class="raise-result-banner" style="display: none;"></div>
+                                <!-- Undead Container -->
+                                <div id="undeadContainer" class="monsters-container">
+                                    <!-- Undead cards will be generated here -->
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Spirit Projection (Warlock) -->
                         <div id="spiritProjectionSheetSection"
@@ -4561,6 +5624,36 @@
                                             class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded text-sm font-medium transition-colors">
                                             <i class="fas fa-heart mr-1"></i>Health
                                         </button>
+                                    </div>
+                                </div>
+
+                                <!-- Light Timers Section (Torch & Lantern) -->
+                                <div class="mb-4 p-3 bg-amber-50 dark:bg-yellow-900/20 rounded-lg"
+                                    id="lightTimersSection">
+                                    <h4 class="font-medium text-amber-800 dark:text-amber-300 mb-2"
+                                        style="display:flex;align-items:center;justify-content:space-between;">
+                                        <span><i class="fas fa-fire mr-1"></i>Light Sources</span>
+                                        <button type="button" id="lightResetBtn"
+                                            style="font-size:0.65rem;padding:2px 8px;border-radius:4px;background:rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.12);color:inherit;cursor:pointer;font-weight:500;transition:all 0.2s;"
+                                            class="hover:bg-black/10 dark:hover:bg-white/10">
+                                            <i class="fas fa-undo-alt" style="margin-right:3px;"></i>Reset
+                                        </button>
+                                    </h4>
+                                    <div class="light-timer-section">
+                                        <button type="button" id="torchTimerBtn" class="light-timer-btn torch-btn">
+                                            <span class="timer-label"><i class="fas fa-fire timer-icon"></i>
+                                                Torch</span>
+                                            <span class="timer-display" id="torchTimerDisplay">45:00</span>
+                                        </button>
+                                        <button type="button" id="lanternTimerBtn" class="light-timer-btn lantern-btn">
+                                            <span class="timer-label"><i class="fas fa-lightbulb timer-icon"></i>
+                                                Lantern</span>
+                                            <span class="timer-display" id="lanternTimerDisplay">60:00</span>
+                                        </button>
+                                        <button type="button" id="candleTimerBtn" class="light-timer-btn candle-btn">
+                                            <span class="timer-label"><i class="fas fa-fire-alt timer-icon"></i>
+                                                Candle</span>
+                                            <span class="timer-display" id="candleTimerDisplay">30:00</span>
                                     </div>
                                 </div>
 
@@ -4999,19 +6092,19 @@
                         <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">
                             Base: <span id="baseEvasion">0</span> |
                             Mod: <span id="modEvasion">0</span> |
-                             Temporary: <span id="temporaryEvasion">0</span>
-                         </div>
-                         <div id="modEvasionBreakdown" class="text-xs text-gray-500 dark:text-gray-500 mb-4 pl-2"
-                             style="display:none;"></div>
+                            Temporary: <span id="temporaryEvasion">0</span>
+                        </div>
+                        <div id="modEvasionBreakdown" class="text-xs text-gray-500 dark:text-gray-500 mb-4 pl-2"
+                            style="display:none;"></div>
                         <input type="number" id="evasionAmount"
                             class="w-full px-3 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-transparent"
                             placeholder="Evasion value" min="1">
                     </div>
                     <div class="flex justify-end space-x-3">
-                        
+
                         <button type="button" id="adjustTempEvasion"
                             class="px-4 py-2 bg-green-500 text-white hover:bg-green-600 rounded">Adjust Temp</button>
-                        
+
                     </div>
                 </div>
             </div>
@@ -5998,79 +7091,103 @@
                 </div>
             </div>
 
+            <!-- Actions Modal (Consolidated Class Ability Buttons) -->
+            <div id="actionsModal"
+                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                <div
+                    class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-lg max-w-md w-full mx-4 max-h-[85vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-indigo-700 dark:text-indigo-300">
+                            <i class="fas fa-bolt mr-2"></i>Actions
+                        </h3>
+                        <button id="closeActionsModal"
+                            class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div id="actionsModalContent" class="space-y-3">
+                        <!-- Dynamically populated by openActionsModal() -->
+                    </div>
+                </div>
+            </div>
+
             <!-- Natural Recovery Target Modal -->
-             <div id="naturalRecoveryTargetModal"
-                 class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
-                     <div class="flex justify-between items-center mb-4">
-                         <h3 class="text-lg font-semibold text-green-700 dark:text-green-400">
-                             <i class="fas fa-leaf mr-2"></i>Natural Recovery
-                         </h3>
-                         <button id="closeNaturalRecoveryTarget"
-                             class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
-                             <i class="fas fa-times"></i>
-                         </button>
-                     </div>
-                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Select a target for Natural Recovery:</p>
-                     <div class="flex flex-col gap-3">
-                         <button id="naturalRecoverySelf"
-                             class="w-full px-4 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
-                             <i class="fas fa-user"></i>Target Self
-                         </button>
-                         <button id="naturalRecoveryAlly"
-                             class="w-full px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
-                             <i class="fas fa-users"></i>Target Ally
-                         </button>
-                     </div>
-                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-4 text-center">Cost: 1 Class Resource</p>
-                 </div>
-             </div>
- 
-             <!-- Natural Recovery Self Modal -->
-             <div id="naturalRecoverySelfModal"
-                 class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
-                     <div class="flex justify-between items-center mb-4">
-                         <h3 class="text-lg font-semibold text-green-700 dark:text-green-400">
-                             <i class="fas fa-user mr-2"></i>Recover Self
-                         </h3>
-                         <button id="closeNaturalRecoverySelf"
-                             class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
-                             <i class="fas fa-times"></i>
-                         </button>
-                     </div>
-                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Choose what to recover:</p>
-                     <div class="flex flex-col gap-3">
-                         <button id="naturalRecoverHP"
-                             class="w-full px-4 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
-                             <i class="fas fa-heart"></i>Recover HP
-                         </button>
-                         <button id="naturalRecoverStress"
-                             class="w-full px-4 py-3 bg-purple-500 hover:bg-purple-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
-                             <i class="fas fa-brain"></i>Recover Stress
-                         </button>
-                     </div>
-                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-4 text-center">Rolls 1d4 and recovers that amount</p>
-                 </div>
-             </div>
- 
-             <!-- Natural Recovery Result Modal -->
-             <div id="naturalRecoveryResultModal"
-                 class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4 text-center">
-                     <div class="mb-4">
-                         <div class="w-16 h-16 mx-auto bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-3">
-                             <i class="fas fa-leaf text-3xl text-green-600 dark:text-green-400"></i>
-                         </div>
-                         <h3 class="text-lg font-semibold text-green-700 dark:text-green-400">Natural Recovery</h3>
-                     </div>
-                     <div id="naturalRecoveryResultContent" class="mb-4">
-                         <!-- Result will be populated here -->
-                     </div>
-                     <button id="closeNaturalRecoveryResult"
-                         class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg font-medium transition-colors">
-                         Close
-                     </button>                 </div>             </div>
+            <div id="naturalRecoveryTargetModal"
+                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-green-700 dark:text-green-400">
+                            <i class="fas fa-leaf mr-2"></i>Natural Recovery
+                        </h3>
+                        <button id="closeNaturalRecoveryTarget"
+                            class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Select a target for Natural Recovery:</p>
+                    <div class="flex flex-col gap-3">
+                        <button id="naturalRecoverySelf"
+                            class="w-full px-4 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                            <i class="fas fa-user"></i>Target Self
+                        </button>
+                        <button id="naturalRecoveryAlly"
+                            class="w-full px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                            <i class="fas fa-users"></i>Target Ally
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-4 text-center">Cost: 1 Class Resource</p>
+                </div>
+            </div>
+
+            <!-- Natural Recovery Self Modal -->
+            <div id="naturalRecoverySelfModal"
+                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-green-700 dark:text-green-400">
+                            <i class="fas fa-user mr-2"></i>Recover Self
+                        </h3>
+                        <button id="closeNaturalRecoverySelf"
+                            class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Choose what to recover:</p>
+                    <div class="flex flex-col gap-3">
+                        <button id="naturalRecoverHP"
+                            class="w-full px-4 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                            <i class="fas fa-heart"></i>Recover HP
+                        </button>
+                        <button id="naturalRecoverStress"
+                            class="w-full px-4 py-3 bg-purple-500 hover:bg-purple-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                            <i class="fas fa-brain"></i>Recover Stress
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-4 text-center">Rolls 1d4 and recovers that
+                        amount</p>
+                </div>
+            </div>
+
+            <!-- Natural Recovery Result Modal -->
+            <div id="naturalRecoveryResultModal"
+                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4 text-center">
+                    <div class="mb-4">
+                        <div
+                            class="w-16 h-16 mx-auto bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-3">
+                            <i class="fas fa-leaf text-3xl text-green-600 dark:text-green-400"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-green-700 dark:text-green-400">Natural Recovery</h3>
+                    </div>
+                    <div id="naturalRecoveryResultContent" class="mb-4">
+                        <!-- Result will be populated here -->
+                    </div>
+                    <button id="closeNaturalRecoveryResult"
+                        class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg font-medium transition-colors">
+                        Close
+                    </button>
+                </div>
+            </div>
 
             <!-- Languages Modal -->
             <div id="languagesModal"
