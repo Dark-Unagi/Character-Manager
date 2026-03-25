@@ -1366,6 +1366,31 @@
             border-color: #5D5CDE;
         }
 
+        /* Skill Row Grid — 3 columns: name (fill) | A/D badge (fixed) | modifier (fixed) */
+        .skill-row-grid {
+            display: grid;
+            grid-template-columns: 1fr 24px 36px;
+            gap: 4px;
+            align-items: center;
+        }
+        .skill-name-col {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            min-width: 0;
+        }
+        .skill-ad-col {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            flex-shrink: 0;
+        }
+        .skill-mod-col {
+            text-align: right;
+            white-space: nowrap;
+        }
+
         /* Advantage/Disadvantage Indicator Styles */
         .skill-ad-indicator {
             display: inline-flex;
@@ -1376,7 +1401,7 @@
             border-radius: 50%;
             font-size: 0.65rem;
             font-weight: bold;
-            margin-left: 6px;
+            margin-left: 0;
             flex-shrink: 0;
         }
 
