@@ -21973,7 +21973,7 @@ function showSilverTongueModal() {
              '<div class="flex justify-center mt-3">' +
                  '<button id="stRollBtn" ' + (canAfford ? '' : 'disabled') + ' class="px-5 py-2 rounded-lg font-semibold text-sm transition-all ' +
                      (canAfford ? 'cursor-pointer opacity-100 hover:opacity-90' : 'cursor-not-allowed opacity-50') + '" ' +
-                     'style="background:rgba(236,72,153,0.2);border:1px solid rgba(236,72,153,0.5);color:#f472b6;">' +
+                     'style="background:rgba(236,72,153,0.2);border:1px solid rgba(236,72,153,0.5);color:#f472b6 text-black dark:text-white;">' +
                      '<i class="fas fa-dice-d20 mr-1"></i>Roll Psychic Damage' +
                 '</button>' +
               '</div>' +
@@ -22091,12 +22091,13 @@ function closeSilverTongueModal() {
     populateSheetResourceBoxes(currentCharacter);
 
     // Build roll display string
-    var rollParts = rolls.map(function(r) {
-        return '[<strong style="color:#ec4899;font-size:1rem;">' + r + '</strong>]';
-    }).join(',');
+ var rollParts = '[' +
+    rolls.map(r => '<strong style="color:#ec4899;font-size:1rem;">' + r + '</strong>')
+         .join(', ') +
+    ']';
 
-    var totalLine = numDice > 1
-        ? '<div style="margin-top:6px;font-size:2rem;font-weight:700;color:#ec4899;">Total: ' + total + ' Psychic damage</div>'
+    var totalLine = numDice >= 1
+        ? '<div style="margin-top:6px;font-size:2rem;font-weight:700;text-black dark:text-white;">Total: ' + total + ' Psychic damage</div>'
         : '';
 
     // Show result
@@ -22107,9 +22108,8 @@ function closeSilverTongueModal() {
             '<div style="font-weight:700;color:#ec4899;margin-bottom:4px;">' +
             '<i class="fas fa-fire" style="margin-right:6px;"></i>Psychic Damage!' +
             '</div>' +
-            '<div style="font-size:0.95rem;color:#d1d5db;">' +
-            numDice + 'd10: ' + rollParts +  ' Psychic damage' +
-            '</div>' +
+            '<div style="font-size:0.95rem;text-black dark:text-white">' +
+            numDice + 'd10: ' + rollParts + '</div>' +
             totalLine +
             '</div>';
     }
