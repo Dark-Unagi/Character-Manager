@@ -8405,7 +8405,7 @@ function generateSkillsList(character) {
         /*const totalModifier = baseModifier + raceBonus + primaryWeaponBonus + secondaryWeaponBonus + armorBonus + wildBeastBonus + jackOfAllTradesBonus;*/
 
         const skillDiv = document.createElement('div');
-        skillDiv.className = 'flex justify-between items-center p-2 bg-white dark:bg-gray-700 rounded hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer skill-roll-btn';
+        skillDiv.className = 'skill-row-grid items-center p-2 bg-white dark:bg-gray-700 rounded hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer skill-roll-btn';
         skillDiv.dataset.skillName = skill.name;
         skillDiv.dataset.skillModifier = totalModifier;
 
@@ -8430,11 +8430,13 @@ function generateSkillsList(character) {
             const alwaysClass = adSetting.always ? ' always' : '';
             adIndicator = `<span class="skill-ad-indicator text-sm disadvantage${alwaysClass}" title="Disadvantage${adSetting.always ? ' (Always)' : ''}">D</span>`;
         }
-
+        const modifierStr = `${totalModifier >= 0 ? '+' : ''}${totalModifier}`;
+         const parsedName = skillDisplayName.replace(/\(([A-Z]{3})\)/g, '<span class="text-xs text-gray-500 dark:text-gray-400">($1)</span>');
 
         skillDiv.innerHTML = `
-                    <span class="flex items-center">${skillDisplayName.replace(/\(([A-Z]{3})\)/g, '<span class="text-xs text-gray-500 dark:text-gray-400">($1)</span>')}${adIndicator}</span>
-                    <span class="font-semibold">${totalModifier >= 0 ? '+' : ''}${totalModifier}</span>
+                    <span class="flex items-center skill-name-col">${parsedName}</span>
+                    <span class="skill-ad-col">${adIndicator}</span>
+                    <span class="font-semibold skill-mod-col">${modifierStr}</span>
                 `;
 
         // Add click event listener for dice rolling
