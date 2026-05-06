@@ -203,7 +203,7 @@ const tooltipDefinitions = {
     },
     'Charisma': {
         title: 'Charisma (CHA)',
-        content: 'Measures personality, leadership, and confidence. Used for persuasion, deception, and intimidation. Spellcasting ability for Bards, Paladins and Sorcerers.'
+        content: 'Measures personality, leadership, and confidence. Used for persuasion, deception, and intimidation (Manipulation). Spellcasting ability for Bards, Paladins and Sorcerers.'
     },
     'HP': {
         title: 'Hit Points (HP)',
@@ -5185,8 +5185,8 @@ const defaultSkills = [
     { name: 'History (INT)', ability: 'int' },
     { name: 'Insight (WIS)', ability: 'wis' },
     { name: 'Investigation (INT)', ability: 'int' },
+    { name: 'Manipulation (CHA)', ability: 'cha' },
     { name: 'Perception (WIS)', ability: 'wis' },
-    { name: 'Persuasion (CHA)', ability: 'cha' },
     { name: 'Sleight of Hand (DEX)', ability: 'dex' },
     { name: 'Stealth (DEX)', ability: 'dex' },
     { name: 'Survival (WIS)', ability: 'wis' }
@@ -5196,7 +5196,6 @@ const defaultSkills = [
 function applyDamage(amount) {
     if (!currentCharacter) return;
 
-    // Ensure resources are initialized
     if (!currentCharacter.resources) {
         currentCharacter.resources = {
             hp: { max: 0, used: [], temp: 0 },
@@ -5218,10 +5217,9 @@ function applyDamage(amount) {
         return;
     }
 
-    // Determine how much damage we can actually apply
     const damageToApply = Math.min(amount, hpRemaining);
 
-    // Apply damage by marking HP boxes as used
+    // Apply damage
     for (let i = 0; i < damageToApply; i++) {
         for (let j = 0; j < totalHp; j++) {
             if (!hpResource.used.includes(j)) {
@@ -5231,15 +5229,21 @@ function applyDamage(amount) {
         }
     }
 
-    // Refresh the HP display
     populateSheetResourceBoxes(currentCharacter);
     saveCharacters();
 
-    // If we couldn't apply the full amount, character has hit 0 HP
+    // NEW: Exact kill (HP becomes exactly 0)
+    if (damageToApply === amount && damageToApply === hpRemaining) {
+        showDivineRollWarning(amount, damageToApply, hpRemaining);
+        return;
+    }
+
+    // Overkill (couldn't apply full damage)
     if (damageToApply < amount) {
         showDivineRollWarning(amount, damageToApply, hpRemaining);
     }
 }
+
 
 // Show a prominent Divine Roll warning when character reaches 0 HP from damage
 function showDivineRollWarning(damageRequested, damageApplied, hpWasRemaining) {
@@ -7752,6 +7756,21 @@ function toggleResourceBoxOrdered(clickedBox) {
         const usedBoxes = Array.from(container.querySelectorAll('.resource-box.used')).map(box => parseInt(box.dataset.index));
         currentCharacter.resources[resourceType].used = usedBoxes;
 
+        // Divine Roll trigger when HP reaches 0 by clicking
+        if (resourceType === "hp") {
+            const hpResource = currentCharacter.resources.hp;
+            const totalHp = hpResource.max + (hpResource.temp || 0);
+            const hpRemaining = totalHp - hpResource.used.length;
+
+            if (hpRemaining === 0) {
+                showDivineRollWarning(
+                    1, // amount (not really used for manual clicks)
+                    1, // damageApplied
+                    1  // hpWasRemaining (was 1 before clicking the last box)
+                );
+            }
+        }
+
         saveCharacters();
 
         // Update character cards to reflect the current HP status
@@ -8431,7 +8450,7 @@ function generateSkillsList(character) {
             adIndicator = `<span class="skill-ad-indicator text-sm disadvantage${alwaysClass}" title="Disadvantage${adSetting.always ? ' (Always)' : ''}">D</span>`;
         }
         const modifierStr = `${totalModifier >= 0 ? '+' : ''}${totalModifier}`;
-         const parsedName = skillDisplayName.replace(/\(([A-Z]{3})\)/g, '<span class="text-xs text-gray-500 dark:text-gray-400">($1)</span>');
+        const parsedName = skillDisplayName.replace(/\(([A-Z]{3})\)/g, '<span class="text-xs text-gray-500 dark:text-gray-400">($1)</span>');
 
         skillDiv.innerHTML = `
                     <span class="flex items-center skill-name-col">${parsedName}</span>
@@ -8515,9 +8534,9 @@ function updateEquipmentDisplay(character) {
     // Update equipment limit display
     updateEquipmentLimitDisplay(character);
     // Restore light timer displays & resume running timers
-     if (typeof restoreLightTimers === 'function') {
-         restoreLightTimers();
-     }
+    if (typeof restoreLightTimers === 'function') {
+        restoreLightTimers();
+    }
 
 }
 
@@ -9598,15 +9617,15 @@ function getStartingGoldForNewCharacter() {
 
     switch (selectedPackage) {
         case 'explorer':
-            // 1d4+2 × 10 gold
+            // 1d4 × 10 gold
             const explorerRoll = Math.floor(Math.random() * 4) + 1; // 1d4
-            goldAmount = (explorerRoll + 2) * 10; // Add 2, then multiply by 10
+            goldAmount = explorerRoll * 10; // Multiply by 10
             break;
 
         case 'scholar':
-            // 1d4 × 10 gold
+            // 1d4+2 × 10 gold
             const scholarRoll = Math.floor(Math.random() * 4) + 1; // 1d4
-            goldAmount = scholarRoll * 10; // Multiply by 10
+            goldAmount = (scholarRoll + 2) * 10; // Add 2, then multiply by 10
             break;
 
         case 'none':
@@ -11098,53 +11117,53 @@ function showOtherAbilitiesModal() {
     const modal = document.createElement('div');
     modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
 
-     // Get the player's selected ability indices
-     var selectedClassIndices = (currentCharacter.classAbilities && currentCharacter.classAbilities.selectedClass) || [];
-     var selectedUniversalIndices = (currentCharacter.classAbilities && currentCharacter.classAbilities.selectedUniversal) || [];
- 
-     // Build class ability option objects with name, index, and selected flag
-     var classOptionItems = [];
-     charClassAbilities.forEach(function(ability, i) {
-         var plainName = ability.name.replace(/<[^>]*>/g, '').trim();
-         var isSelected = selectedClassIndices.indexOf(i) !== -1;
-         classOptionItems.push({ name: plainName, index: i, selected: isSelected });
+    // Get the player's selected ability indices
+    var selectedClassIndices = (currentCharacter.classAbilities && currentCharacter.classAbilities.selectedClass) || [];
+    var selectedUniversalIndices = (currentCharacter.classAbilities && currentCharacter.classAbilities.selectedUniversal) || [];
+
+    // Build class ability option objects with name, index, and selected flag
+    var classOptionItems = [];
+    charClassAbilities.forEach(function (ability, i) {
+        var plainName = ability.name.replace(/<[^>]*>/g, '').trim();
+        var isSelected = selectedClassIndices.indexOf(i) !== -1;
+        classOptionItems.push({ name: plainName, index: i, selected: isSelected });
     });
 
     // Build universal ability option objects
-     var universalOptionItems = [];
-     allUniversal.forEach(function(ability, i) {
-         var plainName = ability.name.replace(/<[^>]*>/g, '').trim();
-         var isSelected = selectedUniversalIndices.indexOf(i) !== -1;
-         universalOptionItems.push({ name: plainName, index: i, selected: isSelected });
-     });
- 
-     // Sort: selected first (alphabetical), then unselected (alphabetical)
-     function sortAbilityOptions(items) {
-         var selected = items.filter(function(item) { return item.selected; });
-         var unselected = items.filter(function(item) { return !item.selected; });
-         selected.sort(function(a, b) { return a.name.localeCompare(b.name); });
-         unselected.sort(function(a, b) { return a.name.localeCompare(b.name); });
-         return selected.concat(unselected);
-     }
- 
-     classOptionItems = sortAbilityOptions(classOptionItems);
-     universalOptionItems = sortAbilityOptions(universalOptionItems);
- 
-     // Build option HTML — selected abilities are colored blue
-     var classOptions = '';
-     classOptionItems.forEach(function(item) {
-         var style = item.selected ? ' style="color:#3b82f6;font-weight:600;"' : '';
-         var marker = item.selected ? '● ' : '';
-         var dataAttr = item.selected ? ' data-selected="true"' : '';
-          classOptions += '<option value="class_' + item.index + '"' + style + dataAttr + '>' + marker + item.name + '</option>';
-     });
- 
-     var universalOptions = '';
-     universalOptionItems.forEach(function(item) {
-         var style = item.selected ? ' style="color:#3b82f6;font-weight:600;"' : '';
-         var marker = item.selected ? '● ' : '';
-          var uDataAttr = item.selected ? ' data-selected="true"' : '';
-         universalOptions += '<option value="universal_' + item.index + '"' + style + uDataAttr + '>' + marker + item.name + '</option>';
+    var universalOptionItems = [];
+    allUniversal.forEach(function (ability, i) {
+        var plainName = ability.name.replace(/<[^>]*>/g, '').trim();
+        var isSelected = selectedUniversalIndices.indexOf(i) !== -1;
+        universalOptionItems.push({ name: plainName, index: i, selected: isSelected });
+    });
+
+    // Sort: selected first (alphabetical), then unselected (alphabetical)
+    function sortAbilityOptions(items) {
+        var selected = items.filter(function (item) { return item.selected; });
+        var unselected = items.filter(function (item) { return !item.selected; });
+        selected.sort(function (a, b) { return a.name.localeCompare(b.name); });
+        unselected.sort(function (a, b) { return a.name.localeCompare(b.name); });
+        return selected.concat(unselected);
+    }
+
+    classOptionItems = sortAbilityOptions(classOptionItems);
+    universalOptionItems = sortAbilityOptions(universalOptionItems);
+
+    // Build option HTML — selected abilities are colored blue
+    var classOptions = '';
+    classOptionItems.forEach(function (item) {
+        var style = item.selected ? ' style="color:#3b82f6;font-weight:600;"' : '';
+        var marker = item.selected ? '● ' : '';
+        var dataAttr = item.selected ? ' data-selected="true"' : '';
+        classOptions += '<option value="class_' + item.index + '"' + style + dataAttr + '>' + marker + item.name + '</option>';
+    });
+
+    var universalOptions = '';
+    universalOptionItems.forEach(function (item) {
+        var style = item.selected ? ' style="color:#3b82f6;font-weight:600;"' : '';
+        var marker = item.selected ? '● ' : '';
+        var uDataAttr = item.selected ? ' data-selected="true"' : '';
+        universalOptions += '<option value="universal_' + item.index + '"' + style + uDataAttr + '>' + marker + item.name + '</option>';
     });
 
     modal.innerHTML = `
@@ -21956,29 +21975,29 @@ function showSilverTongueModal() {
         '<div style="display:flex;flex-direction:column;gap:10px;">' +
         // Option 1 — Psychic Damage with -/+ resource selector (matches Crimson Rite / Brutal Critical pattern)
         '<div class="p-3 bg-pink-50 dark:bg-pink-900/30 rounded-lg border border-pink-200 dark:border-pink-700">' +
-            '<div class="flex items-center gap-2 mb-2">' +
-                '<i class="fas fa-fire text-lg" style="color:#ec4899;"></i>' +
-                '<div class="flex-1">' +
-                    '<div class="text-sm font-semibold" style="color:#f472b6;">Option 1: Psychic Damage</div>' +
-                    '<div class="text-xs text-gray-500 dark:text-gray-400">Each Class resource = 1d10 Psychic damage</div>' +
-                '</div>' +
-            '</div>' +
-            '<div class="text-sm font-medium text-pink-700 dark:text-pink-300 mb-2 text-center">Dice to Roll</div>' +
-             '<div class="flex items-center justify-center gap-4">' +
-                 '<button id="stDiceMinus" class="w-8 h-8 bg-pink-200 dark:bg-gray-700 hover:bg-pink-300 dark:hover:bg-gray-600 text-pink-800 dark:text-white rounded-full flex items-center justify-center text-lg font-bold transition-colors">−</button>' +
-                 '<span id="stDiceCount" class="text-2xl font-bold text-pink-500 dark:text-pink-400 w-8 text-center">1</span>' +
-                 '<button id="stDicePlus" class="w-8 h-8 bg-pink-200 dark:bg-gray-700 hover:bg-pink-300 dark:hover:bg-gray-600 text-pink-800 dark:text-white rounded-full flex items-center justify-center text-lg font-bold transition-colors">+</button>' +
-             '</div>' +
-             '<div class="text-xs text-gray-500 dark:text-gray-400 text-center mt-2" id="stCostSummary">' +
-                 '<i class="fas fa-dice-d20 mr-1"></i><span id="stCostDisplay">1</span>d10 Psychic Damage &nbsp;&nbsp; <i class="fas fa-bolt mr-1"></i>Cost: <strong id="stCostValue" style="color:#60a5fa;">1</strong> Class' +
-             '</div>' +
-             '<div class="flex justify-center mt-3">' +
-                 '<button id="stRollBtn" ' + (canAfford ? '' : 'disabled') + ' class="px-5 py-2 rounded-lg font-semibold text-sm transition-all ' +
-                     (canAfford ? 'cursor-pointer opacity-100 hover:opacity-90' : 'cursor-not-allowed opacity-50') + '" ' +
-                     'style="background:rgba(236,72,153,0.2);border:1px solid rgba(236,72,153,0.5);color:#f472b6 text-black dark:text-white;">' +
-                     '<i class="fas fa-dice-d20 mr-1"></i>Roll Psychic Damage' +
-                '</button>' +
-              '</div>' +
+        '<div class="flex items-center gap-2 mb-2">' +
+        '<i class="fas fa-fire text-lg" style="color:#ec4899;"></i>' +
+        '<div class="flex-1">' +
+        '<div class="text-sm font-semibold" style="color:#f472b6;">Option 1: Psychic Damage</div>' +
+        '<div class="text-xs text-gray-500 dark:text-gray-400">Each Class resource = 1d10 Psychic damage</div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="text-sm font-medium text-pink-700 dark:text-pink-300 mb-2 text-center">Dice to Roll</div>' +
+        '<div class="flex items-center justify-center gap-4">' +
+        '<button id="stDiceMinus" class="w-8 h-8 bg-pink-200 dark:bg-gray-700 hover:bg-pink-300 dark:hover:bg-gray-600 text-pink-800 dark:text-white rounded-full flex items-center justify-center text-lg font-bold transition-colors">−</button>' +
+        '<span id="stDiceCount" class="text-2xl font-bold text-pink-500 dark:text-pink-400 w-8 text-center">1</span>' +
+        '<button id="stDicePlus" class="w-8 h-8 bg-pink-200 dark:bg-gray-700 hover:bg-pink-300 dark:hover:bg-gray-600 text-pink-800 dark:text-white rounded-full flex items-center justify-center text-lg font-bold transition-colors">+</button>' +
+        '</div>' +
+        '<div class="text-xs text-gray-500 dark:text-gray-400 text-center mt-2" id="stCostSummary">' +
+        '<i class="fas fa-dice-d20 mr-1"></i><span id="stCostDisplay">1</span>d10 Psychic Damage &nbsp;&nbsp; <i class="fas fa-bolt mr-1"></i>Cost: <strong id="stCostValue" style="color:#60a5fa;">1</strong> Class' +
+        '</div>' +
+        '<div class="flex justify-center mt-3">' +
+        '<button id="stRollBtn" ' + (canAfford ? '' : 'disabled') + ' class="px-5 py-2 rounded-lg font-semibold text-sm transition-all ' +
+        (canAfford ? 'cursor-pointer opacity-100 hover:opacity-90' : 'cursor-not-allowed opacity-50') + '" ' +
+        'style="background:rgba(236,72,153,0.2);border:1px solid rgba(236,72,153,0.5);color:#f472b6 text-black dark:text-white;">' +
+        '<i class="fas fa-dice-d20 mr-1"></i>Roll Psychic Damage' +
+        '</button>' +
+        '</div>' +
         '</div>' +
 
         // Option 2
@@ -22006,43 +22025,43 @@ function showSilverTongueModal() {
     document.body.appendChild(modal);
 
     // --- -/+ dice counter logic for Option 1 ---
-     var stDiceCount = 1;
-     var countEl = modal.querySelector('#stDiceCount');
-     var costEl = modal.querySelector('#stCostDisplay');
-     var costValueEl = modal.querySelector('#stCostValue');
-     var rollBtn = modal.querySelector('#stRollBtn');
-     var minusBtn = modal.querySelector('#stDiceMinus');
-     var plusBtn = modal.querySelector('#stDicePlus');
- 
-     function updateStCounter() {
-         countEl.textContent = stDiceCount;
-         costEl.textContent = stDiceCount;
-         if (costValueEl) costValueEl.textContent = stDiceCount;
-         // Dim minus at 1, plus at classAvailable
-         minusBtn.style.opacity = stDiceCount <= 1 ? '0.35' : '1';
-         plusBtn.style.opacity = stDiceCount >= classAvailable ? '0.35' : '1';
-     }
- 
-     minusBtn.addEventListener('click', function(e) {
-         e.stopPropagation();
-         if (stDiceCount > 1) { stDiceCount--; updateStCounter(); }
-     });
-     plusBtn.addEventListener('click', function(e) {
-         e.stopPropagation();
-         if (stDiceCount < classAvailable) { stDiceCount++; updateStCounter(); }
-     });
-     updateStCounter();
- 
-     // Roll button for Option 1
-     rollBtn.addEventListener('click', function() {
-         activateSilverTongueOption1(stDiceCount);
-     });
- 
-     // Option 2 button
+    var stDiceCount = 1;
+    var countEl = modal.querySelector('#stDiceCount');
+    var costEl = modal.querySelector('#stCostDisplay');
+    var costValueEl = modal.querySelector('#stCostValue');
+    var rollBtn = modal.querySelector('#stRollBtn');
+    var minusBtn = modal.querySelector('#stDiceMinus');
+    var plusBtn = modal.querySelector('#stDicePlus');
+
+    function updateStCounter() {
+        countEl.textContent = stDiceCount;
+        costEl.textContent = stDiceCount;
+        if (costValueEl) costValueEl.textContent = stDiceCount;
+        // Dim minus at 1, plus at classAvailable
+        minusBtn.style.opacity = stDiceCount <= 1 ? '0.35' : '1';
+        plusBtn.style.opacity = stDiceCount >= classAvailable ? '0.35' : '1';
+    }
+
+    minusBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (stDiceCount > 1) { stDiceCount--; updateStCounter(); }
+    });
+    plusBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (stDiceCount < classAvailable) { stDiceCount++; updateStCounter(); }
+    });
+    updateStCounter();
+
+    // Roll button for Option 1
+    rollBtn.addEventListener('click', function () {
+        activateSilverTongueOption1(stDiceCount);
+    });
+
+    // Option 2 button
     modal.querySelectorAll('.silver-tongue-option-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
             var option = parseInt(btn.dataset.option);
-        if (option === 2) activateSilverTongueOption2();
+            if (option === 2) activateSilverTongueOption2();
         });
     });
 
@@ -22066,14 +22085,14 @@ function closeSilverTongueModal() {
   * Silver Tongue Option 1: Roll Nd10 Psychic damage, spend N Class resources
   * @param {number} numDice — how many d10 to roll (and Class resources to spend)
  */
- function activateSilverTongueOption1(numDice) {
-     if (!numDice || numDice < 1) numDice = 1;
+function activateSilverTongueOption1(numDice) {
+    if (!numDice || numDice < 1) numDice = 1;
     if (!currentCharacter || !currentCharacter.resources || !currentCharacter.resources.class) return;
 
     var classResource = currentCharacter.resources.class;
     var classMax = classResource.max + (classResource.temp || 0);
     var classAvailable = classMax - classResource.used.length;
-   if (classAvailable < numDice) return;
+    if (classAvailable < numDice) return;
 
     // Spend N Class resources
     for (var i = 0; i < numDice; i++) {
@@ -22093,10 +22112,10 @@ function closeSilverTongueModal() {
     populateSheetResourceBoxes(currentCharacter);
 
     // Build roll display string
- var rollParts = '[' +
-    rolls.map(r => '<strong style="color:#ec4899;font-size:1rem;">' + r + '</strong>')
-         .join(', ') +
-    ']';
+    var rollParts = '[' +
+        rolls.map(r => '<strong style="color:#ec4899;font-size:1rem;">' + r + '</strong>')
+            .join(', ') +
+        ']';
 
     var totalLine = numDice >= 1
         ? '<div style="margin-top:6px;font-size:2rem;font-weight:700;text-black dark:text-white;">Total: ' + total + ' Psychic damage</div>'
@@ -22124,13 +22143,13 @@ function closeSilverTongueModal() {
         b.style.cursor = 'not-allowed';
     });
 }
-    // Disable the roll button and +/- counter
-    var rollBtn = document.getElementById('stRollBtn');
-    if (rollBtn) { rollBtn.disabled = true; rollBtn.style.opacity = '0.5'; rollBtn.style.cursor = 'not-allowed'; }
-    var minusBtn = document.getElementById('stDiceMinus');
-    if (minusBtn) { minusBtn.style.opacity = '0.35'; minusBtn.style.pointerEvents = 'none'; }
-    var plusBtn = document.getElementById('stDicePlus');
-    if (plusBtn) { plusBtn.style.opacity = '0.35'; plusBtn.style.pointerEvents = 'none'; }
+// Disable the roll button and +/- counter
+var rollBtn = document.getElementById('stRollBtn');
+if (rollBtn) { rollBtn.disabled = true; rollBtn.style.opacity = '0.5'; rollBtn.style.cursor = 'not-allowed'; }
+var minusBtn = document.getElementById('stDiceMinus');
+if (minusBtn) { minusBtn.style.opacity = '0.35'; minusBtn.style.pointerEvents = 'none'; }
+var plusBtn = document.getElementById('stDicePlus');
+if (plusBtn) { plusBtn.style.opacity = '0.35'; plusBtn.style.pointerEvents = 'none'; }
 
 /**
  * Silver Tongue Option 2: Distraction (Disadvantage), spend 1 Class
@@ -25714,203 +25733,203 @@ document.addEventListener('click', function (e) {
     }
 });
 
- // ===============================================================
- //  LIGHT SOURCE TIMERS — Torch & Lantern
- // ===============================================================
- 
- /**
-  * Light timer runtime state — intervals and running flags live here.
-  * Seconds remaining + consumed flags are persisted on currentCharacter.lightTimers
-  */
- var lightTimerIntervals = {
-     torch: null,
-     lantern: null,
-    candle: null
- };
+// ===============================================================
+//  LIGHT SOURCE TIMERS — Torch & Lantern
+// ===============================================================
 
- var LIGHT_TIMER_DEFAULTS = {
-     torch: 2700,   // 60 minutes
-     lantern: 3600, // 60 minutes per oil
+/**
+ * Light timer runtime state — intervals and running flags live here.
+ * Seconds remaining + consumed flags are persisted on currentCharacter.lightTimers
+ */
+var lightTimerIntervals = {
+    torch: null,
+    lantern: null,
+    candle: null
+};
+
+var LIGHT_TIMER_DEFAULTS = {
+    torch: 2700,   // 60 minutes
+    lantern: 3600, // 60 minutes per oil
     candle: 1800   // 60 minutes per candle
- };
- 
- /**
-  * Get (or initialize) the persisted timer data on the current character.
-  */
- function getLightTimerData() {
-     if (!currentCharacter) return null;
-     if (!currentCharacter.lightTimers) {
-         currentCharacter.lightTimers = {
-             torch:   { secondsRemaining: LIGHT_TIMER_DEFAULTS.torch,   running: false, itemConsumed: false },
-           lantern: { secondsRemaining: LIGHT_TIMER_DEFAULTS.lantern, running: false, itemConsumed: false },
-            candle:  { secondsRemaining: LIGHT_TIMER_DEFAULTS.candle,  running: false, itemConsumed: false }
-         };
-     }
-     // Ensure all entries exist (in case saved data was from an older version)
-     if (!currentCharacter.lightTimers.torch) {
-         currentCharacter.lightTimers.torch = { secondsRemaining: LIGHT_TIMER_DEFAULTS.torch, running: false, itemConsumed: false };
-     }
-     if (!currentCharacter.lightTimers.lantern) {
-         currentCharacter.lightTimers.lantern = { secondsRemaining: LIGHT_TIMER_DEFAULTS.lantern, running: false, itemConsumed: false };
+};
+
+/**
+ * Get (or initialize) the persisted timer data on the current character.
+ */
+function getLightTimerData() {
+    if (!currentCharacter) return null;
+    if (!currentCharacter.lightTimers) {
+        currentCharacter.lightTimers = {
+            torch: { secondsRemaining: LIGHT_TIMER_DEFAULTS.torch, running: false, itemConsumed: false },
+            lantern: { secondsRemaining: LIGHT_TIMER_DEFAULTS.lantern, running: false, itemConsumed: false },
+            candle: { secondsRemaining: LIGHT_TIMER_DEFAULTS.candle, running: false, itemConsumed: false }
+        };
     }
-     if (!currentCharacter.lightTimers.candle) {
-       currentCharacter.lightTimers.candle = { secondsRemaining: LIGHT_TIMER_DEFAULTS.candle, running: false, itemConsumed: false };
-     }
-     return currentCharacter.lightTimers;
- }
- 
- /**
-  * Format seconds into MM:SS display string
-  */
- function formatTimerDisplay(totalSeconds) {
+    // Ensure all entries exist (in case saved data was from an older version)
+    if (!currentCharacter.lightTimers.torch) {
+        currentCharacter.lightTimers.torch = { secondsRemaining: LIGHT_TIMER_DEFAULTS.torch, running: false, itemConsumed: false };
+    }
+    if (!currentCharacter.lightTimers.lantern) {
+        currentCharacter.lightTimers.lantern = { secondsRemaining: LIGHT_TIMER_DEFAULTS.lantern, running: false, itemConsumed: false };
+    }
+    if (!currentCharacter.lightTimers.candle) {
+        currentCharacter.lightTimers.candle = { secondsRemaining: LIGHT_TIMER_DEFAULTS.candle, running: false, itemConsumed: false };
+    }
+    return currentCharacter.lightTimers;
+}
+
+/**
+ * Format seconds into MM:SS display string
+ */
+function formatTimerDisplay(totalSeconds) {
     if (totalSeconds < 0) totalSeconds = 0;
-     var mins = Math.floor(totalSeconds / 60);
-     var secs = totalSeconds % 60;
-     return (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
- }
- 
- /**
-  * Update the timer display text on a button
-  */
- function updateLightTimerDisplay(type) {
-     var displayEl = document.getElementById(type + 'TimerDisplay');
-     var data = getLightTimerData();
-     if (displayEl && data) {
-         displayEl.textContent = formatTimerDisplay(data[type].secondsRemaining);
-     }
-     // Sync the active CSS class with the running state
-     var btn = document.getElementById(type + 'TimerBtn');
-     if (btn && data) {
-         if (data[type].running) {
-             btn.classList.add('active');
-         } else {
-             btn.classList.remove('active');
-         }
-     }
- }
- 
- /**
-  * Save light timer state to the character (calls saveCharacters).
-  * Throttled — only saves at most once per 5 seconds during active ticking
-  * to avoid hammering the save system every second.
-  */
- var _lightTimerSavePending = false;
- function saveLightTimerState() {
-     if (_lightTimerSavePending) return;
-     _lightTimerSavePending = true;
-     setTimeout(function() {
-         _lightTimerSavePending = false;
-         saveCharacters();
-     }, 5000);
- }
- 
- /**
-  * Force an immediate save of light timer state (used on pause/expire).
-  */
- function saveLightTimerStateNow() {
-     _lightTimerSavePending = false;
-     saveCharacters();
- }
- 
- /**
-  * Show the "light has gone out" popup
-  */
- function showLightExpiredPopup(type) {
+    var mins = Math.floor(totalSeconds / 60);
+    var secs = totalSeconds % 60;
+    return (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+}
+
+/**
+ * Update the timer display text on a button
+ */
+function updateLightTimerDisplay(type) {
+    var displayEl = document.getElementById(type + 'TimerDisplay');
+    var data = getLightTimerData();
+    if (displayEl && data) {
+        displayEl.textContent = formatTimerDisplay(data[type].secondsRemaining);
+    }
+    // Sync the active CSS class with the running state
+    var btn = document.getElementById(type + 'TimerBtn');
+    if (btn && data) {
+        if (data[type].running) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    }
+}
+
+/**
+ * Save light timer state to the character (calls saveCharacters).
+ * Throttled — only saves at most once per 5 seconds during active ticking
+ * to avoid hammering the save system every second.
+ */
+var _lightTimerSavePending = false;
+function saveLightTimerState() {
+    if (_lightTimerSavePending) return;
+    _lightTimerSavePending = true;
+    setTimeout(function () {
+        _lightTimerSavePending = false;
+        saveCharacters();
+    }, 5000);
+}
+
+/**
+ * Force an immediate save of light timer state (used on pause/expire).
+ */
+function saveLightTimerStateNow() {
+    _lightTimerSavePending = false;
+    saveCharacters();
+}
+
+/**
+ * Show the "light has gone out" popup
+ */
+function showLightExpiredPopup(type) {
     var labels = { torch: 'Torch', lantern: 'Lantern', candle: 'Candle' };
-    var icons  = { torch: 'fa-fire', lantern: 'fa-lightbulb', candle: 'fa-fire-alt' };
+    var icons = { torch: 'fa-fire', lantern: 'fa-lightbulb', candle: 'fa-fire-alt' };
     var colors = { torch: '#ea580c', lantern: '#ca8a04', candle: '#be123c' };
     var label = labels[type] || 'Light';
     var icon = icons[type] || 'fa-fire';
     var color = colors[type] || '#ea580c';
- 
-     var modal = document.createElement('div');
-     modal.className = 'fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50';
-     modal.innerHTML =
-         '<div style="background:var(--modal-bg, #1f2937);border-radius:12px;padding:28px;max-width:340px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.1);">' +
-             '<div style="font-size:2.5rem;margin-bottom:12px;opacity:0.8;">🕯️</div>' +
-             '<h3 style="font-size:1.2rem;font-weight:700;color:' + color + ';margin:0 0 8px 0;">' +
-                 '<i class="fas ' + icon + '" style="margin-right:6px;"></i>' + label + ' Expired' +
-             '</h3>' +
-             '<p style="font-size:0.9rem;color:#9ca3af;margin:0 0 18px 0;">The light has gone out.</p>' +
-             '<button class="light-expired-ok" style="' +
-                 'width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);' +
-                 'background:rgba(255,255,255,0.08);color:#e5e7eb;cursor:pointer;font-size:0.9rem;font-weight:600;transition:all 0.2s;">' +
-                 'OK' +
-             '</button>' +
-         '</div>';
- 
-     document.body.appendChild(modal);
- 
-     modal.querySelector('.light-expired-ok').addEventListener('click', function() {
-         modal.remove();
-     });
-     modal.addEventListener('click', function(e) {
-         if (e.target === modal) modal.remove();
-     });
- }
- 
- /**
-  * Tick function — called every second while a timer is running
-  */
- function tickLightTimer(type) {
-      var data = getLightTimerData();
-    if (!data) return;
-    var timer = data[type];
-     if (timer.secondsRemaining <= 0) {
-         stopLightTimer(type);
-         showLightExpiredPopup(type);
-         return;
-     }
-     timer.secondsRemaining--;
-     updateLightTimerDisplay(type);
-    // Throttled save every 5s
-     saveLightTimerState();
- 
-     if (timer.secondsRemaining <= 0) {
-         stopLightTimer(type);
-         showLightExpiredPopup(type);
-     }
- }
- 
- /**
-  * Start or resume a light timer
-  */
- function startLightTimer(type) {
+
+    var modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50';
+    modal.innerHTML =
+        '<div style="background:var(--modal-bg, #1f2937);border-radius:12px;padding:28px;max-width:340px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.1);">' +
+        '<div style="font-size:2.5rem;margin-bottom:12px;opacity:0.8;">🕯️</div>' +
+        '<h3 style="font-size:1.2rem;font-weight:700;color:' + color + ';margin:0 0 8px 0;">' +
+        '<i class="fas ' + icon + '" style="margin-right:6px;"></i>' + label + ' Expired' +
+        '</h3>' +
+        '<p style="font-size:0.9rem;color:#9ca3af;margin:0 0 18px 0;">The light has gone out.</p>' +
+        '<button class="light-expired-ok" style="' +
+        'width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);' +
+        'background:rgba(255,255,255,0.08);color:#e5e7eb;cursor:pointer;font-size:0.9rem;font-weight:600;transition:all 0.2s;">' +
+        'OK' +
+        '</button>' +
+        '</div>';
+
+    document.body.appendChild(modal);
+
+    modal.querySelector('.light-expired-ok').addEventListener('click', function () {
+        modal.remove();
+    });
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) modal.remove();
+    });
+}
+
+/**
+ * Tick function — called every second while a timer is running
+ */
+function tickLightTimer(type) {
     var data = getLightTimerData();
     if (!data) return;
     var timer = data[type];
-     if (timer.running) return;
- 
-     timer.running = true;
-     lightTimerIntervals[type] = setInterval(function() {
-         tickLightTimer(type);
-     }, 1000);
- 
-     // Update button CSS
-     var btn = document.getElementById(type + 'TimerBtn');
-     if (btn) btn.classList.add('active');
+    if (timer.secondsRemaining <= 0) {
+        stopLightTimer(type);
+        showLightExpiredPopup(type);
+        return;
+    }
+    timer.secondsRemaining--;
+    updateLightTimerDisplay(type);
+    // Throttled save every 5s
+    saveLightTimerState();
 
-     saveLightTimerStateNow();
- }
- 
- /**
-  * Pause (stop) a light timer without resetting
-  */
- function stopLightTimer(type) {
-     if (lightTimerIntervals[type]) {
-         clearInterval(lightTimerIntervals[type]);
-         lightTimerIntervals[type] = null;
-     }
- 
-     var data = getLightTimerData();
-     if (data) {
-         data[type].running = false;
-     }
- 
-     // Update button CSS
-     var btn = document.getElementById(type + 'TimerBtn');
-     if (btn) btn.classList.remove('active');
-     
+    if (timer.secondsRemaining <= 0) {
+        stopLightTimer(type);
+        showLightExpiredPopup(type);
+    }
+}
+
+/**
+ * Start or resume a light timer
+ */
+function startLightTimer(type) {
+    var data = getLightTimerData();
+    if (!data) return;
+    var timer = data[type];
+    if (timer.running) return;
+
+    timer.running = true;
+    lightTimerIntervals[type] = setInterval(function () {
+        tickLightTimer(type);
+    }, 1000);
+
+    // Update button CSS
+    var btn = document.getElementById(type + 'TimerBtn');
+    if (btn) btn.classList.add('active');
+
+    saveLightTimerStateNow();
+}
+
+/**
+ * Pause (stop) a light timer without resetting
+ */
+function stopLightTimer(type) {
+    if (lightTimerIntervals[type]) {
+        clearInterval(lightTimerIntervals[type]);
+        lightTimerIntervals[type] = null;
+    }
+
+    var data = getLightTimerData();
+    if (data) {
+        data[type].running = false;
+    }
+
+    // Update button CSS
+    var btn = document.getElementById(type + 'TimerBtn');
+    if (btn) btn.classList.remove('active');
+
     saveLightTimerStateNow();
 }
 
@@ -25918,87 +25937,87 @@ document.addEventListener('click', function (e) {
  * Stop both timers (used when switching characters)
  */
 function stopAllLightTimers() {
-    ['torch', 'lantern', 'candle'].forEach(function(type) {
+    ['torch', 'lantern', 'candle'].forEach(function (type) {
         if (lightTimerIntervals[type]) {
             clearInterval(lightTimerIntervals[type]);
             lightTimerIntervals[type] = null;
         }
     });
- }
- 
- /**
-  * Reset a light timer to full duration
-  */
- function resetLightTimer(type) {
-     stopLightTimer(type);
-   var data = getLightTimerData();
+}
+
+/**
+ * Reset a light timer to full duration
+ */
+function resetLightTimer(type) {
+    stopLightTimer(type);
+    var data = getLightTimerData();
     if (data) {
         data[type].secondsRemaining = LIGHT_TIMER_DEFAULTS[type];
         data[type].itemConsumed = false;
     }
-     updateLightTimerDisplay(type);
-     saveLightTimerStateNow();
+    updateLightTimerDisplay(type);
+    saveLightTimerStateNow();
 
- }
- 
- /**
+}
+
+/**
 * Find an equipment item by keyword. Returns index or -1.
-  */
- function findEquipmentByKeyword(keyword) {
-     if (!currentCharacter || !currentCharacter.equipment) return -1;
-     for (var i = 0; i < currentCharacter.equipment.length; i++) {
-         var item = currentCharacter.equipment[i];
-         if (item.name.toLowerCase().indexOf(keyword) !== -1 && item.quantity > 0) {
-             return i;
-         }
-     }
-     return -1;
- }
- 
- /**
-  * Consume one unit of an equipment item by index.
-  * Removes the item entirely if quantity drops to 0.
-  * Returns true on success.
-  */
- function consumeEquipmentItem(index) {
-     if (!currentCharacter || !currentCharacter.equipment || !currentCharacter.equipment[index]) return false;
- 
-     currentCharacter.equipment[index].quantity--;
- 
-     if (currentCharacter.equipment[index].quantity <= 0) {
-         currentCharacter.equipment.splice(index, 1);
-     }
- 
-     saveCharacters();
-     updateEquipmentDisplay(currentCharacter);
-     return true;
- }
- 
- /**
-  * Toggle the Torch timer on/off.
-  * Requires a Torch item in equipment to start — consumes 1 on first activation or restart from 0.
-  */
- function toggleTorchTimer() {
+ */
+function findEquipmentByKeyword(keyword) {
+    if (!currentCharacter || !currentCharacter.equipment) return -1;
+    for (var i = 0; i < currentCharacter.equipment.length; i++) {
+        var item = currentCharacter.equipment[i];
+        if (item.name.toLowerCase().indexOf(keyword) !== -1 && item.quantity > 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+/**
+ * Consume one unit of an equipment item by index.
+ * Removes the item entirely if quantity drops to 0.
+ * Returns true on success.
+ */
+function consumeEquipmentItem(index) {
+    if (!currentCharacter || !currentCharacter.equipment || !currentCharacter.equipment[index]) return false;
+
+    currentCharacter.equipment[index].quantity--;
+
+    if (currentCharacter.equipment[index].quantity <= 0) {
+        currentCharacter.equipment.splice(index, 1);
+    }
+
+    saveCharacters();
+    updateEquipmentDisplay(currentCharacter);
+    return true;
+}
+
+/**
+ * Toggle the Torch timer on/off.
+ * Requires a Torch item in equipment to start — consumes 1 on first activation or restart from 0.
+ */
+function toggleTorchTimer() {
     var data = getLightTimerData();
     if (!data) return;
     var timer = data.torch;
- 
-     if (timer.running) {
-         stopLightTimer('torch');
-     } else {
-       // Need a torch item if this is first start or timer expired
+
+    if (timer.running) {
+        stopLightTimer('torch');
+    } else {
+        // Need a torch item if this is first start or timer expired
         var needsItem = timer.secondsRemaining <= 0 || !timer.itemConsumed;
 
         if (needsItem) {
             var torchIndex = findEquipmentByKeyword('torch');
             if (torchIndex === -1) {
-                 showCustomDialog(
+                showCustomDialog(
                     '<i class="fas fa-fire" style="margin-right:6px;color:#ea580c;"></i>No Torches Available',
                     'You need a Torch in your equipment to light one. Add a Torch first.'
-                 );
-                 return;
-             }
-             // Consume 1 torch
+                );
+                return;
+            }
+            // Consume 1 torch
             consumeEquipmentItem(torchIndex);
             timer.secondsRemaining = LIGHT_TIMER_DEFAULTS.torch;
             timer.itemConsumed = true;
@@ -26033,196 +26052,196 @@ function toggleLanternTimer() {
                 );
                 return;
             }
- 
-             // Consume 1 oil
-             consumeEquipmentItem(oilIndex);
-             timer.secondsRemaining = LIGHT_TIMER_DEFAULTS.lantern;
-             timer.itemConsumed = true;
-             updateLightTimerDisplay('lantern');
-         }
- 
-         startLightTimer('lantern');
-     }
- }
 
- /**
-  * Toggle the Candle timer on/off.
-  * Requires a Candle item in equipment to start — consumes 1 on first activation or restart from 0.
-  */
- function toggleCandleTimer() {
-     var data = getLightTimerData();
-     if (!data) return;
-     var timer = data.candle;
- 
-     if (timer.running) {
-         stopLightTimer('candle');
-     } else {
-         // Need a candle item if this is first start or timer expired
-         var needsItem = timer.secondsRemaining <= 0 || !timer.itemConsumed;
- 
-         if (needsItem) {
-             var candleIndex = findEquipmentByKeyword('candle');
-             if (candleIndex === -1) {
-                 showCustomDialog(
-                     '<i class="fas fa-fire-alt" style="margin-right:6px;color:#be123c;"></i>No Candles Available',
-                     'You need a Candle in your equipment to light one. Add a Candle first.'
-                 );
-                 return;
-             }
- 
-             // Consume 1 candle
-             consumeEquipmentItem(candleIndex);
-             timer.secondsRemaining = LIGHT_TIMER_DEFAULTS.candle;
-             timer.itemConsumed = true;
-             updateLightTimerDisplay('candle');
-         }
- 
-         startLightTimer('candle');
-     }
- }
- 
- /**
-  * Show the Light Timer Reset modal — lets the player choose which timer to reset
-  */
- function showLightResetModal() {
-     var existing = document.getElementById('lightResetModal');
-     if (existing) existing.remove();
- 
-     var btnStyle = 'width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);' +
-         'background:rgba(255,255,255,0.06);color:#e5e7eb;cursor:pointer;font-size:0.9rem;font-weight:600;' +
-         'text-align:left;display:flex;align-items:center;transition:all 0.2s;';
- 
-     var modal = document.createElement('div');
-     modal.id = 'lightResetModal';
-     modal.className = 'fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50';
-     modal.innerHTML =
-         '<div style="background:var(--modal-bg, #1f2937);border-radius:12px;padding:24px;max-width:320px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.1);">' +
-             '<h3 style="font-size:1.1rem;font-weight:700;color:#fbbf24;margin:0 0 16px 0;text-align:center;">' +
-                 '<i class="fas fa-undo-alt" style="margin-right:6px;"></i>Reset Light Timer' +
-             '</h3>' +
-             '<div style="display:flex;flex-direction:column;gap:8px;">' +
-                 '<button class="light-reset-option" data-type="torch" style="' + btnStyle + '">' +
-                     '<i class="fas fa-fire" style="color:#ea580c;margin-right:10px;width:16px;text-align:center;"></i>Torch' +
-                 '</button>' +
-                 '<button class="light-reset-option" data-type="lantern" style="' + btnStyle + '">' +
-                     '<i class="fas fa-lightbulb" style="color:#ca8a04;margin-right:10px;width:16px;text-align:center;"></i>Lantern' +
-                 '</button>' +
-                 '<button class="light-reset-option" data-type="candle" style="' + btnStyle + '">' +
-                     '<i class="fas fa-fire-alt" style="color:#be123c;margin-right:10px;width:16px;text-align:center;"></i>Candle' +
-                 '</button>' +
-             '</div>' +
-             '<button class="light-reset-cancel" style="' +
-                 'width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);margin-top:12px;' +
-                 'background:rgba(255,255,255,0.04);color:#9ca3af;cursor:pointer;font-size:0.85rem;font-weight:500;transition:all 0.2s;">' +
-                 'Cancel' +
-             '</button>' +
-         '</div>';
- 
-     document.body.appendChild(modal);
- 
-     modal.querySelectorAll('.light-reset-option').forEach(function(btn) {
-         btn.addEventListener('click', function() {
-             var type = btn.dataset.type;
-             resetLightTimer(type);
-             updateLightButtonAvailability();
-             modal.remove();
-         });
-     });
- 
-     modal.querySelector('.light-reset-cancel').addEventListener('click', function() {
-         modal.remove();
-     });
- 
-     modal.addEventListener('click', function(e) {
-         if (e.target === modal) modal.remove();
-     });
- }
- 
- /**
-  * Update the greyed-out appearance of light source buttons
-  * based on whether the character has the required equipment item.
-  * Buttons are NOT disabled — just visually dimmed when item is unavailable.
-  */
- function updateLightButtonAvailability() {
-     var data = getLightTimerData();
- 
-     var checks = [
-         { type: 'torch',   keyword: 'torch',  btnId: 'torchTimerBtn' },
-         { type: 'lantern', keyword: 'oil',    btnId: 'lanternTimerBtn' },
-         { type: 'candle',  keyword: 'candle', btnId: 'candleTimerBtn' }
-     ];
- 
-     for (var i = 0; i < checks.length; i++) {
-         var c = checks[i];
-         var btn = document.getElementById(c.btnId);
-         if (!btn) continue;
- 
-         var hasItem = findEquipmentByKeyword(c.keyword) !== -1;
-         var timerActive = data && data[c.type] && (data[c.type].running || data[c.type].itemConsumed);
- 
-         if (hasItem || timerActive) {
-             btn.classList.remove('light-unavailable');
-         } else {
-             btn.classList.add('light-unavailable');
-         }
-     }
- }
+            // Consume 1 oil
+            consumeEquipmentItem(oilIndex);
+            timer.secondsRemaining = LIGHT_TIMER_DEFAULTS.lantern;
+            timer.itemConsumed = true;
+            updateLightTimerDisplay('lantern');
+        }
+
+        startLightTimer('lantern');
+    }
+}
+
+/**
+ * Toggle the Candle timer on/off.
+ * Requires a Candle item in equipment to start — consumes 1 on first activation or restart from 0.
+ */
+function toggleCandleTimer() {
+    var data = getLightTimerData();
+    if (!data) return;
+    var timer = data.candle;
+
+    if (timer.running) {
+        stopLightTimer('candle');
+    } else {
+        // Need a candle item if this is first start or timer expired
+        var needsItem = timer.secondsRemaining <= 0 || !timer.itemConsumed;
+
+        if (needsItem) {
+            var candleIndex = findEquipmentByKeyword('candle');
+            if (candleIndex === -1) {
+                showCustomDialog(
+                    '<i class="fas fa-fire-alt" style="margin-right:6px;color:#be123c;"></i>No Candles Available',
+                    'You need a Candle in your equipment to light one. Add a Candle first.'
+                );
+                return;
+            }
+
+            // Consume 1 candle
+            consumeEquipmentItem(candleIndex);
+            timer.secondsRemaining = LIGHT_TIMER_DEFAULTS.candle;
+            timer.itemConsumed = true;
+            updateLightTimerDisplay('candle');
+        }
+
+        startLightTimer('candle');
+    }
+}
+
+/**
+ * Show the Light Timer Reset modal — lets the player choose which timer to reset
+ */
+function showLightResetModal() {
+    var existing = document.getElementById('lightResetModal');
+    if (existing) existing.remove();
+
+    var btnStyle = 'width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);' +
+        'background:rgba(255,255,255,0.06);color:#e5e7eb;cursor:pointer;font-size:0.9rem;font-weight:600;' +
+        'text-align:left;display:flex;align-items:center;transition:all 0.2s;';
+
+    var modal = document.createElement('div');
+    modal.id = 'lightResetModal';
+    modal.className = 'fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50';
+    modal.innerHTML =
+        '<div style="background:var(--modal-bg, #1f2937);border-radius:12px;padding:24px;max-width:320px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.1);">' +
+        '<h3 style="font-size:1.1rem;font-weight:700;color:#fbbf24;margin:0 0 16px 0;text-align:center;">' +
+        '<i class="fas fa-undo-alt" style="margin-right:6px;"></i>Reset Light Timer' +
+        '</h3>' +
+        '<div style="display:flex;flex-direction:column;gap:8px;">' +
+        '<button class="light-reset-option" data-type="torch" style="' + btnStyle + '">' +
+        '<i class="fas fa-fire" style="color:#ea580c;margin-right:10px;width:16px;text-align:center;"></i>Torch' +
+        '</button>' +
+        '<button class="light-reset-option" data-type="lantern" style="' + btnStyle + '">' +
+        '<i class="fas fa-lightbulb" style="color:#ca8a04;margin-right:10px;width:16px;text-align:center;"></i>Lantern' +
+        '</button>' +
+        '<button class="light-reset-option" data-type="candle" style="' + btnStyle + '">' +
+        '<i class="fas fa-fire-alt" style="color:#be123c;margin-right:10px;width:16px;text-align:center;"></i>Candle' +
+        '</button>' +
+        '</div>' +
+        '<button class="light-reset-cancel" style="' +
+        'width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);margin-top:12px;' +
+        'background:rgba(255,255,255,0.04);color:#9ca3af;cursor:pointer;font-size:0.85rem;font-weight:500;transition:all 0.2s;">' +
+        'Cancel' +
+        '</button>' +
+        '</div>';
+
+    document.body.appendChild(modal);
+
+    modal.querySelectorAll('.light-reset-option').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var type = btn.dataset.type;
+            resetLightTimer(type);
+            updateLightButtonAvailability();
+            modal.remove();
+        });
+    });
+
+    modal.querySelector('.light-reset-cancel').addEventListener('click', function () {
+        modal.remove();
+    });
+
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) modal.remove();
+    });
+}
+
+/**
+ * Update the greyed-out appearance of light source buttons
+ * based on whether the character has the required equipment item.
+ * Buttons are NOT disabled — just visually dimmed when item is unavailable.
+ */
+function updateLightButtonAvailability() {
+    var data = getLightTimerData();
+
+    var checks = [
+        { type: 'torch', keyword: 'torch', btnId: 'torchTimerBtn' },
+        { type: 'lantern', keyword: 'oil', btnId: 'lanternTimerBtn' },
+        { type: 'candle', keyword: 'candle', btnId: 'candleTimerBtn' }
+    ];
+
+    for (var i = 0; i < checks.length; i++) {
+        var c = checks[i];
+        var btn = document.getElementById(c.btnId);
+        if (!btn) continue;
+
+        var hasItem = findEquipmentByKeyword(c.keyword) !== -1;
+        var timerActive = data && data[c.type] && (data[c.type].running || data[c.type].itemConsumed);
+
+        if (hasItem || timerActive) {
+            btn.classList.remove('light-unavailable');
+        } else {
+            btn.classList.add('light-unavailable');
+        }
+    }
+}
 
 /**
   * Restore light timer state when a character is loaded.
   * If a timer was running when the page was last saved, calculate elapsed time
   * and resume or expire accordingly.
   */
- function restoreLightTimers() {
-     stopAllLightTimers();
- 
-     var data = getLightTimerData();
-     if (!data) return;
- 
-     ['torch', 'lantern', 'candle'].forEach(function(type) {
-         var timer = data[type];
-         updateLightTimerDisplay(type);
- 
-         // If the timer was running when saved, resume it
-         if (timer.running && timer.secondsRemaining > 0) {
-             timer.running = false; // reset so startLightTimer can set it
-             startLightTimer(type);
-         } else if (timer.running && timer.secondsRemaining <= 0) {
-             // Was running but has expired
-             timer.running = false;
-             timer.itemConsumed = false;
-             updateLightTimerDisplay(type);
-         }
-     }); 
-    // Update greyed-out state based on equipment availability
-     updateLightButtonAvailability();
-    }
- 
- // --- Event Listeners for Torch, Lantern & Candle buttons ---
- document.getElementById('torchTimerBtn').addEventListener('click', function(e) {
-     e.preventDefault();
-     toggleTorchTimer();
- });
- 
- document.getElementById('lanternTimerBtn').addEventListener('click', function(e) {
-     e.preventDefault();
-     toggleLanternTimer();
- });
+function restoreLightTimers() {
+    stopAllLightTimers();
 
- document.getElementById('candleTimerBtn').addEventListener('click', function(e) {
-     e.preventDefault();
-     toggleCandleTimer();
- });
- 
- // Reset button listener
- document.getElementById('lightResetBtn').addEventListener('click', function(e) {
-     e.preventDefault();
-     e.stopPropagation();
-     showLightResetModal();
- });
- 
- // Initialize the timer displays on page load
- updateLightTimerDisplay('torch');
- updateLightTimerDisplay('lantern');
- updateLightTimerDisplay('candle');
- updateLightButtonAvailability();
+    var data = getLightTimerData();
+    if (!data) return;
+
+    ['torch', 'lantern', 'candle'].forEach(function (type) {
+        var timer = data[type];
+        updateLightTimerDisplay(type);
+
+        // If the timer was running when saved, resume it
+        if (timer.running && timer.secondsRemaining > 0) {
+            timer.running = false; // reset so startLightTimer can set it
+            startLightTimer(type);
+        } else if (timer.running && timer.secondsRemaining <= 0) {
+            // Was running but has expired
+            timer.running = false;
+            timer.itemConsumed = false;
+            updateLightTimerDisplay(type);
+        }
+    });
+    // Update greyed-out state based on equipment availability
+    updateLightButtonAvailability();
+}
+
+// --- Event Listeners for Torch, Lantern & Candle buttons ---
+document.getElementById('torchTimerBtn').addEventListener('click', function (e) {
+    e.preventDefault();
+    toggleTorchTimer();
+});
+
+document.getElementById('lanternTimerBtn').addEventListener('click', function (e) {
+    e.preventDefault();
+    toggleLanternTimer();
+});
+
+document.getElementById('candleTimerBtn').addEventListener('click', function (e) {
+    e.preventDefault();
+    toggleCandleTimer();
+});
+
+// Reset button listener
+document.getElementById('lightResetBtn').addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    showLightResetModal();
+});
+
+// Initialize the timer displays on page load
+updateLightTimerDisplay('torch');
+updateLightTimerDisplay('lantern');
+updateLightTimerDisplay('candle');
+updateLightButtonAvailability();
